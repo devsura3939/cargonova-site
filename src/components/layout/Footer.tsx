@@ -32,7 +32,6 @@ import { LogoMark } from "@/components/layout/Logo";
 import { brand } from "@/lib/constants";
 import { newsletterSchema } from "@/lib/validations";
 import { trackEvent } from "@/lib/analytics";
-import { unsplashAttribution } from "@/data/images";
 import { useLang, type DictKey } from "@/lib/i18n";
 
 const COLUMNS: {
@@ -120,7 +119,7 @@ export function Footer() {
               </div>
             </div>
             <p className="mt-5 text-sm leading-relaxed text-navy-200">
-              {brand.tagline} {t("footer.tagline")}
+              {t("footer.motto")} {t("footer.tagline")}
             </p>
             <div className="mt-6 flex gap-3">
               {[
@@ -223,7 +222,7 @@ export function Footer() {
               </li>
               <li className="flex items-start gap-2.5">
                 <Clock className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" />
-                {brand.contact.hours}
+                {t("footer.hours")}
               </li>
             </ul>
           </div>
@@ -233,8 +232,8 @@ export function Footer() {
         <div className="flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-8 text-xs text-navy-300 sm:flex-row">
           <p>© {new Date().getFullYear()} {brand.name}. {t("footer.rights")}</p>
           <p>
-            Demo website — placeholder company details. Certifications shown are illustrative.{" "}
-            {unsplashAttribution}
+            {t("footer.disclaimer")}{" "}
+            {t("footer.photoAttrib")}
           </p>
         </div>
       </div>

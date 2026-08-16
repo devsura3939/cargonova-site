@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/shared/PageHero";
+import { TranslatedPageHero } from "@/components/shared/TranslatedPageHero";
 import { CTASection } from "@/components/sections/CTASection";
 import { CoverageExplorer } from "@/components/coverage/CoverageExplorer";
 import { buildMetadata } from "@/lib/seo";
@@ -14,11 +14,12 @@ export const metadata: Metadata = buildMetadata({
 export default function CoveragePage() {
   return (
     <>
-      <PageHero
-        crumb={[{ name: "Coverage", path: "/coverage" }]}
-        eyebrow="Coverage & routes"
-        title="One network. Six corridors. Thirty regions."
-        description="Scheduled lanes across Europe's core corridors, gateway hubs at key ports, and an international corridor network extending beyond the EU."
+      <TranslatedPageHero
+        crumbKey="nav.coverage"
+        crumbPath="/coverage"
+        eyebrowKey="pg.coverage.eyebrow"
+        titleKey="pg.coverage.title"
+        descKey="pg.coverage.sub"
       />
       <CoverageExplorer />
       <CTASection />

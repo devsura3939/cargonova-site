@@ -7,56 +7,13 @@ import { brand } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { useLang, type DictKey } from "@/lib/i18n";
 
-type Group = { heading: DictKey; href: string; links: { label: DictKey; href: string }[] };
-
-const GROUPS: Group[] = [
-  {
-    heading: "nav.services",
-    href: "/services",
-    links: [
-      { label: "nav.groundFreight", href: "/services/ground-freight" },
-      { label: "nav.ftl", href: "/services/full-truckload" },
-      { label: "nav.ltl", href: "/services/ltl" },
-      { label: "nav.express", href: "/services/express" },
-      { label: "nav.refrigerated", href: "/services/refrigerated" },
-      { label: "nav.oversized", href: "/services/oversized" },
-      { label: "nav.warehousing", href: "/services/warehousing" },
-    ],
-  },
-  {
-    heading: "nav.tracking",
-    href: "/tracking",
-    links: [
-      { label: "nav.track", href: "/tracking" },
-      { label: "nav.liveMap", href: "/live-map" },
-    ],
-  },
-  {
-    heading: "nav.network",
-    href: "/coverage",
-    links: [
-      { label: "nav.coverage", href: "/coverage" },
-      { label: "nav.fleet", href: "/fleet" },
-    ],
-  },
-  {
-    heading: "nav.company",
-    href: "/about",
-    links: [
-      { label: "nav.about", href: "/about" },
-      { label: "nav.technology", href: "/technology" },
-      { label: "nav.careers", href: "/careers" },
-      { label: "nav.contact", href: "/contact" },
-    ],
-  },
-  {
-    heading: "nav.insights",
-    href: "/blog",
-    links: [
-      { label: "nav.blog", href: "/blog" },
-      { label: "nav.faq", href: "/faq" },
-    ],
-  },
+const LINKS: { label: DictKey; href: string }[] = [
+  { label: "nav.services", href: "/services" },
+  { label: "nav.industries", href: "/industries" },
+  { label: "nav.tracking", href: "/tracking" },
+  { label: "nav.liveMap", href: "/live-map" },
+  { label: "nav.network", href: "/coverage" },
+  { label: "nav.company", href: "/about" },
 ];
 
 export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -84,44 +41,21 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
               transition={{ duration: 0.35, delay: 0.05 }}
               className="flex flex-col divide-y divide-white/8"
             >
-              <Link
-                href="/industries"
-                onClick={onClose}
-                className="flex items-center justify-between py-3.5 text-base font-semibold text-white/90 transition-colors hover:text-white"
-              >
-                {t("nav.industries")}
-                <ArrowRight className="h-4 w-4 text-navy-400" />
-              </Link>
-
-              {GROUPS.map((group, i) => (
+              {LINKS.map((link, i) => (
                 <motion.div
-                  key={group.heading}
+                  key={link.href}
                   initial={reduceMotion ? false : { opacity: 0, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: 0.04 * i }}
-                  className="py-3"
                 >
                   <Link
-                    href={group.href}
+                    href={link.href}
                     onClick={onClose}
-                    className="flex items-center justify-between text-base font-semibold text-white transition-colors hover:text-white"
+                    className="flex items-center justify-between py-4 text-base font-semibold text-white transition-colors hover:text-white"
                   >
-                    {t(group.heading)}
+                    {t(link.label)}
                     <ArrowRight className="h-4 w-4 text-cyan-400" />
                   </Link>
-                  <ul className="mt-2.5 grid grid-cols-1 gap-0.5 pl-1">
-                    {group.links.map((link) => (
-                      <li key={link.href}>
-                        <Link
-                          href={link.href}
-                          onClick={onClose}
-                          className="block py-1.5 pl-3 text-sm text-navy-200 transition-colors hover:text-white"
-                        >
-                          {t(link.label)}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
                 </motion.div>
               ))}
             </motion.nav>

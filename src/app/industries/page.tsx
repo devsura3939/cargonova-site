@@ -1,43 +1,30 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, AlertTriangle, Lightbulb, Check } from "lucide-react";
-import { PageHero } from "@/components/shared/PageHero";
+import { TranslatedPageHero } from "@/components/shared/TranslatedPageHero";
 import { Container } from "@/components/shared/Container";
 import { Section } from "@/components/shared/Section";
 import { Reveal } from "@/components/shared/Reveal";
 import { CTASection } from "@/components/sections/CTASection";
 import { ServiceIcon } from "@/components/icons/ServiceIcon";
 import { industries } from "@/data/industries";
-import { buildMetadata } from "@/lib/seo";
+import { useLang } from "@/lib/i18n";
+import { useDataT } from "@/lib/data-i18n";
 import { cn } from "@/lib/utils";
 
-/** Service slugs used in industry data, mapped to display names. */
-const serviceNames: Record<string, string> = {
-  "ground-freight": "Ground Freight",
-  "full-truckload": "Full Truckload",
-  ltl: "Less-than-Truckload",
-  express: "Express Cargo",
-  refrigerated: "Refrigerated Transport",
-  oversized: "Oversized Cargo",
-  warehousing: "Warehousing",
-  "business-logistics": "Business Logistics",
-};
-
-export const metadata: Metadata = buildMetadata({
-  title: "Industries We Serve",
-  description:
-    "Industry-specific logistics for manufacturing, retail, construction, automotive, food & beverage, e-commerce, healthcare, and industrial equipment.",
-  path: "/industries",
-});
-
 export default function IndustriesPage() {
+  const { t } = useLang();
+  const { serviceTitle } = useDataT();
+
   return (
     <>
-      <PageHero
-        crumb={[{ name: "Industries", path: "/industries" }]}
-        eyebrow="Industries"
-        title="Logistics built around your industry's pressure points"
-        description="Every industry has a failure mode that costs money. We design transport programs around the problem your supply chain actually faces — then measure against it."
+      <TranslatedPageHero
+        crumbKey="nav.industries"
+        crumbPath="/industries"
+        eyebrowKey="pg.industries.eyebrow"
+        titleKey="pg.industries.title"
+        descKey="pg.industries.sub"
       />
 
       <Section variant="light">
@@ -74,12 +61,12 @@ export default function IndustriesPage() {
                             href={`/services/${s}`}
                             className="rounded-full bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white ring-1 ring-inset ring-white/15 transition-colors hover:bg-electric-500"
                           >
-                            {serviceNames[s]}
+                            {serviceTitle(s)}
                           </Link>
                         ))}
                       </div>
                       <p className="relative mt-8 border-t border-white/10 pt-5 text-sm font-semibold text-cyan-400">
-                        Outcome: {industry.benefit}
+                        {t("pg.industries.outcome")} {industry.benefit}
                       </p>
                     </div>
                   </Reveal>
@@ -87,14 +74,14 @@ export default function IndustriesPage() {
                   {/* Copy */}
                   <Reveal delay={0.1} className={cn(flip && "lg:order-1")}>
                     <p className="text-xs font-bold uppercase tracking-[0.18em] text-electric-600">
-                      The problem
+                      {t("pg.industries.problem")}
                     </p>
                     <p className="mt-3 flex gap-3 text-lg font-medium leading-relaxed text-strong">
                       <AlertTriangle className="mt-1 h-5 w-5 shrink-0 text-orange-500" />
                       {industry.problem}
                     </p>
                     <p className="mt-8 text-xs font-bold uppercase tracking-[0.18em] text-electric-600">
-                      The solution
+                      {t("pg.industries.solution")}
                     </p>
                     <p className="mt-3 flex gap-3 text-pretty leading-relaxed text-muted">
                       <Lightbulb className="mt-1 h-5 w-5 shrink-0 text-electric-500" />
@@ -106,7 +93,7 @@ export default function IndustriesPage() {
                           <span className="flex h-5 w-5 items-center justify-center rounded-full bg-electric-100 text-electric-600">
                             <Check className="h-3 w-3" />
                           </span>
-                          {serviceNames[s] ?? s}
+                          {serviceTitle(s)}
                         </li>
                       ))}
                     </ul>
@@ -120,17 +107,17 @@ export default function IndustriesPage() {
             <div className="mt-20 flex flex-col items-center justify-between gap-5 rounded-3xl border border-soft bg-surface-muted p-8 text-center sm:flex-row sm:text-left">
               <div>
                 <h2 className="font-display text-2xl font-extrabold tracking-tight text-strong">
-                  Your industry isn't here?
+                  {t("pg.industries.notHere")}
                 </h2>
                 <p className="mt-1.5 text-sm text-muted">
-                  We design programs for niche supply chains too. Tell us how your freight flows.
+                  {t("pg.industries.notHereSub")}
                 </p>
               </div>
               <Link
                 href="/contact"
                 className="inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-navy-850 px-6 text-sm font-semibold text-white transition-colors hover:bg-navy-700"
               >
-                Talk to logistics team
+                {t("pg.industries.talk")}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>

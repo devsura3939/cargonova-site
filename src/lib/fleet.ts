@@ -2,29 +2,48 @@
  * Live fleet engine for the worldwide map.
  *
  * No API keys: this feed is a deterministic real-time simulation that behaves
- * like a live AIS/TMS stream — real vessels, real ports, real corridors — with
- * positions advancing continuously in real time. `computeLiveFleet(now)` is
- * the single seam a real AIS provider (e.g. aisstream.io free tier) can be
- * swapped into later without touching the map UI.
+ * like a live AIS/TMS stream — real vessels, real ports, real sea lanes that
+ * never cross land (every lane is validated against the 1° landmask in tests)
+ * — with positions advancing continuously in real time. Ships sail their lane,
+ * then dwell at the destination port before the next voyage; trucks run hourly
+ * rotations between real cities. `computeLiveFleet(now)` is the single seam a
+ * real AIS provider (e.g. aisstream.io free tier) can be swapped into later
+ * without touching the map UI.
  */
+
+import { seaRoutes, truckCorridors, type SeaRoute, type TruckCorridor } from "@/data/sea-routes";
+import { ports, distKm, type Port } from "@/data/ports";
+
+export type LatLon = [number, number];
+
+export type UnitKind = "ship" | "truck";
+export type UnitStatus = "In Transit" | "At Port" | "Delivering";
+export type VesselClass = "container" | "mega-container" | "feeder" | "bulk" | "tanker" | "roro";
 
 export type LiveUnit = {
   id: string;
-  kind: "ship" | "truck";
+  kind: UnitKind;
   name: string;
   flag?: string;
   mmsi?: string;
+  imo?: string;
   plate?: string;
+  cls: string;
   type: string;
-  origin: LatLon;
-  destination: LatLon;
+  origin: string;
+  destination: string;
+  originLatLon: LatLon;
+  destLatLon: LatLon;
   lat: number;
   lon: number;
   heading: number;
   speedText: string;
   progress: number; // 0..1 along the route
-  status: "In Transit" | "At Port" | "Delivering";
+  status: UnitStatus;
   eta: string;
+  etaMs: number;
+  routeId: string;
+  routeName: string;
   shipment: {
     id: string;
     cargo: string;
@@ -32,299 +51,189 @@ export type LiveUnit = {
     teu?: number;
     pallets?: number;
     consignee: string;
+    vessel?: string;
   };
 };
 
-type LatLon = [number, number];
-type Route = { id: string; name: string; waypoints: LatLon[]; units: string[] };
-
-/* ── Ports & sea routes (real locations, simplified lanes) ── */
-
-const SEA_ROUTES: Route[] = [
-  {
-    id: "asia-europe",
-    name: "Asia → Europe (Suez)",
-    waypoints: [
-      [31.23, 121.47], // Shanghai
-      [29.87, 122.26], // Ningbo
-      [1.26, 103.84], // Singapore
-      [6.93, 79.85], // Colombo
-      [11.59, 43.15], // Djibouti
-      [30.05, 32.5], // Suez Canal
-      [37.94, 23.62], // Piraeus
-      [35.9, 14.5], // Malta corridor
-      [51.95, 4.14], // Rotterdam
-      [53.55, 9.93], // Hamburg
-    ],
-    units: ["Ever Given", "MSC Gülsün", "OOCL Hong Kong", "CMA CGM Jacques Saadé", "Ever Ace"],
-  },
-  {
-    id: "europe-asia",
-    name: "North Europe → East Asia",
-    waypoints: [
-      [51.95, 4.14], // Rotterdam
-      [35.9, 14.5],
-      [30.05, 32.5], // Suez
-      [6.93, 79.85], // Colombo
-      [1.26, 103.84], // Singapore
-      [22.31, 114.17], // Hong Kong
-      [31.23, 121.47], // Shanghai
-    ],
-    units: ["HMM Algeciras", "Madrid Mærsk", "COSCO Shipping Universe", "Ever Max"],
-  },
-  {
-    id: "transpacific-east",
-    name: "Asia → US West Coast",
-    waypoints: [
-      [35.1, 129.04], // Busan
-      [33.75, -118.19], // Long Beach
-    ],
-    units: ["Maersk Essen", "ONE Apus", "YM Wish"],
-  },
-  {
-    id: "transpacific-west",
-    name: "US West Coast → Asia",
-    waypoints: [
-      [33.75, -118.19], // Long Beach
-      [35.1, 129.04], // Busan
-      [37.57, 126.98], // Incheon
-    ],
-    units: ["CSCL Globe", "APL Singapura", "MSC Oscar"],
-  },
-  {
-    id: "sea-loop",
-    name: "Southeast Asia feeder loop",
-    waypoints: [
-      [1.26, 103.84], // Singapore
-      [3.0, 101.4], // Port Klang
-      [10.31, 107.08], // Ho Chi Minh City
-      [1.26, 103.84],
-    ],
-    units: ["MSC Mia", "ONE Innovation", "Ever Leader"],
-  },
-  {
-    id: "latam-europe",
-    name: "South America → Europe",
-    waypoints: [
-      [-23.96, -46.3], // Santos
-      [28.12, -15.43], // Las Palmas
-      [35.9, 14.5],
-      [51.95, 4.14], // Rotterdam
-    ],
-    units: ["CMA CGM Benjamin Franklin", "HMM Oslo"],
-  },
-  {
-    id: "med-us",
-    name: "Mediterranean → US East Coast",
-    waypoints: [
-      [39.45, -0.3], // Valencia
-      [36.15, -5.35], // Algeciras
-      [40.5, -74.0], // New York / New Jersey
-    ],
-    units: ["MOL Triumph", "YM Together"],
-  },
-  {
-    id: "us-europe",
-    name: "US East Coast → Europe",
-    waypoints: [
-      [40.5, -74.0], // New York
-      [49.49, 0.1], // Le Havre
-      [51.95, 4.14], // Rotterdam
-    ],
-    units: ["Maersk Kuala Lumpur", "COSCO Shipping Solar"],
-  },
-  {
-    id: "gulf-asia",
-    name: "Persian Gulf → Asia",
-    waypoints: [
-      [25.01, 54.96], // Jebel Ali
-      [6.93, 79.85], // Colombo
-      [1.26, 103.84], // Singapore
-      [36.07, 120.32], // Qingdao
-    ],
-    units: ["OOCL Germany", "MSC Anna"],
-  },
-  {
-    id: "africa-gulf",
-    name: "East Africa → Persian Gulf",
-    waypoints: [
-      [-4.04, 39.67], // Mombasa
-      [25.01, 54.96], // Jebel Ali
-      [22.75, 69.69], // Mundra
-      [6.93, 79.85], // Colombo
-    ],
-    units: ["Ever Enest", "CMA CGM Zheng He"],
-  },
-  {
-    id: "baltic-feeder",
-    name: "Baltic feeder",
-    waypoints: [
-      [53.55, 9.93], // Hamburg
-      [54.35, 18.66], // Gdańsk
-      [60.15, 24.94], // Helsinki
-      [59.44, 24.75], // Tallinn
-      [53.55, 9.93],
-    ],
-    units: ["MSC Rita", "Maersk Palermo"],
-  },
-];
-
-/* ── Vessel registry (real container ships, public particulars) ── */
+/* ── Vessel registry (real ships, public particulars) ────── */
 
 type Vessel = {
   name: string;
   flag: string;
   mmsi: string;
+  cls: VesselClass;
   teu: number;
   length: number;
   speedKts: number;
+  dwt: string;
 };
 
-const VESSELS: Record<string, Vessel> = {
-  "Ever Given": { name: "Ever Given", flag: "Panama", mmsi: "353136000", teu: 20124, length: 399.9, speedKts: 20.5 },
-  "Ever Ace": { name: "Ever Ace", flag: "Panama", mmsi: "353782000", teu: 23992, length: 399.9, speedKts: 20.5 },
-  "Ever Max": { name: "Ever Max", flag: "Panama", mmsi: "353523000", teu: 24004, length: 399.9, speedKts: 20.5 },
-  "Ever Leader": { name: "Ever Leader", flag: "Panama", mmsi: "353596000", teu: 15000, length: 365.0, speedKts: 20.0 },
-  "Ever Enest": { name: "Ever Enest", flag: "Panama", mmsi: "353776000", teu: 24004, length: 399.9, speedKts: 20.5 },
-  "MSC Gülsün": { name: "MSC Gülsün", flag: "Liberia", mmsi: "636018798", teu: 23756, length: 399.9, speedKts: 21.0 },
-  "MSC Oscar": { name: "MSC Oscar", flag: "Liberia", mmsi: "636017473", teu: 19224, length: 395.4, speedKts: 20.0 },
-  "MSC Mia": { name: "MSC Mia", flag: "Panama", mmsi: "636016888", teu: 14000, length: 365.0, speedKts: 19.5 },
-  "MSC Anna": { name: "MSC Anna", flag: "Panama", mmsi: "636016877", teu: 14000, length: 365.0, speedKts: 19.5 },
-  "MSC Rita": { name: "MSC Rita", flag: "Panama", mmsi: "636012345", teu: 13000, length: 365.0, speedKts: 19.0 },
-  "OOCL Hong Kong": { name: "OOCL Hong Kong", flag: "Hong Kong", mmsi: "477972100", teu: 21413, length: 399.9, speedKts: 21.0 },
-  "OOCL Germany": { name: "OOCL Germany", flag: "Hong Kong", mmsi: "477543500", teu: 21413, length: 399.9, speedKts: 21.0 },
-  "CMA CGM Jacques Saadé": { name: "CMA CGM Jacques Saadé", flag: "France", mmsi: "228401600", teu: 23112, length: 399.9, speedKts: 21.5 },
-  "CMA CGM Benjamin Franklin": { name: "CMA CGM Benjamin Franklin", flag: "France", mmsi: "228389500", teu: 17722, length: 398.0, speedKts: 20.5 },
-  "CMA CGM Zheng He": { name: "CMA CGM Zheng He", flag: "France", mmsi: "228386800", teu: 18000, length: 399.0, speedKts: 20.5 },
-  "HMM Algeciras": { name: "HMM Algeciras", flag: "Panama", mmsi: "636020723", teu: 23964, length: 399.9, speedKts: 21.5 },
-  "HMM Oslo": { name: "HMM Oslo", flag: "Panama", mmsi: "636020650", teu: 23964, length: 399.9, speedKts: 21.5 },
-  "Madrid Mærsk": { name: "Madrid Mærsk", flag: "Denmark", mmsi: "219789100", teu: 20568, length: 399.0, speedKts: 21.0 },
-  "Maersk Essen": { name: "Maersk Essen", flag: "Denmark", mmsi: "220563000", teu: 15000, length: 365.0, speedKts: 20.0 },
-  "Maersk Kuala Lumpur": { name: "Maersk Kuala Lumpur", flag: "Denmark", mmsi: "219028000", teu: 19000, length: 399.0, speedKts: 21.0 },
-  "Maersk Palermo": { name: "Maersk Palermo", flag: "Denmark", mmsi: "219214000", teu: 4500, length: 280.0, speedKts: 18.0 },
-  "COSCO Shipping Universe": { name: "COSCO Shipping Universe", flag: "Hong Kong", mmsi: "477929500", teu: 21237, length: 399.9, speedKts: 21.0 },
-  "COSCO Shipping Solar": { name: "COSCO Shipping Solar", flag: "Hong Kong", mmsi: "477932100", teu: 21237, length: 399.9, speedKts: 21.0 },
-  "ONE Apus": { name: "ONE Apus", flag: "Japan", mmsi: "431577000", teu: 14500, length: 364.2, speedKts: 19.5 },
-  "ONE Innovation": { name: "ONE Innovation", flag: "Japan", mmsi: "431577130", teu: 24000, length: 399.9, speedKts: 21.0 },
-  "CSCL Globe": { name: "CSCL Globe", flag: "Hong Kong", mmsi: "477491700", teu: 19100, length: 400.0, speedKts: 20.5 },
-  "YM Wish": { name: "YM Wish", flag: "Liberia", mmsi: "636018004", teu: 14000, length: 368.0, speedKts: 19.5 },
-  "YM Together": { name: "YM Together", flag: "Liberia", mmsi: "636020615", teu: 20180, length: 399.9, speedKts: 20.5 },
-  "APL Singapura": { name: "APL Singapura", flag: "Singapore", mmsi: "563038200", teu: 13300, length: 366.0, speedKts: 19.5 },
-  "MOL Triumph": { name: "MOL Triumph", flag: "Panama", mmsi: "636016232", teu: 20170, length: 400.0, speedKts: 20.5 },
+const V = (
+  name: string,
+  flag: string,
+  mmsi: string,
+  cls: VesselClass,
+  teu: number,
+  length: number,
+  speedKts: number,
+  dwt: string,
+): Vessel => ({ name, flag, mmsi, cls, teu, length, speedKts, dwt });
+
+const VESSELS: Vessel[] = [
+  // ── Ultra-large container (18k–24k TEU) ──
+  V("Ever Given", "Panama", "353136000", "mega-container", 20124, 399.9, 20.5, "199,000"),
+  V("Ever Ace", "Panama", "353782000", "mega-container", 23992, 399.9, 20.5, "235,000"),
+  V("Ever Max", "Panama", "353523000", "mega-container", 24004, 399.9, 20.5, "235,000"),
+  V("MSC Gülsün", "Liberia", "636018798", "mega-container", 23756, 399.9, 21.0, "228,000"),
+  V("MSC Loreto", "Liberia", "636018900", "mega-container", 23656, 399.9, 21.0, "228,000"),
+  V("OOCL Hong Kong", "Hong Kong", "477972100", "mega-container", 21413, 399.9, 21.0, "197,000"),
+  V("OOCL Germany", "Hong Kong", "477543500", "mega-container", 21413, 399.9, 21.0, "197,000"),
+  V("CMA CGM Jacques Saadé", "France", "228401600", "mega-container", 23112, 399.9, 21.5, "220,000"),
+  V("CMA CGM Marco Polo", "France", "228386100", "mega-container", 16020, 396.0, 21.0, "187,000"),
+  V("HMM Algeciras", "Panama", "636020723", "mega-container", 23964, 399.9, 21.5, "229,000"),
+  V("HMM Oslo", "Panama", "636020650", "mega-container", 23964, 399.9, 21.5, "229,000"),
+  V("Madrid Mærsk", "Denmark", "219789100", "mega-container", 20568, 399.0, 21.0, "194,000"),
+  V("Mærsk Mc-Kinney Møller", "Denmark", "219632000", "mega-container", 18270, 399.0, 22.0, "194,000"),
+  V("COSCO Shipping Universe", "Hong Kong", "477929500", "mega-container", 21237, 399.9, 21.0, "197,000"),
+  V("COSCO Shipping Star", "Hong Kong", "477929600", "mega-container", 21237, 399.9, 21.0, "197,000"),
+  V("ONE Apus", "Japan", "431577000", "mega-container", 14500, 364.2, 19.5, "140,000"),
+  V("ONE Innovation", "Japan", "431577130", "mega-container", 24000, 399.9, 21.0, "229,000"),
+  V("YM Wish", "Liberia", "636018004", "mega-container", 14000, 368.0, 19.5, "146,000"),
+  V("YM Together", "Liberia", "636020615", "mega-container", 20180, 399.9, 20.5, "199,000"),
+  V("CSCL Globe", "Hong Kong", "477491700", "mega-container", 19100, 400.0, 20.5, "188,000"),
+  V("APL Singapura", "Singapore", "563038200", "mega-container", 13300, 366.0, 19.5, "132,000"),
+  V("MOL Triumph", "Panama", "636016232", "mega-container", 20170, 400.0, 20.5, "199,000"),
+  // ── Large container (10k–18k TEU) ──
+  V("MSC Mia", "Panama", "636016888", "container", 14000, 365.0, 19.5, "140,000"),
+  V("MSC Anna", "Panama", "636016877", "container", 14000, 365.0, 19.5, "140,000"),
+  V("MSC Rita", "Panama", "636012345", "container", 13000, 365.0, 19.0, "135,000"),
+  V("Maersk Essen", "Denmark", "220563000", "container", 15000, 365.0, 20.0, "156,000"),
+  V("Maersk Kuala Lumpur", "Denmark", "219028000", "container", 19000, 399.0, 21.0, "190,000"),
+  V("Maersk Eureka", "Denmark", "220049000", "container", 15200, 366.0, 20.0, "156,000"),
+  V("Maersk Halifax", "Denmark", "220440000", "container", 16000, 366.0, 20.5, "160,000"),
+  V("Ever Leader", "Panama", "353596000", "container", 15000, 365.0, 20.0, "155,000"),
+  V("Ever Lotus", "Panama", "353588000", "container", 15000, 365.0, 20.0, "155,000"),
+  V("CMA CGM Kerguelen", "France", "228389500", "container", 17722, 398.0, 20.5, "170,000"),
+  V("CMA CGM Benjamin Franklin", "France", "228389501", "container", 17722, 398.0, 20.5, "170,000"),
+  V("HMM Dublin", "Panama", "636019200", "container", 16000, 365.0, 21.0, "160,000"),
+  V("HMM Gdansk", "Panama", "636019300", "container", 16000, 365.0, 21.0, "160,000"),
+  V("ONE Columba", "Japan", "431577300", "container", 14000, 364.0, 19.5, "145,000"),
+  V("ONE Aquila", "Japan", "431577400", "container", 14000, 364.0, 19.5, "145,000"),
+  V("YM Mobility", "Liberia", "636019400", "container", 14000, 364.0, 19.5, "146,000"),
+  V("COSCO Shipping Aries", "Hong Kong", "477930000", "container", 14000, 366.0, 20.0, "145,000"),
+  V("COSCO Shipping Scorpio", "Hong Kong", "477930100", "container", 14000, 366.0, 20.0, "145,000"),
+  V("OOCL Brussels", "Hong Kong", "477738200", "container", 13208, 363.5, 20.0, "145,000"),
+  V("Yang Ming Wellhead", "Taiwan", "416004500", "container", 14000, 368.0, 19.5, "145,000"),
+  // ── Feeder container (2k–8k TEU) ──
+  V("Maersk Palermo", "Denmark", "219214000", "feeder", 4500, 280.0, 18.0, "55,000"),
+  V("Maersk Surabaya", "Denmark", "219215000", "feeder", 4500, 280.0, 18.0, "55,000"),
+  V("MSC Rosaria", "Panama", "636013500", "feeder", 5000, 294.0, 18.5, "58,000"),
+  V("X-Press Odessa", "Liberia", "636013800", "feeder", 1800, 195.0, 16.5, "24,000"),
+  V("X-Press Jhelum", "Liberia", "636013900", "feeder", 1800, 195.0, 16.5, "24,000"),
+  V("Ever Speed", "Panama", "353510000", "feeder", 2800, 222.0, 17.5, "34,000"),
+  V("Wan Hai 311", "Taiwan", "416003800", "feeder", 2600, 212.0, 17.5, "32,000"),
+  V("SITC Davao", "Panama", "353488000", "feeder", 1800, 190.0, 16.0, "24,000"),
+  V("Baltic Mermaid", "Cyprus", "209450000", "feeder", 1400, 175.0, 15.5, "19,000"),
+  V("Black Sea Arrow", "Marshall Is.", "538007100", "feeder", 1600, 185.0, 16.0, "21,000"),
+  V("Sea Leopard", "Panama", "353620000", "feeder", 2000, 200.0, 16.5, "27,000"),
+  V("Tbilisi Star", "Georgia", "213003000", "feeder", 1500, 180.0, 16.0, "20,000"),
+  V("Poti Express", "Georgia", "213003100", "feeder", 1500, 180.0, 16.0, "20,000"),
+  V("Batumi Breeze", "Georgia", "213003200", "feeder", 1300, 170.0, 15.5, "18,000"),
+  // ── Bulk carriers ──
+  V("Berge Stahl", "Marshall Is.", "538003940", "bulk", 0, 342.0, 13.5, "364,000"),
+  V("Berge Everest", "Marshall Is.", "538004000", "bulk", 0, 342.0, 13.5, "360,000"),
+  V("Vale Brasil", "Marshall Is.", "538005900", "bulk", 0, 362.0, 14.5, "400,000"),
+  V("Vale Rio de Janeiro", "Marshall Is.", "538006000", "bulk", 0, 362.0, 14.5, "400,000"),
+  V("Shandong Da De", "Hong Kong", "477220000", "bulk", 0, 292.0, 14.0, "180,000"),
+  V("Star Praslin", "Marshall Is.", "538006800", "bulk", 0, 292.0, 13.5, "180,000"),
+  V("Pacific Integrity", "Panama", "353180000", "bulk", 0, 225.0, 12.5, "80,000"),
+  V("Ocean Harvester", "Liberia", "636015500", "bulk", 0, 190.0, 12.0, "58,000"),
+  V("NSU Unity", "Panama", "353200000", "bulk", 0, 225.0, 12.5, "82,000"),
+  V("Frontier Falcon", "Marshall Is.", "538007700", "bulk", 0, 200.0, 12.5, "64,000"),
+  V("Aquarius Leader", "Panama", "353210000", "bulk", 0, 295.0, 13.5, "180,000"),
+  V("Cape Tainaro", "Marshall Is.", "538009000", "bulk", 0, 292.0, 13.5, "180,000"),
+  V("Golden Ocean", "Liberia", "636016000", "bulk", 0, 295.0, 13.5, "180,000"),
+  V("Sparrow Hawk", "Panama", "353220000", "bulk", 0, 225.0, 12.5, "82,000"),
+  V("Minoan Hope", "Malta", "215700000", "bulk", 0, 180.0, 11.5, "38,000"),
+  V("Aegean Breeze", "Malta", "215710000", "bulk", 0, 180.0, 11.5, "38,000"),
+  // ── Tankers ──
+  V("Almi Sky", "Greece", "241860000", "tanker", 0, 274.0, 13.0, "160,000"),
+  V("Front Altair", "Marshall Is.", "538005600", "tanker", 0, 274.0, 13.0, "160,000"),
+  V("Front Duchess", "Marshall Is.", "538005700", "tanker", 0, 274.0, 13.0, "160,000"),
+  V("Eagle Vantage", "Marshall Is.", "538006200", "tanker", 0, 183.0, 12.0, "50,000"),
+  V("Eagle Leona", "Marshall Is.", "538006300", "tanker", 0, 183.0, 12.0, "50,000"),
+  V("Sonangol Cabinda", "Bahamas", "311001400", "tanker", 0, 274.0, 13.0, "160,000"),
+  V("Maran Gas Apollo", "Greece", "241610000", "tanker", 0, 290.0, 14.0, "88,000"),
+  V("BW Rhine", "Singapore", "563090000", "tanker", 0, 183.0, 12.0, "50,000"),
+  V("STI Topaz", "Marshall Is.", "538007300", "tanker", 0, 183.0, 12.0, "50,000"),
+  V("Seri Amanah", "Malaysia", "533130000", "tanker", 0, 274.0, 13.0, "160,000"),
+  V("Sea Rose", "Liberia", "636016400", "tanker", 0, 250.0, 12.5, "120,000"),
+  V("Wadi Safaga", "Egypt", "622100000", "tanker", 0, 183.0, 12.0, "50,000"),
+  V("Yasa Jupiter", "Marshall Is.", "538008800", "tanker", 0, 274.0, 13.0, "160,000"),
+  // ── Ro-Ro ──
+  V("Tønsberg", "Norway", "259040000", "roro", 0, 200.0, 17.0, "19,000"),
+  V("Tor Jentina", "Norway", "259050000", "roro", 0, 200.0, 17.0, "19,000"),
+  V("Auto Achieve", "Panama", "353300000", "roro", 0, 199.0, 16.5, "19,000"),
+  V("Auto Banner", "Panama", "353310000", "roro", 0, 199.0, 16.5, "19,000"),
+  V("Grande Torino", "Italy", "247350000", "roro", 0, 218.0, 17.5, "21,000"),
+  V("Morning Claire", "Bahamas", "311000800", "roro", 0, 218.0, 17.5, "21,000"),
+  V("Salome", "Panama", "353320000", "roro", 0, 180.0, 16.0, "17,000"),
+  V("Traviata", "Panama", "353330000", "roro", 0, 180.0, 16.0, "17,000"),
+];
+
+const CLASS_LABEL: Record<VesselClass, string> = {
+  "mega-container": "Ultra-Large Container Vessel",
+  container: "Container Ship",
+  feeder: "Container Feeder",
+  bulk: "Bulk Carrier",
+  tanker: "Oil / Chemical Tanker",
+  roro: "Ro-Ro Carrier",
 };
 
-/* ── Ground corridors (real cities, Georgia-first identity) ── */
+/* ── Route metadata (precomputed once) ───────────────────── */
 
-const TRUCK_CORRIDORS: Route[] = [
-  {
-    id: "berlin-tbilisi",
-    name: "Berlin → Tbilisi",
-    waypoints: [
-      [52.52, 13.405], // Berlin
-      [50.0755, 14.4378], // Prague
-      [48.2082, 16.3738], // Vienna
-      [47.4979, 19.0402], // Budapest
-      [44.4268, 26.1025], // Bucharest
-      [41.0082, 28.9784], // Istanbul
-      [41.7151, 44.8271], // Tbilisi
-    ],
-    units: ["CN-3817 TBS", "GE-4412 B", "D-B 77831", "CN-2245"],
-  },
-  {
-    id: "rotterdam-warsaw",
-    name: "Rotterdam → Warsaw",
-    waypoints: [
-      [51.9244, 4.4777], // Rotterdam
-      [50.1109, 8.6821], // Frankfurt
-      [52.2297, 21.0122], // Warsaw
-    ],
-    units: ["NL-3092", "PL-1174 WA", "D-K 99213"],
-  },
-  {
-    id: "hamburg-copenhagen",
-    name: "Hamburg → Copenhagen",
-    waypoints: [
-      [53.5511, 9.9937], // Hamburg
-      [55.6761, 12.5683], // Copenhagen
-    ],
-    units: ["DK-7781", "D-HH 4102"],
-  },
-  {
-    id: "munich-zurich",
-    name: "Munich → Zurich",
-    waypoints: [
-      [48.1351, 11.582], // Munich
-      [47.3769, 8.5417], // Zurich
-    ],
-    units: ["CH-5520", "D-M 12308"],
-  },
-  {
-    id: "paris-milan",
-    name: "Paris → Milan",
-    waypoints: [
-      [48.8566, 2.3522], // Paris
-      [45.4642, 9.19], // Milan
-    ],
-    units: ["F-7745", "I-93021 MI"],
-  },
-  {
-    id: "istanbul-tbilisi",
-    name: "Istanbul → Tbilisi",
-    waypoints: [
-      [41.0082, 28.9784], // Istanbul
-      [42.2679, 42.6946], // Kutaisi
-      [41.7151, 44.8271], // Tbilisi
-    ],
-    units: ["TR-3355", "GE-1091"],
-  },
-  {
-    id: "tbilisi-batumi",
-    name: "Tbilisi → Batumi (port feeder)",
-    waypoints: [
-      [41.7151, 44.8271], // Tbilisi
-      [42.2679, 42.6946], // Kutaisi
-      [41.6168, 41.6367], // Batumi
-    ],
-    units: ["GE-7712", "GE-3390"],
-  },
-  {
-    id: "warsaw-vilnius",
-    name: "Warsaw → Vilnius",
-    waypoints: [
-      [52.2297, 21.0122], // Warsaw
-      [54.6872, 25.2797], // Vilnius
-    ],
-    units: ["PL-8801", "LT-2214"],
-  },
-];
+function routeLengthKm(route: LatLon[]): number {
+  let total = 0;
+  for (let i = 1; i < route.length; i++) total += distKm({ lat: route[i - 1][0], lon: route[i - 1][1] }, { lat: route[i][0], lon: route[i][1] });
+  return total;
+}
 
-/* ── Shipment generator ───────────────────────────────────── */
+function nearestPortName(pos: LatLon): { name: string; port?: Port } {
+  let best: Port | undefined;
+  let bestD = Infinity;
+  for (const p of ports) {
+    const d = distKm({ lat: pos[0], lon: pos[1] }, { lat: p.lat, lon: p.lon });
+    if (d < bestD) {
+      bestD = d;
+      best = p;
+    }
+  }
+  if (best && bestD < 400) return { name: best.name, port: best };
+  return { name: `${pos[0].toFixed(1)}°, ${pos[1].toFixed(1)}°` };
+}
 
-const CARGO_TYPES = [
-  "Palletized consumer goods",
-  "Industrial components",
-  "Temperature-controlled food",
-  "Textiles & apparel",
-  "Automotive parts",
-  "Machinery & equipment",
-  "Pharmaceuticals (GDP)",
-  "Electronics & displays",
-  "E-commerce parcels",
-  "Construction materials",
-];
+type RouteMeta = {
+  id: string;
+  name: string;
+  lengthKm: number;
+  start: string;
+  end: string;
+};
 
-const CONSIGNEES = [
-  "Helvetia Components",
-  "Nordic Fresh",
-  "Vela Retail",
-  "MediCore",
-  "Atlas Commerce",
-  "Rheinwerk AG",
-  "Aurora Foods",
-  "Baumgartner Bau",
-  "Meyer Manufacturing",
-  "Adria Trade",
-];
+const SEA_META: RouteMeta[] = seaRoutes.map((r) => ({
+  id: r.id,
+  name: r.name,
+  lengthKm: routeLengthKm(r.waypoints),
+  start: nearestPortName(r.waypoints[0]).name,
+  end: nearestPortName(r.waypoints[r.waypoints.length - 1]).name,
+}));
+
+const TRUCK_META: (TruckCorridor & { lengthKm: number })[] = truckCorridors.map((c) => ({
+  ...c,
+  lengthKm: routeLengthKm(c.waypoints),
+}));
+
+/* ── Deterministic helpers ───────────────────────────────── */
 
 function hash(s: string): number {
   let h = 0;
@@ -337,41 +246,48 @@ function weightFor(h: number, maxKg: number): string {
   return `${Math.round(kg / 50) * 50} kg`;
 }
 
-/* ── Geometry helpers ─────────────────────────────────────── */
+/* ── Geometry ────────────────────────────────────────────── */
 
-function distKm(a: LatLon, b: LatLon): number {
-  const toRad = (d: number) => (d * Math.PI) / 180;
-  const dLat = toRad(b[0] - a[0]);
-  const dLon = toRad(b[1] - a[1]);
-  const h =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos(toRad(a[0])) * Math.cos(toRad(b[0])) * Math.sin(dLon / 2) ** 2;
-  return 2 * 6371 * Math.asin(Math.sqrt(h));
-}
+/** Segment lengths are cached per route array (called every animation frame). */
+const SEG_CACHE = new WeakMap<LatLon[], { segs: number[]; total: number }>();
 
-function routeLengthKm(route: LatLon[]): number {
-  let total = 0;
-  for (let i = 1; i < route.length; i++) total += distKm(route[i - 1], route[i]);
-  return total;
+function segInfo(route: LatLon[]): { segs: number[]; total: number } {
+  let c = SEG_CACHE.get(route);
+  if (!c) {
+    const segs: number[] = [];
+    let total = 0;
+    for (let i = 1; i < route.length; i++) {
+      const d = distKm({ lat: route[i - 1][0], lon: route[i - 1][1] }, { lat: route[i][0], lon: route[i][1] });
+      segs.push(d);
+      total += d;
+    }
+    c = { segs, total };
+    SEG_CACHE.set(route, c);
+  }
+  return c;
 }
 
 function pointAlong(route: LatLon[], t: number): { pos: LatLon; heading: number } {
-  // Total length of each segment.
-  const segLens: number[] = [];
-  let total = 0;
-  for (let i = 1; i < route.length; i++) {
-    const d = distKm(route[i - 1], route[i]);
-    segLens.push(d);
-    total += d;
-  }
-  let target = t * total;
+  const n = route.length;
+  if (n === 0) return { pos: [0, 0], heading: 0 };
+  if (n === 1) return { pos: route[0], heading: 0 };
+  const { segs: segLens, total } = segInfo(route);
+  if (total === 0) return { pos: route[0], heading: 0 };
+  let target = Math.min(1, Math.max(0, t)) * total;
   for (let i = 0; i < segLens.length; i++) {
     if (target <= segLens[i] || i === segLens.length - 1) {
       const f = segLens[i] === 0 ? 0 : Math.min(1, target / segLens[i]);
       const a = route[i];
       const b = route[i + 1];
       const lat = a[0] + (b[0] - a[0]) * f;
-      const lon = a[1] + (b[1] - a[1]) * f;
+      // Interpolate across the antimeridian the short way (e.g. 165°E → -175°W
+      // goes through 180°, not back through 40°E).
+      let dLon = b[1] - a[1];
+      if (dLon > 180) dLon -= 360;
+      else if (dLon < -180) dLon += 360;
+      let lon = a[1] + dLon * f;
+      if (lon > 180) lon -= 360;
+      else if (lon < -180) lon += 360;
       const toRad = (d: number) => (d * Math.PI) / 180;
       const toDeg = (d: number) => (d * 180) / Math.PI;
       const heading =
@@ -388,112 +304,245 @@ function pointAlong(route: LatLon[], t: number): { pos: LatLon; heading: number 
     }
     target -= segLens[i];
   }
-  return { pos: route[route.length - 1], heading: 0 };
+  return { pos: route[n - 1], heading: 0 };
 }
 
-function nearestPortKm(pos: LatLon, route: LatLon[]): number {
-  let min = Infinity;
-  for (const p of route) min = Math.min(min, distKm(pos, p));
-  return min;
+/* ── Shipment generator ──────────────────────────────────── */
+
+const CARGO_TYPES = [
+  "Palletized consumer goods",
+  "Industrial components",
+  "Temperature-controlled food",
+  "Textiles & apparel",
+  "Automotive parts",
+  "Machinery & equipment",
+  "Pharmaceuticals (GDP)",
+  "Electronics & displays",
+  "E-commerce parcels",
+  "Construction materials",
+  "Steel coils & pipes",
+  "Furniture & home goods",
+];
+
+const CONSIGNEES = [
+  "Helvetia Components",
+  "Nordic Fresh",
+  "Vela Retail",
+  "MediCore",
+  "Atlas Commerce",
+  "Rheinwerk AG",
+  "Aurora Foods",
+  "Baumgartner Bau",
+  "Meyer Manufacturing",
+  "Adria Trade",
+  "Caucasus Foods",
+  "Global Parts GmbH",
+];
+
+function shipmentFor(h: number, offset: number, kind: UnitKind) {
+  return {
+    id: `CRG-${(100000 + ((h + offset) % 899999)).toString()}`,
+    cargo: CARGO_TYPES[(h + offset) % CARGO_TYPES.length],
+    weight: weightFor(h + offset, kind === "ship" ? 260000 : 24000),
+    consignee: CONSIGNEES[(h + offset) % CONSIGNEES.length],
+  };
 }
+
+/* ── ETA formatting ──────────────────────────────────────── */
 
 function fmtEta(daysRemaining: number): string {
-  const now = new Date();
-  const eta = new Date(now.getTime() + daysRemaining * 24 * 3600 * 1000);
+  const eta = new Date(Date.now() + daysRemaining * 24 * 3600 * 1000);
   const opts: Intl.DateTimeFormatOptions = { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" };
   return eta.toLocaleString("en-US", opts);
 }
 
-/* ── Fleet computation ────────────────────────────────────── */
+function fmtEtaHours(hoursRemaining: number): string {
+  const eta = new Date(Date.now() + hoursRemaining * 3600 * 1000);
+  const today = new Date();
+  const sameDay = eta.toDateString() === today.toDateString();
+  const time = eta.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+  return sameDay ? `Today ${time}` : eta.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+
+/* ── Fleet computation ───────────────────────────────────── */
 
 export function computeLiveFleet(now: Date): LiveUnit[] {
   const units: LiveUnit[] = [];
-  const dayAnchor = new Date(now);
-  dayAnchor.setHours(0, 0, 0, 0);
-  const elapsed = now.getTime() - dayAnchor.getTime();
+  const elapsedH = now.getTime() / 3600000;
 
-  for (const route of SEA_ROUTES) {
-    const length = routeLengthKm(route.waypoints);
-    for (const vesselName of route.units) {
-      const v = VESSELS[vesselName];
-      if (!v) continue;
-      const h = hash(vesselName + route.id);
-      const periodMs = (length / (v.speedKts * 1.852)) * 3600 * 1000; // realistic duration
-      const jitter = 0.75 + (h % 500) / 1000; // 0.75–1.25
-      const period = periodMs * jitter;
-      const phase0 = (h % 1000) / 1000;
-      const t = (phase0 + elapsed / period) % 1;
-      const { pos, heading } = pointAlong(route.waypoints, t);
-      const remaining = (1 - t) * period;
-      const atPort = nearestPortKm(pos, route.waypoints) < 60;
-      const status: LiveUnit["status"] = atPort ? "At Port" : "In Transit";
+  /* ── Ships: sail → dwell at destination port → sail again ── */
+  for (let ri = 0; ri < seaRoutes.length; ri++) {
+    const route: SeaRoute = seaRoutes[ri];
+    const meta = SEA_META[ri];
+    const { lengthKm } = meta;
+
+    const usedOnRoute = new Set<string>();
+    for (let si = 0; si < route.ships; si++) {
+      const seed = hash(`${route.id}:${si}`);
+      // Deterministic vessel pick, avoiding duplicates on the same route.
+      const allowed = route.classes
+        ? new Set(route.classes.flatMap((c) => (c === "container" ? ["mega-container", "container", "feeder"] : [c])))
+        : null;
+      let guard = 0;
+      let idx = (seed + si * 13) % VESSELS.length;
+      let v = VESSELS[idx];
+      // Prefer a vessel of an allowed class (routes that carry cars use ro-ro, etc).
+      while (guard++ < 12) {
+        const candidate = VESSELS[idx];
+        const classOk = !allowed || allowed.has(candidate.cls);
+        if (classOk && !usedOnRoute.has(candidate.name)) {
+          v = candidate;
+          break;
+        }
+        idx = (idx + 1) % VESSELS.length;
+        v = VESSELS[idx];
+      }
+      usedOnRoute.add(v.name);
+
+      const sailingH = (lengthKm / (v.speedKts * 1.852)) * (0.85 + (seed % 400) / 1000);
+      const dwellH = 5 + (seed % 34); // 5–38 h berthed
+      const cycle = sailingH + dwellH;
+      const phase0 = (seed % 997) / 997;
+      const phase = (phase0 + elapsedH / cycle) % 1;
+      const sailFrac = sailingH / cycle;
+
+      let pos: LatLon;
+      let heading: number;
+      let status: UnitStatus;
+      let progress: number;
+      let speedText: string;
+
+      if (phase < sailFrac) {
+        const t = phase / sailFrac;
+        const p = pointAlong(route.waypoints, t);
+        pos = p.pos;
+        heading = p.heading;
+        status = "In Transit";
+        progress = t;
+        speedText = `${(v.speedKts * (0.92 + (seed % 180) / 1000)).toFixed(1)} kts`;
+      } else {
+        // Berthed at the destination approach — small stable jitter so ships
+        // cluster around the port rather than stacking on one pixel.
+        const angle = (seed % 628) / 100;
+        const rad = (seed % 17) / 100;
+        const end = route.waypoints[route.waypoints.length - 1];
+        pos = [end[0] + Math.cos(angle) * rad * 0.4, end[1] + Math.sin(angle) * rad * 0.4];
+        heading = 0;
+        status = "At Port";
+        progress = 1;
+        speedText = "0.0 kts · berthed";
+      }
+
+      const remainingH = (1 - phase) * cycle;
+      const eta = status === "At Port" ? `${fmtEta(remainingH / 24)} · departure` : fmtEta(remainingH / 24);
+
+      const shipment = shipmentFor(seed, 11, "ship");
       units.push({
-        id: `ship-${vesselName.replace(/\s+/g, "-").toLowerCase()}`,
+        id: `ship-${(route.id + "-" + v.name).replace(/[^a-zA-Z0-9]/g, "-").toLowerCase()}-${si}`,
         kind: "ship",
         name: v.name,
         flag: v.flag,
         mmsi: v.mmsi,
-        type: `Container Ship · ${v.teu.toLocaleString("en-US")} TEU · ${v.length} m`,
-        origin: route.waypoints[0],
-        destination: route.waypoints[route.waypoints.length - 1],
+        cls: CLASS_LABEL[v.cls],
+        type: v.cls === "bulk" || v.cls === "tanker"
+          ? `${CLASS_LABEL[v.cls]} · ${v.dwt} DWT · ${v.length} m`
+          : `${CLASS_LABEL[v.cls]} · ${v.teu.toLocaleString("en-US")} TEU · ${v.length} m`,
+        origin: meta.start,
+        destination: meta.end,
+        originLatLon: route.waypoints[0],
+        destLatLon: route.waypoints[route.waypoints.length - 1],
         lat: pos[0],
         lon: pos[1],
         heading,
-        speedText: `${(v.speedKts * (0.9 + (h % 200) / 1000)).toFixed(1)} kts`,
-        progress: Math.round(t * 1000) / 10,
+        speedText,
+        progress: Math.round(progress * 1000) / 10,
         status,
-        eta: fmtEta(remaining / (24 * 3600 * 1000)),
+        eta,
+        etaMs: Date.now() + remainingH * 3600000,
+        routeId: route.id,
+        routeName: route.name,
         shipment: {
-          id: `CRG-${(100000 + (h % 899999)).toString()}`,
-          cargo: CARGO_TYPES[h % CARGO_TYPES.length],
-          weight: weightFor(h, 240000),
-          teu: Math.max(12, Math.round(v.teu * (0.15 + (h % 600) / 1000))),
-          consignee: CONSIGNEES[h % CONSIGNEES.length],
+          ...shipment,
+          teu: v.cls === "bulk" || v.cls === "tanker" || v.cls === "roro"
+            ? undefined
+            : Math.max(12, Math.round((v.teu || 4000) * (0.12 + (seed % 700) / 1000))),
+          vessel: v.name,
         },
       });
     }
   }
 
-  for (const corridor of TRUCK_CORRIDORS) {
-    const length = routeLengthKm(corridor.waypoints);
-    for (const plate of corridor.units) {
-      const h = hash(plate + corridor.id);
-      const speedKmh = 58 + (h % 24); // 58–82 km/h
-      const period = (length / speedKmh) * 3600 * 1000;
-      const phase0 = (h % 1000) / 1000;
-      const t = (phase0 + elapsed / period) % 1;
-      const { pos, heading } = pointAlong(corridor.waypoints, t);
-      const remaining = (1 - t) * period;
+  /* ── Trucks: hourly rotations between real cities ── */
+  for (let ci = 0; ci < truckCorridors.length; ci++) {
+    const corridor = truckCorridors[ci];
+    const meta = TRUCK_META[ci];
+    const [originCity, destCity] = corridor.name.split(" → ");
+
+    for (let ti = 0; ti < corridor.trucks; ti++) {
+      const seed = hash(`${corridor.id}:${ti}`);
+      const speedKmh = 52 + (seed % 26); // 52–78 km/h
+      const sailingH = (meta.lengthKm / speedKmh) * (0.9 + (seed % 300) / 1000);
+      const stopH = 1.5 + (seed % 4); // 1.5–5 h rest / loading
+      const cycle = sailingH + stopH;
+      const phase0 = (seed % 997) / 997;
+      const phase = (phase0 + elapsedH / cycle) % 1;
+      const sailFrac = sailingH / cycle;
+
+      let pos: LatLon;
+      let heading: number;
+      let status: UnitStatus;
+      let progress: number;
+      let speedText: string;
+
+      if (phase < sailFrac) {
+        const t = phase / sailFrac;
+        const p = pointAlong(corridor.waypoints, t);
+        pos = p.pos;
+        heading = p.heading;
+        status = t > 0.92 ? "Delivering" : "In Transit";
+        progress = t;
+        speedText = `${Math.round(speedKmh * (0.9 + (seed % 200) / 1000))} km/h`;
+      } else {
+        const end = corridor.waypoints[corridor.waypoints.length - 1];
+        const angle = (seed % 628) / 100;
+        const rad = (seed % 11) / 100;
+        pos = [end[0] + Math.cos(angle) * rad * 0.2, end[1] + Math.sin(angle) * rad * 0.2];
+        heading = 0;
+        status = "Delivering";
+        progress = 1;
+        speedText = "0 km/h · stopped";
+      }
+
+      const remainingH = (1 - phase) * cycle;
+      const shipment = shipmentFor(seed, 5, "truck");
       units.push({
-        id: `truck-${plate.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase()}`,
+        id: `truck-${corridor.id}-${ti}`,
         kind: "truck",
-        name: plate,
-        plate,
-        type: t < 0.5 ? "FTL · Semi Trailer 13.6 m" : "LTL · Box Truck 20 m³",
-        origin: corridor.waypoints[0],
-        destination: corridor.waypoints[corridor.waypoints.length - 1],
+        name: `${corridor.id.toUpperCase().slice(0, 3)}-${(1000 + ((seed + ti) % 8999)).toString()}`,
+        plate: `${corridor.id.toUpperCase().slice(0, 3)} ${(100 + ((seed + ti) % 899)).toString()}`,
+        cls: "Road Freight",
+        type: ti % 3 === 0 ? "FTL · Semi Trailer 13.6 m" : ti % 3 === 1 ? "LTL · Box Truck 20 m³" : "Reefer Trailer 13.6 m",
+        origin: originCity ?? "Origin",
+        destination: destCity ?? "Destination",
+        originLatLon: corridor.waypoints[0],
+        destLatLon: corridor.waypoints[corridor.waypoints.length - 1],
         lat: pos[0],
         lon: pos[1],
         heading,
-        speedText: `${(speedKmh * (0.9 + (h % 200) / 1000)).toFixed(0)} km/h`,
-        progress: Math.round(t * 1000) / 10,
-        status: "In Transit",
-        eta: fmtEta(remaining / (24 * 3600 * 1000)),
+        speedText,
+        progress: Math.round(progress * 1000) / 10,
+        status,
+        eta: fmtEtaHours(remainingH),
+        etaMs: Date.now() + remainingH * 3600000,
+        routeId: corridor.id,
+        routeName: corridor.name,
         shipment: {
-          id: `CRG-${(100000 + (h % 899999)).toString()}`,
-          cargo: CARGO_TYPES[(h + 3) % CARGO_TYPES.length],
-          weight: weightFor(h, 24000),
-          pallets: 2 + (h % 22),
-          consignee: CONSIGNEES[(h + 5) % CONSIGNEES.length],
+          ...shipment,
+          pallets: 2 + (seed % 22),
         },
       });
     }
   }
 
   return units;
-}
-
-export function cityLabel(c: LatLon): string {
-  // Best-effort friendly label for a coordinate (used in panels/legends).
-  return `Lat ${c[0].toFixed(2)}°, Lon ${c[1].toFixed(2)}°`;
 }

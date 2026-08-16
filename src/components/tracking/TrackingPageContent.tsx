@@ -20,7 +20,7 @@ export function TrackingPageContent() {
     <>
       <PageHero
         crumb={[{ name: t("nav.tracking"), path: "/tracking" }]}
-        eyebrow="Shipment tracking"
+        eyebrow={t("pg.tracking.eyebrow")}
         title={t("trk.title")}
         description={t("trk.sub")}
       >
@@ -49,7 +49,7 @@ export function TrackingPageContent() {
               className="group inline-flex items-center gap-2 text-sm font-semibold text-electric-600 transition-colors hover:text-electric-500 dark:text-electric-400"
             >
               <Globe2 className="h-4 w-4" />
-              Watch every shipment move on the live map
+              {t("pg.tracking.mapLink")}
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </div>

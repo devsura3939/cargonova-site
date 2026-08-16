@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Search, PackageSearch, Loader2, XCircle, AlertCircle } from "lucide-react";
-import { lookupTrackingAction, type LookupResult } from "@/app/tracking/actions";
+import { lookupShipment, type Shipment } from "@/lib/tracking";
 import { TrackingResult } from "@/components/tracking/TrackingResult";
 import { Skeleton } from "@/components/ui/skeleton";
 import { demoTrackingIds } from "@/lib/tracking";
@@ -15,7 +16,7 @@ type ViewState =
   | { kind: "idle" }
   | { kind: "loading" }
   | { kind: "error"; message: string }
-  | { kind: "result"; data: LookupResult & { ok: true } };
+  | { kind: "result"; data: { ok: true; shipment: Shipment } };
 
 export function TrackingForm() {
   const [query, setQuery] = useState("");
@@ -23,6 +24,14 @@ export function TrackingForm() {
   const [isPending, startTransition] = useTransition();
   const reduceMotion = useReducedMotion();
   const { t } = useLang();
+  const searchParams = useSearchParams();
+
+  // Deep link: /tracking?code=CRG-582941 auto-runs the lookup.
+  useEffect(() => {
+    const code = searchParams.get("code");
+    if (code) search(code.toUpperCase());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function search(id: string) {
     const trimmed = id.trim();
@@ -40,14 +49,14 @@ export function TrackingForm() {
     trackEvent("tracking_search", { id: parsed.data });
 
     startTransition(async () => {
-      const result = await lookupTrackingAction(parsed.data);
-      if (result.ok) {
-        setView({ kind: "result", data: result });
+      // Short delay so the loading state is visible; the lookup itself is
+      // deterministic and runs fully client-side (works on static hosting).
+      await new Promise((r) => setTimeout(r, 500));
+      const shipment = lookupShipment(parsed.data);
+      if (shipment) {
+        setView({ kind: "result", data: { ok: true, shipment } });
       } else {
-        setView({
-          kind: "error",
-          message: result.error === "invalid" ? t("trk.invalidMsg") : t("trk.notFoundMsg"),
-        });
+        setView({ kind: "error", message: t("trk.notFoundMsg") });
       }
     });
   }

@@ -38,11 +38,12 @@ describe("lookupShipment", () => {
     }
   });
 
-  it("returns null for malformed input", () => {
+  it("resolves generic carrier-style codes but rejects malformed input", () => {
+    // Any carrier-style code (AAA-123456, 1Z…, JD…, etc.) resolves now.
+    expect(lookupShipment("XYZ-123456")).not.toBeNull();
     expect(lookupShipment("hello")).toBeNull();
     expect(lookupShipment("")).toBeNull();
     expect(lookupShipment("CRG-123")).toBeNull(); // too few digits
-    expect(lookupShipment("XYZ-123456")).toBeNull();
   });
 
   it("every demo id resolves to a shipment", () => {
@@ -58,9 +59,16 @@ describe("trackingSchema", () => {
     expect(trackingSchema.safeParse(" crg-193847 ").success).toBe(true);
   });
 
+  it("accepts real carrier tracking numbers (UPS / DHL / FedEx / USPS / generic)", () => {
+    expect(trackingSchema.safeParse("1Z999AA10123456784").success).toBe(true); // UPS
+    expect(trackingSchema.safeParse("JD01460000360067008").success).toBe(true); // DHL
+    expect(trackingSchema.safeParse("9611803192397123456782").success).toBe(true); // USPS
+    expect(trackingSchema.safeParse("ABC-123456").success).toBe(true); // generic carrier
+  });
+
   it("rejects invalid tracking numbers", () => {
-    expect(trackingSchema.safeParse("CRG-12").success).toBe(false);
-    expect(trackingSchema.safeParse("ABC-123456").success).toBe(false);
-    expect(trackingSchema.safeParse("582941").success).toBe(false);
+    expect(trackingSchema.safeParse("CRG-12").success).toBe(false); // too few digits
+    expect(trackingSchema.safeParse("582941").success).toBe(false); // no carrier prefix
+    expect(trackingSchema.safeParse("hello world!!").success).toBe(false);
   });
 });

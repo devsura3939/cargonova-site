@@ -1,17 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import type * as L from "leaflet";
+import "leaflet/dist/leaflet.css";
 import { hubs, corridors, corridorPath, type Corridor } from "@/data/routes";
+import { useTheme } from "@/lib/theme";
+import { useLang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
-
-const S = 8; // scale factor from 0-100 coords to SVG space
-const VIEW_W = 800;
-const VIEW_H = 460;
-
-function toSvg(x: number, y: number): [number, number] {
-  return [x * S, y * S + 12];
-}
 
 const TIER_COLOR: Record<string, string> = {
   major: "#1677FF",
@@ -20,147 +15,167 @@ const TIER_COLOR: Record<string, string> = {
 };
 
 export function NetworkMap({
-  dark = false,
   className,
   activeCorridorId,
   onSelectCorridor,
 }: {
-  dark?: boolean;
   className?: string;
   activeCorridorId?: string | null;
   onSelectCorridor?: (id: string | null) => void;
 }) {
-  const reduceMotion = useReducedMotion();
-  const [hoverHub, setHoverHub] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<L.Map | null>(null);
+  const tileRef = useRef<L.TileLayer | null>(null);
+  const linesRef = useRef<Map<string, L.Polyline>>(new Map());
+  const markersRef = useRef<L.Marker[]>([]);
+  const { theme } = useTheme();
+  const { t } = useLang();
+  const [hovered, setHovered] = useState<string | null>(null);
+  const dark = theme === "dark";
 
-  const curves = useMemo(
-    () =>
-      new Map(
-        corridors.map((c) => {
-          const pts = corridorPath(c);
-          const d = pts
-            .map((p, i) => {
-              const [x, y] = toSvg(p.x, p.y);
-              if (i === 0) return `M ${x} ${y}`;
-              const [px, py] = toSvg(pts[i - 1].x, pts[i - 1].y);
-              const mx = (px + x) / 2;
-              return `C ${mx} ${py}, ${mx} ${y}, ${x} ${y}`;
-            })
-            .join(" ");
-          return [c.id, d] as const;
-        }),
-      ),
-    [],
-  );
+  const activeRef = useRef<string | null>(activeCorridorId ?? null);
+  const hoveredRef = useRef<string | null>(hovered);
+  useEffect(() => {
+    activeRef.current = activeCorridorId ?? null;
+  }, [activeCorridorId]);
+  useEffect(() => {
+    hoveredRef.current = hovered;
+  }, [hovered]);
 
-  const isActive = (id: string) => activeCorridorId === id;
+  const resizeRef = useRef<(() => void) | null>(null);
+
+  /* ── Bootstrap map (leaflet imported lazily — SSR-safe) ── */
+  useEffect(() => {
+    let cancelled = false;
+    void import("leaflet").then((L) => {
+      if (cancelled || !containerRef.current || mapRef.current) return;
+
+      const map = L.map(containerRef.current, {
+        center: [50.5, 15],
+        zoom: 5,
+        minZoom: 3,
+        maxZoom: 9,
+        zoomControl: true,
+        attributionControl: true,
+        scrollWheelZoom: false,
+        worldCopyJump: true,
+      });
+      mapRef.current = map;
+
+      const tile = L.tileLayer(
+        "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+        { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>', subdomains: "abcd" },
+      ).addTo(map);
+      tileRef.current = tile;
+
+      // Hub markers with labels
+      for (const hub of hubs) {
+        const color = TIER_COLOR[hub.tier];
+        const icon = L.divIcon({
+          className: "",
+          html: `<div class="network-hub" style="--hub:${color}">
+              <span class="network-hub__dot"></span>
+              <span class="network-hub__label">${hub.city}</span>
+            </div>`,
+          iconSize: [0, 0],
+          iconAnchor: [0, 0],
+        });
+        const marker = L.marker([hub.lat, hub.lon], { icon, keyboard: true, title: hub.name })
+          .addTo(map)
+          .bindTooltip(hub.name, { direction: "top", offset: [0, -12], className: "network-tooltip" });
+        markersRef.current.push(marker);
+      }
+
+      // Corridor lines
+      for (const c of corridors) {
+        const pts = corridorPath(c).map((h) => [h.lat, h.lon] as [number, number]);
+        const line = L.polyline(pts, {
+          color: "#1677FF",
+          weight: 2,
+          opacity: 0.6,
+          dashArray: "6 8",
+          lineCap: "round",
+        }).addTo(map);
+        line.on("click", () => {
+          const id = activeRef.current === c.id ? null : c.id;
+          onSelectCorridor?.(id);
+        });
+        line.on("mouseover", () => setHovered(c.id));
+        line.on("mouseout", () => setHovered((h) => (h === c.id ? null : h)));
+        linesRef.current.set(c.id, line);
+      }
+
+      const bounds = L.latLngBounds(hubs.map((h) => [h.lat, h.lon] as [number, number]));
+      map.fitBounds(bounds.pad(0.18), { animate: false });
+      map.getContainer().style.cursor = "default";
+
+      const resize = () => map.invalidateSize();
+      resizeRef.current = resize;
+      window.addEventListener("resize", resize);
+    });
+
+    return () => {
+      cancelled = true;
+      if (resizeRef.current) window.removeEventListener("resize", resizeRef.current);
+      resizeRef.current = null;
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+        tileRef.current = null;
+        linesRef.current.clear();
+        markersRef.current = [];
+      }
+    };
+  }, [onSelectCorridor]);
+
+  /* ── Theme tiles ─────────────────────────────────────── */
+  useEffect(() => {
+    const tile = tileRef.current;
+    if (!tile) return;
+    tile.setUrl(
+      dark
+        ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+        : "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+    );
+    tile.options.subdomains = dark ? "abcd" : "abc";
+  }, [dark]);
+
+  /* ── Style lines by active / hovered corridor ────────── */
+  useEffect(() => {
+    for (const [id, line] of linesRef.current) {
+      const active = activeRef.current === id;
+      const hover = hoveredRef.current === id;
+      const dimmed = activeRef.current && !active;
+      line.setStyle({
+        color: active ? "#FF8A3D" : hover ? "#2ED3E6" : "#1677FF",
+        weight: active ? 4 : hover ? 3.5 : 2,
+        opacity: dimmed ? 0.15 : active ? 1 : hover ? 0.9 : 0.55,
+        dashArray: active || hover ? undefined : "6 8",
+      });
+      line.bringToFront();
+    }
+  }, [activeCorridorId, hovered]);
+
+  const active = activeCorridorId ? corridors.find((c) => c.id === activeCorridorId) ?? null : null;
 
   return (
-    <div className={cn("relative w-full", className)}>
-      <svg
-        viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
-        role="img"
-        aria-label="CargoNova logistics network map showing hubs and corridors across Europe"
-        className="h-auto w-full"
-      >
-        {/* Stylized landmass hints */}
-        <g opacity={dark ? 0.5 : 0.65} fill={dark ? "#1e4578" : "#dce7f5"}>
-          <path d="M 120 60 C 180 30, 260 40, 300 80 C 340 120, 380 130, 420 110 C 480 80, 560 90, 600 130 L 620 200 C 600 240, 540 250, 480 230 C 430 212, 380 220, 340 250 C 300 285, 240 290, 200 260 C 160 230, 120 220, 100 180 C 85 140, 95 90, 120 60 Z" />
-          <path d="M 640 120 C 700 110, 750 140, 760 200 C 770 260, 730 310, 680 320 C 630 330, 590 300, 585 250 C 580 200, 600 140, 640 120 Z" />
-          <path d="M 100 300 C 140 280, 200 290, 230 330 C 260 370, 250 420, 210 440 C 170 460, 120 450, 95 410 C 75 370, 75 320, 100 300 Z" />
-        </g>
-        {/* Grid */}
-        <g stroke={dark ? "rgba(255,255,255,0.05)" : "rgba(11,31,58,0.06)"} strokeWidth="1">
-          {Array.from({ length: 7 }, (_, i) => (
-            <line key={`v${i}`} x1={(i + 1) * 100} y1="0" x2={(i + 1) * 100} y2={VIEW_H} />
-          ))}
-          {Array.from({ length: 4 }, (_, i) => (
-            <line key={`h${i}`} x1="0" y1={(i + 1) * 92} x2={VIEW_W} y2={(i + 1) * 92} />
-          ))}
-        </g>
-
-        {/* Corridors */}
-        {corridors.map((c) => {
-          const active = isActive(c.id);
-          const dimmed = activeCorridorId && !active;
-          return (
-            <g
-              key={c.id}
-              className="cursor-pointer"
-              onClick={() => onSelectCorridor?.(active ? null : c.id)}
-              onMouseEnter={() => onSelectCorridor?.(c.id)}
-              onMouseLeave={() => onSelectCorridor?.(null)}
-            >
-              <path d={curves.get(c.id)} fill="none" stroke={dark ? "#10294d" : "#d6e3f2"} strokeWidth={active ? 10 : 8} strokeLinecap="round" opacity={dimmed ? 0.25 : 1} />
-              <path
-                d={curves.get(c.id)}
-                fill="none"
-                stroke={active ? "#FF8A3D" : "#1677FF"}
-                strokeWidth={active ? 2.8 : 2}
-                strokeLinecap="round"
-                strokeDasharray="1 11"
-                opacity={dimmed ? 0.15 : active ? 1 : 0.7}
-                className={!reduceMotion ? "route-line" : undefined}
-              />
-              <circle r={active ? 7 : 5} fill="transparent">
-                <title>{`${c.label}: ${c.transitDays} transit`}</title>
-              </circle>
-            </g>
-          );
-        })}
-
-        {/* Hubs */}
-        {hubs.map((hub) => {
-          const [x, y] = toSvg(hub.x, hub.y);
-          const color = TIER_COLOR[hub.tier];
-          const dimmed = activeCorridorId && !corridors.some((c) => isActive(c.id) && (c.from === hub.id || c.to === hub.id || c.via.includes(hub.id)));
-          return (
-            <g
-              key={hub.id}
-              transform={`translate(${x} ${y})`}
-              onMouseEnter={() => setHoverHub(hub.id)}
-              onMouseLeave={() => setHoverHub(null)}
-              className="cursor-pointer"
-              opacity={dimmed ? 0.25 : 1}
-            >
-              {!reduceMotion ? (
-                <circle
-                  r={hoverHub === hub.id ? 16 : 12}
-                  fill={color}
-                  opacity={0.18}
-                  style={{ transition: "r 250ms ease" }}
-                />
-              ) : (
-                <circle r="12" fill={color} opacity="0.18" />
-              )}
-              <circle r="4.5" fill={color} stroke={dark ? "#08111f" : "#ffffff"} strokeWidth="2" />
-              {hoverHub === hub.id ? (
-                <g transform="translate(0 -22)" pointerEvents="none">
-                  <rect x="-64" y="-22" width="128" height="30" rx="8" fill={dark ? "#0b1f3a" : "#ffffff"} stroke={dark ? "rgba(255,255,255,0.15)" : "#d6e3f2"} />
-                  <text textAnchor="middle" y="-3" fontSize="11" fontWeight="700" fill={dark ? "#ffffff" : "#0b1f3a"}>
-                    {hub.city}
-                  </text>
-                </g>
-              ) : null}
-              <text textAnchor="middle" y="20" fontSize="9.5" fontWeight="600" fill={dark ? "#7a9cc9" : "#7b8794"} letterSpacing="0.4">
-                {hub.city}
-              </text>
-            </g>
-          );
-        })}
-      </svg>
+    <div className={cn("relative w-full overflow-hidden rounded-2xl border border-soft", className)}>
+      <div ref={containerRef} className="h-[380px] w-full sm:h-[440px]" aria-label="CargoNova logistics network map across Europe" />
 
       {/* Active corridor legend */}
-      {activeCorridorId ? (
+      {active ? (
         <div className="pointer-events-none absolute left-3 top-3 rounded-xl border border-soft bg-surface/95 px-4 py-2.5 shadow-card backdrop-blur">
-          <p className="text-xs font-bold text-strong">
-            {corridors.find((c) => c.id === activeCorridorId)?.label}
-          </p>
+          <p className="text-xs font-bold text-strong">{active.label}</p>
           <p className="mt-0.5 text-[11px] text-muted">
-            Transit: {corridors.find((c) => c.id === activeCorridorId)?.transitDays}
+            {t("cov.transit")} {active.transitDays}
           </p>
         </div>
       ) : null}
+
+      {/* Hint */}
+      <div className="pointer-events-none absolute bottom-3 right-3 rounded-full border border-soft bg-surface/90 px-3 py-1.5 text-[10px] font-medium text-muted shadow-card backdrop-blur">
+        {t("cov.mapHint")}
+      </div>
     </div>
   );
 }

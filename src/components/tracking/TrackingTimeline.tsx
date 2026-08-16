@@ -14,14 +14,33 @@ const STEP_LABEL_KEYS: Record<string, DictKey> = {
   Customs: "trk.step.borderCheck",
   "Destination Hub": "trk.step.destHub",
   Delivery: "trk.step.delivery",
+  Departure: "trk.step.departure",
+  "Open Sea": "trk.step.openSea",
+  "Port of Call": "trk.step.portCall",
+  Arrival: "trk.step.arrival",
+} as const;
+
+const NOTE_KEYS: Record<string, DictKey> = {
+  "Freight collected at shipper facility.": "trk.note.collected",
+  "Consolidated and secured for linehaul.": "trk.note.consolidated",
+  "In linehaul across the corridor.": "trk.note.linehaul",
+  "Customs documentation pre-cleared.": "trk.note.customs",
+  "Signed for by recipient. POD available on request.": "trk.note.signed",
+  "Delivery window confirmed.": "trk.note.window",
+  "Cargo loaded and sealed on board.": "trk.note.loaded",
+  "Voyage in progress across the sea lane.": "trk.note.voyage",
+  "Port call for bunkering and rotation.": "trk.note.portCall",
+  "Arrived at destination port. Discharge in progress.": "trk.note.arrived",
+  "Scheduled arrival at destination port.": "trk.note.scheduled",
 } as const;
 
 export function TrackingTimeline({ shipment }: { shipment: Shipment }) {
   const reduceMotion = useReducedMotion();
-  const { t } = useLang();
-  // The "current" step is the checkpoint that reflects the shipment status;
-  // everything before it is done, everything after is upcoming.
-  const currentRank = shipment.checkpoints.findIndex((c) => c.status === shipment.status);
+  const { t, tLocation } = useLang();
+  // The "current" step reflects the shipment status (or an explicit per-step
+  // `done` flag when several steps share a status, e.g. ocean voyages).
+  const statusRank = shipment.checkpoints.findIndex((c) => c.status === shipment.status);
+  const currentRank = shipment.checkpoints.findIndex((c, i) => !(c.done ?? i < statusRank));
 
   return (
     <ol className="relative" aria-label={`Progress for ${shipment.id}`}>
@@ -37,7 +56,7 @@ export function TrackingTimeline({ shipment }: { shipment: Shipment }) {
 
       {shipment.route.map((step, i) => {
         const checkpoint = shipment.checkpoints[i];
-        const done = i < currentRank;
+        const done = checkpoint?.done ?? i < currentRank;
         const current = i === currentRank;
         const rawLabel = checkpoint?.label ?? step;
         const labelKey = STEP_LABEL_KEYS[rawLabel];
@@ -77,7 +96,7 @@ export function TrackingTimeline({ shipment }: { shipment: Shipment }) {
                   {label}
                 </p>
                 <p className="text-xs font-medium text-muted">
-                  {checkpoint?.location}
+                  {checkpoint?.location ? tLocation(checkpoint.location) : ""}
                 </p>
               </div>
               <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1">
@@ -85,7 +104,9 @@ export function TrackingTimeline({ shipment }: { shipment: Shipment }) {
                   {checkpoint?.timestamp}
                 </span>
                 {checkpoint?.note ? (
-                  <span className="text-xs leading-relaxed text-muted">{checkpoint.note}</span>
+                  <span className="text-xs leading-relaxed text-muted">
+                    {NOTE_KEYS[checkpoint.note] ? t(NOTE_KEYS[checkpoint.note]) : checkpoint.note}
+                  </span>
                 ) : null}
               </div>
             </div>

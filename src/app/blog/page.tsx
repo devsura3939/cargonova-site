@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/shared/PageHero";
+import { TranslatedPageHero } from "@/components/shared/TranslatedPageHero";
 import { Container } from "@/components/shared/Container";
 import { Section } from "@/components/shared/Section";
 import { BlogExplorer } from "@/components/blog/BlogExplorer";
@@ -16,11 +16,12 @@ export const metadata: Metadata = buildMetadata({
 export default function BlogPage() {
   return (
     <>
-      <PageHero
-        crumb={[{ name: "Insights", path: "/blog" }]}
-        eyebrow="Insights"
-        title="Practical logistics thinking"
-        description="Corridor intelligence, service guides, and supply chain analysis from the team that runs freight every day."
+      <TranslatedPageHero
+        crumbKey="nav.insights"
+        crumbPath="/blog"
+        eyebrowKey="pg.blog.eyebrow"
+        titleKey="pg.blog.title"
+        descKey="pg.blog.sub"
       />
       <Section variant="light">
         <Container>

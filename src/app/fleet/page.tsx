@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/shared/PageHero";
+import { TranslatedPageHero } from "@/components/shared/TranslatedPageHero";
 import { Section } from "@/components/shared/Section";
 import { CTASection } from "@/components/sections/CTASection";
 import { FleetExplorer } from "@/components/fleet/FleetExplorer";
@@ -15,11 +15,12 @@ export const metadata: Metadata = buildMetadata({
 export default function FleetPage() {
   return (
     <>
-      <PageHero
-        crumb={[{ name: "Fleet", path: "/fleet" }]}
-        eyebrow="Our fleet"
-        title="Modern equipment for every kind of freight"
-        description="Every vehicle runs with telematics, scheduled maintenance, and drivers trained on securing your cargo correctly. Filter by service type to find the right unit."
+      <TranslatedPageHero
+        crumbKey="nav.fleet"
+        crumbPath="/fleet"
+        eyebrowKey="pg.fleet.eyebrow"
+        titleKey="pg.fleet.title"
+        descKey="pg.fleet.sub"
       />
       <Section variant="light">
         <FleetExplorer />

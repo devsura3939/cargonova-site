@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { TrackingPageContent } from "@/components/tracking/TrackingPageContent";
 import { CTASection } from "@/components/sections/CTASection";
@@ -13,7 +14,9 @@ export const metadata: Metadata = buildMetadata({
 export default function TrackingPage() {
   return (
     <>
-      <TrackingPageContent />
+      <Suspense>
+        <TrackingPageContent />
+      </Suspense>
       <CTASection />
     </>
   );

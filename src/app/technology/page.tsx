@@ -1,11 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight, Radar, Route, Gauge, Timer, FileCheck2, LayoutGrid, ShieldCheck, Database, Plug, Smartphone, BellRing, Check } from "lucide-react";
-import { PageHero } from "@/components/shared/PageHero";
-import { Section } from "@/components/shared/Section";
-import { SectionHeading } from "@/components/shared/SectionHeading";
-import { Reveal } from "@/components/shared/Reveal";
-import { DashboardMockup } from "@/components/sections/DashboardMockup";
+import { TranslatedPageHero } from "@/components/shared/TranslatedPageHero";
+import { TechnologyBody } from "@/components/technology/TechnologyBody";
 import { CTASection } from "@/components/sections/CTASection";
 import { buildMetadata } from "@/lib/seo";
 
@@ -16,165 +11,17 @@ export const metadata: Metadata = buildMetadata({
   path: "/technology",
 });
 
-const CAPABILITIES = [
-  {
-    icon: Radar,
-    title: "Live Tracking",
-    text: "GPS position and scan-level checkpoints on every shipment. Watch your cargo move in real time, with automatic status changes at pickup, transit, customs, and delivery.",
-  },
-  {
-    icon: Route,
-    title: "Smart Routing",
-    text: "Routes are planned against traffic, weather, border, and roadwork data — and replanned automatically when conditions change mid-journey.",
-  },
-  {
-    icon: Gauge,
-    title: "Fleet Telemetry",
-    text: "Speed, fuel, temperature, and driving behavior data from every vehicle. Maintenance is scheduled on real usage, not a calendar.",
-  },
-  {
-    icon: Timer,
-    title: "ETA Prediction",
-    text: "Arrival estimates that learn. Our ETA engine refines the delivery window continuously as the journey progresses — so your team can plan around reality.",
-  },
-  {
-    icon: FileCheck2,
-    title: "Digital Documentation",
-    text: "CMR, PODs, temperature logs, and customs files in one searchable archive. No filing cabinets, no chasing faxes, no lost paperwork.",
-  },
-  {
-    icon: LayoutGrid,
-    title: "Operations Dashboard",
-    text: "Every shipment in your program, one control tower. Filters, exports, and KPI views that turn operational data into decisions.",
-  },
-];
-
-const INTEGRATIONS = [
-  { icon: Database, title: "ERP / WMS integration", text: "Orders flow from your system to ours — no re-keying." },
-  { icon: Plug, title: "Open API", text: "Shipment data, tracking webhooks, and documents via REST API." },
-  { icon: Smartphone, title: "Mobile access", text: "Approve, sign PODs, and check status from any device." },
-  { icon: BellRing, title: "Proactive alerts", text: "Email, SMS, or webhook notifications at every milestone." },
-];
-
 export default function TechnologyPage() {
   return (
     <>
-      <PageHero
-        crumb={[{ name: "Technology", path: "/technology" }]}
-        eyebrow="Technology"
-        title="The platform behind every CargoNova shipment"
-        description="One system connects your shipments, your vehicles, and your paperwork — so logistics becomes a thing you monitor, not a thing you chase."
+      <TranslatedPageHero
+        crumbKey="nav.technology"
+        crumbPath="/technology"
+        eyebrowKey="pg.technology.eyebrow"
+        titleKey="pg.technology.title"
+        descKey="pg.technology.sub"
       />
-
-      {/* Capabilities */}
-      <Section variant="light">
-        <SectionHeading
-          align="center"
-          eyebrow="Platform capabilities"
-          title="Everything your freight touches, in one place"
-        />
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {CAPABILITIES.map((cap, i) => (
-            <Reveal key={cap.title} delay={0.05 * (i % 3)}>
-              <div className="group relative h-full overflow-hidden rounded-3xl border border-soft bg-surface p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
-                <div className="pointer-events-none absolute -right-14 -top-14 h-36 w-36 rounded-full bg-electric-100/0 blur-2xl transition-all duration-500 group-hover:bg-electric-100/70" />
-                <span className="relative inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-electric-100 text-electric-600 transition-transform duration-300 group-hover:scale-105">
-                  <cap.icon className="h-6 w-6" strokeWidth={1.75} />
-                </span>
-                <h3 className="relative mt-5 font-display text-lg font-bold text-strong">{cap.title}</h3>
-                <p className="relative mt-2 text-sm leading-relaxed text-muted">{cap.text}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </Section>
-
-      {/* Dashboard */}
-      <Section variant="dark">
-        <div className="pointer-events-none absolute inset-0 bg-noise opacity-30" />
-        <div className="relative grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-center">
-          <Reveal>
-            <DashboardMockup className="max-w-3xl" />
-          </Reveal>
-          <div>
-            <SectionHeading
-              dark
-              eyebrow="Control tower"
-              title="The dashboard your operations team actually opens"
-              description="Built for the people who run freight day to day: exceptions surface first, data is filterable in seconds, and nothing important hides behind a menu."
-            />
-            <ul className="mt-8 space-y-4">
-              {[
-                "Exception-first design — problems float to the top",
-                "One click from alert to the affected shipment",
-                "KPI views for on-time, damage, and cost trends",
-                "Exportable reports for your own BI stack",
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-navy-100">
-                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-cyan-500/15 text-cyan-400">
-                    <Check className="h-3 w-3" />
-                  </span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </Section>
-
-      {/* Integrations */}
-      <Section variant="mist">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          <div>
-            <SectionHeading
-              eyebrow="Integrations"
-              title="Plugs into the systems you already run"
-              description="Logistics software fails when it creates another island. CargoNova's platform connects to your ERP, WMS, and communication tools instead of replacing them."
-            />
-            <Reveal delay={0.1}>
-              <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                {INTEGRATIONS.map((item) => (
-                  <div key={item.title} className="rounded-2xl border border-soft bg-surface p-5 shadow-card">
-                    <item.icon className="h-5 w-5 text-electric-500" strokeWidth={1.75} />
-                    <h3 className="mt-3 text-sm font-bold text-strong">{item.title}</h3>
-                    <p className="mt-1 text-xs leading-relaxed text-muted">{item.text}</p>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-          </div>
-          <Reveal delay={0.15}>
-            <div className="relative overflow-hidden rounded-3xl bg-navy-900 p-8 text-white shadow-lift sm:p-10">
-              <div className="pointer-events-none absolute inset-0 bg-noise opacity-40" />
-              <div className="pointer-events-none absolute inset-0 bg-grid-dark" />
-              <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-cyan-500/20 blur-[70px]" />
-              <ShieldCheck className="relative h-8 w-8 text-cyan-400" />
-              <h3 className="relative mt-5 font-display text-2xl font-bold">Security & reliability</h3>
-              <ul className="relative mt-5 space-y-3 text-sm text-navy-100">
-                {[
-                  "TLS-encrypted data in transit and at rest",
-                  "Role-based access for you and your team",
-                  "99.9% platform uptime target with monitoring",
-                  "Data stays yours — exportable at any time",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-2.5">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href="/contact"
-                className="group relative mt-8 inline-flex items-center gap-2 text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
-              >
-                Request a platform demo
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
-            </div>
-          </Reveal>
-        </div>
-      </Section>
-
+      <TechnologyBody />
       <CTASection />
     </>
   );

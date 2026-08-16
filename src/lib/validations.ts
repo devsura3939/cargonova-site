@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { isValidTrackingCode } from "@/lib/tracking";
 
 export const emailSchema = z.string().trim().email("Enter a valid email address.");
 
@@ -8,12 +9,12 @@ export const phoneSchema = z
   .min(7, "Enter a valid phone number.")
   .max(24, "Enter a valid phone number.");
 
-/** Shipment IDs look like CRG-582941. */
+/** Shipment IDs: CargoNova (CRG-582941), UPS (1Z…), DHL (JD…), FedEx/USPS digits, or generic letter+digit codes. */
 export const trackingSchema = z
   .string()
   .trim()
   .toUpperCase()
-  .regex(/^CRG-\d{4,8}$/, "Enter a valid tracking number, e.g. CRG-582941");
+  .refine((v) => isValidTrackingCode(v), "Enter a valid tracking number, e.g. CRG-582941 or 1Z999AA10123456784");
 
 export const quoteSchema = z.object({
   pickupCountry: z.string().trim().min(2, "Pickup country is required."),

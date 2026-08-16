@@ -14,7 +14,7 @@ import { useDataT } from "@/lib/data-i18n";
 
 export function FleetExplorer() {
   const [active, setActive] = useState<string>("all");
-  const { t } = useLang();
+  const { t, tPhrase } = useLang();
   const { fleetCategory, fleetIdeal } = useDataT();
 
   const visible = useMemo(
@@ -72,7 +72,7 @@ export function FleetExplorer() {
               {/* Content */}
               <div className="flex flex-1 flex-col p-6">
                 <div className="flex items-center justify-between">
-                  <h2 className="font-display text-xl font-bold text-strong">{vehicle.name}</h2>
+                  <h2 className="font-display text-xl font-bold text-strong">{tPhrase(vehicle.name)}</h2>
                   <FleetIcon name={vehicle.icon} className="h-6 w-6 text-electric-500" />
                 </div>
 
@@ -106,7 +106,7 @@ export function FleetExplorer() {
                   {vehicle.features.map((f) => (
                     <li key={f} className="flex items-center gap-1.5 text-xs font-medium text-muted">
                       <Check className="h-3 w-3 shrink-0 text-emerald-500" />
-                      {f}
+                      {tPhrase(f)}
                     </li>
                   ))}
                 </ul>
@@ -124,7 +124,7 @@ export function FleetExplorer() {
                     {vehicle.available ? t("fleet.available") : t("fleet.onRequest")}
                   </p>
                   <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-navy-300">
-                    <ShieldCheck className="h-3.5 w-3.5" /> Telematics
+                    <ShieldCheck className="h-3.5 w-3.5" /> {tPhrase("Telematics")}
                   </span>
                 </div>
               </div>
@@ -135,9 +135,9 @@ export function FleetExplorer() {
 
       {visible.length === 0 ? (
         <p className="mt-10 rounded-2xl border border-dashed border-soft bg-surface-muted p-8 text-center text-sm text-muted">
-          No vehicles in this category right now — check back soon or{" "}
+          {t("fleet.empty")}{" "}
           <Link href="/contact" className="font-semibold text-electric-600">
-            contact us
+            {t("fleet.contactUs")}
           </Link>
           .
         </p>
@@ -151,16 +151,15 @@ export function FleetExplorer() {
               <ShieldCheck className="h-5 w-5" />
             </span>
             <p className="text-sm leading-relaxed text-navy-800 dark:text-navy-200 sm:text-base">
-              <span className="font-semibold">Every vehicle is inspected before dispatch</span> —
-              tires, brakes, temperature units, and securing equipment checked against a
-              documented checklist. If it isn't road-ready, it doesn't roll.
+              <span className="font-semibold">{t("fleet.inspectedTitle")}</span>{" "}
+              {t("fleet.inspectedText")}
             </p>
           </div>
           <Link
             href="/quote"
             className="inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-navy-850 px-6 text-sm font-semibold text-white transition-colors hover:bg-navy-700"
           >
-            Tell us what you're shipping
+            {t("fleet.tellUs")}
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>

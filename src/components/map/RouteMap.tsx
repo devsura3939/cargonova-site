@@ -6,6 +6,7 @@ import "leaflet/dist/leaflet.css";
 import type { Shipment } from "@/lib/tracking";
 import { cityByName } from "@/lib/geo";
 import { useTheme } from "@/lib/theme";
+import { useLang } from "@/lib/i18n";
 
 /** Spherical interpolation between two lat/lng — great-circle route. */
 function slerp(a: { lat: number; lng: number }, b: { lat: number; lng: number }, t: number): [number, number] {
@@ -44,6 +45,49 @@ function pinIcon(color: string, glyph: string): L.DivIcon {
   });
 }
 
+/** Distance between two lat/lng points (km). */
+function distKm(a: { lat: number; lng: number }, b: { lat: number; lng: number }): number {
+  const toRad = (d: number) => (d * Math.PI) / 180;
+  const dLat = toRad(b.lat - a.lat);
+  const dLon = toRad(b.lng - a.lng);
+  const h =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(dLon / 2) ** 2;
+  return 2 * 6371 * Math.asin(Math.sqrt(h));
+}
+
+/** Point along a polyline at fraction t (for the live-position marker). */
+function pointAlongPoly(pts: [number, number][], t: number): [number, number] {
+  const n = pts.length;
+  if (n === 0) return [0, 0];
+  if (n === 1) return pts[0];
+  const segs: number[] = [];
+  let total = 0;
+  for (let i = 1; i < n; i++) {
+    const d = distKm({ lat: pts[i - 1][0], lng: pts[i - 1][1] }, { lat: pts[i][0], lng: pts[i][1] });
+    segs.push(d);
+    total += d;
+  }
+  if (total === 0) return pts[0];
+  let target = Math.min(1, Math.max(0, t)) * total;
+  for (let i = 0; i < segs.length; i++) {
+    if (target <= segs[i] || i === segs.length - 1) {
+      const f = segs[i] === 0 ? 0 : Math.min(1, target / segs[i]);
+      const a = pts[i];
+      const b = pts[i + 1];
+      let dLon = b[1] - a[1];
+      if (dLon > 180) dLon -= 360;
+      else if (dLon < -180) dLon += 360;
+      let lon = a[1] + dLon * f;
+      if (lon > 180) lon -= 360;
+      else if (lon < -180) lon += 360;
+      return [a[0] + (b[0] - a[0]) * f, lon];
+    }
+    target -= segs[i];
+  }
+  return pts[n - 1];
+}
+
 function liveIcon(color: string): L.DivIcon {
   return L.divIcon({
     className: "",
@@ -62,15 +106,31 @@ export function RouteMap({ shipment }: { shipment: Shipment }) {
   const tileRef = useRef<L.TileLayer | null>(null);
   const { theme } = useTheme();
   const dark = theme === "dark";
+  const { tPhrase } = useLang();
 
   const originCity = shipment.origin.split(",")[0]?.trim() ?? "";
   const destCity = shipment.destination.split(",")[0]?.trim() ?? "";
   const origin = cityByName(originCity);
   const dest = cityByName(destCity);
-  const resolvable = Boolean(origin && dest);
+
+  // Ocean shipments draw the real sea lane (landmask-validated waypoints);
+  // road shipments use the great-circle between two resolvable cities.
+  const oceanPts = shipment.voyage?.route?.length ? shipment.voyage.route : null;
+  const roadPts: [number, number][] | null =
+    origin && dest
+      ? (() => {
+          const pts: [number, number][] = [];
+          const a = { lat: origin.lat, lng: origin.lon };
+          const b = { lat: dest.lat, lng: dest.lon };
+          for (let i = 0; i <= 48; i++) pts.push(slerp(a, b, i / 48));
+          return pts;
+        })()
+      : null;
+  const routePts = oceanPts ?? roadPts;
+  const resolvable = Boolean(routePts);
 
   useEffect(() => {
-    if (!containerRef.current || mapRef.current || !origin || !dest) return;
+    if (!containerRef.current || mapRef.current || !routePts) return;
 
     const map = L.map(containerRef.current, {
       zoomControl: true,
@@ -92,44 +152,44 @@ export function RouteMap({ shipment }: { shipment: Shipment }) {
     ).addTo(map);
     tileRef.current = tile;
 
-    const a = { lat: origin.lat, lng: origin.lon };
-    const b = { lat: dest.lat, lng: dest.lon };
+    const first = routePts[0];
+    const last = routePts[routePts.length - 1];
 
-    // Route polyline (great circle, 48 samples).
-    const pts: [number, number][] = [];
-    for (let i = 0; i <= 48; i++) pts.push(slerp(a, b, i / 48));
-    L.polyline(pts, { color: "#1677FF", weight: 3, opacity: 0.85, dashArray: "1 10" }).addTo(map);
-    L.polyline(pts, { color: "#2ED3E6", weight: 5, opacity: 0.18 }).addTo(map);
+    // Route polyline — real sea lane for ocean, great circle for road.
+    L.polyline(routePts, { color: "#1677FF", weight: 3, opacity: 0.85, dashArray: "1 10" }).addTo(map);
+    L.polyline(routePts, { color: "#2ED3E6", weight: 5, opacity: 0.18 }).addTo(map);
 
-    L.marker([a.lat, a.lng], { icon: pinIcon("#10b981", "A"), title: shipment.origin }).addTo(map);
-    L.marker([b.lat, b.lng], { icon: pinIcon("#ff8a3d", "B"), title: shipment.destination }).addTo(map);
+    L.marker(first, { icon: pinIcon("#10b981", "A"), title: shipment.origin }).addTo(map);
+    L.marker(last, { icon: pinIcon("#ff8a3d", "B"), title: shipment.destination }).addTo(map);
 
-    // Checkpoint dots at resolvable locations.
-    for (const cp of shipment.checkpoints) {
-      const loc = cp.location.split(",")[0]?.trim() ?? "";
-      const firstToken = loc.split(/[\s·]+/)[0];
-      const city = cityByName(loc) ?? cityByName(firstToken);
-      if (city && `${city.name}` !== originCity && `${city.name}` !== destCity) {
-        L.circleMarker([city.lat, city.lon], {
-          radius: 4,
-          color: "#0e5fd8",
-          weight: 1,
-          fillColor: "#ffffff",
-          fillOpacity: 1,
-        })
-          .addTo(map)
-          .bindTooltip(`${cp.label} · ${cp.location}`, { direction: "top", offset: [0, -4] });
+    // Checkpoint dots at resolvable locations (road shipments only).
+    if (!oceanPts) {
+      for (const cp of shipment.checkpoints) {
+        const loc = cp.location.split(",")[0]?.trim() ?? "";
+        const firstToken = loc.split(/[\s·]+/)[0];
+        const city = cityByName(loc) ?? cityByName(firstToken);
+        if (city && `${city.name}` !== originCity && `${city.name}` !== destCity) {
+          L.circleMarker([city.lat, city.lon], {
+            radius: 4,
+            color: "#0e5fd8",
+            weight: 1,
+            fillColor: "#ffffff",
+            fillOpacity: 1,
+          })
+            .addTo(map)
+            .bindTooltip(`${cp.label} · ${cp.location}`, { direction: "top", offset: [0, -4] });
+        }
       }
     }
 
-    // Live position marker.
+    // Live position marker along the drawn lane.
     const p = Math.min(100, Math.max(0, shipment.progress)) / 100;
-    const [plat, plon] = slerp(a, b, p);
+    const [plat, plon] = pointAlongPoly(routePts, p);
     L.marker([plat, plon], { icon: liveIcon("#1677ff"), zIndexOffset: 1000, title: "Live position" })
       .addTo(map)
       .bindTooltip(`Live position · ${shipment.progress}% complete`, { direction: "top" });
 
-    map.fitBounds(L.latLngBounds([a, b]).pad(0.18), { maxZoom: 9 });
+    map.fitBounds(L.latLngBounds(routePts).pad(0.18), { maxZoom: 9 });
 
     const resize = () => map.invalidateSize();
     window.addEventListener("resize", resize);
@@ -141,7 +201,7 @@ export function RouteMap({ shipment }: { shipment: Shipment }) {
       map.remove();
       mapRef.current = null;
     };
-  }, [origin?.id, dest?.id, shipment.id]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [oceanPts, roadPts, shipment.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     // Swap the tile URL in place — safer than removing/re-adding layers
@@ -173,14 +233,14 @@ export function RouteMap({ shipment }: { shipment: Shipment }) {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-electric-500 opacity-70" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-electric-500" />
           </span>
-          Live position
+          {tPhrase("Live position")}
         </p>
         <p className="mt-0.5 font-mono text-xs font-semibold text-strong">
           {shipment.origin} → {shipment.destination}
         </p>
       </div>
       <div className="pointer-events-none absolute bottom-3 left-3 rounded-lg bg-surface/90 px-2.5 py-1 font-mono text-[11px] font-bold text-strong shadow-card backdrop-blur">
-        {shipment.progress}% complete
+        {shipment.progress}% {tPhrase("complete")}
       </div>
     </div>
   );

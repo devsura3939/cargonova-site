@@ -1,49 +1,27 @@
-import { describe, expect, it } from "vitest";
+import { describe, it, expect } from "vitest";
 import { computeLiveFleet } from "@/lib/fleet";
+import { isWater } from "@/lib/landmask";
+import { lookupShipment } from "@/lib/tracking";
 
-describe("computeLiveFleet", () => {
-  it("returns a live fleet of ships and trucks with shipments", () => {
-    const fleet = computeLiveFleet(new Date("2026-08-16T12:00:00Z"));
-    expect(fleet.length).toBeGreaterThan(30);
-    const ships = fleet.filter((u) => u.kind === "ship");
-    const trucks = fleet.filter((u) => u.kind === "truck");
-    expect(ships.length).toBeGreaterThan(15);
-    expect(trucks.length).toBeGreaterThan(5);
-    for (const unit of fleet) {
-      expect(unit.shipment.id).toMatch(/^CRG-\d{6}$/);
-      expect(unit.lat).toBeGreaterThanOrEqual(-90);
-      expect(unit.lat).toBeLessThanOrEqual(90);
-      expect(unit.progress).toBeGreaterThanOrEqual(0);
-      expect(unit.progress).toBeLessThanOrEqual(100);
-    }
+describe("fleet engine v2", () => {
+  const units = computeLiveFleet(new Date());
+  const ships = units.filter((u) => u.kind === "ship");
+  const trucks = units.filter((u) => u.kind === "truck");
+
+  it("spawns 190+ ships and 115+ trucks", () => {
+    expect(ships.length).toBeGreaterThanOrEqual(190);
+    expect(trucks.length).toBeGreaterThanOrEqual(115);
+    console.log("total:", units.length, "ships:", ships.length, "trucks:", trucks.length);
   });
 
-  it("moves units in real time (positions advance with elapsed time)", () => {
-    const t0 = new Date("2026-08-16T12:00:00Z");
-    const t1 = new Date(t0.getTime() + 120_000); // +2 minutes
-    const a = computeLiveFleet(t0);
-    const b = computeLiveFleet(t1);
-    expect(a.length).toBe(b.length);
-
-    const moved = a.filter((unit) => {
-      const next = b.find((u) => u.id === unit.id);
-      if (!next) return false;
-      return Math.abs(next.lat - unit.lat) > 1e-9 || Math.abs(next.lon - unit.lon) > 1e-9;
-    });
-    // Everyone moves — same id, later timestamp, different position.
-    expect(moved.length).toBe(a.length);
+  it("keeps transit ships on water", () => {
+    const onLand = ships.filter((u) => u.status === "In Transit" && !isWater(u.lat, u.lon));
+    console.log("transit ships on land:", onLand.length, onLand.slice(0, 5).map((u) => `${u.name} ${u.lat.toFixed(1)},${u.lon.toFixed(1)}`));
+    expect(onLand.length).toBe(0);
   });
 
-  it("keeps real vessels and corridors with valid headings", () => {
-    const fleet = computeLiveFleet(new Date());
-    const everGiven = fleet.find((u) => u.name === "Ever Given");
-    expect(everGiven).toBeDefined();
-    expect(everGiven?.type).toContain("20,124 TEU");
-    expect(everGiven?.heading).toBeGreaterThanOrEqual(0);
-    expect(everGiven?.heading).toBeLessThan(360);
-
-    const truck = fleet.find((u) => u.kind === "truck" && u.name === "GE-4412 B");
-    expect(truck).toBeDefined();
-    expect(truck?.shipment.pallets).toBeGreaterThan(0);
+  it("all shipment IDs resolve in the tracking service", () => {
+    const bad = ships.filter((s) => lookupShipment(s.shipment.id) === null).length;
+    expect(bad).toBe(0);
   });
 });

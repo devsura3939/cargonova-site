@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/shared/PageHero";
+import { TranslatedPageHero } from "@/components/shared/TranslatedPageHero";
 import { Container } from "@/components/shared/Container";
 import { LiveMapMount } from "@/components/map/LiveMapMount";
 import { CTASection } from "@/components/sections/CTASection";
@@ -15,11 +15,12 @@ export const metadata: Metadata = buildMetadata({
 export default function LiveMapPage() {
   return (
     <>
-      <PageHero
-        crumb={[{ name: "Live Map", path: "/live-map" }]}
-        eyebrow="Worldwide live map"
-        title="Every load, moving in real time"
-        description="Ocean vessels and road freight tracked live across the world. Click any vessel or vehicle to open its shipment — cargo, consignee, progress, and ETA."
+      <TranslatedPageHero
+        crumbKey="nav.liveMap"
+        crumbPath="/live-map"
+        eyebrowKey="pg.liveMap.eyebrow"
+        titleKey="pg.liveMap.title"
+        descKey="pg.liveMap.sub"
         compact
       />
       <section className="bg-surface-muted px-3 pb-3 pt-0 sm:px-5">

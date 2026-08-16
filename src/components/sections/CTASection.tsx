@@ -86,7 +86,7 @@ export function CTASection() {
             <a href={brand.contact.phoneHref} className="font-semibold text-white underline decoration-cyan-400/60 underline-offset-4 hover:text-cyan-300">
               {brand.contact.phone}
             </a>{" "}
-            — 24/7 for active shipments.
+            {t("cta.hoursNote")}
           </p>
         </Reveal>
       </div>

@@ -9,7 +9,7 @@ export function ContactPageHero() {
   return (
     <PageHero
       crumb={[{ name: t("nav.contact"), path: "/contact" }]}
-      eyebrow="Contact"
+      eyebrow={t("pg.contact.eyebrow")}
       title={t("contact.title")}
       description={t("contact.sub")}
     />

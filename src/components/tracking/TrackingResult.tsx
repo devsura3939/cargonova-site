@@ -10,11 +10,13 @@ import {
   Clock4,
   Package,
   Weight,
+  Anchor,
   Route as RouteIcon,
   FileText,
+  ExternalLink,
 } from "lucide-react";
 import { TrackingTimeline } from "@/components/tracking/TrackingTimeline";
-import type { Shipment } from "@/lib/tracking";
+import { carrierVerifyUrl, type Shipment } from "@/lib/tracking";
 
 // Leaflet touches browser globals at module load — client-side only.
 const RouteMap = dynamic(() => import("@/components/map/RouteMap").then((m) => m.RouteMap), {
@@ -47,7 +49,14 @@ const STATUS_KEYS: Record<string, string> = {
 
 export function TrackingResult({ shipment }: { shipment: Shipment }) {
   const reduceMotion = useReducedMotion();
-  const { t } = useLang();
+  const { t, tPhrase } = useLang();
+
+  const cargoValue = (v: string) => tPhrase(v);
+  const serviceValue = (v: string) => tPhrase(v);
+  const vehicleValue = (v: string) =>
+    v.startsWith("Container vessel")
+      ? `${tPhrase("Container vessel")}${v.slice("Container vessel".length)}`
+      : tPhrase(v);
 
   const card = (delay: number, children: React.ReactNode) => (
     <motion.div
@@ -79,6 +88,7 @@ export function TrackingResult({ shipment }: { shipment: Shipment }) {
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">{t("trk.shipment")}</p>
               <p className="mt-1 font-mono text-2xl font-bold text-strong">{shipment.id}</p>
+              <p className="mt-0.5 text-xs font-semibold text-electric-600 dark:text-electric-400">{shipment.carrierName}</p>
             </div>
             <span
               className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold ${STATUS_TONE[shipment.status] ?? ""} dark:bg-white/10`}
@@ -140,10 +150,13 @@ export function TrackingResult({ shipment }: { shipment: Shipment }) {
             </div>
             <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:grid-cols-4">
               {[
-                { icon: Package, label: t("trk.cargo"), value: shipment.cargo.description },
+                { icon: Package, label: t("trk.cargo"), value: cargoValue(shipment.cargo.description) },
                 { icon: Weight, label: t("trk.weight"), value: shipment.cargo.weight },
-                { icon: Truck, label: t("trk.service"), value: shipment.cargo.service },
-                { icon: Box, label: t("trk.vehicle"), value: shipment.cargo.vehicle },
+                ...(shipment.voyage
+                  ? [{ icon: Anchor, label: t("trk.vessel"), value: shipment.voyage.vessel }]
+                  : [{ icon: Truck, label: t("trk.service"), value: serviceValue(shipment.cargo.service) }]),
+                { icon: Truck, label: t("trk.service"), value: serviceValue(shipment.cargo.service) },
+                { icon: Box, label: t("trk.vehicle"), value: vehicleValue(shipment.cargo.vehicle) },
               ].map((item) => (
                 <div key={item.label}>
                   <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-muted">
@@ -166,6 +179,23 @@ export function TrackingResult({ shipment }: { shipment: Shipment }) {
               </a>{" "}
               {t("trk.docsNote2")}
             </p>
+          </div>
+        ))}
+
+        {card(0.42, (
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-soft bg-surface p-4">
+            <p className="text-xs leading-relaxed text-ink">
+              {t("trk.verifyNote")}
+            </p>
+            <a
+              href={carrierVerifyUrl(shipment.id, shipment.carrier)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full bg-navy-850 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-navy-700"
+            >
+              {t("trk.verifyCta")}
+              <ExternalLink className="h-3.5 w-3.5" />
+            </a>
           </div>
         ))}
       </div>

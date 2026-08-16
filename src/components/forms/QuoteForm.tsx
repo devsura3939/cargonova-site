@@ -19,7 +19,7 @@ import {
   PhoneCall,
 } from "lucide-react";
 import { quoteSchema, type QuoteInput } from "@/lib/validations";
-import { submitQuoteAction } from "@/app/quote/actions";
+import { submitQuoteRequest } from "@/lib/quote";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -146,7 +146,7 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
 
   async function onSubmit(data: QuoteInput) {
     setStatus("submitting");
-    const result = await submitQuoteAction(data);
+    const result = await submitQuoteRequest(data);
     if (result.ok) {
       setReference(result.reference);
       setStatus("done");
