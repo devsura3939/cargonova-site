@@ -46,7 +46,7 @@ export function BlogExplorer() {
                 "rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200",
                 category === cat
                   ? "bg-navy-850 text-white"
-                  : "border border-navy-200 bg-white text-navy-700 hover:border-electric-400 hover:text-electric-600",
+                  : "border border-soft bg-surface text-ink hover:border-electric-400 hover:text-electric-600 dark:hover:text-electric-400",
               )}
             >
               {cat}
@@ -55,12 +55,12 @@ export function BlogExplorer() {
         </div>
         <label className="relative block md:w-72">
           <span className="sr-only">Search articles</span>
-          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate" />
+          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search articles…"
-            className="h-11 w-full rounded-full border border-navy-200 bg-white pl-10 pr-4 text-sm text-ink placeholder:text-slate/70 focus:border-electric-500 focus:outline-none focus:ring-4 focus:ring-electric-500/15"
+            className="h-11 w-full rounded-full border border-soft bg-surface pl-10 pr-4 text-sm text-ink placeholder:text-muted focus:border-electric-500 focus:outline-none focus:ring-4 focus:ring-electric-500/15"
           />
         </label>
       </div>
@@ -113,7 +113,7 @@ export function BlogExplorer() {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="group flex h-full flex-col overflow-hidden rounded-3xl border border-navy-100 bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
+              className="group flex h-full flex-col overflow-hidden rounded-3xl border border-soft bg-surface shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
             >
               <div className="relative h-44 overflow-hidden">
                 <Image
@@ -128,16 +128,16 @@ export function BlogExplorer() {
               <div className="flex flex-1 flex-col p-7 pt-5">
               <div className="flex items-center gap-2 text-xs font-semibold">
                 <span className="rounded-full bg-electric-100 px-2.5 py-1 text-electric-600">{post.category}</span>
-                <span className="flex items-center gap-1 text-slate">
+                <span className="flex items-center gap-1 text-muted">
                   <Clock className="h-3 w-3" /> {post.readTime}
                 </span>
               </div>
-              <h3 className="mt-4 text-balance font-display text-xl font-bold leading-snug text-navy-900 transition-colors group-hover:text-electric-600">
+              <h3 className="mt-4 text-balance font-display text-xl font-bold leading-snug text-strong transition-colors group-hover:text-electric-600 dark:group-hover:text-electric-400">
                 {post.title}
               </h3>
-              <p className="mt-2.5 flex-1 text-sm leading-relaxed text-slate">{post.excerpt}</p>
-              <div className="mt-5 flex items-center justify-between border-t border-navy-100 pt-4">
-                <p className="text-xs text-slate">{formatDate(post.publishedAt)}</p>
+              <p className="mt-2.5 flex-1 text-sm leading-relaxed text-muted">{post.excerpt}</p>
+              <div className="mt-5 flex items-center justify-between border-t border-soft pt-4">
+                <p className="text-xs text-muted">{formatDate(post.publishedAt)}</p>
                 <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-electric-600">
                   Read
                   <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
@@ -149,8 +149,8 @@ export function BlogExplorer() {
         </div>
       ) : (
         <div className="mt-10 rounded-3xl border border-dashed border-navy-200 bg-mist p-12 text-center">
-          <p className="font-display text-lg font-bold text-navy-900">No articles found</p>
-          <p className="mt-2 text-sm text-slate">
+          <p className="font-display text-lg font-bold text-strong">No articles found</p>
+          <p className="mt-2 text-sm text-muted">
             Try a different search term or category.
           </p>
         </div>

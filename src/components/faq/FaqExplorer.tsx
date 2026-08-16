@@ -50,7 +50,7 @@ export function FaqExplorer() {
                     "rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200",
                     category === cat
                       ? "bg-navy-850 text-white"
-                      : "border border-navy-200 bg-white text-navy-700 hover:border-electric-400 hover:text-electric-600",
+                      : "border border-soft bg-surface text-ink hover:border-electric-400 hover:text-electric-600 dark:hover:text-electric-400",
                   )}
                 >
                   {cat}
@@ -62,12 +62,12 @@ export function FaqExplorer() {
           {/* Accordion */}
           {results.length > 0 ? (
             <Reveal delay={0.05}>
-              <Accordion type="single" collapsible className="mx-auto mt-12 max-w-3xl rounded-3xl border border-navy-100 bg-white px-6 shadow-card sm:px-8">
+              <Accordion type="single" collapsible className="mx-auto mt-12 max-w-3xl rounded-3xl border border-soft bg-surface px-6 shadow-card sm:px-8">
                 {results.map((faq) => (
                   <AccordionItem key={faq.question} value={faq.question}>
                     <AccordionTrigger>
                       <span className="flex items-center gap-3">
-                        <span className="hidden rounded-full bg-mist px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-slate sm:inline-block">
+                        <span className="hidden rounded-full bg-surface-muted px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted sm:inline-block">
                           {faq.category}
                         </span>
                         {faq.question}
@@ -81,8 +81,8 @@ export function FaqExplorer() {
           ) : (
             <Reveal delay={0.05}>
               <div className="mx-auto mt-12 max-w-3xl rounded-3xl border border-dashed border-navy-200 bg-mist p-12 text-center">
-                <p className="font-display text-lg font-bold text-navy-900">No matches</p>
-                <p className="mt-2 text-sm text-slate">
+                <p className="font-display text-lg font-bold text-strong">No matches</p>
+                <p className="mt-2 text-sm text-muted">
                   Nothing in the FAQ matches that search. Ask us directly — we answer fast.
                 </p>
                 <Link

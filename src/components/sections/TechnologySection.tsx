@@ -1,9 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, Radar, Route, Gauge, Timer, FileCheck2, LayoutGrid } from "lucide-react";
 import { Section } from "@/components/shared/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Reveal } from "@/components/shared/Reveal";
 import { DashboardMockup } from "@/components/sections/DashboardMockup";
+import { useLang } from "@/lib/i18n";
 
 const FEATURES = [
   { icon: Radar, title: "Live Tracking", text: "Real-time GPS and scan-level visibility on every shipment." },
@@ -15,6 +18,7 @@ const FEATURES = [
 ];
 
 export function TechnologySection() {
+  const { t } = useLang();
   return (
     <Section variant="dark" id="technology">
       <div className="pointer-events-none absolute inset-0 bg-noise opacity-30" />
@@ -29,9 +33,9 @@ export function TechnologySection() {
           <div className="order-1 lg:order-2">
             <SectionHeading
               dark
-              eyebrow="Technology"
-              title="A control tower for your entire freight operation"
-              description="Every CargoNova shipment runs through the same platform — tracking, routing, telemetry, and documentation working as one system."
+              eyebrow={t("tech.eyebrow")}
+              title={t("tech.title")}
+              description={t("tech.sub")}
             />
             <div className="mt-8 grid gap-x-8 gap-y-6 sm:grid-cols-2">
               {FEATURES.map((f, i) => (
@@ -53,7 +57,7 @@ export function TechnologySection() {
                 href="/technology"
                 className="group mt-9 inline-flex items-center gap-2 text-sm font-semibold text-cyan-400 transition-colors hover:text-cyan-300"
               >
-                See how the platform works
+                {t("tech.seeHow")}
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </Reveal>

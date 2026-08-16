@@ -5,36 +5,38 @@ import { ClipboardList, Map, Truck, PackageCheck } from "lucide-react";
 import { Section } from "@/components/shared/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Reveal } from "@/components/shared/Reveal";
+import { useLang } from "@/lib/i18n";
 
 const STEPS = [
   {
     icon: ClipboardList,
     number: "01",
-    title: "Request",
-    text: "Share your route, cargo, and timing. Get a confirmed quote within 4 business hours — 60 minutes for urgent loads.",
+    titleKey: "how.step1t" as const,
+    textKey: "how.step1d" as const,
   },
   {
     icon: Map,
     number: "02",
-    title: "Planning",
-    text: "Our planners match the right vehicle and route, check corridor conditions, and schedule pickup within your window.",
+    titleKey: "how.step2t" as const,
+    textKey: "how.step2d" as const,
   },
   {
     icon: Truck,
     number: "03",
-    title: "Transportation",
-    text: "Your cargo moves with live GPS tracking, checkpoint updates, and a control tower that watches the route around the clock.",
+    titleKey: "how.step3t" as const,
+    textKey: "how.step3d" as const,
   },
   {
     icon: PackageCheck,
     number: "04",
-    title: "Delivery",
-    text: "On-time delivery with signed proof of delivery and full documentation in your portal — the same day.",
+    titleKey: "how.step4t" as const,
+    textKey: "how.step4d" as const,
   },
 ];
 
 export function HowItWorks() {
   const reduceMotion = useReducedMotion();
+  const { t } = useLang();
 
   return (
     <Section variant="dark" id="how-it-works">
@@ -43,9 +45,9 @@ export function HowItWorks() {
         <SectionHeading
           dark
           align="center"
-          eyebrow="How it works"
-          title="From request to delivery in four steps"
-          description="A simple, transparent process — you always know where your cargo is and what happens next."
+          eyebrow={t("how.eyebrow")}
+          title={t("how.title")}
+          description={t("how.sub")}
         />
 
         <div className="relative mt-16">
@@ -91,9 +93,9 @@ export function HowItWorks() {
                       {step.number}
                     </span>
                   </div>
-                  <h3 className="font-display text-xl font-bold text-white">{step.title}</h3>
+                  <h3 className="font-display text-xl font-bold text-white">{t(step.titleKey)}</h3>
                   <p className="mt-2.5 max-w-xs text-sm leading-relaxed text-navy-200 lg:mx-auto">
-                    {step.text}
+                    {t(step.textKey)}
                   </p>
                 </li>
               </Reveal>

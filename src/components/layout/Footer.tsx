@@ -33,10 +33,16 @@ import { brand } from "@/lib/constants";
 import { newsletterSchema } from "@/lib/validations";
 import { trackEvent } from "@/lib/analytics";
 import { unsplashAttribution } from "@/data/images";
+import { useLang } from "@/lib/i18n";
 
-const COLUMNS: { heading: string; links: { label: string; href: string }[] }[] = [
+const COLUMNS: {
+  heading: string;
+  headingKey: "footer.services" | "footer.company" | "footer.resources" | "footer.legal";
+  links: { label: string; href: string }[];
+}[] = [
   {
     heading: "Services",
+    headingKey: "footer.services",
     links: [
       { label: "Ground Freight", href: "/services/ground-freight" },
       { label: "Full Truckload", href: "/services/full-truckload" },
@@ -48,6 +54,7 @@ const COLUMNS: { heading: string; links: { label: string; href: string }[] }[] =
   },
   {
     heading: "Company",
+    headingKey: "footer.company",
     links: [
       { label: "About Us", href: "/about" },
       { label: "Our Fleet", href: "/fleet" },
@@ -59,6 +66,7 @@ const COLUMNS: { heading: string; links: { label: string; href: string }[] }[] =
   },
   {
     heading: "Resources",
+    headingKey: "footer.resources",
     links: [
       { label: "Track Shipment", href: "/tracking" },
       { label: "Get a Quote", href: "/quote" },
@@ -69,6 +77,7 @@ const COLUMNS: { heading: string; links: { label: string; href: string }[] }[] =
   },
   {
     heading: "Legal",
+    headingKey: "footer.legal",
     links: [
       { label: "Privacy Policy", href: "/privacy" },
       { label: "Terms of Service", href: "/terms" },
@@ -80,6 +89,7 @@ const COLUMNS: { heading: string; links: { label: string; href: string }[] }[] =
 export function Footer() {
   const [email, setEmail] = useState("");
   const [state, setState] = useState<"idle" | "loading" | "done" | "error">("idle");
+  const { t } = useLang();
 
   async function subscribe(e: React.FormEvent) {
     e.preventDefault();
@@ -115,8 +125,7 @@ export function Footer() {
               </div>
             </div>
             <p className="mt-5 text-sm leading-relaxed text-navy-200">
-              {brand.tagline} Ground freight, FTL/LTL, express, refrigerated, oversized, and
-              warehousing — built for businesses that cannot afford delays.
+              {brand.tagline} {t("footer.tagline")}
             </p>
             <div className="mt-6 flex gap-3">
               {[
@@ -141,24 +150,22 @@ export function Footer() {
 
           {/* Newsletter */}
           <div className="w-full max-w-md lg:pt-1">
-            <h3 className="font-display text-base font-bold">Freight brief, monthly</h3>
-            <p className="mt-2 text-sm text-navy-200">
-              Corridor updates, capacity notes, and logistics insights. No noise.
-            </p>
+            <h3 className="font-display text-base font-bold">{t("footer.newsletterTitle")}</h3>
+            <p className="mt-2 text-sm text-navy-200">{t("footer.newsletterSub")}</p>
             {state === "done" ? (
               <p className="mt-4 inline-flex items-center gap-2 rounded-xl bg-cyan-500/10 px-4 py-3 text-sm font-medium text-cyan-400">
-                <Check className="h-4 w-4" /> You're subscribed. First brief arrives next month.
+                <Check className="h-4 w-4" /> {t("footer.subscribed")}
               </p>
             ) : (
               <form onSubmit={subscribe} className="mt-4 flex gap-2">
                 <label htmlFor="newsletter-email" className="sr-only">
-                  Email address
+                  {t("footer.newsletterTitle")}
                 </label>
                 <input
                   id="newsletter-email"
                   type="email"
                   required
-                  placeholder="you@company.com"
+                  placeholder={t("footer.newsletterPlaceholder")}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="h-11 w-full rounded-full border border-white/15 bg-white/5 px-4 text-sm text-white placeholder:text-navy-300 focus:border-cyan-400 focus:outline-none focus:ring-4 focus:ring-cyan-400/15"
@@ -168,7 +175,7 @@ export function Footer() {
                   disabled={state === "loading"}
                   className="inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-electric-500 px-5 text-sm font-semibold text-white transition-colors hover:bg-electric-400 disabled:opacity-60"
                 >
-                  {state === "loading" ? "…" : "Subscribe"}
+                  {state === "loading" ? "…" : t("footer.newsletterCta")}
                   {state !== "loading" ? <ArrowRight className="h-4 w-4" /> : null}
                 </button>
               </form>
@@ -180,11 +187,10 @@ export function Footer() {
         </div>
 
         {/* Link columns */}
-        <div className="grid grid-cols-2 gap-10 py-12 sm:grid-cols-3 lg:grid-cols-6">
-          {COLUMNS.map((col) => (
+        <div className="grid grid-cols-2 gap-10 py-12 sm:grid-cols-3 lg:grid-cols-6">              {COLUMNS.map((col) => (
             <nav key={col.heading} aria-label={col.heading}>
               <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-navy-300">
-                {col.heading}
+                {t(col.headingKey)}
               </h3>
               <ul className="mt-4 space-y-2.5">
                 {col.links.map((link) => (
@@ -202,7 +208,7 @@ export function Footer() {
           ))}
 
           <div className="col-span-2 sm:col-span-3 lg:col-span-2">
-            <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-navy-300">Contact</h3>
+            <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-navy-300">{t("footer.contact")}</h3>
             <ul className="mt-4 space-y-3 text-sm text-navy-200">
               <li>
                 <a href={brand.contact.phoneHref} className="flex items-start gap-2.5 transition-colors hover:text-white" onClick={() => trackEvent("phone_clicked")}>
@@ -230,7 +236,7 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-8 text-xs text-navy-300 sm:flex-row">
-          <p>© {new Date().getFullYear()} {brand.name}. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} {brand.name}. {t("footer.rights")}</p>
           <p>
             Demo website — placeholder company details. Certifications shown are illustrative.{" "}
             {unsplashAttribution}

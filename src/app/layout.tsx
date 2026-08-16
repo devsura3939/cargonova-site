@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Manrope } from "next/font/google";
+import { Inter, Manrope, Noto_Sans_Georgian } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileCta } from "@/components/layout/MobileCta";
+import { ThemeProvider, themeInitScript } from "@/lib/theme";
+import { LanguageProvider } from "@/lib/i18n";
 import { brand } from "@/lib/constants";
 import { organizationJsonLd } from "@/lib/seo";
 
@@ -16,6 +18,12 @@ const inter = Inter({
 const manrope = Manrope({
   variable: "--font-manrope",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const georgian = Noto_Sans_Georgian({
+  variable: "--font-georgian",
+  subsets: ["latin", "georgian"],
   display: "swap",
 });
 
@@ -36,18 +44,27 @@ export const metadata: Metadata = {
     "trucking",
     "warehousing",
     "temperature controlled freight",
-    "European freight",
+    "Georgia",
+    "Caucasus corridor",
   ],
   openGraph: {
     siteName: brand.name,
     type: "website",
     locale: "en_US",
+    alternateLocale: "ka_GE",
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${manrope.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${manrope.variable} ${georgian.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="flex min-h-full flex-col pb-16 lg:pb-0">
         <script
           type="application/ld+json"
@@ -59,12 +76,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        <Header />
-        <main id="main-content" className="flex-1">
-          {children}
-        </main>
-        <Footer />
-        <MobileCta />
+        <ThemeProvider>
+          <LanguageProvider>
+            <Header />
+            <main id="main-content" className="flex-1">
+              {children}
+            </main>
+            <Footer />
+            <MobileCta />
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

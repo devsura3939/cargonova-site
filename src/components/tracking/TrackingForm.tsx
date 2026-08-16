@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { demoTrackingIds } from "@/lib/tracking";
 import { trackingSchema } from "@/lib/validations";
 import { trackEvent } from "@/lib/analytics";
+import { useLang } from "@/lib/i18n";
 
 type ViewState =
   | { kind: "idle" }
@@ -21,19 +22,17 @@ export function TrackingForm() {
   const [view, setView] = useState<ViewState>({ kind: "idle" });
   const [isPending, startTransition] = useTransition();
   const reduceMotion = useReducedMotion();
+  const { t } = useLang();
 
   function search(id: string) {
     const trimmed = id.trim();
     if (!trimmed) {
-      setView({ kind: "error", message: "Enter a tracking number to search." });
+      setView({ kind: "error", message: t("trk.emptyMsg") });
       return;
     }
     const parsed = trackingSchema.safeParse(trimmed);
     if (!parsed.success) {
-      setView({
-        kind: "error",
-        message: "Tracking numbers look like CRG-582941 — 3 letters, a dash, then 4–8 digits.",
-      });
+      setView({ kind: "error", message: t("trk.invalidMsg") });
       return;
     }
 
@@ -47,10 +46,7 @@ export function TrackingForm() {
       } else {
         setView({
           kind: "error",
-          message:
-            result.error === "invalid"
-              ? "Enter a valid tracking number, e.g. CRG-582941."
-              : "We couldn't find a shipment with that tracking number. Double-check the ID or contact support.",
+          message: result.error === "invalid" ? t("trk.invalidMsg") : t("trk.notFoundMsg"),
         });
       }
     });
@@ -66,12 +62,12 @@ export function TrackingForm() {
       {/* Search bar */}
       <form
         onSubmit={onSubmit}
-        className="relative z-10 mx-auto max-w-2xl rounded-3xl border border-navy-100 bg-white p-2 shadow-lift"
+        className="relative z-10 mx-auto max-w-2xl rounded-3xl border border-soft bg-surface p-2 shadow-lift"
         noValidate
       >
         <div className="flex flex-col gap-2 sm:flex-row">
           <label htmlFor="tracking-input" className="sr-only">
-            Shipment ID
+            {t("trk.shipment")}
           </label>
           <div className="relative flex-1">
             <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate" />
@@ -79,10 +75,10 @@ export function TrackingForm() {
               id="tracking-input"
               value={query}
               onChange={(e) => setQuery(e.target.value.toUpperCase())}
-              placeholder="Enter shipment ID, e.g. CRG-582941"
+              placeholder={t("trk.placeholder")}
               autoComplete="off"
               spellCheck={false}
-              className="h-12 w-full rounded-2xl border border-transparent bg-mist pl-11 pr-4 font-mono text-sm font-semibold tracking-wide text-navy-900 placeholder:font-sans placeholder:font-normal placeholder:tracking-normal placeholder:text-slate/70 focus:border-electric-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-electric-500/15"
+              className="h-12 w-full rounded-2xl border border-transparent bg-surface-muted pl-11 pr-4 font-mono text-sm font-semibold tracking-wide text-strong placeholder:font-sans placeholder:font-normal placeholder:tracking-normal placeholder:text-muted focus:border-electric-500 focus:bg-surface focus:outline-none focus:ring-4 focus:ring-electric-500/15"
             />
           </div>
           <button
@@ -91,14 +87,14 @@ export function TrackingForm() {
             className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-electric-500 px-6 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgb(22_119_255/0.7)] transition-colors hover:bg-electric-400 disabled:opacity-60"
           >
             {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
-            Track
+            {t("trk.search")}
           </button>
         </div>
       </form>
 
       {/* Demo IDs */}
       <div className="mx-auto mt-4 flex max-w-2xl flex-wrap items-center justify-center gap-2">
-        <span className="text-xs font-medium text-slate">Try a demo shipment:</span>
+        <span className="text-xs font-medium text-slate">{t("trk.quick")}</span>
         {demoTrackingIds.map((id) => (
           <button
             key={id}
@@ -107,7 +103,7 @@ export function TrackingForm() {
               setQuery(id);
               search(id);
             }}
-            className="rounded-full border border-navy-200 bg-white px-3 py-1 font-mono text-xs font-semibold text-navy-700 transition-colors hover:border-electric-400 hover:text-electric-600"
+            className="rounded-full border border-soft bg-surface px-3 py-1 font-mono text-xs font-semibold text-ink transition-colors hover:border-electric-400 hover:text-electric-600 dark:hover:text-electric-400"
           >
             {id}
           </button>
@@ -124,17 +120,16 @@ export function TrackingForm() {
               animate={{ opacity: 1, y: 0 }}
               exit={reduceMotion ? undefined : { opacity: 0, y: -10 }}
               transition={{ duration: 0.35 }}
-              className="mx-auto flex max-w-lg flex-col items-center rounded-3xl border border-dashed border-navy-200 bg-white/60 px-8 py-14 text-center"
+              className="mx-auto flex max-w-lg flex-col items-center rounded-3xl border border-dashed border-soft bg-surface/60 px-8 py-14 text-center"
             >
               <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-electric-100 text-electric-600">
                 <PackageSearch className="h-7 w-7" strokeWidth={1.6} />
               </span>
-              <h2 className="mt-5 font-display text-xl font-bold text-navy-900">
-                Where is your shipment?
+              <h2 className="mt-5 font-display text-xl font-bold text-navy-900 dark:text-white">
+                {t("trk.idleTitle")}
               </h2>
-              <p className="mt-2 text-sm leading-relaxed text-slate">
-                Enter your tracking number to see current status, checkpoint history,
-                ETA, and delivery progress.
+              <p className="mt-2 text-sm leading-relaxed text-slate dark:text-navy-200">
+                {t("trk.idleSub")}
               </p>
             </motion.div>
           ) : null}
@@ -170,23 +165,23 @@ export function TrackingForm() {
               animate={{ opacity: 1, y: 0 }}
               exit={reduceMotion ? undefined : { opacity: 0, y: -10 }}
               transition={{ duration: 0.35 }}
-              className="mx-auto flex max-w-lg flex-col items-center rounded-3xl border border-orange-200 bg-orange-50/70 px-8 py-12 text-center"
+              className="mx-auto flex max-w-lg flex-col items-center rounded-3xl border border-orange-200 bg-orange-50/70 px-8 py-12 text-center dark:border-orange-500/30 dark:bg-orange-500/10"
               role="alert"
             >
               <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-100 text-orange-500">
                 <AlertCircle className="h-7 w-7" strokeWidth={1.6} />
               </span>
-              <h2 className="mt-5 font-display text-xl font-bold text-navy-900">
-                Shipment not found
+              <h2 className="mt-5 font-display text-xl font-bold text-navy-900 dark:text-white">
+                {t("trk.notFound")}
               </h2>
-              <p className="mt-2 text-sm leading-relaxed text-slate">{view.message}</p>
+              <p className="mt-2 text-sm leading-relaxed text-slate dark:text-navy-200">{view.message}</p>
               <button
                 type="button"
                 onClick={() => setView({ kind: "idle" })}
                 className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-electric-600 hover:text-electric-500"
               >
                 <XCircle className="h-4 w-4" />
-                Clear search
+                {t("trk.clear")}
               </button>
             </motion.div>
           ) : null}

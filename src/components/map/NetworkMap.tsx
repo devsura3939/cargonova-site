@@ -124,12 +124,11 @@ export function NetworkMap({
               opacity={dimmed ? 0.25 : 1}
             >
               {!reduceMotion ? (
-                <motion.circle
+                <circle
                   r={hoverHub === hub.id ? 16 : 12}
                   fill={color}
                   opacity={0.18}
-                  animate={{ r: hoverHub === hub.id ? 16 : 12 }}
-                  transition={{ duration: 0.25 }}
+                  style={{ transition: "r 250ms ease" }}
                 />
               ) : (
                 <circle r="12" fill={color} opacity="0.18" />
@@ -153,11 +152,11 @@ export function NetworkMap({
 
       {/* Active corridor legend */}
       {activeCorridorId ? (
-        <div className="pointer-events-none absolute left-3 top-3 rounded-xl border border-navy-100 bg-white/95 px-4 py-2.5 shadow-card backdrop-blur">
-          <p className="text-xs font-bold text-navy-900">
+        <div className="pointer-events-none absolute left-3 top-3 rounded-xl border border-soft bg-surface/95 px-4 py-2.5 shadow-card backdrop-blur">
+          <p className="text-xs font-bold text-strong">
             {corridors.find((c) => c.id === activeCorridorId)?.label}
           </p>
-          <p className="mt-0.5 text-[11px] text-slate">
+          <p className="mt-0.5 text-[11px] text-muted">
             Transit: {corridors.find((c) => c.id === activeCorridorId)?.transitDays}
           </p>
         </div>

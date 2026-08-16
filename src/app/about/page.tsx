@@ -72,7 +72,7 @@ export default function AboutPage() {
             <div>
               <SectionHeading eyebrow="Our story" title="Founded on corridor density, not ambition" />
               <Reveal delay={0.1}>
-                <div className="mt-6 space-y-5 text-pretty leading-relaxed text-slate">
+                <div className="mt-6 space-y-5 text-pretty leading-relaxed text-muted">
                   <p>
                     CargoNova started in 2012 with three trucks and one scheduled lane between
                     Berlin and Warsaw. The founding bet was that shippers didn't need more
@@ -183,11 +183,11 @@ export default function AboutPage() {
                       text: "A dedicated coordinator owns each shipment from booking to signed POD. No handoffs between departments, no 'not my desk' moments.",
                     },
                   ].map((item) => (
-                    <div key={item.title} className="flex gap-4 rounded-2xl border border-navy-100 bg-white p-5 shadow-card">
+                    <div key={item.title} className="flex gap-4 rounded-2xl border border-soft bg-surface p-5 shadow-card">
                       <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-electric-500" />
                       <div>
-                        <h3 className="font-display font-bold text-navy-900">{item.title}</h3>
-                        <p className="mt-1.5 text-sm leading-relaxed text-slate">{item.text}</p>
+                        <h3 className="font-display font-bold text-strong">{item.title}</h3>
+                        <p className="mt-1.5 text-sm leading-relaxed text-muted">{item.text}</p>
                       </div>
                     </div>
                   ))}
@@ -200,14 +200,14 @@ export default function AboutPage() {
               <div className="mt-8 space-y-4">
                 {LEADERSHIP.map((person, i) => (
                   <Reveal key={person.name} delay={0.05 * i}>
-                    <div className="flex items-start gap-4 rounded-2xl border border-navy-100 bg-white p-5 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift">
+                    <div className="flex items-start gap-4 rounded-2xl border border-soft bg-surface p-5 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift">
                       <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-navy-900 font-display text-lg font-bold text-cyan-400">
                         {person.name.split(" ").map((n) => n[0]).join("")}
                       </span>
                       <div>
-                        <h3 className="font-display font-bold text-navy-900">{person.name}</h3>
+                        <h3 className="font-display font-bold text-strong">{person.name}</h3>
                         <p className="text-xs font-semibold uppercase tracking-wide text-electric-600">{person.role}</p>
-                        <p className="mt-1.5 text-sm leading-relaxed text-slate">{person.note}</p>
+                        <p className="mt-1.5 text-sm leading-relaxed text-muted">{person.note}</p>
                       </div>
                     </div>
                   </Reveal>
@@ -255,19 +255,19 @@ export default function AboutPage() {
                     { icon: Truck, title: "GDP-aligned pharma handling", note: "Temperature-controlled procedures aligned with EU GDP for pharmaceutical cargo." },
                     { icon: Users, title: "ADR-trained drivers", note: "Hazmat-capable drivers and certified equipment for approved dangerous-goods lanes." },
                   ].map((cert) => (
-                    <div key={cert.title} className="flex gap-4 rounded-2xl border border-navy-100 bg-white p-5 shadow-card">
+                    <div key={cert.title} className="flex gap-4 rounded-2xl border border-soft bg-surface p-5 shadow-card">
                       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-electric-100 text-electric-600">
                         <cert.icon className="h-5 w-5" />
                       </span>
                       <div>
-                        <h3 className="font-display font-bold text-navy-900">{cert.title}</h3>
-                        <p className="mt-1 text-sm leading-relaxed text-slate">{cert.note}</p>
+                        <h3 className="font-display font-bold text-strong">{cert.title}</h3>
+                        <p className="mt-1 text-sm leading-relaxed text-muted">{cert.note}</p>
                       </div>
                     </div>
                   ))}
-                  <div className="flex items-center gap-3 rounded-2xl bg-mist p-4">
+                  <div className="flex items-center gap-3 rounded-2xl bg-surface-muted p-4">
                     <HeartHandshake className="h-5 w-5 shrink-0 text-electric-500" />
-                    <p className="text-xs leading-relaxed text-navy-700">
+                    <p className="text-xs leading-relaxed text-ink">
                       We only publish credentials we can document. Anything marked placeholder
                       on this page will be completed before it's presented to a customer.
                     </p>
@@ -282,11 +282,11 @@ export default function AboutPage() {
       {/* CTA band */}
       <Section variant="light" className="pt-0">
         <Reveal>
-          <div className="mx-auto flex max-w-3xl flex-col items-center rounded-3xl border border-navy-100 bg-mist p-10 text-center sm:p-12">
-            <h2 className="text-balance font-display text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">
+          <div className="mx-auto flex max-w-3xl flex-col items-center rounded-3xl border border-soft bg-surface-muted p-10 text-center sm:p-12">
+            <h2 className="text-balance font-display text-3xl font-extrabold tracking-tight text-strong sm:text-4xl">
               See how we operate on your freight
             </h2>
-            <p className="mt-4 max-w-xl text-pretty text-slate sm:text-lg">
+            <p className="mt-4 max-w-xl text-pretty text-muted sm:text-lg">
               A quote, a lane test, or a full program review — the fastest way to judge a
               carrier is to give them one load.
             </p>

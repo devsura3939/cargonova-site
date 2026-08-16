@@ -27,13 +27,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
+import { useLang } from "@/lib/i18n";
 
 const STEPS = [
-  { id: "route", label: "Route", icon: MapPin },
-  { id: "cargo", label: "Cargo", icon: Package },
-  { id: "transport", label: "Transport", icon: Truck },
-  { id: "customer", label: "Customer", icon: User },
-  { id: "review", label: "Review", icon: ClipboardCheck },
+  { id: "route", labelKey: "quote.step.route" as const, icon: MapPin },
+  { id: "cargo", labelKey: "quote.step.cargo" as const, icon: Package },
+  { id: "transport", labelKey: "quote.step.transport" as const, icon: Truck },
+  { id: "customer", labelKey: "quote.step.customer" as const, icon: User },
+  { id: "review", labelKey: "quote.step.review" as const, icon: ClipboardCheck },
 ];
 
 const CARGO_TYPES = [
@@ -98,6 +99,7 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
   const [status, setStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
   const [reference, setReference] = useState("");
   const reduceMotion = useReducedMotion();
+  const { t } = useLang();
 
   const {
     register,
@@ -156,23 +158,23 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
 
   const summaryRows = useMemo(() => {
     const rows: { label: string; value: string }[] = [
-      { label: "Pickup", value: [values.pickupCity, values.pickupCountry].filter(Boolean).join(", ") },
-      { label: "Delivery", value: [values.destinationCity, values.destinationCountry].filter(Boolean).join(", ") },
-      { label: "Cargo type", value: values.cargoType },
-      { label: "Weight", value: values.weight ? `${values.weight} kg` : "—" },
-      { label: "Pallets", value: values.pallets ? String(values.pallets) : "—" },
-      { label: "Volume", value: values.volume ? `${values.volume} m³` : "—" },
-      { label: "Dimensions", value: [values.length, values.width, values.height].some(Boolean) ? `${values.length || "?"} × ${values.width || "?"} × ${values.height || "?"} m` : "—" },
-      { label: "Transport date", value: values.transportDate || "As soon as possible" },
-      { label: "Urgency", value: values.urgency === "standard" ? "Standard" : values.urgency === "priority" ? "Priority" : "Express" },
-      { label: "Refrigeration", value: values.refrigerationRequired ? "Required" : "Not required" },
-      { label: "Contact", value: `${values.name}${values.company ? ` · ${values.company}` : ""}` },
-      { label: "Email", value: values.email || "—" },
-      { label: "Phone", value: values.phone || "—" },
+      { label: t("quote.sum.pickup"), value: [values.pickupCity, values.pickupCountry].filter(Boolean).join(", ") },
+      { label: t("quote.sum.delivery"), value: [values.destinationCity, values.destinationCountry].filter(Boolean).join(", ") },
+      { label: t("quote.sum.cargoType"), value: values.cargoType },
+      { label: t("quote.sum.weight"), value: values.weight ? `${values.weight} kg` : "—" },
+      { label: t("quote.sum.pallets"), value: values.pallets ? String(values.pallets) : "—" },
+      { label: t("quote.sum.volume"), value: values.volume ? `${values.volume} m³` : "—" },
+      { label: t("quote.sum.dimensions"), value: [values.length, values.width, values.height].some(Boolean) ? `${values.length || "?"} × ${values.width || "?"} × ${values.height || "?"} m` : "—" },
+      { label: t("quote.sum.date"), value: values.transportDate || t("quote.asap") },
+      { label: t("quote.sum.urgency"), value: values.urgency === "standard" ? t("quote.urgencyStandard") : values.urgency === "priority" ? t("quote.urgencyPriority") : t("quote.urgencyExpress") },
+      { label: t("quote.sum.refrig"), value: values.refrigerationRequired ? t("quote.required") : t("quote.notRequired") },
+      { label: t("quote.sum.contact"), value: `${values.name}${values.company ? ` · ${values.company}` : ""}` },
+      { label: t("quote.sum.email"), value: values.email || "—" },
+      { label: t("quote.sum.phone"), value: values.phone || "—" },
     ];
-    if (values.specialRequirements) rows.push({ label: "Special handling", value: values.specialRequirements });
+    if (values.specialRequirements) rows.push({ label: t("quote.sum.special"), value: values.specialRequirements });
     return rows;
-  }, [values]);
+  }, [values, t]);
 
   /* ── Success screen ─────────────────────────────────── */
   if (status === "done") {
@@ -180,32 +182,30 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
       <motion.div
         initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="mx-auto max-w-xl rounded-3xl border border-navy-100 bg-white p-10 text-center shadow-lift sm:p-12"
+        className="mx-auto max-w-xl rounded-3xl border border-soft bg-surface p-10 text-center shadow-lift sm:p-12"
         role="status"
       >
-        <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+        <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20">
           <Check className="h-8 w-8" />
         </span>
-        <h2 className="mt-6 font-display text-3xl font-extrabold tracking-tight text-navy-900">
-          Quote request received
+        <h2 className="mt-6 font-display text-3xl font-extrabold tracking-tight text-strong">
+          {t("quote.successTitle")}
         </h2>
-        <p className="mt-3 text-sm leading-relaxed text-slate sm:text-base">
-          Your reference is{" "}
-          <span className="font-mono font-bold text-electric-600">{reference}</span>. Our
-          planning team will confirm pricing and availability within{" "}
-          <span className="font-semibold text-navy-900">4 business hours</span> — for urgent
-          loads, within 60 minutes.
+        <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
+          {t("quote.successSub")}{" "}
+          <span className="font-mono font-bold text-electric-600 dark:text-electric-400">{reference}</span>
+          {t("quote.successSub2")}
         </p>
-        <div className="mt-8 rounded-2xl bg-mist p-5 text-left text-sm leading-relaxed text-navy-700">
-          <p className="font-semibold text-navy-900">What happens next:</p>
+        <div className="mt-8 rounded-2xl bg-surface-muted p-5 text-left text-sm leading-relaxed text-ink">
+          <p className="font-semibold text-strong">{t("quote.whatNext")}</p>
           <ol className="mt-2 list-inside list-decimal space-y-1">
-            <li>You'll receive the quote by email.</li>
-            <li>Confirm to lock capacity and schedule pickup.</li>
-            <li>We handle the rest — you track it live.</li>
+            <li>{t("quote.next1")}</li>
+            <li>{t("quote.next2")}</li>
+            <li>{t("quote.next3")}</li>
           </ol>
         </div>
         <Button asChild size="lg" className="mt-8">
-          <a href="/tracking">Track your first shipment</a>
+          <a href="/tracking">{t("quote.trackFirst")}</a>
         </Button>
       </motion.div>
     );
@@ -244,10 +244,10 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
                 <span
                   className={cn(
                     "hidden text-sm font-semibold sm:block",
-                    active ? "text-navy-900" : done ? "text-electric-600" : "text-navy-300",
+                    active ? "text-strong" : done ? "text-electric-600" : "text-muted",
                   )}
                 >
-                  {s.label}
+                  {t(s.labelKey)}
                 </span>
               </button>
               {i < STEPS.length - 1 ? (
@@ -264,10 +264,10 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
         })}
       </ol>
 
-      <div className="relative overflow-hidden rounded-3xl border border-navy-100 bg-white p-6 shadow-lift sm:p-10">
+      <div className="relative overflow-hidden rounded-3xl border border-soft bg-surface p-6 shadow-lift sm:p-10">
         {status === "error" ? (
-          <p className="mb-6 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-600" role="alert">
-            Your request could not be submitted. Please try again.
+          <p className="mb-6 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-600 dark:bg-red-500/15 dark:text-red-400" role="alert">
+            {t("quote.error")}
           </p>
         ) : null}
 
@@ -282,18 +282,18 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
             {step === 0 ? (
               <div className="grid gap-5 sm:grid-cols-2">
                 <div className="sm:col-span-2">
-                  <h2 className="flex items-center gap-2 font-display text-xl font-bold text-navy-900">
-                    <MapPin className="h-5 w-5 text-electric-500" /> Where is the cargo going?
+                  <h2 className="flex items-center gap-2 font-display text-xl font-bold text-strong">
+                    <MapPin className="h-5 w-5 text-electric-500" /> {t("quote.heading.route")}
                   </h2>
                 </div>
-                <Field label="Pickup country" error={errors.pickupCountry?.message}>
+                <Field label={t("quote.pickupCountry")} error={errors.pickupCountry?.message}>
                   <Controller
                     control={control}
                     name="pickupCountry"
                     render={({ field }) => (
                       <Select value={field.value || undefined} onValueChange={field.onChange}>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select country" />
+                          <SelectValue placeholder={t("quote.selectCountry")} />
                         </SelectTrigger>
                         <SelectContent>
                           {COUNTRIES.map((c) => (
@@ -304,17 +304,17 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
                     )}
                   />
                 </Field>
-                <Field label="Pickup city" htmlFor="pickupCity" error={errors.pickupCity?.message}>
+                <Field label={t("quote.pickupCity")} htmlFor="pickupCity" error={errors.pickupCity?.message}>
                   <Input id="pickupCity" placeholder="e.g. Berlin" {...register("pickupCity")} invalid={!!errors.pickupCity} />
                 </Field>
-                <Field label="Delivery country" error={errors.destinationCountry?.message}>
+                <Field label={t("quote.destCountry")} error={errors.destinationCountry?.message}>
                   <Controller
                     control={control}
                     name="destinationCountry"
                     render={({ field }) => (
                       <Select value={field.value || undefined} onValueChange={field.onChange}>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select country" />
+                          <SelectValue placeholder={t("quote.selectCountry")} />
                         </SelectTrigger>
                         <SelectContent>
                           {COUNTRIES.map((c) => (
@@ -325,8 +325,8 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
                     )}
                   />
                 </Field>
-                <Field label="Delivery city" htmlFor="destinationCity" error={errors.destinationCity?.message}>
-                  <Input id="destinationCity" placeholder="e.g. Tbilisi" {...register("destinationCity")} invalid={!!errors.destinationCity} />
+                <Field label={t("quote.destCity")} htmlFor="destinationCity" error={errors.destinationCity?.message}>
+                  <Input id="destinationCity" placeholder={t("quote.exampleCity")} {...register("destinationCity")} invalid={!!errors.destinationCity} />
                 </Field>
               </div>
             ) : null}
@@ -334,48 +334,48 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
             {step === 1 ? (
               <div className="grid gap-5 sm:grid-cols-2">
                 <div className="sm:col-span-2">
-                  <h2 className="flex items-center gap-2 font-display text-xl font-bold text-navy-900">
-                    <Package className="h-5 w-5 text-electric-500" /> What are we moving?
+                  <h2 className="flex items-center gap-2 font-display text-xl font-bold text-strong">
+                    <Package className="h-5 w-5 text-electric-500" /> {t("quote.heading.cargo")}
                   </h2>
                 </div>
-                <Field label="Cargo type" error={errors.cargoType?.message} className="sm:col-span-2">
+                <Field label={t("quote.cargoType")} error={errors.cargoType?.message} className="sm:col-span-2">
                   <Controller
                     control={control}
                     name="cargoType"
                     render={({ field }) => (
                       <Select value={field.value || undefined} onValueChange={field.onChange}>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select cargo type" />
+                          <SelectValue placeholder={t("quote.selectCargo")} />
                         </SelectTrigger>
                         <SelectContent>
-                          {CARGO_TYPES.map((t) => (
-                            <SelectItem key={t} value={t}>{t}</SelectItem>
+                          {CARGO_TYPES.map((c) => (
+                            <SelectItem key={c} value={c}>{c}</SelectItem>
                           ))}
                         </SelectContent>
                       </Select>
                     )}
                   />
                 </Field>
-                <Field label="Description (optional)" htmlFor="cargoDescription" className="sm:col-span-2">
+                <Field label={t("quote.description")} htmlFor="cargoDescription" className="sm:col-span-2">
                   <Input id="cargoDescription" placeholder="e.g. Industrial components, palletized" {...register("cargoDescription")} />
                 </Field>
-                <Field label="Weight (kg)" htmlFor="weight" error={errors.weight?.message}>
+                <Field label={t("quote.weight")} htmlFor="weight" error={errors.weight?.message}>
                   <Input id="weight" type="number" min="1" placeholder="e.g. 4500" {...register("weight")} invalid={!!errors.weight} />
                 </Field>
-                <Field label="Pallets" htmlFor="pallets" error={errors.pallets?.message}>
+                <Field label={t("quote.pallets")} htmlFor="pallets" error={errors.pallets?.message}>
                   <Input id="pallets" type="number" min="1" max="100" placeholder="e.g. 6" {...register("pallets")} invalid={!!errors.pallets} />
                 </Field>
-                <Field label="Volume (m³, optional)" htmlFor="volume" error={errors.volume?.message}>
+                <Field label={t("quote.volume")} htmlFor="volume" error={errors.volume?.message}>
                   <Input id="volume" type="number" step="0.1" min="0.1" placeholder="e.g. 24" {...register("volume")} invalid={!!errors.volume} />
                 </Field>
                 <div />
-                <Field label="Length (m, optional)" htmlFor="length" error={errors.length?.message}>
+                <Field label={t("quote.length")} htmlFor="length" error={errors.length?.message}>
                   <Input id="length" type="number" step="0.1" placeholder="e.g. 2.4" {...register("length")} invalid={!!errors.length} />
                 </Field>
-                <Field label="Width (m, optional)" htmlFor="width" error={errors.width?.message}>
+                <Field label={t("quote.width")} htmlFor="width" error={errors.width?.message}>
                   <Input id="width" type="number" step="0.1" placeholder="e.g. 1.2" {...register("width")} invalid={!!errors.width} />
                 </Field>
-                <Field label="Height (m, optional)" htmlFor="height" error={errors.height?.message}>
+                <Field label={t("quote.height")} htmlFor="height" error={errors.height?.message}>
                   <Input id="height" type="number" step="0.1" placeholder="e.g. 1.5" {...register("height")} invalid={!!errors.height} />
                 </Field>
               </div>
@@ -384,14 +384,14 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
             {step === 2 ? (
               <div className="grid gap-5 sm:grid-cols-2">
                 <div className="sm:col-span-2">
-                  <h2 className="flex items-center gap-2 font-display text-xl font-bold text-navy-900">
-                    <Truck className="h-5 w-5 text-electric-500" /> When and how should it move?
+                  <h2 className="flex items-center gap-2 font-display text-xl font-bold text-strong">
+                    <Truck className="h-5 w-5 text-electric-500" /> {t("quote.heading.transport")}
                   </h2>
                 </div>
-                <Field label="Desired transport date" htmlFor="transportDate" error={errors.transportDate?.message}>
+                <Field label={t("quote.date")} htmlFor="transportDate" error={errors.transportDate?.message}>
                   <Input id="transportDate" type="date" {...register("transportDate")} invalid={!!errors.transportDate} />
                 </Field>
-                <Field label="Delivery urgency">
+                <Field label={t("quote.urgency")}>
                   <Controller
                     control={control}
                     name="urgency"
@@ -401,9 +401,9 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="standard">Standard (most economical)</SelectItem>
-                          <SelectItem value="priority">Priority (faster lane)</SelectItem>
-                          <SelectItem value="express">Express (dedicated vehicle)</SelectItem>
+                          <SelectItem value="standard">{t("quote.urgencyStandard")}</SelectItem>
+                          <SelectItem value="priority">{t("quote.urgencyPriority")}</SelectItem>
+                          <SelectItem value="express">{t("quote.urgencyExpress")}</SelectItem>
                         </SelectContent>
                       </Select>
                     )}
@@ -423,22 +423,22 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
                           "flex w-full items-center justify-between gap-4 rounded-2xl border p-4 text-left transition-all duration-200",
                           field.value
                             ? "border-cyan-400 bg-cyan-100/50 ring-2 ring-cyan-400/30"
-                            : "border-navy-200 bg-white hover:border-navy-300",
+                            : "border-soft bg-surface hover:border-soft-strong",
                         )}
                       >
                         <span className="flex items-center gap-3">
-                          <span className={cn("flex h-10 w-10 items-center justify-center rounded-xl", field.value ? "bg-cyan-500 text-white" : "bg-mist text-navy-400")}>
+                          <span className={cn("flex h-10 w-10 items-center justify-center rounded-xl", field.value ? "bg-cyan-500 text-white" : "bg-surface-muted text-navy-400 dark:text-navy-300")}>
                             <Snowflake className="h-5 w-5" />
                           </span>
                           <span>
-                            <span className="block text-sm font-bold text-navy-900">Temperature-controlled transport</span>
-                            <span className="block text-xs text-slate">Reefer unit, continuous logging, -25°C to +25°C</span>
+                            <span className="block text-sm font-bold text-strong">{t("quote.refrigeration")}</span>
+                            <span className="block text-xs text-muted">{t("quote.refrigerationSub")}</span>
                           </span>
                         </span>
                         <span
                           className={cn(
                             "relative h-6 w-11 shrink-0 rounded-full transition-colors duration-200",
-                            field.value ? "bg-cyan-500" : "bg-navy-200",
+                            field.value ? "bg-cyan-500" : "bg-soft-strong dark:bg-white/20",
                           )}
                           aria-hidden="true"
                         >
@@ -453,7 +453,7 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
                     )}
                   />
                 </div>
-                <Field label="Special handling (optional)" htmlFor="specialRequirements" className="sm:col-span-2">
+                <Field label={t("quote.special")} htmlFor="specialRequirements" className="sm:col-span-2">
                   <Textarea id="specialRequirements" placeholder="Loading equipment, appointment windows, hazardous notes, delivery instructions…" {...register("specialRequirements")} />
                 </Field>
               </div>
@@ -462,51 +462,50 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
             {step === 3 ? (
               <div className="grid gap-5 sm:grid-cols-2">
                 <div className="sm:col-span-2">
-                  <h2 className="flex items-center gap-2 font-display text-xl font-bold text-navy-900">
-                    <User className="h-5 w-5 text-electric-500" /> Who should receive the quote?
+                  <h2 className="flex items-center gap-2 font-display text-xl font-bold text-strong">
+                    <User className="h-5 w-5 text-electric-500" /> {t("quote.heading.customer")}
                   </h2>
                 </div>
-                <Field label="Full name" htmlFor="name" error={errors.name?.message}>
+                <Field label={t("quote.name")} htmlFor="name" error={errors.name?.message}>
                   <Input id="name" placeholder="e.g. Anna Meyer" {...register("name")} invalid={!!errors.name} />
                 </Field>
-                <Field label="Company (optional)" htmlFor="company" error={errors.company?.message}>
+                <Field label={t("quote.company")} htmlFor="company" error={errors.company?.message}>
                   <Input id="company" placeholder="e.g. Meyer Manufacturing GmbH" {...register("company")} invalid={!!errors.company} />
                 </Field>
-                <Field label="Phone" htmlFor="phone" error={errors.phone?.message}>
+                <Field label={t("quote.phone")} htmlFor="phone" error={errors.phone?.message}>
                   <Input id="phone" type="tel" placeholder="+49 30 …" {...register("phone")} invalid={!!errors.phone} />
                 </Field>
-                <Field label="Email" htmlFor="email" error={errors.email?.message}>
+                <Field label={t("quote.email")} htmlFor="email" error={errors.email?.message}>
                   <Input id="email" type="email" placeholder="you@company.com" {...register("email")} invalid={!!errors.email} />
                 </Field>
-                <p className="flex items-center gap-2 text-xs text-slate sm:col-span-2">
+                <p className="flex items-center gap-2 text-xs text-muted sm:col-span-2">
                   <PhoneCall className="h-3.5 w-3.5 shrink-0 text-electric-500" />
-                  Prefer to talk? Call +49 30 1234 5678 — urgent loads answered in minutes.
+                  {t("quote.prefersPhone")}
                 </p>
               </div>
             ) : null}
 
             {step === 4 ? (
               <div>
-                <h2 className="flex items-center gap-2 font-display text-xl font-bold text-navy-900">
-                  <ClipboardCheck className="h-5 w-5 text-electric-500" /> Review your request
+                <h2 className="flex items-center gap-2 font-display text-xl font-bold text-strong">
+                  <ClipboardCheck className="h-5 w-5 text-electric-500" /> {t("quote.reviewTitle")}
                 </h2>
-                <p className="mt-1.5 text-sm text-slate">
-                  Check the details below, then submit. You'll receive the quote by email.
+                <p className="mt-1.5 text-sm text-muted">
+                  {t("quote.reviewSub")}
                 </p>
-                <dl className="mt-6 grid gap-x-8 gap-y-3 rounded-2xl bg-mist p-6 text-sm sm:grid-cols-2">
+                <dl className="mt-6 grid gap-x-8 gap-y-3 rounded-2xl bg-surface-muted p-6 text-sm sm:grid-cols-2">
                   {summaryRows.map((row) => (
-                    <div key={row.label} className="flex justify-between gap-4 border-b border-navy-100 pb-2.5">
-                      <dt className="shrink-0 font-medium text-slate">{row.label}</dt>
-                      <dd className="text-right font-semibold text-navy-900">{row.value}</dd>
+                    <div key={row.label} className="flex justify-between gap-4 border-b border-soft pb-2.5">
+                      <dt className="shrink-0 font-medium text-muted">{row.label}</dt>
+                      <dd className="text-right font-semibold text-strong">{row.value}</dd>
                     </div>
                   ))}
                 </dl>
-                <p className="mt-4 text-xs leading-relaxed text-slate">
-                  By submitting you agree to our{" "}
-                  <a href="/terms" className="font-semibold text-electric-600 underline decoration-electric-300 underline-offset-2">terms of service</a>{" "}
-                  and{" "}
-                  <a href="/privacy" className="font-semibold text-electric-600 underline decoration-electric-300 underline-offset-2">privacy policy</a>.
-                  No payment is taken at this stage.
+                <p className="mt-4 text-xs leading-relaxed text-muted">
+                  {t("quote.agree")}{" "}
+                  <a href="/terms" className="font-semibold text-electric-600 underline decoration-electric-300 underline-offset-2 dark:text-electric-400">terms of service</a>{" "}
+                  {t("quote.and")}{" "}
+                  <a href="/privacy" className="font-semibold text-electric-600 underline decoration-electric-300 underline-offset-2 dark:text-electric-400">privacy policy</a>.
                 </p>
               </div>
             ) : null}
@@ -523,11 +522,11 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
             className={cn(step === 0 && "invisible")}
           >
             <ArrowLeft className="h-4 w-4" />
-            Back
+            {t("common.back")}
           </Button>
           {step < STEPS.length - 1 ? (
             <Button type="button" onClick={next} size="lg">
-              Continue
+              {t("common.continue")}
               <ArrowRight className="h-4 w-4" />
             </Button>
           ) : (
@@ -540,11 +539,11 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
               {status === "submitting" ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Submitting…
+                  {t("quote.submitting")}
                 </>
               ) : (
                 <>
-                  Submit Quote Request
+                  {t("quote.submit")}
                   <ArrowRight className="h-4 w-4" />
                 </>
               )}

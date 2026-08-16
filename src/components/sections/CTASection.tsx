@@ -1,10 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, PhoneCall } from "lucide-react";
 import { Reveal } from "@/components/shared/Reveal";
 import { Button } from "@/components/ui/button";
 import { brand } from "@/lib/constants";
+import { useLang } from "@/lib/i18n";
 
 export function CTASection() {
+  const { t } = useLang();
   return (
     <section className="relative overflow-hidden bg-navy-900 py-24 text-white sm:py-28">
       <div className="pointer-events-none absolute inset-0 bg-noise opacity-40" />
@@ -50,36 +54,35 @@ export function CTASection() {
         <Reveal>
           <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-4 py-1.5 text-xs font-semibold text-navy-100">
             <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
-            Capacity available this week on core corridors
+            {t("cta.badge")}
           </p>
           <h2 className="text-balance font-display text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
-            Move Your Cargo With{" "}
+            {t("cta.title1")}{" "}
             <span className="bg-gradient-to-r from-electric-400 to-cyan-400 bg-clip-text text-transparent">
-              Confidence
+              {t("cta.titleAccent")}
             </span>
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-pretty text-base leading-relaxed text-navy-200 sm:text-lg">
-            Get a confirmed quote within 4 business hours — or talk to a logistics
-            specialist about your network today.
+            {t("cta.sub")}
           </p>
         </Reveal>
         <Reveal delay={0.1}>
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button asChild size="lg">
               <Link href="/quote">
-                Get a Quote
+                {t("cta.getQuote")}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="secondary">
               <Link href="/contact">
                 <PhoneCall className="h-4 w-4" />
-                Contact Logistics Team
+                {t("cta.contact")}
               </Link>
             </Button>
           </div>
           <p className="mt-6 text-sm text-navy-300">
-            Prefer to talk? Call{" "}
+            {t("cta.prefers")}{" "}
             <a href={brand.contact.phoneHref} className="font-semibold text-white underline decoration-cyan-400/60 underline-offset-4 hover:text-cyan-300">
               {brand.contact.phone}
             </a>{" "}

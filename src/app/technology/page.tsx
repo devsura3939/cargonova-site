@@ -76,13 +76,13 @@ export default function TechnologyPage() {
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {CAPABILITIES.map((cap, i) => (
             <Reveal key={cap.title} delay={0.05 * (i % 3)}>
-              <div className="group relative h-full overflow-hidden rounded-3xl border border-navy-100 bg-white p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
+              <div className="group relative h-full overflow-hidden rounded-3xl border border-soft bg-surface p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
                 <div className="pointer-events-none absolute -right-14 -top-14 h-36 w-36 rounded-full bg-electric-100/0 blur-2xl transition-all duration-500 group-hover:bg-electric-100/70" />
                 <span className="relative inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-electric-100 text-electric-600 transition-transform duration-300 group-hover:scale-105">
                   <cap.icon className="h-6 w-6" strokeWidth={1.75} />
                 </span>
-                <h3 className="relative mt-5 font-display text-lg font-bold text-navy-900">{cap.title}</h3>
-                <p className="relative mt-2 text-sm leading-relaxed text-slate">{cap.text}</p>
+                <h3 className="relative mt-5 font-display text-lg font-bold text-strong">{cap.title}</h3>
+                <p className="relative mt-2 text-sm leading-relaxed text-muted">{cap.text}</p>
               </div>
             </Reveal>
           ))}
@@ -134,10 +134,10 @@ export default function TechnologyPage() {
             <Reveal delay={0.1}>
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 {INTEGRATIONS.map((item) => (
-                  <div key={item.title} className="rounded-2xl border border-navy-100 bg-white p-5 shadow-card">
+                  <div key={item.title} className="rounded-2xl border border-soft bg-surface p-5 shadow-card">
                     <item.icon className="h-5 w-5 text-electric-500" strokeWidth={1.75} />
-                    <h3 className="mt-3 text-sm font-bold text-navy-900">{item.title}</h3>
-                    <p className="mt-1 text-xs leading-relaxed text-slate">{item.text}</p>
+                    <h3 className="mt-3 text-sm font-bold text-strong">{item.title}</h3>
+                    <p className="mt-1 text-xs leading-relaxed text-muted">{item.text}</p>
                   </div>
                 ))}
               </div>

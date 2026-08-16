@@ -5,17 +5,19 @@ import { testimonials } from "@/data/testimonials";
 import { Section } from "@/components/shared/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Reveal } from "@/components/shared/Reveal";
+import { useLang } from "@/lib/i18n";
 
 export function TestimonialsSection() {
+  const { t } = useLang();
   const [featured, ...rest] = testimonials;
 
   return (
     <Section variant="mist" id="testimonials">
       <SectionHeading
         align="center"
-        eyebrow="Client outcomes"
-        title="Results our customers measure in their own KPIs"
-        description="Enterprise logistics is judged by numbers. These are the numbers our clients report after moving freight with CargoNova."
+        eyebrow={t("test.eyebrow")}
+        title={t("test.title")}
+        description={t("test.sub")}
       />
 
       <div className="mt-14 grid gap-6 lg:grid-cols-3">
@@ -50,20 +52,20 @@ export function TestimonialsSection() {
         {/* Standard cards */}
         {rest.map((t, i) => (
           <Reveal key={t.company} delay={0.06 * i}>
-            <figure className="flex h-full flex-col rounded-3xl border border-navy-100 bg-white p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
+            <figure className="flex h-full flex-col rounded-3xl border border-soft bg-surface p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
               <blockquote className="flex-1 text-pretty text-sm leading-relaxed text-ink">
                 “{t.quote}”
               </blockquote>
-              <figcaption className="mt-6 flex items-center justify-between gap-4 border-t border-navy-100 pt-5">
+              <figcaption className="mt-6 flex items-center justify-between gap-4 border-t border-soft pt-5">
                 <div>
-                  <p className="text-sm font-bold text-navy-900">{t.person}</p>
-                  <p className="text-xs text-slate">
+                  <p className="text-sm font-bold text-strong">{t.person}</p>
+                  <p className="text-xs text-muted">
                     {t.role} · {t.company}
                   </p>
                 </div>
                 <div className="shrink-0 text-right">
                   <p className="font-display text-lg font-extrabold text-electric-600">{t.metric}</p>
-                  <p className="max-w-24 text-[9px] font-semibold uppercase tracking-wide text-slate">
+                  <p className="max-w-24 text-[9px] font-semibold uppercase tracking-wide text-muted">
                     {t.metricLabel}
                   </p>
                 </div>
@@ -73,9 +75,7 @@ export function TestimonialsSection() {
         ))}
       </div>
 
-      <p className="mt-8 text-center text-xs text-slate">
-        Placeholder case studies for demo purposes — replace with customer-approved references.
-      </p>
+      <p className="mt-8 text-center text-xs text-muted">{t("test.placeholder")}</p>
     </Section>
   );
 }

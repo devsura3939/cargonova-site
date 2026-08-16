@@ -34,14 +34,14 @@ export default function ServicesPage() {
       />
 
       {/* Service categories */}
-      <section className="bg-mist py-20 sm:py-24">
+      <section className="bg-surface-muted py-20 sm:py-24">
         <Container>
           <div className="grid gap-6 md:grid-cols-2">
             {services.map((service, i) => (
               <Reveal key={service.slug} delay={0.05 * (i % 2)}>
                 <Link
                   href={`/services/${service.slug}`}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-navy-100 bg-white p-8 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
+                  className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-soft bg-surface p-8 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
                 >
                   <div
                     className={cn(
@@ -60,17 +60,17 @@ export default function ServicesPage() {
                     </span>
                     <ArrowUpRight className="h-5 w-5 text-navy-200 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-electric-500" />
                   </div>
-                  <h2 className="mt-6 font-display text-2xl font-bold text-navy-900">
+                  <h2 className="mt-6 font-display text-2xl font-bold text-strong">
                     {service.title}
                   </h2>
-                  <p className="mt-2.5 flex-1 text-sm leading-relaxed text-slate sm:text-base">
+                  <p className="mt-2.5 flex-1 text-sm leading-relaxed text-muted sm:text-base">
                     {service.short}
                   </p>
                   <div className="mt-6 flex flex-wrap gap-2">
                     {service.features.slice(0, 3).map((f) => (
                       <span
                         key={f}
-                        className="rounded-full bg-mist px-3 py-1 text-xs font-medium text-navy-700"
+                        className="rounded-full bg-surface-muted px-3 py-1 text-xs font-medium text-ink"
                       >
                         {f}
                       </span>
@@ -88,13 +88,13 @@ export default function ServicesPage() {
       </section>
 
       {/* How to choose */}
-      <section className="bg-white py-20 sm:py-24">
+      <section className="bg-surface py-20 sm:py-24">
         <Container className="max-w-4xl">
           <Reveal className="text-center">
-            <h2 className="text-balance font-display text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">
+            <h2 className="text-balance font-display text-3xl font-extrabold tracking-tight text-strong sm:text-4xl">
               Not sure which service fits?
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-pretty text-slate sm:text-lg">
+            <p className="mx-auto mt-4 max-w-xl text-pretty text-muted sm:text-lg">
               Most shipments fit one of two patterns: full loads move fastest on FTL,
               partial loads cost least on LTL. Everything else is a conversation worth
               having.
@@ -107,14 +107,14 @@ export default function ServicesPage() {
                 { title: "1–15 pallets", text: "Less-than-Truckload — pay for the space you use." },
                 { title: "Time-critical", text: "Express Cargo — dedicated vehicle, priority lane." },
               ].map((tip) => (
-                <div key={tip.title} className="rounded-2xl border border-navy-100 bg-mist/70 p-6 text-center">
+                <div key={tip.title} className="rounded-2xl border border-soft bg-surface-muted/70 p-6 text-center">
                   <Check className="mx-auto h-5 w-5 text-electric-500" />
-                  <p className="mt-3 font-display text-base font-bold text-navy-900">{tip.title}</p>
-                  <p className="mt-1.5 text-sm leading-relaxed text-slate">{tip.text}</p>
+                  <p className="mt-3 font-display text-base font-bold text-strong">{tip.title}</p>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted">{tip.text}</p>
                 </div>
               ))}
             </div>
-            <p className="mt-8 text-center text-sm text-slate">
+            <p className="mt-8 text-center text-sm text-muted">
               Still unsure?{" "}
               <Link href="/quote" className="font-semibold text-electric-600 underline decoration-electric-300 underline-offset-4 hover:text-electric-500">
                 Request a quote

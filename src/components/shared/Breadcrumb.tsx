@@ -15,7 +15,7 @@ export function Breadcrumb({
         href="/"
         className={cn(
           "transition-colors",
-          dark ? "text-navy-300 hover:text-white" : "text-slate hover:text-navy-900",
+          dark ? "text-navy-300 hover:text-white" : "text-muted hover:text-strong",
         )}
       >
         Home
@@ -26,7 +26,7 @@ export function Breadcrumb({
             className={cn("h-3.5 w-3.5", dark ? "text-navy-500" : "text-navy-200")}
           />
           {i === items.length - 1 ? (
-            <span className={cn("font-semibold", dark ? "text-white" : "text-navy-900")}>
+            <span className={cn("font-semibold", dark ? "text-white" : "text-strong")}>
               {item.name}
             </span>
           ) : (
@@ -34,7 +34,7 @@ export function Breadcrumb({
               href={item.path}
               className={cn(
                 "transition-colors",
-                dark ? "text-navy-300 hover:text-white" : "text-slate hover:text-navy-900",
+                dark ? "text-navy-300 hover:text-white" : "text-muted hover:text-strong",
               )}
             >
               {item.name}

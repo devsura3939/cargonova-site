@@ -118,15 +118,15 @@ export default async function BlogPostPage({
             </div>
             <article className="space-y-7">
               {post.body.map((paragraph, i) => (
-                <p key={i} className={i === 0 ? "text-lg font-medium leading-relaxed text-navy-900" : "text-pretty leading-relaxed text-ink"}>
+                <p key={i} className={i === 0 ? "text-lg font-medium leading-relaxed text-strong" : "text-pretty leading-relaxed text-ink"}>
                   {paragraph}
                 </p>
               ))}
             </article>
 
-            <div className="mt-12 rounded-3xl border border-navy-100 bg-mist p-7 sm:p-9">
-              <h2 className="font-display text-xl font-bold text-navy-900">Put this into practice</h2>
-              <p className="mt-2 text-sm leading-relaxed text-slate">
+            <div className="mt-12 rounded-3xl border border-soft bg-surface-muted p-7 sm:p-9">
+              <h2 className="font-display text-xl font-bold text-strong">Put this into practice</h2>
+              <p className="mt-2 text-sm leading-relaxed text-muted">
                 The ideas in this article apply to real shipments. Tell us what you're moving
                 and we'll show you how they work on your routes.
               </p>
@@ -140,7 +140,7 @@ export default async function BlogPostPage({
                 </Link>
                 <Link
                   href="/contact"
-                  className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-navy-200 bg-white px-6 text-sm font-semibold text-navy-800 transition-colors hover:border-electric-400 hover:text-electric-600"
+                  className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-soft bg-surface px-6 text-sm font-semibold text-ink transition-colors hover:border-electric-400 hover:text-electric-600 dark:hover:text-electric-400"
                 >
                   Talk to a specialist
                 </Link>
@@ -162,7 +162,7 @@ export default async function BlogPostPage({
       {fallbackRelated.length > 0 ? (
         <Section variant="mist">
           <Container>
-            <h2 className="font-display text-2xl font-extrabold tracking-tight text-navy-900">
+            <h2 className="font-display text-2xl font-extrabold tracking-tight text-strong">
               Continue reading
             </h2>
             <div className="mt-8 grid gap-6 md:grid-cols-3">
@@ -170,7 +170,7 @@ export default async function BlogPostPage({
                 <Link
                   key={p.slug}
                   href={`/blog/${p.slug}`}
-                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-navy-100 bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
+                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-soft bg-surface shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
                 >
                   <div className="relative h-36 overflow-hidden">
                     <Image
@@ -183,7 +183,7 @@ export default async function BlogPostPage({
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     <span className="text-xs font-semibold text-electric-600">{p.category}</span>
-                    <h3 className="mt-2.5 flex-1 font-display text-base font-bold leading-snug text-navy-900 transition-colors group-hover:text-electric-600">
+                    <h3 className="mt-2.5 flex-1 font-display text-base font-bold leading-snug text-strong transition-colors group-hover:text-electric-600 dark:group-hover:text-electric-400">
                       {p.title}
                     </h3>
                     <span className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-electric-600">

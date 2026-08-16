@@ -2,8 +2,11 @@
 
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, extend } from "@react-three/fiber";
 import { useReducedMotion } from "framer-motion";
+
+// Register the Line primitive so <threeLine> resolves to THREE.Line.
+extend({ ThreeLine: THREE.Line });
 
 /* ── Helpers ─────────────────────────────────────────────── */
 

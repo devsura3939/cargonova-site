@@ -41,7 +41,7 @@ export function CoverageExplorer() {
                 "inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200",
                 active === c.id
                   ? "bg-electric-500 text-white shadow-glow"
-                  : "border border-navy-200 bg-white text-navy-700 hover:border-electric-400 hover:text-electric-600",
+                  : "border border-soft bg-surface text-ink hover:border-electric-400 hover:text-electric-600 dark:hover:text-electric-400",
               )}
             >
               <MapPin className="h-4 w-4" />
@@ -62,10 +62,10 @@ export function CoverageExplorer() {
               description="Published transit days per corridor, updated quarterly from actual performance. Deviations are the exception, and you'll hear about them first."
             />
             <Reveal delay={0.1}>
-              <div className="mt-10 overflow-hidden rounded-3xl border border-navy-100 bg-white shadow-card">
+              <div className="mt-10 overflow-hidden rounded-3xl border border-soft bg-surface shadow-card">
                 <table className="w-full text-left text-sm">
                   <thead>
-                    <tr className="border-b border-navy-100 bg-mist text-xs font-bold uppercase tracking-wide text-slate">
+                    <tr className="border-b border-soft bg-surface-muted text-xs font-bold uppercase tracking-wide text-muted">
                       <th className="px-6 py-4">Corridor</th>
                       <th className="px-6 py-4">Via</th>
                       <th className="px-6 py-4 text-right">Transit</th>
@@ -87,8 +87,8 @@ export function CoverageExplorer() {
                           )}
                           onClick={() => setActive(active === c.id ? null : c.id)}
                         >
-                          <td className="px-6 py-4 font-semibold text-navy-900">{c.label}</td>
-                          <td className="px-6 py-4 text-slate">{path.join(" → ")}</td>
+                          <td className="px-6 py-4 font-semibold text-strong">{c.label}</td>
+                          <td className="px-6 py-4 text-muted">{path.join(" → ")}</td>
                           <td className="px-6 py-4 text-right font-bold text-electric-600">{c.transitDays}</td>
                         </tr>
                       );
@@ -104,13 +104,13 @@ export function CoverageExplorer() {
             <div className="mt-10 space-y-4">
               {regions.map((region, i) => (
                 <Reveal key={region.id} delay={0.05 * i}>
-                  <div className="flex gap-4 rounded-2xl border border-navy-100 bg-white p-5 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift">
+                  <div className="flex gap-4 rounded-2xl border border-soft bg-surface p-5 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift">
                     <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-electric-100 text-electric-600">
                       <MapPin className="h-4 w-4" />
                     </span>
                     <div>
-                      <h3 className="font-display font-bold text-navy-900">{region.name}</h3>
-                      <p className="mt-1 text-sm leading-relaxed text-slate">{region.note}</p>
+                      <h3 className="font-display font-bold text-strong">{region.name}</h3>
+                      <p className="mt-1 text-sm leading-relaxed text-muted">{region.note}</p>
                     </div>
                   </div>
                 </Reveal>
@@ -124,10 +124,10 @@ export function CoverageExplorer() {
       <Section variant="light">
         <Reveal>
           <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-            <h2 className="text-balance font-display text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">
+            <h2 className="text-balance font-display text-3xl font-extrabold tracking-tight text-strong sm:text-4xl">
               Not on a listed corridor?
             </h2>
-            <p className="mt-4 max-w-xl text-pretty text-slate sm:text-lg">
+            <p className="mt-4 max-w-xl text-pretty text-muted sm:text-lg">
               Our network extends beyond these lanes through vetted partners. Ask us about
               your route — if it's movable by road, we'll price it.
             </p>

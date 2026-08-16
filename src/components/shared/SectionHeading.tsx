@@ -44,7 +44,7 @@ export function SectionHeading({
       <Tag
         className={cn(
           "text-balance font-display text-3xl font-extrabold leading-[1.12] tracking-tight sm:text-4xl lg:text-[2.75rem]",
-          dark ? "text-white" : "text-navy-900",
+          dark ? "text-white" : "text-strong",
         )}
       >
         {title}
@@ -53,7 +53,7 @@ export function SectionHeading({
         <p
           className={cn(
             "mt-5 text-pretty text-base leading-relaxed sm:text-lg",
-            dark ? "text-navy-200" : "text-slate",
+            dark ? "text-navy-200" : "text-muted",
           )}
         >
           {description}

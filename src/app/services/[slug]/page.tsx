@@ -87,7 +87,7 @@ export default async function ServicePage({
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
           <div>
             <Reveal>
-              <h2 className="text-balance font-display text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">
+              <h2 className="text-balance font-display text-3xl font-extrabold tracking-tight text-strong sm:text-4xl">
                 Why {service.title.toLowerCase()} with CargoNova
               </h2>
               <div className="mt-6 space-y-5">
@@ -97,8 +97,8 @@ export default async function ServicePage({
                       <Check className="h-4 w-4" />
                     </span>
                     <div>
-                      <h3 className="font-display text-lg font-bold text-navy-900">{b.title}</h3>
-                      <p className="mt-1 text-sm leading-relaxed text-slate sm:text-base">{b.text}</p>
+                      <h3 className="font-display text-lg font-bold text-strong">{b.title}</h3>
+                      <p className="mt-1 text-sm leading-relaxed text-muted sm:text-base">{b.text}</p>
                     </div>
                   </div>
                 ))}
@@ -106,16 +106,16 @@ export default async function ServicePage({
             </Reveal>
 
             <Reveal delay={0.1}>
-              <h3 className="mt-12 font-display text-2xl font-bold text-navy-900">How it works</h3>
+              <h3 className="mt-12 font-display text-2xl font-bold text-strong">How it works</h3>
               <ol className="mt-6 grid gap-6 sm:grid-cols-2">
                 {service.process.map((p) => (
                   <li
                     key={p.step}
-                    className="relative rounded-2xl border border-navy-100 bg-mist/70 p-5"
+                    className="relative rounded-2xl border border-soft bg-surface-muted/70 p-5"
                   >
                     <span className="font-mono text-xs font-bold text-electric-600">{p.step}</span>
-                    <h4 className="mt-1.5 font-display text-base font-bold text-navy-900">{p.title}</h4>
-                    <p className="mt-1.5 text-sm leading-relaxed text-slate">{p.text}</p>
+                    <h4 className="mt-1.5 font-display text-base font-bold text-strong">{p.title}</h4>
+                    <p className="mt-1.5 text-sm leading-relaxed text-muted">{p.text}</p>
                   </li>
                 ))}
               </ol>
@@ -125,7 +125,7 @@ export default async function ServicePage({
           {/* Side rail */}
           <div className="space-y-6">
             <Reveal delay={0.1}>
-              <div className="overflow-hidden rounded-3xl border border-navy-100 bg-white shadow-card">
+              <div className="overflow-hidden rounded-3xl border border-soft bg-surface shadow-card">
                 <div className="bg-navy-900 p-6 text-white">
                   <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 ring-1 ring-inset ring-white/15">
                     <ServiceIcon name={service.icon} className="h-6 w-6 text-cyan-400" />
@@ -144,14 +144,14 @@ export default async function ServicePage({
             </Reveal>
 
             <Reveal delay={0.15}>
-              <div className="rounded-3xl border border-navy-100 bg-white p-6 shadow-card">
-                <h3 className="flex items-center gap-2 font-display text-lg font-bold text-navy-900">
+              <div className="rounded-3xl border border-soft bg-surface p-6 shadow-card">
+                <h3 className="flex items-center gap-2 font-display text-lg font-bold text-strong">
                   <Truck className="h-5 w-5 text-electric-500" />
                   Fleet options
                 </h3>
                 <ul className="mt-4 space-y-2.5">
                   {service.fleet.map((f) => (
-                    <li key={f} className="flex items-center justify-between rounded-xl bg-mist px-4 py-2.5 text-sm">
+                    <li key={f} className="flex items-center justify-between rounded-xl bg-surface-muted px-4 py-2.5 text-sm">
                       <span className="font-semibold text-navy-800">{f}</span>
                       <span className="text-xs font-medium text-emerald-600">Available</span>
                     </li>
@@ -183,12 +183,12 @@ export default async function ServicePage({
       <Section variant="mist">
         <div className="mx-auto max-w-3xl">
           <Reveal className="text-center">
-            <h2 className="text-balance font-display text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">
+            <h2 className="text-balance font-display text-3xl font-extrabold tracking-tight text-strong sm:text-4xl">
               {service.title} — common questions
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <Accordion type="single" collapsible className="mt-10 rounded-3xl border border-navy-100 bg-white px-6 shadow-card sm:px-8">
+            <Accordion type="single" collapsible className="mt-10 rounded-3xl border border-soft bg-surface px-6 shadow-card sm:px-8">
               {service.faqs.map((faq) => (
                 <AccordionItem key={faq.question} value={faq.question}>
                   <AccordionTrigger>{faq.question}</AccordionTrigger>
@@ -198,7 +198,7 @@ export default async function ServicePage({
             </Accordion>
           </Reveal>
           <Reveal delay={0.15}>
-            <p className="mt-8 flex items-center justify-center gap-2 text-sm text-slate">
+            <p className="mt-8 flex items-center justify-center gap-2 text-sm text-muted">
               <MessageCircleQuestion className="h-4 w-4 text-electric-500" />
               More questions?{" "}
               <Link href="/contact" className="font-semibold text-electric-600 underline decoration-electric-300 underline-offset-4 hover:text-electric-500">
@@ -210,28 +210,28 @@ export default async function ServicePage({
       </Section>
 
       {/* Prev / next */}
-      <section className="bg-white py-16">
+      <section className="bg-surface py-16">
         <Container>
           <div className="grid gap-4 sm:grid-cols-2">
             <Link
               href={`/services/${prev.slug}`}
-              className="group flex items-center gap-4 rounded-2xl border border-navy-100 bg-mist/60 p-5 transition-all duration-300 hover:border-electric-300 hover:bg-white hover:shadow-card"
+              className="group flex items-center gap-4 rounded-2xl border border-soft bg-surface-muted/60 p-5 transition-all duration-300 hover:border-electric-300 hover:bg-surface hover:shadow-card"
             >
-              <ArrowLeft className="h-5 w-5 shrink-0 text-slate transition-colors group-hover:text-electric-500" />
+              <ArrowLeft className="h-5 w-5 shrink-0 text-muted transition-colors group-hover:text-electric-500" />
               <span>
-                <span className="block text-xs font-semibold uppercase tracking-wide text-slate">Previous</span>
-                <span className="mt-0.5 block font-display font-bold text-navy-900">{prev.title}</span>
+                <span className="block text-xs font-semibold uppercase tracking-wide text-muted">Previous</span>
+                <span className="mt-0.5 block font-display font-bold text-strong">{prev.title}</span>
               </span>
             </Link>
             <Link
               href={`/services/${next.slug}`}
-              className="group flex items-center justify-end gap-4 rounded-2xl border border-navy-100 bg-mist/60 p-5 text-right transition-all duration-300 hover:border-electric-300 hover:bg-white hover:shadow-card"
+              className="group flex items-center justify-end gap-4 rounded-2xl border border-soft bg-surface-muted/60 p-5 text-right transition-all duration-300 hover:border-electric-300 hover:bg-surface hover:shadow-card"
             >
               <span>
-                <span className="block text-xs font-semibold uppercase tracking-wide text-slate">Next</span>
-                <span className="mt-0.5 block font-display font-bold text-navy-900">{next.title}</span>
+                <span className="block text-xs font-semibold uppercase tracking-wide text-muted">Next</span>
+                <span className="mt-0.5 block font-display font-bold text-strong">{next.title}</span>
               </span>
-              <ArrowRight className="h-5 w-5 shrink-0 text-slate transition-colors group-hover:text-electric-500" />
+              <ArrowRight className="h-5 w-5 shrink-0 text-muted transition-colors group-hover:text-electric-500" />
             </Link>
           </div>
         </Container>

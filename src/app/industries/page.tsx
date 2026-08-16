@@ -89,14 +89,14 @@ export default function IndustriesPage() {
                     <p className="text-xs font-bold uppercase tracking-[0.18em] text-electric-600">
                       The problem
                     </p>
-                    <p className="mt-3 flex gap-3 text-lg font-medium leading-relaxed text-navy-900">
+                    <p className="mt-3 flex gap-3 text-lg font-medium leading-relaxed text-strong">
                       <AlertTriangle className="mt-1 h-5 w-5 shrink-0 text-orange-500" />
                       {industry.problem}
                     </p>
                     <p className="mt-8 text-xs font-bold uppercase tracking-[0.18em] text-electric-600">
                       The solution
                     </p>
-                    <p className="mt-3 flex gap-3 text-pretty leading-relaxed text-slate">
+                    <p className="mt-3 flex gap-3 text-pretty leading-relaxed text-muted">
                       <Lightbulb className="mt-1 h-5 w-5 shrink-0 text-electric-500" />
                       {industry.solution}
                     </p>
@@ -117,12 +117,12 @@ export default function IndustriesPage() {
           </div>
 
           <Reveal delay={0.1}>
-            <div className="mt-20 flex flex-col items-center justify-between gap-5 rounded-3xl border border-navy-100 bg-mist p-8 text-center sm:flex-row sm:text-left">
+            <div className="mt-20 flex flex-col items-center justify-between gap-5 rounded-3xl border border-soft bg-surface-muted p-8 text-center sm:flex-row sm:text-left">
               <div>
-                <h2 className="font-display text-2xl font-extrabold tracking-tight text-navy-900">
+                <h2 className="font-display text-2xl font-extrabold tracking-tight text-strong">
                   Your industry isn't here?
                 </h2>
-                <p className="mt-1.5 text-sm text-slate">
+                <p className="mt-1.5 text-sm text-muted">
                   We design programs for niche supply chains too. Tell us how your freight flows.
                 </p>
               </div>

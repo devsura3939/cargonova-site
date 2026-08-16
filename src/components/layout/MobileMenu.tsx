@@ -5,23 +5,25 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowRight, Search, Phone } from "lucide-react";
 import { brand } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
+import { useLang } from "@/lib/i18n";
 
-const MOBILE_LINKS = [
-  { href: "/services", label: "Services" },
-  { href: "/industries", label: "Industries" },
-  { href: "/tracking", label: "Tracking" },
-  { href: "/coverage", label: "Coverage" },
-  { href: "/fleet", label: "Fleet" },
-  { href: "/technology", label: "Technology" },
-  { href: "/about", label: "About" },
-  { href: "/blog", label: "Insights" },
-  { href: "/careers", label: "Careers" },
-  { href: "/faq", label: "FAQ" },
-  { href: "/contact", label: "Contact" },
+const MOBILE_LINKS: { href: string; label: "nav.services" | "nav.industries" | "nav.tracking" | "nav.coverage" | "nav.fleet" | "nav.technology" | "nav.about" | "nav.insights" | "nav.careers" | "nav.faq" | "nav.contact" }[] = [
+  { href: "/services", label: "nav.services" },
+  { href: "/industries", label: "nav.industries" },
+  { href: "/tracking", label: "nav.tracking" },
+  { href: "/coverage", label: "nav.coverage" },
+  { href: "/fleet", label: "nav.fleet" },
+  { href: "/technology", label: "nav.technology" },
+  { href: "/about", label: "nav.about" },
+  { href: "/blog", label: "nav.insights" },
+  { href: "/careers", label: "nav.careers" },
+  { href: "/faq", label: "nav.faq" },
+  { href: "/contact", label: "nav.contact" },
 ];
 
 export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const reduceMotion = useReducedMotion();
+  const { t } = useLang();
 
   return (
     <AnimatePresence>
@@ -56,7 +58,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
                     onClick={onClose}
                     className="flex items-center justify-between border-b border-white/8 py-4 text-lg font-semibold text-white/90 transition-colors hover:text-white"
                   >
-                    {link.label}
+                    {t(link.label)}
                     <ArrowRight className="h-4 w-4 text-navy-400" />
                   </Link>
                 </motion.div>
@@ -66,14 +68,14 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
             <div className="mt-8 flex flex-col gap-3">
               <Button asChild size="lg">
                 <Link href="/quote" onClick={onClose}>
-                  Get a Quote
+                  {t("nav.getQuote")}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="secondary">
                 <Link href="/tracking" onClick={onClose}>
                   <Search className="h-4 w-4" />
-                  Track Shipment
+                  {t("nav.track")}
                 </Link>
               </Button>
               <Button asChild size="lg" variant="ghost-light" className="justify-start">

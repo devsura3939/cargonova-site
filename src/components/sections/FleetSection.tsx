@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Scale, Box, Ruler, Check } from "lucide-react";
@@ -5,24 +7,26 @@ import { fleet } from "@/data/fleet";
 import { Section } from "@/components/shared/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Reveal } from "@/components/shared/Reveal";
+import { useLang } from "@/lib/i18n";
 
 const HIGHLIGHTS = fleet.slice(0, 3);
 
 export function FleetSection() {
+  const { t } = useLang();
   return (
     <Section variant="mist" id="fleet">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <SectionHeading
-          eyebrow="Our fleet"
-          title="Modern equipment for every kind of freight"
-          description="Vetted vehicles with telematics, maintenance programs, and drivers trained to your cargo's requirements."
+          eyebrow={t("fleet.eyebrow")}
+          title={t("fleet.title")}
+          description={t("fleet.sub")}
         />
         <Reveal delay={0.1}>
           <Link
             href="/fleet"
             className="group inline-flex items-center gap-2 text-sm font-semibold text-electric-600 transition-colors hover:text-electric-500"
           >
-            Browse full fleet
+            {t("fleet.browse")}
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </Reveal>
@@ -33,7 +37,7 @@ export function FleetSection() {
           <Reveal key={vehicle.slug} delay={0.08 * i}>
             <Link
               href="/fleet"
-              className="group block h-full overflow-hidden rounded-3xl border border-navy-100 bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
+              className="group block h-full overflow-hidden rounded-3xl border border-soft bg-surface shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
             >
               {/* Vehicle visual */}
               <div className="relative h-44 overflow-hidden">
@@ -61,33 +65,33 @@ export function FleetSection() {
               {/* Specs */}
               <div className="p-6">
                 <div className="flex items-start justify-between">
-                  <h3 className="font-display text-xl font-bold text-navy-900">{vehicle.name}</h3>
+                  <h3 className="font-display text-xl font-bold text-strong">{vehicle.name}</h3>
                   <ArrowUpRight className="h-4 w-4 text-navy-200 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-electric-500" />
                 </div>
-                <div className="mt-4 grid grid-cols-3 gap-2 border-y border-navy-100 py-3.5 text-center">
+                <div className="mt-4 grid grid-cols-3 gap-2 border-y border-soft py-3.5 text-center">
                   <div>
-                    <p className="flex items-center justify-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-slate">
+                    <p className="flex items-center justify-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-muted">
                       <Scale className="h-3 w-3" /> Payload
                     </p>
-                    <p className="mt-0.5 text-sm font-bold text-navy-900">{vehicle.payload}</p>
+                    <p className="mt-0.5 text-sm font-bold text-strong">{vehicle.payload}</p>
                   </div>
                   <div>
-                    <p className="flex items-center justify-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-slate">
+                    <p className="flex items-center justify-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-muted">
                       <Box className="h-3 w-3" /> Volume
                     </p>
-                    <p className="mt-0.5 text-sm font-bold text-navy-900">{vehicle.volume}</p>
+                    <p className="mt-0.5 text-sm font-bold text-strong">{vehicle.volume}</p>
                   </div>
                   <div>
-                    <p className="flex items-center justify-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-slate">
+                    <p className="flex items-center justify-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-muted">
                       <Ruler className="h-3 w-3" /> Length
                     </p>
-                    <p className="mt-0.5 text-sm font-bold text-navy-900">{vehicle.dimensions.split("×")[0]}</p>
+                    <p className="mt-0.5 text-sm font-bold text-strong">{vehicle.dimensions.split("×")[0]}</p>
                   </div>
                 </div>
-                <p className="mt-4 text-sm leading-relaxed text-slate">{vehicle.ideal}</p>
-                <p className="mt-4 flex items-center gap-2 text-xs font-semibold text-emerald-600">
+                <p className="mt-4 text-sm leading-relaxed text-muted">{vehicle.ideal}</p>
+                <p className="mt-4 flex items-center gap-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
                   <span className="flex h-2 w-2 rounded-full bg-emerald-500" />
-                  {vehicle.available ? "Available for booking" : "Booking on request"}
+                  {vehicle.available ? t("fleet.available") : t("fleet.onRequest")}
                 </p>
               </div>
             </Link>
@@ -96,21 +100,18 @@ export function FleetSection() {
       </div>
 
       <Reveal delay={0.15}>
-        <div className="mt-10 flex flex-col items-start justify-between gap-4 rounded-3xl border border-navy-100 bg-white p-7 sm:flex-row sm:items-center">
+        <div className="mt-10 flex flex-col items-start justify-between gap-4 rounded-3xl border border-soft bg-surface p-7 sm:flex-row sm:items-center">
           <div className="flex items-center gap-4">
             <span className="hidden h-12 w-12 items-center justify-center rounded-2xl bg-electric-100 text-electric-600 sm:flex">
               <Check className="h-5 w-5" />
             </span>
-            <p className="text-pretty text-navy-800">
-              <span className="font-semibold">Tell us what you're shipping.</span> We'll recommend
-              the right vehicle — payload, dimensions, and equipment matched to your cargo.
-            </p>
+            <p className="text-pretty text-ink">{t("fleet.recommend")}</p>
           </div>
           <Link
             href="/quote"
-            className="inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-navy-850 px-6 text-sm font-semibold text-white transition-colors hover:bg-navy-700"
+            className="inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-navy-850 px-6 text-sm font-semibold text-white transition-colors hover:bg-navy-700 dark:bg-electric-500 dark:hover:bg-electric-400"
           >
-            Get a recommendation
+            {t("fleet.getRecommendation")}
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>

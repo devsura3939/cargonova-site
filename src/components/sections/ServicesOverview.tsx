@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
@@ -8,6 +10,7 @@ import { Section } from "@/components/shared/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Reveal } from "@/components/shared/Reveal";
 import { cn } from "@/lib/utils";
+import { useLang } from "@/lib/i18n";
 
 const TINTS: Record<string, { bg: string; text: string; ring: string }> = {
   blue: { bg: "bg-electric-100/70", text: "text-electric-600", ring: "group-hover:ring-electric-500/30" },
@@ -16,22 +19,23 @@ const TINTS: Record<string, { bg: string; text: string; ring: string }> = {
 };
 
 export function ServicesOverview() {
+  const { t } = useLang();
   const [featured, ...rest] = services;
 
   return (
     <Section variant="mist" id="services">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <SectionHeading
-          eyebrow="What we move"
-          title="Freight solutions for every load, every corridor"
-          description="Eight core services covering the full logistics lifecycle — from a single pallet to project-scale special transport."
+          eyebrow={t("svc.eyebrow")}
+          title={t("svc.title")}
+          description={t("svc.sub")}
         />
         <Reveal delay={0.1}>
           <Link
             href="/services"
             className="group inline-flex items-center gap-2 text-sm font-semibold text-electric-600 transition-colors hover:text-electric-500"
           >
-            Explore all services
+            {t("svc.explore")}
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </Reveal>
@@ -115,7 +119,7 @@ export function ServicesOverview() {
               <Link
                 href={`/services/${service.slug}`}
                 className={cn(
-                  "group relative flex h-full flex-col rounded-3xl border border-navy-100 bg-white p-7 shadow-card ring-1 ring-transparent transition-all duration-300 hover:-translate-y-1 hover:shadow-lift",
+                  "group relative flex h-full flex-col rounded-3xl border border-soft bg-surface p-7 shadow-card ring-1 ring-transparent transition-all duration-300 hover:-translate-y-1 hover:shadow-lift",
                   tint.ring,
                 )}
               >
@@ -125,10 +129,10 @@ export function ServicesOverview() {
                   </span>
                   <ArrowUpRight className="h-4 w-4 text-navy-200 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-electric-500" />
                 </div>
-                <h3 className="mt-5 font-display text-lg font-bold text-navy-900">{service.title}</h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-slate">{service.short}</p>
+                <h3 className="mt-5 font-display text-lg font-bold text-strong">{service.title}</h3>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{service.short}</p>
                 <span className="mt-5 text-xs font-bold uppercase tracking-[0.14em] text-electric-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  Learn more
+                  {t("svc.learnMore")}
                 </span>
               </Link>
             </Reveal>

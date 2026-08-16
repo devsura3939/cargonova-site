@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Hero } from "@/components/sections/Hero";
 import { ClientLogos } from "@/components/sections/ClientLogos";
 import { StatsSection } from "@/components/sections/StatsSection";
-import { QuickQuote } from "@/components/sections/QuickQuote";
+import { FreightCalculator } from "@/components/sections/FreightCalculator";
 import { ServicesOverview } from "@/components/sections/ServicesOverview";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { CoverageSection } from "@/components/sections/CoverageSection";
@@ -27,9 +27,9 @@ export default function HomePage() {
       <Hero />
       <ClientLogos />
       <StatsSection />
-      <section className="bg-white py-20 sm:py-24">
+      <section className="bg-surface py-20 sm:py-24">
         <Container>
-          <QuickQuote />
+          <FreightCalculator />
         </Container>
       </section>
       <ServicesOverview />

@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Class-based dark mode (toggle, not OS-only) */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   /* ── CargoNova brand palette ─────────────────────────── */
   --color-navy-950: #060d18;
@@ -28,14 +31,24 @@
   --color-orange-400: #ffa25f;
   --color-orange-100: #ffe9d9;
 
-  --color-mist: #f4f7fa;
-  --color-slate: #7b8794;
-  --color-ink: #1e293b;
+  --color-mist: var(--c-surface-muted);
+  --color-slate: var(--c-muted);
+  --color-ink: var(--c-ink);
   --color-night: #08111f;
 
+  /* ── Semantic surface & text tokens (theme-aware) ────── */
+  --color-surface: var(--c-surface);
+  --color-surface-muted: var(--c-surface-muted);
+  --color-surface-hover: var(--c-surface-hover);
+  --color-strong: var(--c-strong);
+  --color-body: var(--c-body);
+  --color-muted: var(--c-muted);
+  --color-soft: var(--c-border-soft);
+  --color-soft-strong: var(--c-border-strong);
+
   /* ── Typography ──────────────────────────────────────── */
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-manrope), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), var(--font-georgian), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-manrope), var(--font-georgian), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
   /* ── Elevation & surfaces ────────────────────────────── */
   --shadow-card: 0 1px 2px rgb(11 31 58 / 0.04), 0 8px 24px -8px rgb(11 31 58 / 0.12);
@@ -73,8 +86,29 @@
   }
 }
 
+/* ── Light / dark token values ───────────────────────────── */
 :root {
   color-scheme: light;
+  --c-surface: #ffffff;
+  --c-surface-muted: #f4f7fa;
+  --c-surface-hover: #eef3f9;
+  --c-strong: #0b1f3a;
+  --c-ink: #1e293b;
+  --c-muted: #7b8794;
+  --c-border-soft: #e6edf5;
+  --c-border-strong: #d3dfee;
+}
+
+.dark {
+  color-scheme: dark;
+  --c-surface: #0a1526;
+  --c-surface-muted: #0c1c33;
+  --c-surface-hover: #10294d;
+  --c-strong: #f2f6fc;
+  --c-ink: #c9d7ea;
+  --c-muted: #8fa3bd;
+  --c-border-soft: rgb(255 255 255 / 0.08);
+  --c-border-strong: rgb(255 255 255 / 0.16);
 }
 
 html {
@@ -82,23 +116,22 @@ html {
 }
 
 body {
-  @apply bg-mist font-sans text-ink antialiased;
+  @apply bg-surface font-sans text-body antialiased;
   text-rendering: optimizeLegibility;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 ::selection {
-  background: rgb(22 119 255 / 0.18);
-  color: var(--color-navy-900);
+  background: rgb(22 119 255 / 0.22);
+  color: var(--c-strong);
 }
 
-/* Visible, consistent focus ring */
 :focus-visible {
   outline: 2px solid var(--color-electric-500);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
-/* Custom scrollbar (subtle) */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
@@ -113,12 +146,10 @@ body {
 .text-balance { text-wrap: balance; }
 .text-pretty { text-wrap: pretty; }
 
-/* Noise texture for dark surfaces */
 .bg-noise {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
 }
 
-/* Grid lines used inside dark panels */
 .bg-grid-dark {
   background-image:
     linear-gradient(rgb(255 255 255 / 0.045) 1px, transparent 1px),
@@ -127,12 +158,11 @@ body {
 }
 .bg-grid-light {
   background-image:
-    linear-gradient(rgb(11 31 58 / 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(11 31 58 / 0.05) 1px, transparent 1px);
+    linear-gradient(var(--c-border-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--c-border-soft) 1px, transparent 1px);
   background-size: 44px 44px;
 }
 
-/* Animated route line (SVG) */
 .route-line {
   stroke-dasharray: 6 8;
   animation: var(--animate-dash-flow);

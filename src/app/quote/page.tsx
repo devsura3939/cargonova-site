@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/shared/PageHero";
 import { Container } from "@/components/shared/Container";
 import { Section } from "@/components/shared/Section";
 import { QuoteForm } from "@/components/forms/QuoteForm";
+import { QuotePageHero } from "@/components/forms/QuotePageHero";
 import { buildMetadata } from "@/lib/seo";
 import type { QuoteInput } from "@/lib/validations";
 
@@ -32,12 +32,7 @@ export default async function QuotePage({
 
   return (
     <>
-      <PageHero
-        crumb={[{ name: "Quote", path: "/quote" }]}
-        eyebrow="Get a quote"
-        title="Tell us what you're shipping"
-        description="Five short steps. A confirmed quote within 4 business hours — and 60 minutes for urgent loads. No commitment until you book."
-      />
+      <QuotePageHero />
       <Section variant="mist">
         <Container>
           <QuoteForm prefill={prefill} />

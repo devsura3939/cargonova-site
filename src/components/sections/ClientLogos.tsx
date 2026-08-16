@@ -2,6 +2,7 @@
 
 import { useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useLang } from "@/lib/i18n";
 
 /**
  * Placeholder client marks — fictional names rendered as styled wordmarks.
@@ -20,12 +21,13 @@ const CLIENT_NAMES = [
 
 export function ClientLogos() {
   const reduceMotion = useReducedMotion();
+  const { t } = useLang();
   const row = [...CLIENT_NAMES, ...CLIENT_NAMES];
 
   return (
-    <section className="border-b border-navy-100/70 bg-white py-12">
-      <p className="text-center text-xs font-bold uppercase tracking-[0.22em] text-slate">
-        Trusted by operations teams across Europe
+    <section className="border-b border-soft bg-surface py-12">
+      <p className="text-center text-xs font-bold uppercase tracking-[0.22em] text-muted">
+        {t("logos.heading")}
       </p>
       <div className="relative mx-auto mt-8 max-w-6xl overflow-hidden px-5 [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
         <div

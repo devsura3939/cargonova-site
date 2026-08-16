@@ -70,8 +70,8 @@ export function ContactForm() {
         <span className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
           <Check className="h-7 w-7" />
         </span>
-        <h3 className="mt-5 font-display text-xl font-bold text-navy-900">Message sent</h3>
-        <p className="mt-2 max-w-sm text-sm leading-relaxed text-slate">
+        <h3 className="mt-5 font-display text-xl font-bold text-strong">Message sent</h3>
+        <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted">
           Thanks for reaching out. Our team replies within one business day — faster for
           active shipments.
         </p>
@@ -125,7 +125,7 @@ export function ContactForm() {
         </Field>
       </div>
       <div className="flex items-center justify-between gap-4">
-        <p className="text-xs text-slate">We reply within one business day.</p>
+        <p className="text-xs text-muted">We reply within one business day.</p>
         <Button type="submit" size="lg" disabled={status === "submitting"}>
           {status === "submitting" ? (
             <>

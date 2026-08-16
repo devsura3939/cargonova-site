@@ -47,12 +47,12 @@ export default function CareersPage() {
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {BENEFITS.map((b, i) => (
             <Reveal key={b.title} delay={0.05 * (i % 3)}>
-              <div className="h-full rounded-3xl border border-navy-100 bg-white p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
+              <div className="h-full rounded-3xl border border-soft bg-surface p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
                 <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-electric-100 text-electric-600">
                   <b.icon className="h-6 w-6" strokeWidth={1.75} />
                 </span>
-                <h3 className="mt-5 font-display text-lg font-bold text-navy-900">{b.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate">{b.text}</p>
+                <h3 className="mt-5 font-display text-lg font-bold text-strong">{b.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{b.text}</p>
               </div>
             </Reveal>
           ))}
@@ -71,11 +71,11 @@ export default function CareersPage() {
             <div className="mt-10 space-y-4">
               {jobs.map((job, i) => (
                 <Reveal key={job.slug} delay={0.04 * i}>
-                  <div className="group rounded-3xl border border-navy-100 bg-white p-6 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift">
+                  <div className="group rounded-3xl border border-soft bg-surface p-6 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift">
                     <div className="flex flex-wrap items-start justify-between gap-4">
                       <div>
-                        <h3 className="font-display text-lg font-bold text-navy-900">{job.title}</h3>
-                        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-medium text-slate">
+                        <h3 className="font-display text-lg font-bold text-strong">{job.title}</h3>
+                        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-medium text-muted">
                           <span className="flex items-center gap-1.5">
                             <Briefcase className="h-3.5 w-3.5" /> {job.department}
                           </span>
@@ -91,13 +91,13 @@ export default function CareersPage() {
                         Open
                       </span>
                     </div>
-                    <p className="mt-3 text-sm leading-relaxed text-slate">{job.summary}</p>
+                    <p className="mt-3 text-sm leading-relaxed text-muted">{job.summary}</p>
                     <details className="group/details mt-4">
                       <summary className="cursor-pointer list-none text-sm font-semibold text-electric-600 transition-colors hover:text-electric-500">
                         What we're looking for
                         <span className="ml-1 inline-block transition-transform duration-200 group-open/details:rotate-180">▾</span>
                       </summary>
-                      <ul className="mt-3 space-y-1.5 rounded-2xl bg-mist p-4 text-sm text-navy-800">
+                      <ul className="mt-3 space-y-1.5 rounded-2xl bg-surface-muted p-4 text-sm text-ink">
                         {job.requirements.map((req) => (
                           <li key={req} className="flex items-start gap-2">
                             <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-electric-500" />
@@ -115,11 +115,11 @@ export default function CareersPage() {
           {/* Application */}
           <div>
             <Reveal className="sticky top-24">
-              <div className="rounded-3xl border border-navy-100 bg-white p-7 shadow-card sm:p-9">
-                <h2 className="font-display text-2xl font-extrabold tracking-tight text-navy-900">
+              <div className="rounded-3xl border border-soft bg-surface p-7 shadow-card sm:p-9">
+                <h2 className="font-display text-2xl font-extrabold tracking-tight text-strong">
                   Apply in two minutes
                 </h2>
-                <p className="mt-2 text-sm text-slate">
+                <p className="mt-2 text-sm text-muted">
                   No cover-letter gymnastics. Tell us who you are and why you're interested —
                   we read everything.
                 </p>

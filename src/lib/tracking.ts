@@ -136,15 +136,6 @@ const STATUS_PROGRESS: Record<ShipmentStatus, number> = {
   delivered: 100,
 };
 
-const STATUS_NOTE: Record<ShipmentStatus, string> = {
-  pending: "Documentation in progress.",
-  picked_up: "Freight collected at shipper facility.",
-  in_transit: "In linehaul across the corridor.",
-  customs: "Documentation under review — release expected within 24 h.",
-  out_for_delivery: "Vehicle on route. Delivery window confirmed.",
-  delivered: "Signed for by recipient. POD available on request.",
-};
-
 function weightFor(h: number): string {
   const kg = 600 + (h % 21400);
   return `${Math.round(kg / 50) * 50} kg`;
@@ -199,8 +190,7 @@ function buildShipment(id: string, overrides: ShipmentOverrides): Shipment {
   const route = overrides.route ?? buildRoute(originLoc, destLoc, international);
 
   // Build checkpoints aligned to the route.
-  const checkpoints: TrackingCheckpoint[] = route.map((label, i) => {
-    const last = i === route.length - 1;
+  const checkpoints: TrackingCheckpoint[] = route.map((label) => {
     if (label === "Pickup") {
       return {
         label,

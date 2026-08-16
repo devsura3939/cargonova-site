@@ -13,9 +13,9 @@ const buttonVariants = cva(
         secondary:
           "bg-white/10 text-white ring-1 ring-inset ring-white/20 backdrop-blur hover:bg-white/15 hover:ring-white/30",
         outline:
-          "border border-navy-200 bg-white text-navy-800 hover:border-electric-400 hover:text-electric-600 hover:bg-electric-100/40",
+          "border border-soft bg-surface text-ink hover:border-electric-400 hover:text-electric-600 hover:bg-electric-100/40 dark:hover:bg-electric-500/10",
         ghost:
-          "text-navy-700 hover:bg-navy-100/70 hover:text-navy-900",
+          "text-ink hover:bg-surface-hover hover:text-strong",
         "ghost-light": "text-white/80 hover:bg-white/10 hover:text-white",
         dark: "bg-navy-850 text-white hover:bg-navy-700",
       },

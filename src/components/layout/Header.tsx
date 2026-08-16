@@ -4,21 +4,23 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Menu, Search } from "lucide-react";
+import { ArrowRight, Menu, Search, Moon, Sun, Globe } from "lucide-react";
 import { Logo } from "@/components/layout/Logo";
 import { Button } from "@/components/ui/button";
 import { MobileMenu } from "@/components/layout/MobileMenu";
+import { useTheme } from "@/lib/theme";
+import { useLang, type Lang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
-const NAV_LINKS = [
-  { href: "/services", label: "Services" },
-  { href: "/industries", label: "Industries" },
-  { href: "/tracking", label: "Tracking" },
-  { href: "/coverage", label: "Coverage" },
-  { href: "/fleet", label: "Fleet" },
-  { href: "/technology", label: "Technology" },
-  { href: "/about", label: "About" },
-  { href: "/blog", label: "Insights" },
+const NAV_LINKS: { href: string; key: "nav.services" | "nav.industries" | "nav.tracking" | "nav.coverage" | "nav.fleet" | "nav.technology" | "nav.about" | "nav.insights" }[] = [
+  { href: "/services", key: "nav.services" },
+  { href: "/industries", key: "nav.industries" },
+  { href: "/tracking", key: "nav.tracking" },
+  { href: "/coverage", key: "nav.coverage" },
+  { href: "/fleet", key: "nav.fleet" },
+  { href: "/technology", key: "nav.technology" },
+  { href: "/about", key: "nav.about" },
+  { href: "/blog", key: "nav.insights" },
 ];
 
 export function Header() {
@@ -28,6 +30,8 @@ export function Header() {
   );
   const [menuOpen, setMenuOpen] = useState(false);
   const reduceMotion = useReducedMotion();
+  const { theme, toggleTheme } = useTheme();
+  const { t, lang, setLang } = useLang();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -73,7 +77,7 @@ export function Header() {
                     active ? "text-white" : "text-navy-200 hover:text-white",
                   )}
                 >
-                  {link.label}
+                  {t(link.key)}
                   <span
                     className={cn(
                       "absolute inset-x-3 -bottom-0.5 h-px origin-left scale-x-0 bg-cyan-400 transition-transform duration-300 group-hover:scale-x-100",
@@ -86,26 +90,75 @@ export function Header() {
           </nav>
 
           {/* Right actions */}
-          <div className="hidden items-center gap-3 lg:flex">
+          <div className="hidden items-center gap-2 lg:flex">
+            {/* Language toggle */}
+            <div
+              className="flex items-center rounded-full border border-white/12 bg-white/5 p-0.5 backdrop-blur"
+              role="group"
+              aria-label="Language"
+            >
+              <Globe className="ml-2.5 h-3.5 w-3.5 text-navy-300" />
+              {(["en", "ka"] as Lang[]).map((l) => (
+                <button
+                  key={l}
+                  type="button"
+                  onClick={() => setLang(l)}
+                  aria-pressed={lang === l}
+                  className={cn(
+                    "rounded-full px-2.5 py-1 text-xs font-bold transition-colors",
+                    lang === l ? "bg-white text-navy-900" : "text-navy-200 hover:text-white",
+                  )}
+                >
+                  {l === "en" ? "EN" : "ქარ"}
+                </button>
+              ))}
+            </div>
+
+            {/* Theme toggle */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label={t("theme.toggle")}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full text-navy-200 transition-colors hover:bg-white/10 hover:text-white"
+            >
+              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
+
             <Link
               href="/tracking"
               className="inline-flex h-11 items-center gap-2 rounded-full px-4 text-sm font-semibold text-white/85 transition-colors hover:bg-white/10 hover:text-white"
             >
               <Search className="h-4 w-4" />
-              Track Shipment
+              {t("nav.track")}
             </Link>
             <Button asChild size="default">
               <Link href="/quote">
-                Get a Quote
+                {t("nav.getQuote")}
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
               </Link>
             </Button>
           </div>
 
           {/* Mobile actions */}
-          <div className="flex items-center gap-2 lg:hidden">
+          <div className="flex items-center gap-1.5 lg:hidden">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label={t("theme.toggle")}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10"
+            >
+              {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </button>
+            <button
+              type="button"
+              onClick={() => setLang(lang === "en" ? "ka" : "en")}
+              aria-label="Language"
+              className="inline-flex h-10 items-center rounded-full px-2 text-xs font-bold text-white transition-colors hover:bg-white/10"
+            >
+              {lang === "en" ? "EN" : "ქარ"}
+            </button>
             <Button asChild size="sm" className="h-10">
-              <Link href="/quote">Get a Quote</Link>
+              <Link href="/quote">{t("nav.getQuote")}</Link>
             </Button>
             <button
               type="button"

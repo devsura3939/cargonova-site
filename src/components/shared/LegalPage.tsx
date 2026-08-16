@@ -28,12 +28,12 @@ export function LegalPage({
             <div className="space-y-10">
               {sections.map((section) => (
                 <section key={section.heading}>
-                  <h2 className="font-display text-2xl font-extrabold tracking-tight text-navy-900">
+                  <h2 className="font-display text-2xl font-extrabold tracking-tight text-strong">
                     {section.heading}
                   </h2>
                   <div className="mt-4 space-y-4">
                     {section.body.map((paragraph, i) => (
-                      <p key={i} className="text-pretty text-sm leading-relaxed text-slate sm:text-base">
+                      <p key={i} className="text-pretty text-sm leading-relaxed text-muted sm:text-base">
                         {paragraph}
                       </p>
                     ))}

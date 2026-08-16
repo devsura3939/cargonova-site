@@ -4,9 +4,21 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Check, CircleDashed } from "lucide-react";
 import type { Shipment } from "@/lib/tracking";
 import { cn } from "@/lib/utils";
+import { useLang, type DictKey } from "@/lib/i18n";
+
+const STEP_LABEL_KEYS: Record<string, DictKey> = {
+  Pickup: "trk.step.pickup",
+  "Origin Hub": "trk.step.originHub",
+  Transit: "trk.step.transit",
+  "Border Check": "trk.step.borderCheck",
+  Customs: "trk.step.borderCheck",
+  "Destination Hub": "trk.step.destHub",
+  Delivery: "trk.step.delivery",
+} as const;
 
 export function TrackingTimeline({ shipment }: { shipment: Shipment }) {
   const reduceMotion = useReducedMotion();
+  const { t } = useLang();
   // The "current" step is the checkpoint that reflects the shipment status;
   // everything before it is done, everything after is upcoming.
   const currentRank = shipment.checkpoints.findIndex((c) => c.status === shipment.status);
@@ -14,7 +26,7 @@ export function TrackingTimeline({ shipment }: { shipment: Shipment }) {
   return (
     <ol className="relative" aria-label={`Progress for ${shipment.id}`}>
       {/* rail */}
-      <div className="absolute bottom-6 left-5 top-6 w-px bg-navy-100" aria-hidden="true" />
+      <div className="absolute bottom-6 left-5 top-6 w-px bg-soft" aria-hidden="true" />
       <motion.div
         className="absolute bottom-6 left-5 top-6 w-px origin-top bg-gradient-to-b from-electric-500 via-cyan-500 to-cyan-400"
         aria-hidden="true"
@@ -27,7 +39,9 @@ export function TrackingTimeline({ shipment }: { shipment: Shipment }) {
         const checkpoint = shipment.checkpoints[i];
         const done = i < currentRank;
         const current = i === currentRank;
-        const label = checkpoint?.label ?? step;
+        const rawLabel = checkpoint?.label ?? step;
+        const labelKey = STEP_LABEL_KEYS[rawLabel];
+        const label = labelKey ? t(labelKey) : rawLabel;
 
         return (
           <motion.li
@@ -42,7 +56,7 @@ export function TrackingTimeline({ shipment }: { shipment: Shipment }) {
                 "relative z-10 mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 transition-colors",
                 done && "border-electric-500 bg-electric-500 text-white",
                 current && "border-cyan-500 bg-white text-cyan-500",
-                !done && !current && "border-navy-100 bg-white text-navy-200",
+                !done && !current && "border-soft bg-surface text-muted",
               )}
             >
               {done ? (
@@ -59,10 +73,10 @@ export function TrackingTimeline({ shipment }: { shipment: Shipment }) {
 
             <div className="min-w-0 flex-1 pt-1">
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                <p className={cn("font-display font-bold", done || current ? "text-navy-900" : "text-navy-400")}>
+                <p className={cn("font-display font-bold", done || current ? "text-strong" : "text-muted")}>
                   {label}
                 </p>
-                <p className="text-xs font-medium text-slate">
+                <p className="text-xs font-medium text-muted">
                   {checkpoint?.location}
                 </p>
               </div>
@@ -71,7 +85,7 @@ export function TrackingTimeline({ shipment }: { shipment: Shipment }) {
                   {checkpoint?.timestamp}
                 </span>
                 {checkpoint?.note ? (
-                  <span className="text-xs leading-relaxed text-slate">{checkpoint.note}</span>
+                  <span className="text-xs leading-relaxed text-muted">{checkpoint.note}</span>
                 ) : null}
               </div>
             </div>

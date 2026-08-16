@@ -41,8 +41,8 @@ export function CareerForm({ role }: { role?: string }) {
         <span className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
           <Check className="h-7 w-7" />
         </span>
-        <h3 className="mt-5 font-display text-xl font-bold text-navy-900">Application received</h3>
-        <p className="mt-2 max-w-sm text-sm leading-relaxed text-slate">
+        <h3 className="mt-5 font-display text-xl font-bold text-strong">Application received</h3>
+        <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted">
           Thanks for applying. Our talent team reviews every application and replies
           within five business days.
         </p>
@@ -93,7 +93,7 @@ export function CareerForm({ role }: { role?: string }) {
         </Field>
       </div>
       <div className="flex items-center justify-between gap-4">
-        <p className="text-xs text-slate">We reply to every application within five business days.</p>
+        <p className="text-xs text-muted">We reply to every application within five business days.</p>
         <Button type="submit" size="lg" disabled={status === "submitting"}>
           {status === "submitting" ? (
             <>

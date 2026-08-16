@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Phone, MapPin, Clock, Headset, BadgeDollarSign, Building2 } from "lucide-react";
-import { PageHero } from "@/components/shared/PageHero";
 import { Container } from "@/components/shared/Container";
 import { Section } from "@/components/shared/Section";
 import { Reveal } from "@/components/shared/Reveal";
+import { ContactPageHero } from "@/components/forms/ContactPageHero";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { CTASection } from "@/components/sections/CTASection";
 import { brand } from "@/lib/constants";
@@ -49,23 +49,18 @@ const DETAILS = [
 export default function ContactPage() {
   return (
     <>
-      <PageHero
-        crumb={[{ name: "Contact", path: "/contact" }]}
-        eyebrow="Contact"
-        title="Talk to a logistics team that answers"
-        description="Quotes, active shipments, or a question about your network — reach the right desk directly."
-      />
+      <ContactPageHero />
 
       <Section variant="light">
         <Container>
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)]">
             {/* Form */}
             <Reveal>
-              <div className="rounded-3xl border border-navy-100 bg-white p-7 shadow-card sm:p-9">
-                <h2 className="font-display text-2xl font-extrabold tracking-tight text-navy-900">
+              <div className="rounded-3xl border border-soft bg-surface p-7 shadow-card sm:p-9">
+                <h2 className="font-display text-2xl font-extrabold tracking-tight text-strong">
                   Send us a message
                 </h2>
-                <p className="mt-2 text-sm text-slate">
+                <p className="mt-2 text-sm text-muted">
                   The right department gets it automatically — no phone trees.
                 </p>
                 <div className="mt-7">
@@ -78,33 +73,33 @@ export default function ContactPage() {
             <div className="space-y-5">
               {DETAILS.map((d, i) => (
                 <Reveal key={d.title} delay={0.06 * i}>
-                  <div className="rounded-3xl border border-navy-100 bg-white p-6 shadow-card">
+                  <div className="rounded-3xl border border-soft bg-surface p-6 shadow-card">
                     <div className="flex items-center gap-3">
                       <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-electric-100 text-electric-600">
                         <d.icon className="h-5 w-5" />
                       </span>
-                      <h3 className="font-display text-lg font-bold text-navy-900">{d.title}</h3>
+                      <h3 className="font-display text-lg font-bold text-strong">{d.title}</h3>
                     </div>
                     <dl className="mt-4 space-y-2">
                       {d.lines.map((line) => (
                         <div key={line.label} className="flex items-baseline justify-between gap-4 text-sm">
-                          <dt className="shrink-0 text-slate">{line.label}</dt>
+                          <dt className="shrink-0 text-muted">{line.label}</dt>
                           <dd className="text-right">
                             {line.href ? (
                               <a
                                 href={line.href}
-                                className="font-semibold text-navy-900 transition-colors hover:text-electric-600"
+                                className="font-semibold text-strong transition-colors hover:text-electric-600"
                               >
                                 {line.value}
                               </a>
                             ) : (
-                              <span className="font-semibold text-navy-900">{line.value}</span>
+                              <span className="font-semibold text-strong">{line.value}</span>
                             )}
                           </dd>
                         </div>
                       ))}
                     </dl>
-                    <p className="mt-3 rounded-xl bg-mist px-3.5 py-2.5 text-xs text-navy-700">{d.note}</p>
+                    <p className="mt-3 rounded-xl bg-surface-muted px-3.5 py-2.5 text-xs text-ink">{d.note}</p>
                   </div>
                 </Reveal>
               ))}

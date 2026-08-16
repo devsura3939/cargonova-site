@@ -7,6 +7,7 @@ import { ArrowRight, Search, ShieldCheck, Clock4, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { fadeUp, stagger } from "@/lib/motion";
+import { useLang } from "@/lib/i18n";
 
 const LogisticsScene = dynamic(() => import("@/components/three/LogisticsScene"), {
   ssr: false,
@@ -63,15 +64,13 @@ function HeroVisualFallback() {
   );
 }
 
-const TRUST_ITEMS = [
-  { icon: ShieldCheck, label: "10,000+ shipments delivered yearly" },
-  { icon: Clock4, label: "98.7% on-time delivery rate" },
-  { icon: MapPin, label: "30+ regions across Europe & beyond" },
-];
+const TRUST_KEYS = ["hero.trust1", "hero.trust2", "hero.trust3"] as const;
+const TRUST_ICONS = [ShieldCheck, Clock4, MapPin];
 
 export function Hero() {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
   const reduceMotion = useReducedMotion();
+  const { t } = useLang();
 
   return (
     <section className="relative overflow-hidden bg-navy-900 text-white">
@@ -96,7 +95,7 @@ export function Hero() {
               <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-400" />
             </span>
             <span className="text-xs font-semibold tracking-wide text-navy-100">
-              European ground freight · 24/7 control tower
+              {t("hero.badge")}
             </span>
           </motion.div>
 
@@ -104,9 +103,9 @@ export function Hero() {
             variants={fadeUp}
             className="text-balance font-display text-[2.65rem] font-extrabold leading-[1.06] tracking-tight sm:text-6xl lg:text-[4.25rem]"
           >
-            Logistics That{" "}
+            {t("hero.title1")}{" "}
             <span className="bg-gradient-to-r from-electric-400 via-cyan-400 to-electric-400 bg-clip-text text-transparent">
-              Keep Business Moving
+              {t("hero.titleAccent")}
             </span>
           </motion.h1>
 
@@ -114,30 +113,32 @@ export function Hero() {
             variants={fadeUp}
             className="mt-6 max-w-xl text-pretty text-base leading-relaxed text-navy-200 sm:text-lg"
           >
-            Reliable cargo transportation, intelligent route planning, and end-to-end
-            logistics solutions built for businesses that cannot afford delays.
+            {t("hero.sub")}
           </motion.p>
 
           <motion.div variants={fadeUp} className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Button asChild size="lg">
               <Link href="/quote">
-                Get a Quote
+                {t("hero.getQuote")}
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="secondary">
               <Link href="/tracking">
                 <Search className="h-4 w-4" />
-                Track Shipment
+                {t("hero.track")}
               </Link>
             </Button>
           </motion.div>
 
           <motion.ul variants={fadeUp} className="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/10 pt-7">
-            {TRUST_ITEMS.map((item) => (
-              <li key={item.label} className="flex items-center gap-2.5 text-sm font-medium text-navy-100">
-                <item.icon className="h-4 w-4 text-cyan-400" />
-                {item.label}
+            {TRUST_KEYS.map((key, i) => (
+              <li key={key} className="flex items-center gap-2.5 text-sm font-medium text-navy-100">
+                {(() => {
+                  const Icon = TRUST_ICONS[i];
+                  return <Icon className="h-4 w-4 text-cyan-400" />;
+                })()}
+                {t(key)}
               </li>
             ))}
           </motion.ul>
@@ -156,11 +157,11 @@ export function Hero() {
             {/* HUD overlay */}
             <div className="pointer-events-none absolute inset-0 rounded-[2.5rem] ring-1 ring-inset ring-white/5" />
             <div className="pointer-events-none absolute left-5 top-5 rounded-xl border border-white/10 bg-navy-900/70 px-4 py-3 backdrop-blur-md">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-400">Live Network</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-400">{t("hero.liveNetwork")}</p>
               <p className="mt-1 font-mono text-sm font-semibold text-white">CRG-582941 · In Transit</p>
             </div>
             <div className="pointer-events-none absolute bottom-5 right-5 rounded-xl border border-white/10 bg-navy-900/70 px-4 py-3 text-right backdrop-blur-md">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-navy-300">ETA Berlin → Tbilisi</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-navy-300">{t("hero.eta")}</p>
               <p className="mt-1 font-mono text-sm font-semibold text-white">Aug 18 · 62% complete</p>
             </div>
           </div>
