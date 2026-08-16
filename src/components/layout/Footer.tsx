@@ -32,6 +32,7 @@ import { LogoMark } from "@/components/layout/Logo";
 import { brand } from "@/lib/constants";
 import { newsletterSchema } from "@/lib/validations";
 import { trackEvent } from "@/lib/analytics";
+import { unsplashAttribution } from "@/data/images";
 
 const COLUMNS: { heading: string; links: { label: string; href: string }[] }[] = [
   {
@@ -231,7 +232,8 @@ export function Footer() {
         <div className="flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-8 text-xs text-navy-300 sm:flex-row">
           <p>© {new Date().getFullYear()} {brand.name}. All rights reserved.</p>
           <p>
-            Demo website — placeholder company details. Certifications shown are illustrative.
+            Demo website — placeholder company details. Certifications shown are illustrative.{" "}
+            {unsplashAttribution}
           </p>
         </div>
       </div>

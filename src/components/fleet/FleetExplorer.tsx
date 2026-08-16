@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import { ArrowRight, Scale, Box, Ruler, ShieldCheck, Check } from "lucide-react";
 import Link from "next/link";
 import { Container } from "@/components/shared/Container";
@@ -54,24 +55,20 @@ export function FleetExplorer() {
           <Reveal key={vehicle.slug} delay={0.05 * (i % 3)}>
             <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-navy-100 bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
               {/* Visual */}
-              <div className="relative flex h-48 items-end justify-center overflow-hidden bg-gradient-to-b from-navy-900 to-navy-850">
-                <div className="pointer-events-none absolute inset-0 bg-grid-dark" />
-                <div className="pointer-events-none absolute -bottom-12 left-1/2 h-36 w-36 -translate-x-1/2 rounded-full bg-electric-500/20 blur-[60px]" />
-                <div className="relative w-full px-10 pb-6">
-                  <svg viewBox="0 0 280 100" fill="none" className="w-full" aria-hidden="true">
-                    <ellipse cx="140" cy="92" rx="118" ry="8" fill="rgba(0,0,0,0.45)" />
-                    <g className="transition-transform duration-500 group-hover:-translate-x-1.5">
-                      <rect x="10" y="52" width="120" height="34" rx="5" fill="#12315e" />
-                      <rect x="120" y="58" width="52" height="24" rx="4" fill="#1677ff" />
-                      <rect x="128" y="63" width="14" height="10" rx="2" fill="#0b1f3a" />
-                      <circle cx="52" cy="90" r="9" fill="#0a0f18" />
-                      <circle cx="160" cy="90" r="9" fill="#0a0f18" />
-                      <rect x="196" y="52" width="46" height="34" rx="4" fill="#2ed3e6" opacity="0.9" />
-                    </g>
-                  </svg>
-                </div>
-                <span className="absolute left-4 top-4 rounded-full bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white ring-1 ring-inset ring-white/15 backdrop-blur">
+              <div className="relative h-48 overflow-hidden">
+                <Image
+                  src={vehicle.image}
+                  alt={`${vehicle.name} in the CargoNova fleet`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy-950/95 via-navy-900/35 to-navy-900/15" />
+                <span className="absolute left-4 top-4 rounded-full bg-navy-950/70 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white ring-1 ring-inset ring-white/20 backdrop-blur">
                   {CATEGORY_LABEL[vehicle.category]}
+                </span>
+                <span className="absolute bottom-3 right-4 flex h-9 w-9 items-center justify-center rounded-xl bg-white/15 text-white ring-1 ring-inset ring-white/25 backdrop-blur">
+                  <FleetIcon name={vehicle.icon} className="h-5 w-5" />
                 </span>
               </div>
 

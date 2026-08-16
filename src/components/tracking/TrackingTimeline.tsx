@@ -5,18 +5,11 @@ import { Check, CircleDashed } from "lucide-react";
 import type { Shipment } from "@/lib/tracking";
 import { cn } from "@/lib/utils";
 
-const ORDER: Record<string, number> = {
-  pending: 0,
-  picked_up: 1,
-  in_transit: 2,
-  customs: 3,
-  out_for_delivery: 4,
-  delivered: 5,
-};
-
 export function TrackingTimeline({ shipment }: { shipment: Shipment }) {
   const reduceMotion = useReducedMotion();
-  const currentRank = ORDER[shipment.status] ?? 0;
+  // The "current" step is the checkpoint that reflects the shipment status;
+  // everything before it is done, everything after is upcoming.
+  const currentRank = shipment.checkpoints.findIndex((c) => c.status === shipment.status);
 
   return (
     <ol className="relative" aria-label={`Progress for ${shipment.id}`}>

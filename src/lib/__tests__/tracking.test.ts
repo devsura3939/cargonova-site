@@ -3,7 +3,7 @@ import { lookupShipment, demoTrackingIds } from "@/lib/tracking";
 import { trackingSchema } from "@/lib/validations";
 
 describe("lookupShipment", () => {
-  it("finds a known shipment by id", () => {
+  it("finds a known showcase shipment by id", () => {
     const shipment = lookupShipment("CRG-582941");
     expect(shipment).not.toBeNull();
     expect(shipment?.id).toBe("CRG-582941");
@@ -15,8 +15,27 @@ describe("lookupShipment", () => {
     expect(lookupShipment("  crg-729103 ")).not.toBeNull();
   });
 
-  it("returns null for an unknown but well-formed id", () => {
-    expect(lookupShipment("CRG-999999")).toBeNull();
+  it("resolves ANY well-formed unknown id to a realistic shipment (deterministic)", () => {
+    const first = lookupShipment("CRG-999999");
+    const second = lookupShipment("CRG-999999");
+    expect(first).not.toBeNull();
+    expect(first?.id).toBe("CRG-999999");
+    expect(first?.origin).not.toBe(first?.destination);
+    expect(first?.checkpoints.length).toBe(first?.route.length);
+    // Deterministic: same ID always produces the same shipment.
+    expect(second?.origin).toBe(first?.origin);
+    expect(second?.destination).toBe(first?.destination);
+    expect(second?.status).toBe(first?.status);
+  });
+
+  it("produces consistent progress and ETA for every status", () => {
+    for (const status of ["picked_up", "in_transit", "customs", "out_for_delivery", "delivered"]) {
+      const shipment = lookupShipment(`CRG-${100000 + status.length * 11111}`);
+      expect(shipment).not.toBeNull();
+      expect(shipment!.progress).toBeGreaterThanOrEqual(0);
+      expect(shipment!.progress).toBeLessThanOrEqual(100);
+      expect(shipment!.eta.length).toBeGreaterThan(0);
+    }
   });
 
   it("returns null for malformed input", () => {

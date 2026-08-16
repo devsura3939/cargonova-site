@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Clock, CalendarDays } from "lucide-react";
@@ -105,6 +106,16 @@ export default async function BlogPostPage({
       <Section variant="light">
         <Container className="max-w-3xl">
           <Reveal>
+            <div className="relative mb-10 h-64 overflow-hidden rounded-3xl shadow-card sm:h-80">
+              <Image
+                src={post.image}
+                alt=""
+                fill
+                sizes="(max-width: 768px) 100vw, 768px"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-950/30 to-transparent" />
+            </div>
             <article className="space-y-7">
               {post.body.map((paragraph, i) => (
                 <p key={i} className={i === 0 ? "text-lg font-medium leading-relaxed text-navy-900" : "text-pretty leading-relaxed text-ink"}>
@@ -159,16 +170,27 @@ export default async function BlogPostPage({
                 <Link
                   key={p.slug}
                   href={`/blog/${p.slug}`}
-                  className="group flex h-full flex-col rounded-3xl border border-navy-100 bg-white p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
+                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-navy-100 bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
                 >
-                  <span className="text-xs font-semibold text-electric-600">{p.category}</span>
-                  <h3 className="mt-2.5 flex-1 font-display text-base font-bold leading-snug text-navy-900 transition-colors group-hover:text-electric-600">
-                    {p.title}
-                  </h3>
-                  <span className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-electric-600">
-                    Read article
-                    <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                  </span>
+                  <div className="relative h-36 overflow-hidden">
+                    <Image
+                      src={p.image}
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="flex flex-1 flex-col p-6">
+                    <span className="text-xs font-semibold text-electric-600">{p.category}</span>
+                    <h3 className="mt-2.5 flex-1 font-display text-base font-bold leading-snug text-navy-900 transition-colors group-hover:text-electric-600">
+                      {p.title}
+                    </h3>
+                    <span className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-electric-600">
+                      Read article
+                      <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                    </span>
+                  </div>
                 </Link>
               ))}
             </div>

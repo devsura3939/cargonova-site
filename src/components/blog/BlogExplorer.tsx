@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Search, ArrowRight, Clock } from "lucide-react";
 import { posts, blogCategories } from "@/data/blog";
@@ -68,12 +69,19 @@ export function BlogExplorer() {
       {category === "All" && !query ? (
         <Link
           href={`/blog/${featured.slug}`}
-          className="group relative mt-10 block overflow-hidden rounded-3xl bg-navy-900 p-8 text-white shadow-lift transition-all duration-300 hover:-translate-y-1 hover:shadow-glow sm:p-12"
+          className="group relative mt-10 block overflow-hidden rounded-3xl bg-navy-900 text-white shadow-lift transition-all duration-300 hover:-translate-y-1 hover:shadow-glow"
         >
-          <div className="pointer-events-none absolute inset-0 bg-noise opacity-40" />
-          <div className="pointer-events-none absolute inset-0 bg-grid-dark" />
-          <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-electric-500/25 blur-[90px]" />
-          <div className="relative max-w-2xl">
+          <Image
+            src={featured.image}
+            alt=""
+            fill
+            sizes="(max-width: 1280px) 100vw, 1280px"
+            className="object-cover opacity-30 transition-all duration-700 group-hover:scale-105 group-hover:opacity-40"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/85 to-navy-950/40" />
+          <div className="pointer-events-none absolute inset-0 bg-noise opacity-30" />
+          <div className="relative p-8 sm:p-12">
+          <div className="max-w-2xl">
             <div className="flex flex-wrap items-center gap-3 text-xs font-semibold">
               <span className="rounded-full bg-electric-500 px-3 py-1 text-white">Featured</span>
               <span className="text-navy-300">{featured.category}</span>
@@ -94,6 +102,7 @@ export function BlogExplorer() {
               </span>
             </div>
           </div>
+          </div>
         </Link>
       ) : null}
 
@@ -104,8 +113,19 @@ export function BlogExplorer() {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="group flex h-full flex-col rounded-3xl border border-navy-100 bg-white p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
+              className="group flex h-full flex-col overflow-hidden rounded-3xl border border-navy-100 bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
             >
+              <div className="relative h-44 overflow-hidden">
+                <Image
+                  src={post.image}
+                  alt=""
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy-950/40 to-transparent" />
+              </div>
+              <div className="flex flex-1 flex-col p-7 pt-5">
               <div className="flex items-center gap-2 text-xs font-semibold">
                 <span className="rounded-full bg-electric-100 px-2.5 py-1 text-electric-600">{post.category}</span>
                 <span className="flex items-center gap-1 text-slate">
@@ -122,6 +142,7 @@ export function BlogExplorer() {
                   Read
                   <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
+              </div>
               </div>
             </Link>
           ))}

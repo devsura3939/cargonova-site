@@ -1,4 +1,5 @@
 import type { FleetVehicle } from "@/types";
+import { images } from "@/data/images";
 
 export const fleetCategories = [
   { slug: "all", label: "All" },
@@ -14,6 +15,7 @@ export const fleet: FleetVehicle[] = [
     name: "Sprinter Van",
     category: "express",
     icon: "van",
+    image: images.warehouseForklift,
     payload: "1.2 t",
     volume: "8 m³",
     dimensions: "3.1 × 1.8 × 1.4 m",
@@ -26,6 +28,7 @@ export const fleet: FleetVehicle[] = [
     name: "Box Truck",
     category: "standard",
     icon: "box-truck",
+    image: images.truckDusk,
     payload: "3.5 t",
     volume: "20 m³",
     dimensions: "4.2 × 2.1 × 2.2 m",
@@ -38,6 +41,7 @@ export const fleet: FleetVehicle[] = [
     name: "Semi Trailer",
     category: "standard",
     icon: "semi",
+    image: images.semiHighway,
     payload: "24 t",
     volume: "90 m³",
     dimensions: "13.6 × 2.45 × 2.7 m",
@@ -50,6 +54,7 @@ export const fleet: FleetVehicle[] = [
     name: "Refrigerated Truck",
     category: "refrigerated",
     icon: "reefer",
+    image: images.truckRoad,
     payload: "21 t",
     volume: "86 m³",
     dimensions: "13.6 × 2.45 × 2.6 m",
@@ -62,6 +67,7 @@ export const fleet: FleetVehicle[] = [
     name: "Flatbed",
     category: "heavy",
     icon: "flatbed",
+    image: images.highwayDusk,
     payload: "24 t",
     volume: "—",
     dimensions: "13.6 × 2.48 m deck",
@@ -74,6 +80,7 @@ export const fleet: FleetVehicle[] = [
     name: "Lowbed / Heavy Transport",
     category: "heavy",
     icon: "lowbed",
+    image: images.portCranes,
     payload: "up to 60 t",
     volume: "—",
     dimensions: "13–19 m deck, hydraulically extendable",

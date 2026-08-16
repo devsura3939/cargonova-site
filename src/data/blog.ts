@@ -1,4 +1,5 @@
 import type { BlogPost } from "@/types";
+import { images } from "@/data/images";
 
 export const blogCategories = [
   "Freight",
@@ -20,6 +21,7 @@ export const posts: BlogPost[] = [
     publishedAt: "2026-08-04",
     readTime: "8 min",
     author: "CargoNova Insights",
+    image: images.containersAerial,
     featured: true,
     body: [
       "European road freight is entering a new phase. After years of volatile capacity, shippers are moving away from transactional spot buying toward committed programs with measurable service levels. The reason is simple: predictability has become the product.",
@@ -38,6 +40,7 @@ export const posts: BlogPost[] = [
     publishedAt: "2026-07-22",
     readTime: "6 min",
     author: "CargoNova Insights",
+    image: images.semiHighway,
     body: [
       "The FTL vs. LTL decision comes down to three variables: volume, urgency, and the value of direct handling.",
       "Full Truckload buys you a dedicated vehicle. That means no transfers, no co-loading, and a direct route. It is the right choice when your cargo fills most of a trailer, when transit time is critical, or when your freight is fragile enough that every handoff is a risk event.",
@@ -55,6 +58,7 @@ export const posts: BlogPost[] = [
     publishedAt: "2026-07-10",
     readTime: "7 min",
     author: "CargoNova Insights",
+    image: images.warehouseShelf,
     body: [
       "A cold-chain audit is a documentation exercise with physical consequences. Auditors are not checking whether your cargo was cold — they are checking whether you can prove it was, continuously, and what you did when it was not.",
       "The first thing auditors look at is unit validation. A reefer unit that cannot demonstrate a pre-trip temperature check against an independent reference starts the audit at a disadvantage.",
@@ -72,6 +76,7 @@ export const posts: BlogPost[] = [
     publishedAt: "2026-06-28",
     readTime: "9 min",
     author: "CargoNova Insights",
+    image: images.portCranes,
     body: [
       "An oversized move fails or succeeds in the planning phase. The truck is the simple part; the route is where the work is.",
       "Every move starts with a load assessment: exact dimensions, weight, center of gravity, and load path. From there, our engineers survey candidate routes — bridge classifications, overhead clearances, road widths, turning radii, and local restrictions.",
@@ -89,6 +94,7 @@ export const posts: BlogPost[] = [
     publishedAt: "2026-06-14",
     readTime: "5 min",
     author: "CargoNova Insights",
+    image: images.warehouseForklift,
     body: [
       "Peak season pressure is not a transport problem; it is a timing problem. The freight that arrives late in Q4 usually failed to be staged early in Q4.",
       "Staging inventory closer to demand is the highest-leverage move a retail supply chain can make. Pre-positioning seasonal stock in regional warehouses cuts last-mile distance, shortens delivery windows, and turns the transport network's job from 'rush' into 'schedule'.",
@@ -106,6 +112,7 @@ export const posts: BlogPost[] = [
     publishedAt: "2026-05-30",
     readTime: "7 min",
     author: "CargoNova Insights",
+    image: images.opsTablet,
     body: [
       "Most logistics dashboards are full of numbers that nobody acts on. A useful KPI set is small, measurable, and tied to a decision someone can make this week.",
       "On-time delivery is the anchor. Define it precisely — door-to-door or dock-to-dock? Within the agreed window, or by the promised day? The definition determines whether the number means anything.",

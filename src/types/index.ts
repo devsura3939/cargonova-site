@@ -31,6 +31,7 @@ export type FleetVehicle = {
   name: string;
   category: "express" | "standard" | "refrigerated" | "heavy";
   icon: string;
+  image: string;
   payload: string;
   volume: string;
   dimensions: string;
@@ -62,6 +63,7 @@ export type BlogPost = {
   publishedAt: string;
   readTime: string;
   author: string;
+  image: string;
   featured?: boolean;
   body: string[];
 };

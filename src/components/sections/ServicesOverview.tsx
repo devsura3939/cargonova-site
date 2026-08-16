@@ -1,5 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { images } from "@/data/images";
 import { services } from "@/data/services";
 import { ServiceIcon } from "@/components/icons/ServiceIcon";
 import { Section } from "@/components/shared/Section";
@@ -42,7 +44,15 @@ export function ServicesOverview() {
             href={`/services/${featured.slug}`}
             className="group relative flex h-full min-h-105 flex-col justify-between overflow-hidden rounded-3xl bg-navy-900 p-8 text-white shadow-lift transition-all duration-300 hover:-translate-y-1 hover:shadow-glow sm:p-10"
           >
-            <div className="pointer-events-none absolute inset-0 bg-noise opacity-40" />
+            <Image
+              src={images.containersNight}
+              alt=""
+              fill
+              sizes="(max-width: 1024px) 100vw, 66vw"
+              className="object-cover opacity-25 transition-all duration-700 group-hover:scale-105 group-hover:opacity-30"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-navy-900/80 via-navy-900/60 to-navy-950" />
+            <div className="pointer-events-none absolute inset-0 bg-noise opacity-30" />
             <div className="pointer-events-none absolute inset-0 bg-grid-dark" />
             <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-electric-500/25 blur-[90px] transition-opacity duration-500 group-hover:opacity-100" />
             <svg
