@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLang } from "@/lib/i18n";
 
 export function Breadcrumb({
   items,
@@ -9,6 +12,8 @@ export function Breadcrumb({
   items: { name: string; path: string }[];
   dark?: boolean;
 }) {
+  const { t } = useLang();
+
   return (
     <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1.5 text-sm">
       <Link
@@ -18,7 +23,7 @@ export function Breadcrumb({
           dark ? "text-navy-300 hover:text-white" : "text-muted hover:text-strong",
         )}
       >
-        Home
+        {t("nav.home")}
       </Link>
       {items.map((item, i) => (
         <span key={item.path} className="flex items-center gap-1.5">

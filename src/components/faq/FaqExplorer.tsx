@@ -7,17 +7,26 @@ import { Container } from "@/components/shared/Container";
 import { Section } from "@/components/shared/Section";
 import { Reveal } from "@/components/shared/Reveal";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { faqCategories, searchFaqs } from "@/data/faq";
+import { faqs, faqCategories, searchFaqs } from "@/data/faq";
 import { cn } from "@/lib/utils";
+import { useLang } from "@/lib/i18n";
+import { faqCategoryKa } from "@/data/faq";
 
 export function FaqExplorer() {
+  const { t, lang } = useLang();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string>("All");
+
+  const isKa = lang === "ka";
 
   const results = useMemo(() => {
     const searched = searchFaqs(query);
     return category === "All" ? searched : searched.filter((f) => f.category === category);
   }, [query, category]);
+
+  const catLabel = (cat: string) => (isKa ? faqCategoryKa[cat] ?? cat : cat);
+  const qText = (f: (typeof faqs)[number]) => (isKa && f.questionKa ? f.questionKa : f.question);
+  const aText = (f: (typeof faqs)[number]) => (isKa && f.answerKa ? f.answerKa : f.answer);
 
   return (
     <>
@@ -25,12 +34,12 @@ export function FaqExplorer() {
       <Section variant="dark" className="py-12">
         <Container className="max-w-2xl">
           <label className="relative block">
-            <span className="sr-only">Search frequently asked questions</span>
+            <span className="sr-only">{t("faq.search")}</span>
             <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-navy-300" />
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search questions… e.g. insurance, customs, LTL"
+              placeholder={t("faq.searchPh")}
               className="h-13 w-full rounded-2xl border border-white/15 bg-white/10 pl-11 pr-4 text-sm text-white placeholder:text-navy-300 backdrop-blur focus:border-cyan-400 focus:outline-none focus:ring-4 focus:ring-cyan-400/15"
             />
           </label>
@@ -53,7 +62,7 @@ export function FaqExplorer() {
                       : "border border-soft bg-surface text-ink hover:border-electric-400 hover:text-electric-600 dark:hover:text-electric-400",
                   )}
                 >
-                  {cat}
+                  {catLabel(cat)}
                 </button>
               ))}
             </div>
@@ -68,12 +77,12 @@ export function FaqExplorer() {
                     <AccordionTrigger>
                       <span className="flex items-center gap-3">
                         <span className="hidden rounded-full bg-surface-muted px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted sm:inline-block">
-                          {faq.category}
+                          {catLabel(faq.category)}
                         </span>
-                        {faq.question}
+                        {qText(faq)}
                       </span>
                     </AccordionTrigger>
-                    <AccordionContent>{faq.answer}</AccordionContent>
+                    <AccordionContent>{aText(faq)}</AccordionContent>
                   </AccordionItem>
                 ))}
               </Accordion>
@@ -81,16 +90,14 @@ export function FaqExplorer() {
           ) : (
             <Reveal delay={0.05}>
               <div className="mx-auto mt-12 max-w-3xl rounded-3xl border border-dashed border-navy-200 bg-mist p-12 text-center dark:border-white/15">
-                <p className="font-display text-lg font-bold text-strong">No matches</p>
-                <p className="mt-2 text-sm text-muted">
-                  Nothing in the FAQ matches that search. Ask us directly — we answer fast.
-                </p>
+                <p className="font-display text-lg font-bold text-strong">{t("faq.noMatches")}</p>
+                <p className="mt-2 text-sm text-muted">{t("faq.noMatchesSub")}</p>
                 <Link
                   href="/contact"
                   className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-electric-600 hover:text-electric-500"
                 >
                   <MessageCircleQuestion className="h-4 w-4" />
-                  Contact support
+                  {t("faq.contactSupport")}
                 </Link>
               </div>
             </Reveal>
@@ -98,11 +105,11 @@ export function FaqExplorer() {
 
           <Reveal delay={0.1}>
             <p className="mx-auto mt-10 max-w-3xl rounded-2xl bg-mist p-5 text-center text-sm text-navy-700 dark:text-navy-200">
-              Still have a question?{" "}
+              {t("faq.stillHave")}{" "}
               <Link href="/contact" className="font-semibold text-electric-600 underline decoration-electric-300 underline-offset-4 hover:text-electric-500">
-                Contact our logistics team
+                {t("faq.contactTeam")}
               </Link>{" "}
-              — replies within one business day.
+              {t("faq.replies")}
             </p>
           </Reveal>
         </Container>

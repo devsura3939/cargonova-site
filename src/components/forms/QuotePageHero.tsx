@@ -9,7 +9,7 @@ export function QuotePageHero() {
   return (
     <PageHero
       crumb={[{ name: t("nav.getQuote"), path: "/quote" }]}
-      eyebrow="Get a quote"
+      eyebrow={t("quote.eyebrow")}
       title={t("quote.title")}
       description={t("quote.sub")}
     />

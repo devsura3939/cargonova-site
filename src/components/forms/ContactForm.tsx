@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/analytics";
+import { useLang } from "@/lib/i18n";
 
 function Field({
   label,
@@ -42,6 +43,7 @@ function Field({
 }
 
 export function ContactForm() {
+  const { t } = useLang();
   const [status, setStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
   const {
     register,
@@ -70,13 +72,12 @@ export function ContactForm() {
         <span className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
           <Check className="h-7 w-7" />
         </span>
-        <h3 className="mt-5 font-display text-xl font-bold text-strong">Message sent</h3>
+        <h3 className="mt-5 font-display text-xl font-bold text-strong">{t("contact.sentTitle")}</h3>
         <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted">
-          Thanks for reaching out. Our team replies within one business day — faster for
-          active shipments.
+          {t("contact.sentSub")}
         </p>
         <Button variant="outline" className="mt-6" onClick={() => setStatus("idle")}>
-          Send another message
+          {t("contact.sendAnother")}
         </Button>
       </div>
     );
@@ -86,14 +87,14 @@ export function ContactForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-5" noValidate>
       {status === "error" ? (
         <p className="rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-600" role="alert">
-          Your message could not be sent. Please try again.
+          {t("contact.error")}
         </p>
       ) : null}
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Full name" htmlFor="contact-name" error={errors.name?.message}>
-          <Input id="contact-name" placeholder="e.g. Anna Meyer" {...register("name")} invalid={!!errors.name} />
+        <Field label={t("contact.name")} htmlFor="contact-name" error={errors.name?.message}>
+          <Input id="contact-name" placeholder={t("contact.namePh")} {...register("name")} invalid={!!errors.name} />
         </Field>
-        <Field label="Department">
+        <Field label={t("contact.department")}>
           <Controller
             control={control}
             name="department"
@@ -103,37 +104,37 @@ export function ContactForm() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="sales">Sales & Quotes</SelectItem>
-                  <SelectItem value="support">Logistics Support</SelectItem>
-                  <SelectItem value="general">General</SelectItem>
+                  <SelectItem value="sales">{t("contact.deptSales")}</SelectItem>
+                  <SelectItem value="support">{t("contact.deptSupport")}</SelectItem>
+                  <SelectItem value="general">{t("contact.deptGeneral")}</SelectItem>
                 </SelectContent>
               </Select>
             )}
           />
         </Field>
-        <Field label="Email" htmlFor="contact-email" error={errors.email?.message}>
-          <Input id="contact-email" type="email" placeholder="you@company.com" {...register("email")} invalid={!!errors.email} />
+        <Field label={t("contact.email")} htmlFor="contact-email" error={errors.email?.message}>
+          <Input id="contact-email" type="email" placeholder={t("contact.emailPh")} {...register("email")} invalid={!!errors.email} />
         </Field>
-        <Field label="Phone (optional)" htmlFor="contact-phone" error={errors.phone?.message}>
-          <Input id="contact-phone" type="tel" placeholder="+49 30 …" {...register("phone")} invalid={!!errors.phone} />
+        <Field label={t("contact.phone")} htmlFor="contact-phone" error={errors.phone?.message}>
+          <Input id="contact-phone" type="tel" placeholder={t("contact.phonePh")} {...register("phone")} invalid={!!errors.phone} />
         </Field>
-        <Field label="Subject" htmlFor="contact-subject" error={errors.subject?.message} className="sm:col-span-2">
-          <Input id="contact-subject" placeholder="e.g. Quote for FTL Berlin → Warsaw" {...register("subject")} invalid={!!errors.subject} />
+        <Field label={t("contact.subject")} htmlFor="contact-subject" error={errors.subject?.message} className="sm:col-span-2">
+          <Input id="contact-subject" placeholder={t("contact.subjectPh")} {...register("subject")} invalid={!!errors.subject} />
         </Field>
-        <Field label="Message" htmlFor="contact-message" error={errors.message?.message} className="sm:col-span-2">
-          <Textarea id="contact-message" rows={6} placeholder="Tell us about your shipment or question…" {...register("message")} invalid={!!errors.message} />
+        <Field label={t("contact.message")} htmlFor="contact-message" error={errors.message?.message} className="sm:col-span-2">
+          <Textarea id="contact-message" rows={6} placeholder={t("contact.messagePh")} {...register("message")} invalid={!!errors.message} />
         </Field>
       </div>
       <div className="flex items-center justify-between gap-4">
-        <p className="text-xs text-muted">We reply within one business day.</p>
+        <p className="text-xs text-muted">{t("contact.replyNote")}</p>
         <Button type="submit" size="lg" disabled={status === "submitting"}>
           {status === "submitting" ? (
             <>
-              <Loader2 className="h-4 w-4 animate-spin" /> Sending…
+              <Loader2 className="h-4 w-4 animate-spin" /> {t("contact.sending")}
             </>
           ) : (
             <>
-              Send Message
+              {t("contact.send")}
               <Send className="h-4 w-4" />
             </>
           )}

@@ -110,7 +110,7 @@ export function FreightCalculator() {
         { icon: RouteIcon, label: t("calc.baseRate"), value: `€ ${fmt(estimate.base)}` },
         { icon: Fuel, label: t("calc.fuel"), value: `€ ${fmt(estimate.fuel)}` },
         { icon: FileBadge, label: t("calc.border"), value: estimate.customs > 0 ? `€ ${fmt(estimate.customs)}` : "—" },
-        { icon: Landmark, label: "Tolls & road fees", value: `€ ${fmt(estimate.tolls)}` },
+        { icon: Landmark, label: t("calc.tolls"), value: `€ ${fmt(estimate.tolls)}` },
       ]
     : [];
 

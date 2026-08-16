@@ -11,6 +11,13 @@ export const industries: Industry[] = [
       "Scheduled daily and weekly lanes between your plants and suppliers, with slot-based delivery windows and live visibility so planners always know where inventory is.",
     services: ["ground-freight", "full-truckload", "business-logistics"],
     benefit: "Reduced line-stoppage risk and predictable inbound flow.",
+    nameKa: "წარმოება",
+    problemKa:
+      "საწარმოო ხაზები დამოკიდებულია კომპონენტების სწორი თანმიმდევრობით და დროულად მიწოდებაზე — ერთი დაგვიანებული მიწოდებაც აჩერებს ხაზს.",
+    challengeKa: "შემომავალი კომპონენტებისა და მზა პროდუქციის სინქრონიზაცია მრავალ ქარხანას შორის.",
+    solutionKa:
+      "დაგეგმილი ყოველდღიური და ყოველკვირეული რეისები თქვენს ქარხნებსა და მომწოდებლებს შორის, სლოტზე დაფუძნებული მიწოდების ფანჯრებით და ცოცხალი ხილვადობით, რომ პლანერებმა ყოველთვის იცოდნენ, სად არის მარაგი.",
+    benefitKa: "ხაზის გაჩერების რისკის შემცირება და პროგნოზირებადი შემომავალი ნაკადი.",
   },
   {
     slug: "retail",
@@ -22,6 +29,13 @@ export const industries: Industry[] = [
       "Distribution programs with staging in our warehousing network, then just-in-time delivery to stores and e-commerce fulfillment hubs.",
     services: ["ltl", "warehousing", "ground-freight"],
     benefit: "Stores stocked when they need to be, without overflow inventory.",
+    nameKa: "საცალო ვაჭრობა",
+    problemKa:
+      "სეზონური პიკები, მაღაზიების შევსება და ომნიჩანელური მოთხოვნა მარაგის დროულობას გადამწყვეტს ხდის.",
+    challengeKa: "შემომავალი ტვირთების შეთანხმება სარეკლამო კალენდრებთან და მაღაზიების მუშაობის საათებთან.",
+    solutionKa:
+      "დისტრიბუციის პროგრამები ჩვენს საწყობის ქსელში სტეიჯინგით, შემდეგ კი ზუსტად დროული მიწოდება მაღაზიებსა და ელექტრონული კომერციის ჰაბებში.",
+    benefitKa: "მაღაზიები დროულად ივსება, ზედმეტი მარაგის გარეშე.",
   },
   {
     slug: "construction",
@@ -33,6 +47,13 @@ export const industries: Industry[] = [
       "FTL and oversized transport with route surveys for every site, plus crane-coordinated unloading for structural and heavy components.",
     services: ["oversized", "full-truckload", "ground-freight"],
     benefit: "Materials on site when the crane and crew are ready.",
+    nameKa: "მშენებლობა",
+    problemKa:
+      "ობიექტის ვადები სახელშეკრულებოა — მასალების დაგვიანება ჯარიმებში გადაიზრდება.",
+    challengeKa: "მძიმე და არასტანდარტული ტვირთების გადაადგილება ობიექტებზე შეზღუდული მისასვლელით და მკაცრი ფანჯრებით.",
+    solutionKa:
+      "FTL და მსხვილი ტვირთების ტრანსპორტირება მარშრუტის შესწავლით თითოეული ობიექტისთვის, პლუს ამწესთან კოორდინირებული გადმოტვირთვა კონსტრუქციული და მძიმე ელემენტებისთვის.",
+    benefitKa: "მასალები ადგილზეა მაშინ, როცა ამწე და გუნდი მზადაა.",
   },
   {
     slug: "automotive",
@@ -44,6 +65,13 @@ export const industries: Industry[] = [
       "Dedicated FTL programs with sequence loading, protective securing, and telematics-monitored vehicles for parts and finished vehicles.",
     services: ["full-truckload", "business-logistics", "ground-freight"],
     benefit: "JIS/JIT reliability with documented handling quality.",
+    nameKa: "ავტომობილები",
+    problemKa:
+      "ავტომობილების მიწოდების ჯაჭვი მუშაობს ზუსტ თანმიმდევრობაზე და დაზიანებისადმი ნულოვანი ტოლერანტობით.",
+    challengeKa: "ნაწილების ზუსტად თანმიმდევრობით მიწოდება დაზიანების გარეშე.",
+    solutionKa:
+      "სპეციალიზებული FTL პროგრამები თანმიმდევრობით ჩატვირთვით, დამცავი დამაგრებით და ტელემატიკით კონტროლირებადი მანქანებით ნაწილებისა და მზა ავტომობილებისთვის.",
+    benefitKa: "JIS/JIT საიმედოობა დოკუმენტირებული დამუშავების ხარისხით.",
   },
   {
     slug: "food-beverage",
@@ -55,6 +83,13 @@ export const industries: Industry[] = [
       "Refrigerated transport with continuous logging, pre-trip validation, and dual-zone units for mixed chilled and ambient loads.",
     services: ["refrigerated", "warehousing", "full-truckload"],
     benefit: "Documented cold-chain integrity, from plant to shelf.",
+    nameKa: "საკვები და სასმელი",
+    problemKa:
+      "ცივი ჯაჭვი არ შეიძლება დაირღვეს — ტემპერატურის გადახრა ნიშნავს პროდუქტის უარყოფას და ღირებულების დაკარგვას.",
+    challengeKa: "დოკუმენტირებული ტემპერატურის მთლიანობის შენარჩუნება საზღვრებსა და გადაცემის ეტაპებზე.",
+    solutionKa:
+      "რეფრიჟერატორული ტრანსპორტი უწყვეტი ჟურნალით, წინასწარი ვალიდაციით და ორზონიანი აგრეგატებით შერეული გაცივებული და ჩვეულებრივი ტვირთებისთვის.",
+    benefitKa: "დოკუმენტირებული ცივი ჯაჭვის მთლიანობა ქარხნიდან თაროებამდე.",
   },
   {
     slug: "ecommerce",
@@ -66,6 +101,13 @@ export const industries: Industry[] = [
       "Warehouse-integrated fulfillment with pick-and-pack, plus express and LTL lanes into e-commerce carrier networks.",
     services: ["express", "warehousing", "ltl"],
     benefit: "Faster order cycles and a returns process customers don't dread.",
+    nameKa: "ელექტრონული კომერცია",
+    problemKa:
+      "მომხმარებლები მოელოდებიან სწრაფ, თვალთვალად მიწოდებას — და დაბრუნებებს უპრობლემოდ.",
+    challengeKa: "შეკვეთების შესრულებისა და ბოლო მილის მიწოდების მასშტაბირება სეზონთან ერთად.",
+    solutionKa:
+      "საწყობთან ინტეგრირებული შეკვეთების შესრულება pick-and-pack-ით, პლუს ექსპრეს და LTL რეისები ელექტრონული კომერციის ქსელებში.",
+    benefitKa: "უფრო სწრაფი შეკვეთის ციკლები და დაბრუნების პროცესი, რომელიც მომხმარებელს არ აშინებს.",
   },
   {
     slug: "healthcare",
@@ -77,6 +119,13 @@ export const industries: Industry[] = [
       "Temperature-controlled express and FTL with logging, alarm monitoring, and documented handling for pharma and medical devices.",
     services: ["express", "refrigerated", "business-logistics"],
     benefit: "Compliance-ready cold chain for regulated products.",
+    nameKa: "ჯანდაცვა",
+    problemKa:
+      "ფარმაცევტული პროდუქტები და სამედიცინო აპარატურა დროზე და ტემპერატურაზე მგრძნობიარეა, მკაცრი შესაბამისობის მოთხოვნებით.",
+    challengeKa: "GDP-თან შესაბამისი ტრანსპორტი მგრძნობიარე პროდუქტებისთვის ვალიდაციით.",
+    solutionKa:
+      "ტემპერატურის კონტროლირებადი ექსპრეს და FTL ჟურნალით, სიგნალიზაციის მონიტორინგით და დოკუმენტირებული დამუშავებით ფარმასა და სამედიცინო მოწყობილობებისთვის.",
+    benefitKa: "რეგულირებადი პროდუქტებისთვის შესაბამისი ცივი ჯაჭვი.",
   },
   {
     slug: "industrial-equipment",
@@ -88,6 +137,13 @@ export const industries: Industry[] = [
       "Oversized cargo planning with route surveys, lowbed transport, and escort coordination for machinery moves across Europe.",
     services: ["oversized", "ground-freight", "full-truckload"],
     benefit: "Heavy equipment moved safely, legally, and on schedule.",
+    nameKa: "სამრეწველო აღჭურვილობა",
+    problemKa:
+      "მძიმე ტექნიკა ნელა იტვირთება, რთულად მოძრაობს და ძვირი ღირს დაზიანების შემთხვევაში.",
+    challengeKa: "ნებართვები, მარშრუტის ინჟინერია და სპეციალიზებული ტექნიკა გაბარიტული ტვირთებისთვის.",
+    solutionKa:
+      "მსხვილი ტვირთების დაგეგმვა მარშრუტის შესწავლით, დაბალი პლატფორმის ტრანსპორტით და ესკორტის კოორდინაციით მანქანების გადასატანად ევროპის მასშტაბით.",
+    benefitKa: "მძიმე აღჭურვილობის უსაფრთხო, კანონიერი და გრაფიკით გადაზიდვა.",
   },
 ];
 

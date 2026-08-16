@@ -14,8 +14,9 @@ import { useDataT } from "@/lib/data-i18n";
 import { cn } from "@/lib/utils";
 
 export default function IndustriesPage() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const { serviceTitle } = useDataT();
+  const isKa = lang === "ka";
 
   return (
     <>
@@ -32,6 +33,11 @@ export default function IndustriesPage() {
           <div className="space-y-16 lg:space-y-20">
             {industries.map((industry, i) => {
               const flip = i % 2 === 1;
+              const name = isKa && industry.nameKa ? industry.nameKa : industry.name;
+              const problem = isKa && industry.problemKa ? industry.problemKa : industry.problem;
+              const challenge = isKa && industry.challengeKa ? industry.challengeKa : industry.challenge;
+              const solution = isKa && industry.solutionKa ? industry.solutionKa : industry.solution;
+              const benefit = isKa && industry.benefitKa ? industry.benefitKa : industry.benefit;
               return (
                 <div
                   key={industry.slug}
@@ -49,10 +55,10 @@ export default function IndustriesPage() {
                         <ServiceIcon name={industry.icon} className="h-8 w-8 text-cyan-400" />
                       </span>
                       <h2 className="relative mt-6 font-display text-3xl font-extrabold tracking-tight">
-                        {industry.name}
+                        {name}
                       </h2>
                       <p className="relative mt-3 text-sm leading-relaxed text-navy-200">
-                        {industry.challenge}
+                        {challenge}
                       </p>
                       <div className="relative mt-8 flex flex-wrap gap-2">
                         {industry.services.map((s) => (
@@ -66,7 +72,7 @@ export default function IndustriesPage() {
                         ))}
                       </div>
                       <p className="relative mt-8 border-t border-white/10 pt-5 text-sm font-semibold text-cyan-400">
-                        {t("pg.industries.outcome")} {industry.benefit}
+                        {t("pg.industries.outcome")} {benefit}
                       </p>
                     </div>
                   </Reveal>
@@ -78,14 +84,14 @@ export default function IndustriesPage() {
                     </p>
                     <p className="mt-3 flex gap-3 text-lg font-medium leading-relaxed text-strong">
                       <AlertTriangle className="mt-1 h-5 w-5 shrink-0 text-orange-500" />
-                      {industry.problem}
+                      {problem}
                     </p>
                     <p className="mt-8 text-xs font-bold uppercase tracking-[0.18em] text-electric-600">
                       {t("pg.industries.solution")}
                     </p>
                     <p className="mt-3 flex gap-3 text-pretty leading-relaxed text-muted">
                       <Lightbulb className="mt-1 h-5 w-5 shrink-0 text-electric-500" />
-                      {industry.solution}
+                      {solution}
                     </p>
                     <ul className="mt-8 space-y-2.5">
                       {industry.services.map((s) => (

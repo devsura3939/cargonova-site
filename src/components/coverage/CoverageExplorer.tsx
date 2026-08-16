@@ -10,19 +10,21 @@ import { Reveal } from "@/components/shared/Reveal";
 import { corridors, regions, getHub } from "@/data/routes";
 import { cn } from "@/lib/utils";
 import { useDataT } from "@/lib/data-i18n";
+import { useLang } from "@/lib/i18n";
 
 export function CoverageExplorer() {
   const [active, setActive] = useState<string | null>(null);
   const { regionNote } = useDataT();
+  const { t } = useLang();
 
   return (
     <>
       {/* Interactive map */}
       <Section variant="light">
         <SectionHeading
-          eyebrow="Network map"
-          title="Explore the network"
-          description="Hover a corridor or select one below to trace its route through our hub network."
+          eyebrow={t("cov.networkMap")}
+          title={t("cov.networkTitle")}
+          description={t("cov.networkSub")}
         />
         <Reveal delay={0.1} className="mt-10">
           <div className="rounded-3xl border border-navy-100 bg-mist p-4 shadow-card sm:p-8 dark:border-white/10">
@@ -59,18 +61,18 @@ export function CoverageExplorer() {
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
           <div>
             <SectionHeading
-              eyebrow="International corridors"
-              title="Transit times our planners commit to"
-              description="Published transit days per corridor, updated quarterly from actual performance. Deviations are the exception, and you'll hear about them first."
+              eyebrow={t("cov.corridors")}
+              title={t("cov.corridorsTitle")}
+              description={t("cov.corridorsSub")}
             />
             <Reveal delay={0.1}>
               <div className="mt-10 overflow-hidden rounded-3xl border border-soft bg-surface shadow-card">
                 <table className="w-full text-left text-sm">
                   <thead>
                     <tr className="border-b border-soft bg-surface-muted text-xs font-bold uppercase tracking-wide text-muted">
-                      <th className="px-6 py-4">Corridor</th>
-                      <th className="px-6 py-4">Via</th>
-                      <th className="px-6 py-4 text-right">Transit</th>
+                      <th className="px-6 py-4">{t("cov.colCorridor")}</th>
+                      <th className="px-6 py-4">{t("cov.colVia")}</th>
+                      <th className="px-6 py-4 text-right">{t("cov.colTransit")}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-navy-100">
@@ -102,7 +104,7 @@ export function CoverageExplorer() {
           </div>
 
           <div>
-            <SectionHeading eyebrow="Service regions" title="Where we operate daily" />
+            <SectionHeading eyebrow={t("cov.regions")} title={t("cov.regionsTitle")} />
             <div className="mt-10 space-y-4">
               {regions.map((region, i) => (
                 <Reveal key={region.id} delay={0.05 * i}>
@@ -127,17 +129,16 @@ export function CoverageExplorer() {
         <Reveal>
           <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
             <h2 className="text-balance font-display text-3xl font-extrabold tracking-tight text-strong sm:text-4xl">
-              Not on a listed corridor?
+              {t("cov.offCorridor")}
             </h2>
             <p className="mt-4 max-w-xl text-pretty text-muted sm:text-lg">
-              Our network extends beyond these lanes through vetted partners. Ask us about
-              your route — if it's movable by road, we'll price it.
+              {t("cov.offCorridorSub")}
             </p>
             <Link
               href="/quote"
               className="group mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-electric-500 px-8 text-sm font-semibold text-white shadow-glow transition-colors hover:bg-electric-400"
             >
-              Request a route quote
+              {t("cov.requestQuote")}
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </div>

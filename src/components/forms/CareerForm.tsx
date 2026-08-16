@@ -13,8 +13,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { jobs } from "@/data/jobs";
 import { trackEvent } from "@/lib/analytics";
+import { useLang, type DictKey } from "@/lib/i18n";
 
 export function CareerForm({ role }: { role?: string }) {
+  const { t } = useLang();
   const [status, setStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
   const {
     register,
@@ -41,10 +43,9 @@ export function CareerForm({ role }: { role?: string }) {
         <span className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
           <Check className="h-7 w-7" />
         </span>
-        <h3 className="mt-5 font-display text-xl font-bold text-strong">Application received</h3>
+        <h3 className="mt-5 font-display text-xl font-bold text-strong">{t("career.sentTitle")}</h3>
         <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted">
-          Thanks for applying. Our talent team reviews every application and replies
-          within five business days.
+          {t("career.sentSub")}
         </p>
       </div>
     );
@@ -54,54 +55,54 @@ export function CareerForm({ role }: { role?: string }) {
     <form onSubmit={handleSubmit(onSubmit)} className="grid gap-5" noValidate>
       {status === "error" ? (
         <p className="rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-600" role="alert">
-          Your application could not be submitted. Please try again.
+          {t("career.error")}
         </p>
       ) : null}
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Full name" htmlFor="career-name" error={errors.name?.message}>
-          <Input id="career-name" placeholder="e.g. Tomasz Nowak" {...register("name")} invalid={!!errors.name} />
+        <Field label={t("career.name")} htmlFor="career-name" error={errors.name?.message}>
+          <Input id="career-name" placeholder={t("career.namePh")} {...register("name")} invalid={!!errors.name} />
         </Field>
-        <Field label="Applying for" error={errors.role?.message}>
+        <Field label={t("career.applyingFor")} error={errors.role?.message}>
           <Controller
             control={control}
             name="role"
             render={({ field }) => (
               <Select value={field.value || undefined} onValueChange={field.onChange}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select a role" />
+                  <SelectValue placeholder={t("career.selectRole")} />
                 </SelectTrigger>
                 <SelectContent>
                   {jobs.map((j) => (
                     <SelectItem key={j.slug} value={j.slug}>
-                      {j.title}
+                      {t(`career.job.${j.slug}` as DictKey)}
                     </SelectItem>
                   ))}
-                  <SelectItem value="open-application">Open application</SelectItem>
+                  <SelectItem value="open-application">{t("career.openApp")}</SelectItem>
                 </SelectContent>
               </Select>
             )}
           />
         </Field>
-        <Field label="Email" htmlFor="career-email" error={errors.email?.message}>
-          <Input id="career-email" type="email" placeholder="you@email.com" {...register("email")} invalid={!!errors.email} />
+        <Field label={t("career.email")} htmlFor="career-email" error={errors.email?.message}>
+          <Input id="career-email" type="email" placeholder={t("career.emailPh")} {...register("email")} invalid={!!errors.email} />
         </Field>
-        <Field label="Phone (optional)" htmlFor="career-phone" error={errors.phone?.message}>
-          <Input id="career-phone" type="tel" placeholder="+49 30 …" {...register("phone")} invalid={!!errors.phone} />
+        <Field label={t("career.phone")} htmlFor="career-phone" error={errors.phone?.message}>
+          <Input id="career-phone" type="tel" placeholder={t("career.phonePh")} {...register("phone")} invalid={!!errors.phone} />
         </Field>
-        <Field label="Why you / anything else (optional)" htmlFor="career-message" error={errors.message?.message} className="sm:col-span-2">
-          <Textarea id="career-message" rows={5} placeholder="Relevant experience, notice period, questions…" {...register("message")} invalid={!!errors.message} />
+        <Field label={t("career.whyYou")} htmlFor="career-message" error={errors.message?.message} className="sm:col-span-2">
+          <Textarea id="career-message" rows={5} placeholder={t("career.whyYouPh")} {...register("message")} invalid={!!errors.message} />
         </Field>
       </div>
       <div className="flex items-center justify-between gap-4">
-        <p className="text-xs text-muted">We reply to every application within five business days.</p>
+        <p className="text-xs text-muted">{t("career.replyNote")}</p>
         <Button type="submit" size="lg" disabled={status === "submitting"}>
           {status === "submitting" ? (
             <>
-              <Loader2 className="h-4 w-4 animate-spin" /> Sending…
+              <Loader2 className="h-4 w-4 animate-spin" /> {t("career.sending")}
             </>
           ) : (
             <>
-              Submit Application
+              {t("career.submit")}
               <Send className="h-4 w-4" />
             </>
           )}

@@ -24,6 +24,11 @@ export type Industry = {
   solution: string;
   services: string[];
   benefit: string;
+  nameKa?: string;
+  challengeKa?: string;
+  problemKa?: string;
+  solutionKa?: string;
+  benefitKa?: string;
 };
 
 export type FleetVehicle = {
@@ -53,6 +58,8 @@ export type FaqItem = {
   category: string;
   question: string;
   answer: string;
+  questionKa?: string;
+  answerKa?: string;
 };
 
 export type BlogPost = {
