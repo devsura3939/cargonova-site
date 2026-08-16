@@ -1,0 +1,88 @@
+import type { FleetVehicle } from "@/types";
+
+export const fleetCategories = [
+  { slug: "all", label: "All" },
+  { slug: "express", label: "Express" },
+  { slug: "standard", label: "Standard" },
+  { slug: "refrigerated", label: "Refrigerated" },
+  { slug: "heavy", label: "Heavy Cargo" },
+] as const;
+
+export const fleet: FleetVehicle[] = [
+  {
+    slug: "sprinter-van",
+    name: "Sprinter Van",
+    category: "express",
+    icon: "van",
+    payload: "1.2 t",
+    volume: "8 m³",
+    dimensions: "3.1 × 1.8 × 1.4 m",
+    ideal: "Parcel freight, express deliveries, small pallets, medical samples",
+    features: ["Low-height access", "Ramp tailgate option", "Two-person crew available", "Urban-friendly"],
+    available: true,
+  },
+  {
+    slug: "box-truck",
+    name: "Box Truck",
+    category: "standard",
+    icon: "box-truck",
+    payload: "3.5 t",
+    volume: "20 m³",
+    dimensions: "4.2 × 2.1 × 2.2 m",
+    ideal: "Regional distribution, retail replenishment, 4–8 pallets",
+    features: ["Liftgate standard", "Pallet jack friendly", "Side-loading doors", "Air-ride suspension"],
+    available: true,
+  },
+  {
+    slug: "semi-trailer",
+    name: "Semi Trailer",
+    category: "standard",
+    icon: "semi",
+    payload: "24 t",
+    volume: "90 m³",
+    dimensions: "13.6 × 2.45 × 2.7 m",
+    ideal: "Full loads, 24–33 pallets, long-haul corridors",
+    features: ["33 Euro pallet capacity", "Air-ride suspension", "Telematics + live GPS", "Tautliner / box options"],
+    available: true,
+  },
+  {
+    slug: "refrigerated-truck",
+    name: "Refrigerated Truck",
+    category: "refrigerated",
+    icon: "reefer",
+    payload: "21 t",
+    volume: "86 m³",
+    dimensions: "13.6 × 2.45 × 2.6 m",
+    ideal: "Chilled and frozen food, pharma, temperature-sensitive goods",
+    features: ["-25°C to +25°C range", "Continuous temp logging", "Remote alarm monitoring", "Dual-zone option"],
+    available: true,
+  },
+  {
+    slug: "flatbed",
+    name: "Flatbed",
+    category: "heavy",
+    icon: "flatbed",
+    payload: "24 t",
+    volume: "—",
+    dimensions: "13.6 × 2.48 m deck",
+    ideal: "Steel, timber, machinery, construction materials",
+    features: ["Crane-assisted loading", "Tarping and lashing", "Chain securing standard", "Escort option"],
+    available: true,
+  },
+  {
+    slug: "lowbed",
+    name: "Lowbed / Heavy Transport",
+    category: "heavy",
+    icon: "lowbed",
+    payload: "up to 60 t",
+    volume: "—",
+    dimensions: "13–19 m deck, hydraulically extendable",
+    ideal: "Excavators, plant machinery, transformers, project cargo",
+    features: ["Hydraulic deck", "Route engineering", "Permit + escort coordination", "Multi-axle configs"],
+    available: false,
+  },
+];
+
+export function getVehicle(slug: string): FleetVehicle | undefined {
+  return fleet.find((v) => v.slug === slug);
+}

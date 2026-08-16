@@ -1,0 +1,43 @@
+// Prisma schema — prepared for the quote/CRM backend.
+// Not yet wired into the app: quote requests currently use the dev-safe
+// in-memory store in src/lib/quote.ts. Run `prisma migrate dev` once a
+// DATABASE_URL is available, then replace the body of submitQuoteRequest.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model QuoteRequest {
+  id                   String   @id @default(cuid())
+  pickupCountry        String
+  pickupCity           String
+  destinationCountry   String
+  destinationCity      String
+  cargoType            String
+  cargoDescription     String?
+  weightKg             Float?
+  volumeM3             Float?
+  pallets              Int?
+  lengthM              Float?
+  widthM               Float?
+  heightM              Float?
+  transportDate        String?
+  urgency              String   @default("standard")
+  refrigerationRequired Boolean @default(false)
+  specialRequirements  String?
+  customerName         String
+  customerCompany      String?
+  customerPhone        String
+  customerEmail        String
+  status               String   @default("new")
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([createdAt])
+  @@index([status])
+}
