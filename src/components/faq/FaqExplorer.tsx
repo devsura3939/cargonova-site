@@ -80,7 +80,7 @@ export function FaqExplorer() {
             </Reveal>
           ) : (
             <Reveal delay={0.05}>
-              <div className="mx-auto mt-12 max-w-3xl rounded-3xl border border-dashed border-navy-200 bg-mist p-12 text-center">
+              <div className="mx-auto mt-12 max-w-3xl rounded-3xl border border-dashed border-navy-200 bg-mist p-12 text-center dark:border-white/15">
                 <p className="font-display text-lg font-bold text-strong">No matches</p>
                 <p className="mt-2 text-sm text-muted">
                   Nothing in the FAQ matches that search. Ask us directly — we answer fast.
@@ -97,7 +97,7 @@ export function FaqExplorer() {
           )}
 
           <Reveal delay={0.1}>
-            <p className="mx-auto mt-10 max-w-3xl rounded-2xl bg-mist p-5 text-center text-sm text-navy-700">
+            <p className="mx-auto mt-10 max-w-3xl rounded-2xl bg-mist p-5 text-center text-sm text-navy-700 dark:text-navy-200">
               Still have a question?{" "}
               <Link href="/contact" className="font-semibold text-electric-600 underline decoration-electric-300 underline-offset-4 hover:text-electric-500">
                 Contact our logistics team

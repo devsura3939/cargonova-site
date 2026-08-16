@@ -148,7 +148,7 @@ export function BlogExplorer() {
           ))}
         </div>
       ) : (
-        <div className="mt-10 rounded-3xl border border-dashed border-navy-200 bg-mist p-12 text-center">
+        <div className="mt-10 rounded-3xl border border-dashed border-navy-200 bg-mist p-12 text-center dark:border-white/15">
           <p className="font-display text-lg font-bold text-strong">No articles found</p>
           <p className="mt-2 text-sm text-muted">
             Try a different search term or category.

@@ -9,16 +9,13 @@ import { Reveal } from "@/components/shared/Reveal";
 import { FleetIcon } from "@/components/icons/FleetIcon";
 import { fleet, fleetCategories } from "@/data/fleet";
 import { cn } from "@/lib/utils";
-
-const CATEGORY_LABEL: Record<string, string> = {
-  express: "Express",
-  standard: "Standard",
-  refrigerated: "Refrigerated",
-  heavy: "Heavy Cargo",
-};
+import { useLang } from "@/lib/i18n";
+import { useDataT } from "@/lib/data-i18n";
 
 export function FleetExplorer() {
   const [active, setActive] = useState<string>("all");
+  const { t } = useLang();
+  const { fleetCategory, fleetIdeal } = useDataT();
 
   const visible = useMemo(
     () => (active === "all" ? fleet : fleet.filter((v) => v.category === active)),
@@ -43,7 +40,7 @@ export function FleetExplorer() {
                   : "border border-soft bg-surface text-ink hover:border-electric-400 hover:text-electric-600 dark:hover:text-electric-400",
               )}
             >
-              {cat.label}
+              {fleetCategory(cat.slug)}
             </button>
           ))}
         </div>
@@ -65,7 +62,7 @@ export function FleetExplorer() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-950/95 via-navy-900/35 to-navy-900/15" />
                 <span className="absolute left-4 top-4 rounded-full bg-navy-950/70 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white ring-1 ring-inset ring-white/20 backdrop-blur">
-                  {CATEGORY_LABEL[vehicle.category]}
+                  {fleetCategory(vehicle.category)}
                 </span>
                 <span className="absolute bottom-3 right-4 flex h-9 w-9 items-center justify-center rounded-xl bg-white/15 text-white ring-1 ring-inset ring-white/25 backdrop-blur">
                   <FleetIcon name={vehicle.icon} className="h-5 w-5" />
@@ -82,27 +79,27 @@ export function FleetExplorer() {
                 <div className="mt-4 grid grid-cols-3 gap-2 rounded-2xl bg-mist p-3 text-center">
                   <div>
                     <p className="flex items-center justify-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-muted">
-                      <Scale className="h-3 w-3" /> Payload
+                      <Scale className="h-3 w-3" /> {t("fleet.label.payload")}
                     </p>
                     <p className="mt-0.5 text-sm font-bold text-strong">{vehicle.payload}</p>
                   </div>
                   <div>
                     <p className="flex items-center justify-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-muted">
-                      <Box className="h-3 w-3" /> Volume
+                      <Box className="h-3 w-3" /> {t("fleet.label.volume")}
                     </p>
                     <p className="mt-0.5 text-sm font-bold text-strong">{vehicle.volume}</p>
                   </div>
                   <div>
                     <p className="flex items-center justify-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-muted">
-                      <Ruler className="h-3 w-3" /> Dimensions
+                      <Ruler className="h-3 w-3" /> {t("fleet.label.dimensions")}
                     </p>
                     <p className="mt-0.5 text-xs font-bold leading-tight text-strong">{vehicle.dimensions}</p>
                   </div>
                 </div>
 
                 <div className="mt-4">
-                  <p className="text-xs font-bold uppercase tracking-wide text-muted">Ideal for</p>
-                  <p className="mt-1 text-sm leading-relaxed text-navy-800">{vehicle.ideal}</p>
+                  <p className="text-xs font-bold uppercase tracking-wide text-muted">{t("fleet.idealFor")}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-navy-800 dark:text-navy-200">{fleetIdeal(vehicle.slug)}</p>
                 </div>
 
                 <ul className="mt-4 grid grid-cols-2 gap-x-3 gap-y-1.5">
@@ -124,7 +121,7 @@ export function FleetExplorer() {
                     <span
                       className={cn("h-2 w-2 rounded-full", vehicle.available ? "bg-emerald-500" : "bg-orange-500")}
                     />
-                    {vehicle.available ? "Available for booking" : "Booking on request"}
+                    {vehicle.available ? t("fleet.available") : t("fleet.onRequest")}
                   </p>
                   <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-navy-300">
                     <ShieldCheck className="h-3.5 w-3.5" /> Telematics
@@ -153,7 +150,7 @@ export function FleetExplorer() {
             <span className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-electric-100 text-electric-600 sm:flex">
               <ShieldCheck className="h-5 w-5" />
             </span>
-            <p className="text-sm leading-relaxed text-navy-800 sm:text-base">
+            <p className="text-sm leading-relaxed text-navy-800 dark:text-navy-200 sm:text-base">
               <span className="font-semibold">Every vehicle is inspected before dispatch</span> —
               tires, brakes, temperature units, and securing equipment checked against a
               documented checklist. If it isn't road-ready, it doesn't roll.

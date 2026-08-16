@@ -144,22 +144,16 @@ export function RouteMap({ shipment }: { shipment: Shipment }) {
   }, [origin?.id, dest?.id, shipment.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    // Swap to dark tiles when theme changes.
-    const map = mapRef.current;
-    if (!map) return;
-    if (tileRef.current) map.removeLayer(tileRef.current);
-    const tile = L.tileLayer(
+    // Swap the tile URL in place — safer than removing/re-adding layers
+    // (which trips over React StrictMode's double-mount in dev).
+    const tile = tileRef.current;
+    if (!tile) return;
+    tile.setUrl(
       dark
         ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
         : "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-      {
-        subdomains: dark ? "abcd" : undefined,
-        attribution: dark
-          ? '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
-          : '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      },
-    ).addTo(map);
-    tileRef.current = tile;
+    );
+    tile.options.subdomains = dark ? "abcd" : "abc";
   }, [dark]);
 
   if (!resolvable) {

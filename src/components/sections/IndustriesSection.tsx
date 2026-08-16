@@ -8,9 +8,11 @@ import { Section } from "@/components/shared/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Reveal } from "@/components/shared/Reveal";
 import { useLang } from "@/lib/i18n";
+import { useDataT, serviceTitleKey } from "@/lib/data-i18n";
 
 export function IndustriesSection() {
   const { t } = useLang();
+  const { industryProblem } = useDataT();
   return (
     <Section variant="light" id="industries">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
@@ -44,11 +46,11 @@ export function IndustriesSection() {
                 <ArrowUpRight className="h-4 w-4 text-navy-200 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-electric-500" />
               </div>
               <h3 className="mt-4 font-display text-lg font-bold text-strong">{industry.name}</h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{industry.problem}</p>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{industryProblem(industry.slug)}</p>
               <p className="mt-4 flex flex-wrap gap-1.5">
                 {industry.services.slice(0, 2).map((s) => (
                   <span key={s} className="rounded-full bg-electric-100/70 px-2.5 py-0.5 text-[11px] font-semibold text-electric-600">
-                    {s}
+                    {serviceTitleKey[s] ? t(serviceTitleKey[s]) : s}
                   </span>
                 ))}
               </p>

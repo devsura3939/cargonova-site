@@ -39,7 +39,7 @@ export function ClientLogos() {
           {row.map((name, i) => (
             <span
               key={`${name}-${i}`}
-              className="whitespace-nowrap font-display text-lg font-bold tracking-tight text-navy-300 transition-colors duration-300 hover:text-navy-600"
+              className="whitespace-nowrap font-display text-lg font-bold tracking-tight text-navy-300 transition-colors duration-300 hover:text-navy-600 dark:text-navy-500 dark:hover:text-navy-300"
               aria-hidden={i >= CLIENT_NAMES.length}
             >
               {name}

@@ -102,11 +102,11 @@ export default function IndustriesPage() {
                     </p>
                     <ul className="mt-8 space-y-2.5">
                       {industry.services.map((s) => (
-                        <li key={s} className="flex items-center gap-2.5 text-sm font-semibold text-navy-800">
+                        <li key={s} className="flex items-center gap-2.5 text-sm font-semibold text-navy-800 dark:text-navy-200">
                           <span className="flex h-5 w-5 items-center justify-center rounded-full bg-electric-100 text-electric-600">
                             <Check className="h-3 w-3" />
                           </span>
-                          {s}
+                          {serviceNames[s] ?? s}
                         </li>
                       ))}
                     </ul>

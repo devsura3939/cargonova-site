@@ -133,7 +133,7 @@ export default async function ServicePage({
                 </div>
                 <ul className="divide-y divide-navy-100 p-2">
                   {service.suitableCargo.map((c) => (
-                    <li key={c} className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-navy-800">
+                    <li key={c} className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-navy-800 dark:text-navy-200">
                       <span className="h-1.5 w-1.5 rounded-full bg-cyan-500" />
                       {c}
                     </li>
@@ -151,7 +151,7 @@ export default async function ServicePage({
                 <ul className="mt-4 space-y-2.5">
                   {service.fleet.map((f) => (
                     <li key={f} className="flex items-center justify-between rounded-xl bg-surface-muted px-4 py-2.5 text-sm">
-                      <span className="font-semibold text-navy-800">{f}</span>
+                      <span className="font-semibold text-navy-800 dark:text-navy-200">{f}</span>
                       <span className="text-xs font-medium text-emerald-600">Available</span>
                     </li>
                   ))}

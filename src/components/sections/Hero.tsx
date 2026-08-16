@@ -154,6 +154,8 @@ export function Hero() {
           <div className="absolute inset-0 -z-0 rounded-[2.5rem] bg-gradient-to-br from-electric-500/15 via-transparent to-cyan-500/10 blur-2xl" />
           <div className="relative h-[540px] overflow-hidden rounded-[2.5rem] border border-white/10 bg-navy-950/60 shadow-[0_40px_80px_-24px_rgb(0_0_0/0.6)] backdrop-blur-sm">
             {isDesktop ? <LogisticsScene /> : <HeroVisualFallback />}
+            {/* ground grid for depth */}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 [background-image:linear-gradient(rgb(46_211_230/0.05)_1px,transparent_1px),linear-gradient(90deg,rgb(46_211_230/0.05)_1px,transparent_1px)] [background-size:36px_36px] [mask-image:linear-gradient(to_top,black,transparent)]" />
             {/* HUD overlay */}
             <div className="pointer-events-none absolute inset-0 rounded-[2.5rem] ring-1 ring-inset ring-white/5" />
             <div className="pointer-events-none absolute left-5 top-5 rounded-xl border border-white/10 bg-navy-900/70 px-4 py-3 backdrop-blur-md">

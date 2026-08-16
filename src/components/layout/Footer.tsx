@@ -33,56 +33,50 @@ import { brand } from "@/lib/constants";
 import { newsletterSchema } from "@/lib/validations";
 import { trackEvent } from "@/lib/analytics";
 import { unsplashAttribution } from "@/data/images";
-import { useLang } from "@/lib/i18n";
+import { useLang, type DictKey } from "@/lib/i18n";
 
 const COLUMNS: {
-  heading: string;
   headingKey: "footer.services" | "footer.company" | "footer.resources" | "footer.legal";
-  links: { label: string; href: string }[];
+  links: { key: DictKey; href: string }[];
 }[] = [
   {
-    heading: "Services",
     headingKey: "footer.services",
     links: [
-      { label: "Ground Freight", href: "/services/ground-freight" },
-      { label: "Full Truckload", href: "/services/full-truckload" },
-      { label: "Less-than-Truckload", href: "/services/ltl" },
-      { label: "Express Cargo", href: "/services/express" },
-      { label: "Refrigerated Transport", href: "/services/refrigerated" },
-      { label: "Warehousing", href: "/services/warehousing" },
+      { key: "svc.title.groundFreight", href: "/services/ground-freight" },
+      { key: "svc.title.ftl", href: "/services/full-truckload" },
+      { key: "svc.title.ltl", href: "/services/ltl" },
+      { key: "svc.title.express", href: "/services/express" },
+      { key: "svc.title.refrigerated", href: "/services/refrigerated" },
+      { key: "svc.title.warehousing", href: "/services/warehousing" },
     ],
   },
   {
-    heading: "Company",
     headingKey: "footer.company",
     links: [
-      { label: "About Us", href: "/about" },
-      { label: "Our Fleet", href: "/fleet" },
-      { label: "Coverage & Routes", href: "/coverage" },
-      { label: "Technology", href: "/technology" },
-      { label: "Careers", href: "/careers" },
-      { label: "Insights", href: "/blog" },
+      { key: "nav.about", href: "/about" },
+      { key: "nav.fleet", href: "/fleet" },
+      { key: "nav.coverage", href: "/coverage" },
+      { key: "nav.technology", href: "/technology" },
+      { key: "nav.careers", href: "/careers" },
+      { key: "nav.insights", href: "/blog" },
     ],
   },
   {
-    heading: "Resources",
     headingKey: "footer.resources",
     links: [
-      { label: "Track Shipment", href: "/tracking" },
-      { label: "Live Map", href: "/live-map" },
-      { label: "Get a Quote", href: "/quote" },
-      { label: "Industries", href: "/industries" },
-      { label: "FAQ", href: "/faq" },
-      { label: "Contact", href: "/contact" },
+      { key: "nav.track", href: "/tracking" },
+      { key: "nav.liveMap", href: "/live-map" },
+      { key: "nav.getQuote", href: "/quote" },
+      { key: "nav.industries", href: "/industries" },
+      { key: "nav.faq", href: "/faq" },
+      { key: "nav.contact", href: "/contact" },
     ],
   },
   {
-    heading: "Legal",
     headingKey: "footer.legal",
     links: [
-      { label: "Privacy Policy", href: "/privacy" },
-      { label: "Terms of Service", href: "/terms" },
-      { label: "Cookie Policy", href: "/privacy" },
+      { key: "footer.privacy", href: "/privacy" },
+      { key: "footer.terms", href: "/terms" },
     ],
   },
 ];
@@ -189,18 +183,18 @@ export function Footer() {
 
         {/* Link columns */}
         <div className="grid grid-cols-2 gap-10 py-12 sm:grid-cols-3 lg:grid-cols-6">              {COLUMNS.map((col) => (
-            <nav key={col.heading} aria-label={col.heading}>
+            <nav key={col.headingKey} aria-label={t(col.headingKey)}>
               <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-navy-300">
                 {t(col.headingKey)}
               </h3>
               <ul className="mt-4 space-y-2.5">
                 {col.links.map((link) => (
-                  <li key={link.label + link.href}>
+                  <li key={link.key}>
                     <Link
                       href={link.href}
                       className="text-sm text-navy-200 transition-colors hover:text-white"
                     >
-                      {link.label}
+                      {t(link.key)}
                     </Link>
                   </li>
                 ))}

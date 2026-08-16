@@ -8,13 +8,13 @@ import { Reveal } from "@/components/shared/Reveal";
 import { DashboardMockup } from "@/components/sections/DashboardMockup";
 import { useLang } from "@/lib/i18n";
 
-const FEATURES = [
-  { icon: Radar, title: "Live Tracking", text: "Real-time GPS and scan-level visibility on every shipment." },
-  { icon: Route, title: "Smart Routing", text: "Routes optimized against traffic, borders, and weather data." },
-  { icon: Gauge, title: "Fleet Monitoring", text: "Vehicle telemetry with proactive maintenance alerts." },
-  { icon: Timer, title: "ETA Prediction", text: "Arrival estimates refined continuously during transit." },
-  { icon: FileCheck2, title: "Digital Documentation", text: "Paperwork, PODs, and reports in one searchable place." },
-  { icon: LayoutGrid, title: "Operations Dashboard", text: "One control tower for every shipment in your program." },
+const FEATURES: { icon: typeof Radar; titleKey: "tech.f.liveTracking" | "tech.f.smartRouting" | "tech.f.fleetMonitoring" | "tech.f.etaPrediction" | "tech.f.docs" | "tech.f.dashboard"; textKey: "tech.f.liveTrackingText" | "tech.f.smartRoutingText" | "tech.f.fleetMonitoringText" | "tech.f.etaPredictionText" | "tech.f.docsText" | "tech.f.dashboardText" }[] = [
+  { icon: Radar, titleKey: "tech.f.liveTracking", textKey: "tech.f.liveTrackingText" },
+  { icon: Route, titleKey: "tech.f.smartRouting", textKey: "tech.f.smartRoutingText" },
+  { icon: Gauge, titleKey: "tech.f.fleetMonitoring", textKey: "tech.f.fleetMonitoringText" },
+  { icon: Timer, titleKey: "tech.f.etaPrediction", textKey: "tech.f.etaPredictionText" },
+  { icon: FileCheck2, titleKey: "tech.f.docs", textKey: "tech.f.docsText" },
+  { icon: LayoutGrid, titleKey: "tech.f.dashboard", textKey: "tech.f.dashboardText" },
 ];
 
 export function TechnologySection() {
@@ -39,14 +39,14 @@ export function TechnologySection() {
             />
             <div className="mt-8 grid gap-x-8 gap-y-6 sm:grid-cols-2">
               {FEATURES.map((f, i) => (
-                <Reveal key={f.title} delay={0.05 * i}>
+                <Reveal key={f.titleKey} delay={0.05 * i}>
                   <div className="flex gap-3.5">
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/8 ring-1 ring-inset ring-white/12">
                       <f.icon className="h-4.5 w-4.5 text-cyan-400" strokeWidth={1.75} />
                     </span>
                     <div>
-                      <h3 className="text-sm font-bold text-white">{f.title}</h3>
-                      <p className="mt-1 text-sm leading-relaxed text-navy-200">{f.text}</p>
+                      <h3 className="text-sm font-bold text-white">{t(f.titleKey)}</h3>
+                      <p className="mt-1 text-sm leading-relaxed text-navy-200">{t(f.textKey)}</p>
                     </div>
                   </div>
                 </Reveal>

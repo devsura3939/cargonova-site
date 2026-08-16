@@ -28,9 +28,9 @@ const RouteMap = dynamic(() => import("@/components/map/RouteMap").then((m) => m
 import { useLang } from "@/lib/i18n";
 
 const STATUS_TONE: Record<string, string> = {
-  pending: "bg-slate-100 text-navy-700",
+  pending: "bg-slate-100 text-navy-700 dark:bg-white/10 dark:text-navy-100",
   picked_up: "bg-electric-100 text-electric-600",
-  in_transit: "bg-cyan-100 text-navy-800",
+  in_transit: "bg-cyan-100 text-navy-800 dark:bg-cyan-500/15 dark:text-cyan-300",
   customs: "bg-orange-100 text-orange-500",
   out_for_delivery: "bg-electric-100 text-electric-600",
   delivered: "bg-emerald-100 text-emerald-700",

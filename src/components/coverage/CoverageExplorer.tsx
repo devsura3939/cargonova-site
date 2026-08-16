@@ -9,9 +9,11 @@ import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Reveal } from "@/components/shared/Reveal";
 import { corridors, regions, getHub } from "@/data/routes";
 import { cn } from "@/lib/utils";
+import { useDataT } from "@/lib/data-i18n";
 
 export function CoverageExplorer() {
   const [active, setActive] = useState<string | null>(null);
+  const { regionNote } = useDataT();
 
   return (
     <>
@@ -23,7 +25,7 @@ export function CoverageExplorer() {
           description="Hover a corridor or select one below to trace its route through our hub network."
         />
         <Reveal delay={0.1} className="mt-10">
-          <div className="rounded-3xl border border-navy-100 bg-mist p-4 shadow-card sm:p-8">
+          <div className="rounded-3xl border border-navy-100 bg-mist p-4 shadow-card sm:p-8 dark:border-white/10">
             <NetworkMap
               activeCorridorId={active}
               onSelectCorridor={setActive}
@@ -110,7 +112,7 @@ export function CoverageExplorer() {
                     </span>
                     <div>
                       <h3 className="font-display font-bold text-strong">{region.name}</h3>
-                      <p className="mt-1 text-sm leading-relaxed text-muted">{region.note}</p>
+                      <p className="mt-1 text-sm leading-relaxed text-muted">{regionNote(region.id)}</p>
                     </div>
                   </div>
                 </Reveal>

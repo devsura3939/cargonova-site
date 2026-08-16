@@ -9,10 +9,12 @@ import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Reveal } from "@/components/shared/Reveal";
 import { regions } from "@/data/routes";
 import { useLang } from "@/lib/i18n";
+import { useDataT } from "@/lib/data-i18n";
 
 export function CoverageSection() {
   const [active, setActive] = useState<string | null>(null);
   const { t } = useLang();
+  const { regionNote } = useDataT();
 
   return (
     <Section variant="light" id="coverage">
@@ -30,7 +32,7 @@ export function CoverageSection() {
                   <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-electric-500" />
                   <div>
                     <p className="font-semibold text-strong">{region.name}</p>
-                    <p className="text-sm leading-relaxed text-muted">{region.note}</p>
+                    <p className="text-sm leading-relaxed text-muted">{regionNote(region.id)}</p>
                   </div>
                 </li>
               ))}

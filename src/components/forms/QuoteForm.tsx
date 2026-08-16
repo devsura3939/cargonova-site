@@ -236,7 +236,7 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
                     "flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-all duration-300",
                     done && "bg-electric-500 text-white",
                     active && "bg-navy-850 text-white ring-4 ring-electric-500/25",
-                    !done && !active && "border-2 border-navy-200 bg-white text-navy-300",
+                    !done && !active && "border-2 border-navy-200 bg-white text-navy-300 dark:border-white/20 dark:bg-transparent dark:text-navy-400",
                   )}
                 >
                   {done ? <Check className="h-4 w-4" /> : i + 1}
@@ -254,7 +254,7 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
                 <span
                   className={cn(
                     "mx-2 h-px flex-1 transition-colors duration-500 sm:mx-3",
-                    i < step ? "bg-electric-500" : "bg-navy-200",
+                    i < step ? "bg-electric-500" : "bg-navy-200 dark:bg-white/15",
                   )}
                   aria-hidden="true"
                 />
@@ -513,7 +513,7 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
         </AnimatePresence>
 
         {/* Navigation */}
-        <div className="mt-8 flex items-center justify-between gap-4 border-t border-navy-100 pt-6">
+        <div className="mt-8 flex items-center justify-between gap-4 border-t border-navy-100 pt-6 dark:border-white/10">
           <Button
             type="button"
             variant="ghost"

@@ -8,11 +8,13 @@ import { Section } from "@/components/shared/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Reveal } from "@/components/shared/Reveal";
 import { useLang } from "@/lib/i18n";
+import { useDataT } from "@/lib/data-i18n";
 
 const HIGHLIGHTS = fleet.slice(0, 3);
 
 export function FleetSection() {
   const { t } = useLang();
+  const { fleetCategory, fleetIdeal } = useDataT();
   return (
     <Section variant="mist" id="fleet">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
@@ -50,7 +52,7 @@ export function FleetSection() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-950/95 via-navy-900/35 to-navy-900/15" />
                 <span className="absolute left-4 top-4 rounded-full bg-navy-950/70 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white ring-1 ring-inset ring-white/20 backdrop-blur">
-                  {vehicle.category}
+                  {fleetCategory(vehicle.category)}
                 </span>
                 <span className="absolute bottom-3 right-4 flex h-9 w-9 items-center justify-center rounded-xl bg-white/15 text-white ring-1 ring-inset ring-white/25 backdrop-blur">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden="true">
@@ -71,24 +73,24 @@ export function FleetSection() {
                 <div className="mt-4 grid grid-cols-3 gap-2 border-y border-soft py-3.5 text-center">
                   <div>
                     <p className="flex items-center justify-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-muted">
-                      <Scale className="h-3 w-3" /> Payload
+                      <Scale className="h-3 w-3" /> {t("fleet.label.payload")}
                     </p>
                     <p className="mt-0.5 text-sm font-bold text-strong">{vehicle.payload}</p>
                   </div>
                   <div>
                     <p className="flex items-center justify-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-muted">
-                      <Box className="h-3 w-3" /> Volume
+                      <Box className="h-3 w-3" /> {t("fleet.label.volume")}
                     </p>
                     <p className="mt-0.5 text-sm font-bold text-strong">{vehicle.volume}</p>
                   </div>
                   <div>
                     <p className="flex items-center justify-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-muted">
-                      <Ruler className="h-3 w-3" /> Length
+                      <Ruler className="h-3 w-3" /> {t("fleet.label.length")}
                     </p>
                     <p className="mt-0.5 text-sm font-bold text-strong">{vehicle.dimensions.split("×")[0]}</p>
                   </div>
                 </div>
-                <p className="mt-4 text-sm leading-relaxed text-muted">{vehicle.ideal}</p>
+                <p className="mt-4 text-sm leading-relaxed text-muted">{fleetIdeal(vehicle.slug)}</p>
                 <p className="mt-4 flex items-center gap-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
                   <span className="flex h-2 w-2 rounded-full bg-emerald-500" />
                   {vehicle.available ? t("fleet.available") : t("fleet.onRequest")}

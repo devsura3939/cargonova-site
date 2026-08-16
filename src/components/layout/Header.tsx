@@ -2,29 +2,203 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Menu, Search, Moon, Sun, Globe } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { ArrowRight, ChevronDown, Menu, Moon, Sun, Globe } from "lucide-react";
 import { Logo } from "@/components/layout/Logo";
 import { Button } from "@/components/ui/button";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { useTheme } from "@/lib/theme";
-import { useLang, type Lang } from "@/lib/i18n";
+import { useLang, type Lang, type DictKey } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
-const NAV_LINKS: { href: string; key: "nav.services" | "nav.industries" | "nav.tracking" | "nav.coverage" | "nav.fleet" | "nav.technology" | "nav.about" | "nav.insights" }[] = [
-  { href: "/services", key: "nav.services" },
+type NavChild = { href: string; key: DictKey; descKey?: DictKey };
+type NavItem =
+  | { href: string; key: DictKey; children: NavChild[] }
+  | { href: string; key: DictKey; children?: never };
+
+const NAV: NavItem[] = [
+  {
+    href: "/services",
+    key: "nav.services",
+    children: [
+      { href: "/services/ground-freight", key: "nav.groundFreight" },
+      { href: "/services/full-truckload", key: "nav.ftl" },
+      { href: "/services/ltl", key: "nav.ltl" },
+      { href: "/services/express", key: "nav.express" },
+      { href: "/services/refrigerated", key: "nav.refrigerated" },
+      { href: "/services/oversized", key: "nav.oversized" },
+      { href: "/services/warehousing", key: "nav.warehousing" },
+      { href: "/services/business-logistics", key: "nav.consulting" },
+      { href: "/services", key: "nav.allServices" },
+    ],
+  },
   { href: "/industries", key: "nav.industries" },
-  { href: "/tracking", key: "nav.tracking" },
-  { href: "/coverage", key: "nav.coverage" },
-  { href: "/fleet", key: "nav.fleet" },
-  { href: "/technology", key: "nav.technology" },
-  { href: "/about", key: "nav.about" },
-  { href: "/blog", key: "nav.insights" },
+  {
+    href: "/tracking",
+    key: "nav.tracking",
+    children: [
+      { href: "/tracking", key: "nav.track" },
+      { href: "/live-map", key: "nav.liveMap" },
+    ],
+  },
+  {
+    href: "/coverage",
+    key: "nav.network",
+    children: [
+      { href: "/coverage", key: "nav.coverage" },
+      { href: "/fleet", key: "nav.fleet" },
+    ],
+  },
+  {
+    href: "/about",
+    key: "nav.company",
+    children: [
+      { href: "/about", key: "nav.about" },
+      { href: "/technology", key: "nav.technology" },
+      { href: "/careers", key: "nav.careers" },
+      { href: "/contact", key: "nav.contact" },
+    ],
+  },
+  {
+    href: "/blog",
+    key: "nav.insights",
+    children: [
+      { href: "/blog", key: "nav.blog" },
+      { href: "/faq", key: "nav.faq" },
+    ],
+  },
 ];
 
-export function Header() {
+function NavMenu({ item }: { item: NavItem }) {
   const pathname = usePathname();
+  const { t } = useLang();
+  const reduceMotion = useReducedMotion();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<number | null>(null);
+
+  const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+
+  // Close on outside click / route change
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent | TouchEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("touchstart", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("touchstart", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  // Close the dropdown when the route changes (render-time adjustment,
+  // per React's recommended pattern for deriving state from props).
+  const [prevPath, setPrevPath] = useState(pathname);
+  if (prevPath !== pathname) {
+    setPrevPath(pathname);
+    setOpen(false);
+  }
+
+  const openSoon = () => {
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    setOpen(true);
+  };
+  const closeSoon = () => {
+    closeTimer.current = window.setTimeout(() => setOpen(false), 120);
+  };
+
+  const triggerClasses = cn(
+    "group relative inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-medium transition-colors duration-200",
+    active ? "text-white" : "text-navy-200 hover:text-white",
+  );
+  const underline = (
+    <span
+      className={cn(
+        "absolute inset-x-3 -bottom-0.5 h-px origin-left scale-x-0 bg-cyan-400 transition-transform duration-300 group-hover:scale-x-100",
+        active && "scale-x-100",
+      )}
+    />
+  );
+
+  if (!item.children) {
+    return (
+      <div ref={ref}>
+        <Link href={item.href} className={cn(triggerClasses, "group")}>
+          {t(item.key)}
+          {underline}
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <div ref={ref} onMouseLeave={closeSoon}>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        onMouseEnter={openSoon}
+        aria-expanded={open}
+        aria-haspopup="menu"
+        className={triggerClasses}
+      >
+        {t(item.key)}
+        <ChevronDown
+          className={cn("h-3.5 w-3.5 transition-transform duration-200", open && "rotate-180")}
+        />
+        {underline}
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 8, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={reduceMotion ? undefined : { opacity: 0, y: 6, scale: 0.98 }}
+            transition={{ duration: 0.16, ease: [0.22, 0.61, 0.36, 1] }}
+            role="menu"
+            className="absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3"
+          >
+            <div
+              className={cn(
+                "min-w-56 rounded-2xl border border-white/10 bg-navy-900/95 p-2 shadow-[0_24px_60px_-16px_rgb(0_0_0/0.6)] backdrop-blur-xl",
+                item.children.length > 6 && "grid grid-cols-2 gap-1 min-w-[26rem]",
+              )}
+            >
+              {item.children.map((child) => (
+                <Link
+                  key={child.href}
+                  href={child.href}
+                  role="menuitem"
+                  onClick={() => setOpen(false)}
+                  className={cn(
+                    "flex items-center justify-between gap-6 rounded-xl px-3 py-2 text-sm font-medium transition-colors duration-150 hover:bg-white/10",
+                    (pathname === child.href || pathname.startsWith(`${child.href}/`))
+                      ? "text-white"
+                      : "text-navy-100 hover:text-white",
+                  )}
+                >
+                  {t(child.key)}
+                  {child.href === item.href && (
+                    <span className="text-xs font-bold text-cyan-400">→</span>
+                  )}
+                </Link>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+export function Header() {
   const [scrolled, setScrolled] = useState(
     () => typeof window !== "undefined" && window.scrollY > 24,
   );
@@ -65,32 +239,14 @@ export function Header() {
           <Logo dark />
 
           {/* Desktop nav */}
-          <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
-            {NAV_LINKS.map((link) => {
-              const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    "group relative rounded-full px-3 py-2 text-sm font-medium transition-colors duration-200",
-                    active ? "text-white" : "text-navy-200 hover:text-white",
-                  )}
-                >
-                  {t(link.key)}
-                  <span
-                    className={cn(
-                      "absolute inset-x-3 -bottom-0.5 h-px origin-left scale-x-0 bg-cyan-400 transition-transform duration-300 group-hover:scale-x-100",
-                      active && "scale-x-100",
-                    )}
-                  />
-                </Link>
-              );
-            })}
+          <nav aria-label="Main" className="hidden items-center gap-0.5 xl:flex">
+            {NAV.map((item) => (
+              <NavMenu key={item.href} item={item} />
+            ))}
           </nav>
 
           {/* Right actions */}
-          <div className="hidden items-center gap-2 lg:flex">
+          <div className="hidden items-center gap-2 xl:flex">
             {/* Language toggle */}
             <div
               className="flex items-center rounded-full border border-white/12 bg-white/5 p-0.5 backdrop-blur"
@@ -124,13 +280,6 @@ export function Header() {
               {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
 
-            <Link
-              href="/tracking"
-              className="inline-flex h-11 items-center gap-2 rounded-full px-4 text-sm font-semibold text-white/85 transition-colors hover:bg-white/10 hover:text-white"
-            >
-              <Search className="h-4 w-4" />
-              {t("nav.track")}
-            </Link>
             <Button asChild size="default">
               <Link href="/quote">
                 {t("nav.getQuote")}
@@ -140,7 +289,7 @@ export function Header() {
           </div>
 
           {/* Mobile actions */}
-          <div className="flex items-center gap-1.5 lg:hidden">
+          <div className="flex items-center gap-1.5 xl:hidden">
             <button
               type="button"
               onClick={toggleTheme}

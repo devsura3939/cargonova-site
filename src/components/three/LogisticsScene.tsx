@@ -24,23 +24,53 @@ function useRoutePath() {
   }, []);
 }
 
+/** Deterministic pseudo-random so the skyline is stable between renders. */
+function seeded(seed: number) {
+  let s = seed;
+  return () => {
+    s = (s * 16807) % 2147483647;
+    return (s - 1) / 2147483646;
+  };
+}
+
+/* ── Truck ───────────────────────────────────────────────── */
+
 function Truck({ curve }: { curve: THREE.CatmullRomCurve3 }) {
   const group = useRef<THREE.Group>(null);
+  const wheels = useRef<(THREE.Group | null)[]>([]);
   const progress = useRef(0);
+  const lastHeading = useRef(0);
   const reduced = useReducedMotion();
 
   useFrame((_, delta) => {
     const speed = 0.055 + Math.sin(progress.current * Math.PI * 2) * 0.012;
-    progress.current = (progress.current + delta * speed * (reduced ? 0 : 1)) % 1;
+    const step = delta * speed * (reduced ? 0 : 1);
+    progress.current = (progress.current + step) % 1;
     const t = progress.current;
     const pos = curve.getPointAt(t);
     const tangent = curve.getTangentAt(t).normalize();
     if (group.current) {
       group.current.position.copy(pos);
       group.current.position.y = 0.78;
-      group.current.rotation.y = Math.atan2(tangent.x, tangent.z);
+      const heading = Math.atan2(tangent.x, tangent.z);
+      // Lean into turns — bank proportional to heading change.
+      let dHeading = heading - lastHeading.current;
+      if (dHeading > Math.PI) dHeading -= Math.PI * 2;
+      if (dHeading < -Math.PI) dHeading += Math.PI * 2;
+      lastHeading.current = heading;
+      group.current.rotation.y = heading;
+      group.current.rotation.z = THREE.MathUtils.clamp(-dHeading * 3.2, -0.18, 0.18);
+      // Spin wheels by distance travelled.
+      const arc = step * curve.getLength();
+      wheels.current.forEach((w) => {
+        if (w) w.rotation.z -= arc / 0.24;
+      });
     }
   });
+
+  const wheelRef = (i: number) => (el: THREE.Group | null) => {
+    wheels.current[i] = el;
+  };
 
   return (
     <group ref={group}>
@@ -53,6 +83,11 @@ function Truck({ curve }: { curve: THREE.CatmullRomCurve3 }) {
         <boxGeometry args={[2.12, 0.04, 1.07]} />
         <meshStandardMaterial color="#1e4578" metalness={0.4} roughness={0.4} />
       </mesh>
+      {/* brand stripe on the box */}
+      <mesh position={[-0.55, 0.52, 0.532]}>
+        <boxGeometry args={[2.12, 0.07, 0.01]} />
+        <meshStandardMaterial color="#2ed3e6" emissive="#2ed3e6" emissiveIntensity={0.35} />
+      </mesh>
       {/* cabin */}
       <mesh position={[0.85, 0.62, 0]}>
         <boxGeometry args={[0.95, 1.0, 1.02]} />
@@ -63,27 +98,279 @@ function Truck({ curve }: { curve: THREE.CatmullRomCurve3 }) {
         <boxGeometry args={[0.82, 0.34, 0.02]} />
         <meshStandardMaterial color="#0b1f3a" roughness={0.2} metalness={0.6} />
       </mesh>
+      {/* headlights */}
+      <mesh position={[1.34, 0.62, 0.36]}>
+        <boxGeometry args={[0.02, 0.09, 0.14]} />
+        <meshStandardMaterial color="#e3efff" emissive="#e3efff" emissiveIntensity={1.6} />
+      </mesh>
+      <mesh position={[1.34, 0.62, -0.36]}>
+        <boxGeometry args={[0.02, 0.09, 0.14]} />
+        <meshStandardMaterial color="#e3efff" emissive="#e3efff" emissiveIntensity={1.6} />
+      </mesh>
+      {/* taillights */}
+      <mesh position={[-1.61, 0.62, 0.38]}>
+        <boxGeometry args={[0.02, 0.07, 0.12]} />
+        <meshStandardMaterial color="#ff8a3d" emissive="#ff3b1d" emissiveIntensity={1.2} />
+      </mesh>
+      <mesh position={[-1.61, 0.62, -0.38]}>
+        <boxGeometry args={[0.02, 0.07, 0.12]} />
+        <meshStandardMaterial color="#ff8a3d" emissive="#ff3b1d" emissiveIntensity={1.2} />
+      </mesh>
       {/* chassis */}
       <mesh position={[0.05, 0.08, 0]}>
         <boxGeometry args={[3.4, 0.16, 0.5]} />
         <meshStandardMaterial color="#08111f" roughness={0.7} />
       </mesh>
-      {/* wheels */}
-      {[-1.25, -0.35, 0.75, 1.45].map((x) => (
-        <group key={x} position={[x, 0.16, 0]}>
-          <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0, 0.42]}>
-            <cylinderGeometry args={[0.24, 0.24, 0.16, 14]} />
-            <meshStandardMaterial color="#0a0f18" roughness={0.9} />
+      {/* wheels (spin in useFrame) */}
+      {[-1.25, -0.35, 0.75, 1.45].map((x, i) => (
+        <group key={x}>
+          {[0.42, -0.42].map((z) => (
+            <group key={z} position={[x, 0.16, z]} ref={wheelRef(i * 2 + (z > 0 ? 0 : 1))}>
+              <mesh rotation={[0, 0, 0]}>
+                <cylinderGeometry args={[0.24, 0.24, 0.16, 14]} />
+                <meshStandardMaterial color="#0a0f18" roughness={0.9} />
+              </mesh>
+              {/* hub cap */}
+              <mesh position={[0, 0, 0.082]}>
+                <cylinderGeometry args={[0.1, 0.1, 0.01, 10]} />
+                <meshStandardMaterial color="#2a5592" metalness={0.6} roughness={0.4} />
+              </mesh>
+            </group>
+          ))}
+        </group>
+      ))}
+      {/* headlight glow cone ahead of the truck */}
+      <pointLight position={[2.1, 0.7, 0]} intensity={10} distance={5.5} color="#bfe3ff" />
+    </group>
+  );
+}
+
+/* ── Cargo plane ─────────────────────────────────────────── */
+
+function CargoPlane() {
+  const group = useRef<THREE.Group>(null);
+  const progress = useRef(0.35);
+  const reduced = useReducedMotion();
+
+  const path = useMemo(() => {
+    const pts = [
+      new THREE.Vector3(-9.5, 4.4, -1.5),
+      new THREE.Vector3(-4.5, 4.9, -6.2),
+      new THREE.Vector3(4.5, 4.8, -5.4),
+      new THREE.Vector3(9.5, 4.2, -0.5),
+      new THREE.Vector3(5.5, 4.9, 5.2),
+      new THREE.Vector3(-4.0, 5.0, 6.4),
+    ];
+    return new THREE.CatmullRomCurve3(pts, true);
+  }, []);
+
+  useFrame((_, delta) => {
+    if (reduced) return;
+    progress.current = (progress.current + delta * 0.021) % 1;
+    const t = progress.current;
+    const pos = path.getPointAt(t);
+    const tangent = path.getTangentAt(t).normalize();
+    if (group.current) {
+      group.current.position.copy(pos);
+      const heading = Math.atan2(tangent.x, tangent.z);
+      // Bank into the turn based on heading change.
+      const tPrev = (t - 0.01 + 1) % 1;
+      const prevHeading = Math.atan2(path.getTangentAt(tPrev).x, path.getTangentAt(tPrev).z);
+      let d = heading - prevHeading;
+      if (d > Math.PI) d -= Math.PI * 2;
+      if (d < -Math.PI) d += Math.PI * 2;
+      group.current.rotation.y = heading;
+      group.current.rotation.z = THREE.MathUtils.clamp(-d * 2.6, -0.55, 0.55);
+      group.current.rotation.x = THREE.MathUtils.clamp(-tangent.y * 1.4, -0.35, 0.35);
+    }
+  });
+
+  return (
+    <group ref={group} scale={0.82}>
+      {/* fuselage (pointing +z) */}
+      <mesh rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.3, 0.34, 2.5, 12]} />
+        <meshStandardMaterial color="#d6e3f2" metalness={0.4} roughness={0.35} />
+      </mesh>
+      {/* nose */}
+      <mesh position={[0, 0, 1.32]} rotation={[Math.PI / 2, 0, 0]}>
+        <coneGeometry args={[0.3, 0.55, 12]} />
+        <meshStandardMaterial color="#e3efff" metalness={0.35} roughness={0.4} />
+      </mesh>
+      {/* cockpit window band */}
+      <mesh position={[0, 0.06, 1.12]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.29, 0.29, 0.3, 12, 1, false, Math.PI, Math.PI]} />
+        <meshStandardMaterial color="#0b1f3a" metalness={0.7} roughness={0.2} />
+      </mesh>
+      {/* main wings */}
+      <group position={[0, 0.04, 0.1]}>
+        <mesh rotation={[0, 0, 0.04]}>
+          <boxGeometry args={[4.8, 0.07, 1.15]} />
+          <meshStandardMaterial color="#c3d6ec" metalness={0.35} roughness={0.45} />
+        </mesh>
+        {/* engine pods */}
+        <mesh position={[1.15, -0.16, 0.35]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.13, 0.13, 0.5, 10]} />
+          <meshStandardMaterial color="#8fa3bd" metalness={0.6} roughness={0.3} />
+        </mesh>
+        <mesh position={[-1.15, -0.16, 0.35]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.13, 0.13, 0.5, 10]} />
+          <meshStandardMaterial color="#8fa3bd" metalness={0.6} roughness={0.3} />
+        </mesh>
+      </group>
+      {/* tail */}
+      <group position={[0, 0.1, -1.18]}>
+        <mesh position={[0, 0.55, 0]}>
+          <boxGeometry args={[0.06, 1.15, 0.5]} />
+          <meshStandardMaterial color="#1677ff" metalness={0.4} roughness={0.4} />
+        </mesh>
+        <mesh position={[0, 0.28, 0]}>
+          <boxGeometry args={[1.6, 0.06, 0.45]} />
+          <meshStandardMaterial color="#c3d6ec" metalness={0.35} roughness={0.45} />
+        </mesh>
+      </group>
+      {/* nav light */}
+      <mesh position={[-2.42, 0.04, 0.1]}>
+        <sphereGeometry args={[0.05, 8, 8]} />
+        <meshBasicMaterial color="#ff3b1d" />
+      </mesh>
+      <mesh position={[2.42, 0.04, 0.1]}>
+        <sphereGeometry args={[0.05, 8, 8]} />
+        <meshBasicMaterial color="#3bff9d" />
+      </mesh>
+      {/* blinking beacon */}
+      <Beacon />
+    </group>
+  );
+}
+
+function Beacon() {
+  const mat = useRef<THREE.MeshBasicMaterial>(null);
+  useFrame(({ clock }) => {
+    if (mat.current) {
+      mat.current.opacity = Math.sin(clock.elapsedTime * 6) > 0.2 ? 1 : 0.15;
+    }
+  });
+  return (
+    <mesh position={[0, 0.72, -1.18]}>
+      <sphereGeometry args={[0.06, 8, 8]} />
+      <meshBasicMaterial ref={mat} color="#ff4d4d" transparent />
+    </mesh>
+  );
+}
+
+/* ── City skyline with lit windows ───────────────────────── */
+
+function CitySkyline() {
+  const rand = seeded(7);
+  const blocks = useMemo(
+    () =>
+      Array.from({ length: 26 }, () => {
+        const angle = rand() * Math.PI * 2;
+        const r = 9.5 + rand() * 4.5;
+        const w = 0.9 + rand() * 1.1;
+        const d = 0.9 + rand() * 1.2;
+        const h = 1.2 + rand() * 3.6;
+        const tilt = (rand() - 0.5) * 0.12;
+        return {
+          pos: [Math.cos(angle) * r, h / 2, Math.sin(angle) * r] as [number, number, number],
+          size: [w, h, d] as [number, number, number],
+          rotY: angle + Math.PI / 2 + (rand() - 0.5) * 0.6,
+          tilt,
+          // a few blocks get a glowing crown so the skyline reads at night
+          crown: rand() > 0.68,
+          windows: Math.floor(rand() * 3),
+        };
+      }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
+  return (
+    <group>
+      {blocks.map((b, i) => (
+        <group key={i} position={b.pos} rotation={[0, b.rotY, b.tilt]}>
+          <mesh>
+            <boxGeometry args={b.size} />
+            <meshStandardMaterial
+              color="#0e2140"
+              metalness={0.25}
+              roughness={0.75}
+              emissive="#123057"
+              emissiveIntensity={b.crown ? 0.9 : 0.25}
+            />
           </mesh>
-          <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0, -0.42]}>
-            <cylinderGeometry args={[0.24, 0.24, 0.16, 14]} />
-            <meshStandardMaterial color="#0a0f18" roughness={0.9} />
-          </mesh>
+          {/* lit window rows on the facing side */}
+          {Array.from({ length: b.windows }).map((_, w) => (
+            <mesh
+              key={w}
+              position={[0, 0, (b.size[2] ?? 1) / 2 + 0.01]}
+            >
+              <planeGeometry args={[b.size[0] * 0.8, b.size[1] * 0.5]} />
+              <meshBasicMaterial
+                color={w % 2 === 0 ? "#2ed3e6" : "#1677ff"}
+                transparent
+                opacity={0.16 + rand() * 0.25}
+              />
+            </mesh>
+          ))}
         </group>
       ))}
     </group>
   );
 }
+
+/* ── Drifting data particles ─────────────────────────────── */
+
+function Particles() {
+  const points = useRef<THREE.Points>(null);
+  const reduced = useReducedMotion();
+
+  const { positions, speeds } = useMemo(() => {
+    const rand = seeded(42);
+    const n = 130;
+    const positions = new Float32Array(n * 3);
+    const speeds = new Float32Array(n);
+    for (let i = 0; i < n; i++) {
+      positions[i * 3] = (rand() - 0.5) * 26;
+      positions[i * 3 + 1] = rand() * 7;
+      positions[i * 3 + 2] = (rand() - 0.5) * 22 - 2;
+      speeds[i] = 0.12 + rand() * 0.3;
+    }
+    return { positions, speeds };
+  }, []);
+
+  useFrame(({ clock }) => {
+    if (!points.current || reduced) return;
+    const dt = clock.getDelta();
+    const pos = points.current.geometry.attributes.position as THREE.BufferAttribute;
+    for (let i = 0; i < pos.count; i++) {
+      let y = pos.getY(i) + speeds[i] * dt;
+      if (y > 7.2) y = 0;
+      pos.setY(i, y);
+    }
+    pos.needsUpdate = true;
+  });
+
+  return (
+    <points ref={points}>
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+      </bufferGeometry>
+      <pointsMaterial
+        size={0.045}
+        color="#5ee2ef"
+        transparent
+        opacity={0.5}
+        sizeAttenuation
+        depthWrite={false}
+        blending={THREE.AdditiveBlending}
+      />
+    </points>
+  );
+}
+
+/* ── Existing scene elements ─────────────────────────────── */
 
 function AnimatedRoute({ curve }: { curve: THREE.CatmullRomCurve3 }) {
   const lineRef = useRef<THREE.Line>(null);
@@ -116,11 +403,9 @@ function AnimatedRoute({ curve }: { curve: THREE.CatmullRomCurve3 }) {
 function HubPin({
   position,
   color = "#1677ff",
-  label,
 }: {
   position: [number, number, number];
   color?: string;
-  label?: string;
 }) {
   const ring = useRef<THREE.Mesh>(null);
   const core = useRef<THREE.Mesh>(null);
@@ -153,15 +438,6 @@ function HubPin({
         <sphereGeometry args={[0.09, 16, 16]} />
         <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.7} />
       </mesh>
-      {label ? (
-        <group position={[0, 0.5, 0]}>
-          {/* label billboard kept minimal to avoid font loading in WebGL */}
-          <mesh position={[0, -0.06, 0]}>
-            <boxGeometry args={[1.05, 0.16, 0.02]} />
-            <meshBasicMaterial color="#08111f" transparent opacity={0.72} />
-          </mesh>
-        </group>
-      ) : null}
     </group>
   );
 }
@@ -175,7 +451,7 @@ function Warehouse({ position }: { position: [number, number, number] }) {
         <meshStandardMaterial color="#132c52" metalness={0.2} roughness={0.6} />
       </mesh>
       {/* roof */}
-      <mesh position={[0, 1.78, 0]} rotation={[0, 0, 0]}>
+      <mesh position={[0, 1.78, 0]}>
         <boxGeometry args={[2.7, 0.14, 2.1]} />
         <meshStandardMaterial color="#1e4578" metalness={0.3} roughness={0.5} />
       </mesh>
@@ -186,10 +462,19 @@ function Warehouse({ position }: { position: [number, number, number] }) {
           <meshStandardMaterial color="#0b1f3a" roughness={0.8} />
         </mesh>
       ))}
-      {/* dock light */}
+      {/* dock lights */}
       <mesh position={[0, 1.5, 0.95]}>
         <boxGeometry args={[0.14, 0.14, 0.02]} />
         <meshBasicMaterial color="#2ED3E6" />
+      </mesh>
+      <mesh position={[0.62, 1.5, 0.95]}>
+        <boxGeometry args={[0.14, 0.14, 0.02]} />
+        <meshBasicMaterial color="#2ED3E6" />
+      </mesh>
+      {/* "CargoNova" sign glow */}
+      <mesh position={[0, 2.02, 0.1]}>
+        <boxGeometry args={[1.5, 0.12, 0.04]} />
+        <meshStandardMaterial color="#e3efff" emissive="#ffffff" emissiveIntensity={0.5} />
       </mesh>
     </group>
   );
@@ -209,6 +494,13 @@ function Containers({ position }: { position: [number, number, number] }) {
         <mesh key={i} position={c.pos as [number, number, number]} castShadow>
           <boxGeometry args={[0.82, 0.74, 1.3]} />
           <meshStandardMaterial color={c.color} metalness={0.35} roughness={0.45} />
+        </mesh>
+      ))}
+      {/* outline strips for realism */}
+      {stack.map((c, i) => (
+        <mesh key={`s${i}`} position={[c.pos[0], c.pos[1], c.pos[2] + 0.652]}>
+          <planeGeometry args={[0.82, 0.74]} />
+          <meshBasicMaterial color="#0b1f3a" transparent opacity={0.5} />
         </mesh>
       ))}
     </group>
@@ -248,7 +540,6 @@ function DataLines() {
           <lineBasicMaterial color={l.color} transparent opacity={0.22} />
         </threeLine>
       ))}
-      {/* floating nodes */}
       {lines.slice(0, 8).map((l, i) => (
         <mesh key={`n${i}`} position={l.end as [number, number, number]}>
           <sphereGeometry args={[0.035, 8, 8]} />
@@ -267,6 +558,13 @@ function RouteLane() {
         <planeGeometry args={[17, 11]} />
         <meshStandardMaterial color="#0a1526" roughness={0.9} />
       </mesh>
+      {/* road edges */}
+      {[-1.28, 1.28].map((x) => (
+        <mesh key={x} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.012, x * 5.5 + 0.4]}>
+          <planeGeometry args={[17, 0.03]} />
+          <meshBasicMaterial color="#1e4578" transparent opacity={0.5} />
+        </mesh>
+      ))}
       {/* center line */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0.4]}>
         <planeGeometry args={[17, 0.02]} />
@@ -278,14 +576,13 @@ function RouteLane() {
 
 function Rig() {
   const reduced = useReducedMotion();
-  useFrame(({ camera, pointer }, delta) => {
+  useFrame(({ camera, pointer }) => {
     if (reduced) return;
     const targetX = THREE.MathUtils.lerp(camera.position.x, pointer.x * 0.7, 0.04);
     const targetY = THREE.MathUtils.lerp(camera.position.y, 5.6 + pointer.y * 0.5, 0.04);
     camera.position.x = targetX;
     camera.position.y = targetY;
     camera.lookAt(0, 0.9, 0);
-    void delta;
   });
   return null;
 }
@@ -303,7 +600,7 @@ export default function LogisticsScene() {
       style={{ background: "transparent" }}
       aria-hidden="true"
     >
-      <fog attach="fog" args={["#08111f", 14, 26]} />
+      <fog attach="fog" args={["#08111f", 14, 30]} />
       <ambientLight intensity={0.45} />
       <directionalLight position={[6, 10, 6]} intensity={1.1} color="#ffffff" />
       <pointLight position={[-5, 4, -4]} intensity={22} color="#1677ff" />
@@ -311,6 +608,7 @@ export default function LogisticsScene() {
 
       <group position={[0, 0, -0.6]}>
         <RouteLane />
+        <CitySkyline />
         <AnimatedRoute curve={curve} />
         <Truck curve={curve} />
         <HubPin position={[-6.2, 0, 3.4]} color="#2ed3e6" />
@@ -320,6 +618,9 @@ export default function LogisticsScene() {
         <Containers position={[4.1, 0, 1.7]} />
         <DataLines />
       </group>
+
+      <CargoPlane />
+      <Particles />
 
       <Rig />
     </Canvas>

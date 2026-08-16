@@ -11,15 +11,17 @@ import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Reveal } from "@/components/shared/Reveal";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/lib/i18n";
+import { useDataT, featuredFeatureKey } from "@/lib/data-i18n";
 
 const TINTS: Record<string, { bg: string; text: string; ring: string }> = {
-  blue: { bg: "bg-electric-100/70", text: "text-electric-600", ring: "group-hover:ring-electric-500/30" },
-  cyan: { bg: "bg-cyan-100/70", text: "text-navy-800", ring: "group-hover:ring-cyan-500/30" },
-  orange: { bg: "bg-orange-100/70", text: "text-orange-500", ring: "group-hover:ring-orange-500/30" },
+  blue: { bg: "bg-electric-100/70 dark:bg-electric-500/15", text: "text-electric-600 dark:text-electric-400", ring: "group-hover:ring-electric-500/30" },
+  cyan: { bg: "bg-cyan-100/70 dark:bg-cyan-500/15", text: "text-navy-800 dark:text-cyan-300", ring: "group-hover:ring-cyan-500/30" },
+  orange: { bg: "bg-orange-100/70 dark:bg-orange-500/15", text: "text-orange-500 dark:text-orange-400", ring: "group-hover:ring-orange-500/30" },
 };
 
 export function ServicesOverview() {
   const { t } = useLang();
+  const { serviceTitle, serviceShort } = useDataT();
   const [featured, ...rest] = services;
 
   return (
@@ -89,7 +91,7 @@ export function ServicesOverview() {
                 <ServiceIcon name={featured.icon} className="h-7 w-7 text-cyan-400" />
               </span>
               <h3 className="mt-6 font-display text-3xl font-extrabold tracking-tight">
-                {featured.title}
+                {serviceTitle(featured.slug)}
               </h3>
               <p className="mt-3 max-w-md text-pretty leading-relaxed text-navy-200">
                 {featured.description}
@@ -98,9 +100,9 @@ export function ServicesOverview() {
 
             <div className="relative mt-10 flex items-center justify-between">
               <div className="flex flex-wrap gap-2">
-                {featured.features.slice(0, 3).map((f) => (
+                {featured.features.slice(0, 3).map((f, fi) => (
                   <span key={f} className="rounded-full bg-white/8 px-3 py-1 text-xs font-medium text-navy-100 ring-1 ring-inset ring-white/10">
-                    {f}
+                    {t(featuredFeatureKey[fi] ?? ("svc.gf.f1" as const))}
                   </span>
                 ))}
               </div>
@@ -129,8 +131,8 @@ export function ServicesOverview() {
                   </span>
                   <ArrowUpRight className="h-4 w-4 text-navy-200 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-electric-500" />
                 </div>
-                <h3 className="mt-5 font-display text-lg font-bold text-strong">{service.title}</h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{service.short}</p>
+                <h3 className="mt-5 font-display text-lg font-bold text-strong">{serviceTitle(service.slug)}</h3>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{serviceShort(service.slug)}</p>
                 <span className="mt-5 text-xs font-bold uppercase tracking-[0.14em] text-electric-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   {t("svc.learnMore")}
                 </span>
