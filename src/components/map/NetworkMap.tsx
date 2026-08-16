@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 import { hubs, corridors, corridorPath, type Corridor } from "@/data/routes";
 import { cn } from "@/lib/utils";
 

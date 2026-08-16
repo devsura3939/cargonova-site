@@ -17,6 +17,7 @@ const en = {
   "nav.careers": "Careers",
   "nav.faq": "FAQ",
   "nav.contact": "Contact",
+  "nav.liveMap": "Live Map",
   "nav.getQuote": "Get a Quote",
   "nav.track": "Track Shipment",
 
@@ -323,6 +324,7 @@ const ka: Record<keyof typeof en, string> = {
   "nav.careers": "კარიერა",
   "nav.faq": "კითხვა-პასუხი",
   "nav.contact": "კონტაქტი",
+  "nav.liveMap": "ცოცხალი რუკა",
   "nav.getQuote": "მიიღეთ შეთავაზება",
   "nav.track": "ტვირთის თვალთვალი",
 

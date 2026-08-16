@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   MapPin,
@@ -14,6 +15,16 @@ import {
 } from "lucide-react";
 import { TrackingTimeline } from "@/components/tracking/TrackingTimeline";
 import type { Shipment } from "@/lib/tracking";
+
+// Leaflet touches browser globals at module load — client-side only.
+const RouteMap = dynamic(() => import("@/components/map/RouteMap").then((m) => m.RouteMap), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-72 w-full items-center justify-center rounded-2xl border border-soft bg-surface-muted text-sm text-muted sm:h-80">
+      Loading route map…
+    </div>
+  ),
+});
 import { useLang } from "@/lib/i18n";
 
 const STATUS_TONE: Record<string, string> = {
@@ -50,7 +61,17 @@ export function TrackingResult({ shipment }: { shipment: Shipment }) {
   );
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
+    <div className="grid gap-6">
+      {/* Live route map */}
+      <motion.div
+        initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.05, ease: [0.22, 0.61, 0.36, 1] }}
+      >
+        <RouteMap shipment={shipment} />
+      </motion.div>
+
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
       {/* Left: overview */}
       <div className="space-y-6">
         {card(0, (
@@ -150,14 +171,15 @@ export function TrackingResult({ shipment }: { shipment: Shipment }) {
       </div>
 
       {/* Right: timeline */}
-      {card(0.1, (
-        <div className="p-5 sm:p-6">
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">{t("trk.timeline")}</p>
-          <div className="mt-6">
-            <TrackingTimeline shipment={shipment} />
+        {card(0.1, (
+          <div className="p-5 sm:p-6">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">{t("trk.timeline")}</p>
+            <div className="mt-6">
+              <TrackingTimeline shipment={shipment} />
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

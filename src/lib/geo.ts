@@ -386,6 +386,15 @@ export function getCity(countryCode: string, cityId: string): GeoCity | undefine
   return getCountry(countryCode)?.cities.find((c) => c.id === cityId);
 }
 
+export function cityByName(name: string): GeoCity | undefined {
+  const lower = name.trim().toLowerCase();
+  for (const c of COUNTRIES) {
+    const hit = c.cities.find((city) => city.name.toLowerCase() === lower);
+    if (hit) return hit;
+  }
+  return undefined;
+}
+
 /* ── Distance (haversine × road factor, no API) ─────────── */
 
 const EARTH_R = 6371;

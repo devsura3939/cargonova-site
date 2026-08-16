@@ -69,6 +69,7 @@ const COLUMNS: {
     headingKey: "footer.resources",
     links: [
       { label: "Track Shipment", href: "/tracking" },
+      { label: "Live Map", href: "/live-map" },
       { label: "Get a Quote", href: "/quote" },
       { label: "Industries", href: "/industries" },
       { label: "FAQ", href: "/faq" },

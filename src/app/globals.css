@@ -168,6 +168,44 @@ body {
   animation: var(--animate-dash-flow);
 }
 
+/* ── Live map fleet markers ──────────────────────────── */
+.fleet-marker {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 26px;
+  height: 26px;
+  filter: drop-shadow(0 2px 4px rgb(8 17 31 / 0.45));
+}
+.fleet-marker__rot {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 1.6s linear;
+}
+.fleet-marker__rot svg {
+  display: block;
+}
+.fleet-marker--selected .fleet-marker__rot svg {
+  transform: scale(1.25);
+}
+.fleet-marker__ping {
+  position: absolute;
+  inset: -6px;
+  border-radius: 999px;
+  animation: fleet-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes fleet-ping {
+  0% { transform: scale(0.6); opacity: 0.8; }
+  70%, 100% { transform: scale(1.9); opacity: 0; }
+}
+@keyframes route-ping {
+  0% { transform: scale(0.6); opacity: 0.7; }
+  70%, 100% { transform: scale(2); opacity: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *,

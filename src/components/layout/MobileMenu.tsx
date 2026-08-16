@@ -7,10 +7,11 @@ import { brand } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { useLang } from "@/lib/i18n";
 
-const MOBILE_LINKS: { href: string; label: "nav.services" | "nav.industries" | "nav.tracking" | "nav.coverage" | "nav.fleet" | "nav.technology" | "nav.about" | "nav.insights" | "nav.careers" | "nav.faq" | "nav.contact" }[] = [
+const MOBILE_LINKS: { href: string; label: "nav.services" | "nav.industries" | "nav.tracking" | "nav.liveMap" | "nav.coverage" | "nav.fleet" | "nav.technology" | "nav.about" | "nav.insights" | "nav.careers" | "nav.faq" | "nav.contact" }[] = [
   { href: "/services", label: "nav.services" },
   { href: "/industries", label: "nav.industries" },
   { href: "/tracking", label: "nav.tracking" },
+  { href: "/live-map", label: "nav.liveMap" },
   { href: "/coverage", label: "nav.coverage" },
   { href: "/fleet", label: "nav.fleet" },
   { href: "/technology", label: "nav.technology" },

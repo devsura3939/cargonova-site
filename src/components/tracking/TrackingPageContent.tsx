@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { Globe2, ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/shared/PageHero";
 import { Container } from "@/components/shared/Container";
 import { TrackingForm } from "@/components/tracking/TrackingForm";
@@ -39,6 +41,17 @@ export function TrackingPageContent() {
                 </p>
               </div>
             ))}
+          </div>
+
+          <div className="mt-10 text-center">
+            <Link
+              href="/live-map"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-electric-600 transition-colors hover:text-electric-500 dark:text-electric-400"
+            >
+              <Globe2 className="h-4 w-4" />
+              Watch every shipment move on the live map
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
           </div>
         </Container>
       </section>

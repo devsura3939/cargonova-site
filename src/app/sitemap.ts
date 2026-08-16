@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       "/services",
       "/industries",
       "/tracking",
+      "/live-map",
       "/coverage",
       "/fleet",
       "/technology",
