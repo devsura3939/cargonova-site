@@ -437,7 +437,11 @@ export type Estimate = {
   totalEur: number;
   totalGel: number;
   currencyRate: number;
-  modeLabel: string;
+  modeLabel: FreightMode;
+  perKmEur: number;
+  co2Kg: number;
+  borders: number;
+  international: boolean;
 };
 
 export const GEL_RATE = 2.82; // indicative EUR→GEL
@@ -507,6 +511,16 @@ export function estimateFreight(input: {
 
   const transitDays = Math.max(1, Math.ceil(km / 550) + (international ? 1 : 0));
 
+  // CO₂e: road freight ≈ 62 g CO₂e per tonne-km (European average) with a
+  // per-mode load-factor adjustment. Trucks are heavy in their own right, so
+  // keep the estimate vehicle-based, not cargo-weight-based, for transparency.
+  const gPerKm = { ftl: 820, ltl: 480, express: 980, reefer: 1150, oversized: 1250, van: 310, small: 420 }[mode];
+  const co2Kg = Math.round((km * gPerKm) / 1000);
+
+  // A customs border is crossed when the route is international and the two
+  // countries are not in the same customs union.
+  const borders = international && crossBorder ? 1 : 0;
+
   return {
     km,
     transitDays,
@@ -519,5 +533,9 @@ export function estimateFreight(input: {
     totalGel: Math.round(totalEur * GEL_RATE),
     currencyRate: GEL_RATE,
     modeLabel: mode,
+    perKmEur: rate.perKm,
+    co2Kg,
+    borders,
+    international,
   };
 }

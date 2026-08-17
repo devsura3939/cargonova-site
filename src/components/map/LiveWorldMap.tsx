@@ -5,7 +5,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Link from "next/link";
 import { computeLiveFleet, type LiveUnit } from "@/lib/fleet";
-import { ports, type Port } from "@/data/ports";
+import { ports } from "@/data/ports";
 import { seaRoutes } from "@/data/sea-routes";
 import { useTheme } from "@/lib/theme";
 import { useLang } from "@/lib/i18n";
@@ -20,6 +20,8 @@ import {
   ExternalLink,
   Radar,
   PackageSearch,
+  Activity,
+  Thermometer,
 } from "lucide-react";
 
 const SHIP_COLOR = "#2ED3E6";
@@ -28,6 +30,16 @@ const PORT_COLOR = "#7fb4ff";
 const STATS_INTERVAL = 2000;
 
 type Filter = "all" | "ship" | "truck" | "port";
+
+type FeedEvent = { id: number; kind: string; actor: string; target: string; at: number };
+
+const KIND_COLOR: Record<string, string> = {
+  departed: "#2ED3E6",
+  berthed: "#7fb4ff",
+  midway: "#FF8A3D",
+  arrived: "#10b981",
+  delivering: "#FF8A3D",
+};
 
 type DrawState = {
   units: LiveUnit[];
@@ -321,6 +333,41 @@ export function LiveWorldMap() {
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
   const [query, setQuery] = useState("");
   const [hoverId, setHoverId] = useState<string | null>(null);
+  const [feed, setFeed] = useState<FeedEvent[]>([]);
+  const [now, setNow] = useState(() => Date.now());
+  const feedSeqRef = useRef(0);
+  const prevUnitsRef = useRef<Map<string, { status: string; bucket: number }>>(new Map());
+
+  // 1s tick for countdowns / "updated Xs ago" labels.
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const timeAgo = (ms: number) => {
+    if (ms < 0) ms = 0;
+    const s = Math.round(ms / 1000);
+    if (s < 60) return s <= 2 ? t("map.justNow") : `${s}${t("map.secondsAgo")}`;
+    return `${Math.floor(s / 60)}${t("map.minutesAgo")}`;
+  };
+
+  const etaCountdown = (etaMs: number, nowMs: number) => {
+    const left = etaMs - nowMs;
+    if (left <= 0) return "—";
+    const d = Math.floor(left / 86400000);
+    const h = Math.floor((left % 86400000) / 3600000);
+    const m = Math.floor((left % 3600000) / 60000);
+    if (lang === "ka") {
+      const parts: string[] = [];
+      if (d) parts.push(`${d}დ`);
+      if (h) parts.push(`${h}სთ`);
+      if (!d && m) parts.push(`${m}წთ`);
+      return parts.length ? parts.join(" ") : `${m}წთ`;
+    }
+    if (d) return `in ${d}d ${h}h`;
+    if (h) return `in ${h}h ${m}m`;
+    return `in ${m}m`;
+  };
 
   const dark = theme === "dark";
   const selectedIdRef = useRef<string | null>(selectedId);
@@ -411,6 +458,31 @@ export function LiveWorldMap() {
         lastStats = nowMs;
         setFleet(units);
         setLastUpdate(now);
+
+        // Detect status / milestone changes → rolling live-event feed.
+        const prev = prevUnitsRef.current;
+        const next = new Map<string, { status: string; bucket: number }>();
+        const fresh: FeedEvent[] = [];
+        for (const u of units) {
+          const bucket = Math.min(9, Math.floor(u.progress * 10));
+          next.set(u.id, { status: u.status, bucket });
+          const p = prev.get(u.id);
+          if (!p) continue;
+          const push = (kind: string, actor: string, target: string) => {
+            feedSeqRef.current += 1;
+            fresh.push({ id: feedSeqRef.current, kind, actor, target, at: Date.now() });
+          };
+          if (p.status !== u.status) {
+            if (u.status === "At Port" || u.status === "Delivering") push("berthed", u.name, u.destination);
+            else push("departed", u.name, u.origin);
+          } else if (bucket > p.bucket) {
+            if (p.bucket <= 1 && bucket >= 2) push("departed", u.name, u.origin);
+            else if (p.bucket < 5 && bucket >= 5) push("midway", u.name, u.routeName);
+            else if (p.bucket < 9 && bucket >= 9) push("arrived", u.name, u.destination);
+          }
+        }
+        prevUnitsRef.current = next;
+        if (fresh.length) setFeed((f) => [...fresh, ...f].slice(0, 12));
       }
       raf = requestAnimationFrame(loop);
     };
@@ -494,8 +566,45 @@ export function LiveWorldMap() {
           </span>
           <span className="font-mono text-xs font-bold tracking-wide text-ink">{t("map.live")}</span>
           <span className="hidden text-xs text-muted sm:inline">
-            {lastUpdate ? `${lastUpdate.toLocaleTimeString("en-US", { hour12: false })} UTC` : "connecting…"}
+            {lastUpdate ? `${t("map.updated")} ${timeAgo(now - lastUpdate.getTime())}` : "connecting…"}
           </span>
+        </div>
+      </div>
+
+      {/* Live events feed */}
+      <div className="pointer-events-none absolute bottom-20 left-3 z-[500] hidden w-72 sm:block">
+        <div className="overflow-hidden rounded-2xl border border-soft bg-surface/92 shadow-lift backdrop-blur">
+          <div className="flex items-center justify-between border-b border-soft px-3.5 py-2">
+            <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-muted">
+              <Activity className="h-3 w-3 text-emerald-500" />
+              {t("map.feed")}
+            </p>
+            <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-500">
+              <span className="h-full w-full animate-ping rounded-full bg-emerald-500 opacity-70" />
+            </span>
+          </div>
+          <ul className="max-h-44 space-y-0 overflow-y-auto p-1.5">
+            {feed.filter((e) => now - e.at < 180000).length === 0 ? (
+              <li className="px-2.5 py-2 text-[11px] text-muted">{t("map.feedEmpty")}</li>
+            ) : (
+              feed
+                .filter((e) => now - e.at < 180000)
+                .map((e) => (
+                  <li key={e.id} className="flex items-start gap-2 rounded-lg px-2.5 py-1.5 transition-colors hover:bg-surface-hover">
+                    <span
+                      className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full"
+                      style={{ background: KIND_COLOR[e.kind] ?? "#2ED3E6" }}
+                    />
+                    <p className="min-w-0 flex-1 text-[11px] leading-snug text-ink">
+                      <span className="font-semibold text-strong">{e.actor}</span>{" "}
+                      <span className="text-muted">{t(`map.verb.${e.kind}` as never)}</span>{" "}
+                      <span className="font-medium text-strong">{e.target}</span>
+                    </p>
+                    <span className="shrink-0 font-mono text-[9px] text-muted">{timeAgo(now - e.at)}</span>
+                  </li>
+                ))
+            )}
+          </ul>
         </div>
       </div>
 
@@ -615,6 +724,28 @@ export function LiveWorldMap() {
                 <span className="text-right font-semibold text-strong">{t(`map.${selected.status === "In Transit" ? "inTransit" : selected.status === "At Port" ? "atPort" : "delivering"}` as never)}</span>
                 <span className="text-muted">{t("map.eta")}</span>
                 <span className="text-right font-semibold text-strong">{formatEtaLang(selected.etaMs, lang)}</span>
+                <span className="text-muted">{t("map.etaIn")}</span>
+                <span className="text-right font-semibold text-strong">{etaCountdown(selected.etaMs, now)}</span>
+                <span className="text-muted">{t("map.distLeft")}</span>
+                <span className="text-right font-semibold text-strong">
+                  {Math.max(0, Math.round(selected.routeKm * (1 - selected.progress / 100))).toLocaleString("en-US")} km
+                </span>
+                {selected.kind === "ship" ? (
+                  <>
+                    <span className="text-muted">{t("map.imo")}</span>
+                    <span className="text-right font-mono font-semibold text-strong">{selected.imo}</span>
+                    <span className="text-muted">{t("map.mmsi")}</span>
+                    <span className="text-right font-mono font-semibold text-strong">{selected.mmsi}</span>
+                  </>
+                ) : null}
+                {selected.tempC !== undefined ? (
+                  <>
+                    <span className="flex items-center gap-1 text-muted">
+                      <Thermometer className="h-3 w-3 text-cyan-500" /> {t("map.temp")}
+                    </span>
+                    <span className="text-right font-semibold text-strong">{selected.tempC} °C</span>
+                  </>
+                ) : null}
               </div>
             </div>
 
@@ -644,7 +775,12 @@ export function LiveWorldMap() {
 
             <p className="mt-4 flex items-center gap-1.5 rounded-xl bg-surface-muted px-3 py-2.5 text-[10px] leading-relaxed text-muted">
               <Radar className="h-3.5 w-3.5 shrink-0 text-emerald-500" />
-              {t("map.feedNote")}
+              <span className="min-w-0 flex-1">{t("map.feedNote")}</span>
+              {lastUpdate ? (
+                <span className="shrink-0 font-mono text-[9px] text-muted">
+                  {t("map.updated")} {timeAgo(now - lastUpdate.getTime())}
+                </span>
+              ) : null}
             </p>
           </div>
         </div>

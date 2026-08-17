@@ -14,6 +14,8 @@ import {
   FileBadge,
   Calculator,
   Loader2,
+  Leaf,
+  Truck,
 } from "lucide-react";
 import { COUNTRIES, getCountry, estimateFreight, type Estimate } from "@/lib/geo";
 import { useLang } from "@/lib/i18n";
@@ -35,6 +37,16 @@ const CARGO_OPTIONS = [
 ] as const;
 
 const fmt = (n: number) => new Intl.NumberFormat("en-US").format(n);
+
+const MODE_KEY: Record<string, string> = {
+  ftl: "calc.mode.ftl",
+  ltl: "calc.mode.ltl",
+  express: "calc.mode.express",
+  reefer: "calc.mode.reefer",
+  oversized: "calc.mode.oversized",
+  van: "calc.mode.van",
+  small: "calc.mode.small",
+};
 
 export function FreightCalculator() {
   const router = useRouter();
@@ -111,6 +123,7 @@ export function FreightCalculator() {
         { icon: Fuel, label: t("calc.fuel"), value: `€ ${fmt(estimate.fuel)}` },
         { icon: FileBadge, label: t("calc.border"), value: estimate.customs > 0 ? `€ ${fmt(estimate.customs)}` : "—" },
         { icon: Landmark, label: t("calc.tolls"), value: `€ ${fmt(estimate.tolls)}` },
+        { icon: Leaf, label: t("calc.co2"), value: `${fmt(estimate.co2Kg)} kg` },
       ]
     : [];
 
@@ -313,6 +326,26 @@ export function FreightCalculator() {
                         {estimate.transitDays} {t("calc.days")}
                       </p>
                     </div>
+                  </div>
+
+                  {/* Route context: rate, borders, recommended vehicle */}
+                  <div className="mt-4 grid grid-cols-2 gap-2.5">
+                    <div className="rounded-xl border border-white/10 bg-white/5 px-3.5 py-2.5">
+                      <p className="text-[10px] font-bold uppercase tracking-wide text-navy-300">{t("calc.rate")}</p>
+                      <p className="mt-0.5 font-mono text-sm font-bold text-white">€ {estimate.perKmEur.toFixed(2)} / km</p>
+                    </div>
+                    <div className="rounded-xl border border-white/10 bg-white/5 px-3.5 py-2.5">
+                      <p className="text-[10px] font-bold uppercase tracking-wide text-navy-300">{t("calc.borders")}</p>
+                      <p className="mt-0.5 truncate text-xs font-bold text-white">
+                        {estimate.borders === 0 ? t("calc.borderNone") : t("calc.borderOne")}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-2.5 flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3.5 py-2.5">
+                    <Truck className="h-3.5 w-3.5 shrink-0 text-cyan-400" />
+                    <span className="text-[10px] font-bold uppercase tracking-wide text-navy-300">{t("calc.recommend")}</span>
+                    <span className="ml-auto truncate text-xs font-bold text-white">{t(MODE_KEY[estimate.modeLabel] as never)}</span>
                   </div>
 
                   {/* Line items */}

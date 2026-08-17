@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { ArrowRight, Search, Phone } from "lucide-react";
+import { ArrowRight, Search, Phone, Info, Globe2, Contact } from "lucide-react";
 import { brand } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { useLang, type DictKey } from "@/lib/i18n";
@@ -12,8 +12,13 @@ const LINKS: { label: DictKey; href: string }[] = [
   { label: "nav.industries", href: "/industries" },
   { label: "nav.tracking", href: "/tracking" },
   { label: "nav.liveMap", href: "/live-map" },
-  { label: "nav.network", href: "/coverage" },
-  { label: "nav.company", href: "/about" },
+];
+
+/** Company & Network live together — one group with About, Coverage, Contact. */
+const COMPANY_LINKS: { label: DictKey; href: string; icon: typeof Info }[] = [
+  { label: "nav.about", href: "/about", icon: Info },
+  { label: "nav.coverage", href: "/coverage", icon: Globe2 },
+  { label: "nav.contact", href: "/contact", icon: Contact },
 ];
 
 export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -58,6 +63,34 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
                   </Link>
                 </motion.div>
               ))}
+
+              {/* Company & Network group */}
+              <motion.div
+                initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.2 }}
+                className="pt-5"
+              >
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-navy-300">
+                  {t("nav.company")}
+                </p>
+                <div className="mt-2 flex flex-col divide-y divide-white/8">
+                  {COMPANY_LINKS.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={onClose}
+                      className="flex items-center gap-3 py-3.5 text-base font-semibold text-white transition-colors hover:text-white"
+                    >
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/8 text-cyan-400">
+                        <link.icon className="h-4 w-4" />
+                      </span>
+                      {t(link.label)}
+                      <ArrowRight className="ml-auto h-4 w-4 text-cyan-400" />
+                    </Link>
+                  ))}
+                </div>
+              </motion.div>
             </motion.nav>
 
             <div className="mt-8 flex flex-col gap-3">

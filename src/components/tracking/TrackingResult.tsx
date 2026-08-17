@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   MapPin,
@@ -47,9 +48,51 @@ const STATUS_KEYS: Record<string, string> = {
   delivered: "trk.shipmentStatus.delivered",
 };
 
-export function TrackingResult({ shipment }: { shipment: Shipment }) {
+export function TrackingResult({
+  shipment,
+  onRefresh,
+}: {
+  shipment: Shipment;
+  onRefresh?: () => void;
+}) {
   const reduceMotion = useReducedMotion();
-  const { t, tPhrase } = useLang();
+  const { t, tPhrase, lang } = useLang();
+  // The component is keyed by shipment id upstream, so these clocks start
+  // fresh whenever a different shipment (or a refreshed status) is shown.
+  const [now, setNow] = useState(() => Date.now());
+  const [updatedAt] = useState(() => Date.now());
+
+  // Live 1s tick for the ETA countdown + "updated Xs ago".
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const timeAgo = (ms: number) => {
+    if (ms < 0) ms = 0;
+    const s = Math.round(ms / 1000);
+    if (s < 60) return s <= 2 ? t("trk.justNow") : `${s}${t("trk.secondsAgo")}`;
+    return `${Math.floor(s / 60)}${t("trk.minutesAgo")}`;
+  };
+
+  const countdown = (() => {
+    if (shipment.status === "delivered") return null;
+    const left = shipment.etaMs - now;
+    if (left <= 0) return null;
+    const d = Math.floor(left / 86400000);
+    const h = Math.floor((left % 86400000) / 3600000);
+    const m = Math.floor((left % 3600000) / 60000);
+    if (lang === "ka") {
+      const parts: string[] = [];
+      if (d) parts.push(`${d}დ`);
+      if (h) parts.push(`${h}სთ`);
+      if (!d && m) parts.push(`${m}წთ`);
+      return parts.length ? parts.join(" ") : `${m}წთ`;
+    }
+    if (d) return `${d}d ${h}h`;
+    if (h) return `${h}h ${m}m`;
+    return `${m}m`;
+  })();
 
   const cargoValue = (v: string) => tPhrase(v);
   const serviceValue = (v: string) => tPhrase(v);
@@ -90,12 +133,26 @@ export function TrackingResult({ shipment }: { shipment: Shipment }) {
               <p className="mt-1 font-mono text-2xl font-bold text-strong">{shipment.id}</p>
               <p className="mt-0.5 text-xs font-semibold text-electric-600 dark:text-electric-400">{shipment.carrierName}</p>
             </div>
-            <span
-              className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold ${STATUS_TONE[shipment.status] ?? ""} dark:bg-white/10`}
-            >
-              <span className="h-2 w-2 rounded-full bg-current" />
-              {t(STATUS_KEYS[shipment.status] as never)}
-            </span>
+            <div className="flex flex-wrap items-center gap-3">
+              {shipment.status !== "delivered" && countdown ? (
+                <div className="text-right">
+                  <p className="flex items-center justify-end gap-1.5 text-[10px] font-bold uppercase tracking-wide text-muted">
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-70" />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                    </span>
+                    {t("trk.etaIn")}
+                  </p>
+                  <p className="mt-1 font-mono text-base font-bold text-electric-600 dark:text-electric-400">{countdown}</p>
+                </div>
+              ) : null}
+              <span
+                className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold ${STATUS_TONE[shipment.status] ?? ""} dark:bg-white/10`}
+              >
+                <span className="h-2 w-2 rounded-full bg-current" />
+                {t(STATUS_KEYS[shipment.status] as never)}
+              </span>
+            </div>
           </div>
         ))}
 
@@ -133,6 +190,31 @@ export function TrackingResult({ shipment }: { shipment: Shipment }) {
             </div>
           ))}
         </div>
+
+        {card(0.3, (
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-soft bg-surface-muted/60 p-4">
+            <div className="flex items-center gap-2 text-xs text-muted">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-70" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+              </span>
+              {t("trk.updated")}: <span className="font-mono font-bold text-strong">{timeAgo(now - updatedAt)}</span>
+            </div>
+            {onRefresh ? (
+              <button
+                type="button"
+                onClick={onRefresh}
+                className="inline-flex items-center gap-1.5 rounded-full border border-soft bg-surface px-3.5 py-1.5 text-xs font-semibold text-ink transition-colors hover:border-electric-400 hover:text-electric-600 dark:hover:text-electric-400"
+              >
+                <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 12a9 9 0 1 1-2.64-6.36" />
+                  <path d="M21 3v6h-6" />
+                </svg>
+                {t("trk.refresh")}
+              </button>
+            ) : null}
+          </div>
+        ))}
 
         {card(0.32, (
           <div>

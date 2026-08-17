@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Search, PackageSearch, Loader2, XCircle, AlertCircle } from "lucide-react";
@@ -25,6 +25,7 @@ export function TrackingForm() {
   const reduceMotion = useReducedMotion();
   const { t, lang } = useLang();
   const searchParams = useSearchParams();
+  const lastIdRef = useRef<string>("");
 
   // Deep link: /tracking?code=CRG-582941 auto-runs the lookup.
   useEffect(() => {
@@ -45,6 +46,7 @@ export function TrackingForm() {
       return;
     }
 
+    lastIdRef.current = parsed.data;
     setView({ kind: "loading" });
     trackEvent("tracking_search", { id: parsed.data });
 
@@ -203,7 +205,14 @@ export function TrackingForm() {
               exit={reduceMotion ? undefined : { opacity: 0, y: -10 }}
               transition={{ duration: 0.4 }}
             >
-              <TrackingResult shipment={view.data.shipment} />
+              <TrackingResult
+                key={view.data.shipment.id}
+                shipment={view.data.shipment}
+                onRefresh={() => {
+                  const id = lastIdRef.current;
+                  if (id) search(id);
+                }}
+              />
             </motion.div>
           ) : null}
         </AnimatePresence>

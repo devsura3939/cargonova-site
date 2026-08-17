@@ -42,6 +42,8 @@ export type LiveUnit = {
   status: UnitStatus;
   eta: string;
   etaMs: number;
+  routeKm: number;
+  tempC?: number;
   routeId: string;
   routeName: string;
   shipment: {
@@ -244,6 +246,11 @@ function hash(s: string): number {
 function weightFor(h: number, maxKg: number): string {
   const kg = 400 + (h % maxKg);
   return `${Math.round(kg / 50) * 50} kg`;
+}
+
+/** Stable pseudo-IMO derived from the vessel name (real IMOs are public data). */
+function imoFor(name: string): string {
+  return `IMO ${9000000 + (hash(name) % 999999)}`;
 }
 
 /* ── Geometry ────────────────────────────────────────────── */
@@ -459,6 +466,8 @@ export function computeLiveFleet(now: Date): LiveUnit[] {
         status,
         eta,
         etaMs: Date.now() + remainingH * 3600000,
+        routeKm: Math.round(lengthKm),
+        imo: imoFor(v.name),
         routeId: route.id,
         routeName: route.name,
         shipment: {
@@ -534,6 +543,8 @@ export function computeLiveFleet(now: Date): LiveUnit[] {
         status,
         eta: fmtEtaHours(remainingH),
         etaMs: Date.now() + remainingH * 3600000,
+        routeKm: Math.round(meta.lengthKm),
+        tempC: ti % 3 === 2 ? -20 + (seed % 26) : undefined, // reefers run -20..5 °C
         routeId: corridor.id,
         routeName: corridor.name,
         shipment: {

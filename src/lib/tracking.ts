@@ -53,6 +53,8 @@ export type Shipment = {
   destination: string;
   currentCheckpoint: string;
   eta: string;
+  /** ETA as a timestamp (ms) — drives the live countdown in the UI. */
+  etaMs: number;
   progress: number; // 0–100
   route: string[];
   checkpoints: TrackingCheckpoint[];
@@ -431,6 +433,7 @@ function buildShipment(id: string, overrides: ShipmentOverrides, lang: Lang = "e
     destination: destinationName,
     currentCheckpoint: status === "delivered" ? (lang === "ka" ? "მიწოდებულია" : "Delivered") : checkpoints.find((c) => c.status === status)?.location ?? checkpoints[0].location,
     eta: status === "delivered" ? `${lang === "ka" ? "მიწოდებულია" : "Delivered"} ${fmtDay(at(0, 13, 10), lang)}` : etaLabel(eta, today, lang),
+    etaMs: eta.getTime(),
     progress,
     route,
     checkpoints,
@@ -540,6 +543,7 @@ function buildOceanShipment(id: string, input: OceanInput, lang: Lang = "en"): S
           ? `${lang === "ka" ? "ჩავიდა" : "Arrived"} · ${input.destination}`
           : `${lang === "ka" ? "ღია ზღვაში" : "At sea"} · ${input.routeName}`,
     eta: lang === "ka" ? formatEtaLang(input.etaMs, "ka") : input.eta,
+    etaMs: input.etaMs,
     progress: Math.round(p),
     route,
     checkpoints,
