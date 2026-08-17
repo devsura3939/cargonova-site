@@ -31,8 +31,12 @@ jobs:
 
       # GitHub Pages project sites live at /<repo-name>/, so Next.js needs the
       # repo name as basePath. GITHUB_REPOSITORY is "owner/repo".
+      # NEXT_PUBLIC_BASE_PATH is also exported so client components (raw video/
+      # asset URLs in JSX) get the same prefix at build time.
       - name: Build static export
-        run: BASE_PATH="/${GITHUB_REPOSITORY#*/}" npm run build
+        run: |
+          BASE_PATH="/${GITHUB_REPOSITORY#*/}"
+          NEXT_PUBLIC_BASE_PATH="$BASE_PATH" BASE_PATH="$BASE_PATH" npm run build
 
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -205,7 +206,7 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
           </ol>
         </div>
         <Button asChild size="lg" className="mt-8">
-          <a href="/tracking">{t("quote.trackFirst")}</a>
+          <Link href="/tracking">{t("quote.trackFirst")}</Link>
         </Button>
       </motion.div>
     );
@@ -503,9 +504,9 @@ export function QuoteForm({ prefill }: { prefill?: Partial<QuoteInput> }) {
                 </dl>
                 <p className="mt-4 text-xs leading-relaxed text-muted">
                   {t("quote.agree")}{" "}
-                  <a href="/terms" className="font-semibold text-electric-600 underline decoration-electric-300 underline-offset-2 dark:text-electric-400">terms of service</a>{" "}
+                  <Link href="/terms" className="font-semibold text-electric-600 underline decoration-electric-300 underline-offset-2 dark:text-electric-400">terms of service</Link>{" "}
                   {t("quote.and")}{" "}
-                  <a href="/privacy" className="font-semibold text-electric-600 underline decoration-electric-300 underline-offset-2 dark:text-electric-400">privacy policy</a>.
+                  <Link href="/privacy" className="font-semibold text-electric-600 underline decoration-electric-300 underline-offset-2 dark:text-electric-400">privacy policy</Link>.
                 </p>
               </div>
             ) : null}

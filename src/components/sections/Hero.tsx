@@ -10,6 +10,11 @@ import { OpsTicker } from "@/components/sections/OpsTicker";
 
 const EASE = [0.23, 1, 0.32, 1] as const;
 
+// GitHub Pages serves the site under /<repo>/. Raw asset URLs in JSX are not
+// rewritten by Next's basePath, so public/ files must be prefixed manually.
+// Inlined at build time (NEXT_PUBLIC_*); empty locally / on surge.
+const ASSET_ROOT = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export function Hero() {
   const router = useRouter();
   const reduceMotion = useReducedMotion();
@@ -147,8 +152,8 @@ export function Hero() {
               poster={images.semiHighway}
               aria-label="CargoNova linehaul truck on the highway"
             >
-              <source media="(min-width: 1024px)" src="/videos/trucks-transport.mp4" type="video/mp4" />
-              <source src="/videos/trucks-transport-sm.mp4" type="video/mp4" />
+              <source media="(min-width: 1024px)" src={`${ASSET_ROOT}/videos/trucks-transport.mp4`} type="video/mp4" />
+              <source src={`${ASSET_ROOT}/videos/trucks-transport-sm.mp4`} type="video/mp4" />
             </video>
           </motion.div>
           <div className="pointer-events-none absolute inset-0 bg-ink-950/30" aria-hidden="true" />

@@ -9,8 +9,9 @@ const nextConfig: NextConfig = {
   output: "export",
   // GitHub Pages serves project sites under /<repo>/. The deploy workflow sets
   // BASE_PATH to the repo name; on Vercel/Netlify the site sits at the root so
-  // the env var is absent and this stays "".
-  basePath: process.env.BASE_PATH || "",
+  // the env var is absent and this stays "". NEXT_PUBLIC_BASE_PATH is threaded
+  // through to client components so raw asset URLs get the same prefix.
+  basePath: process.env.BASE_PATH || process.env.NEXT_PUBLIC_BASE_PATH || "",
   images: {
     // Static hosting has no image optimizer; use the remote images as-is.
     unoptimized: true,

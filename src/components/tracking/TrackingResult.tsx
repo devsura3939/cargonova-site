@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
@@ -260,9 +261,9 @@ export function TrackingResult({
             <FileText className="mt-0.5 h-4 w-4 shrink-0 text-electric-500" />
             <p className="text-xs leading-relaxed text-ink">
               {t("trk.docsNote1")}{" "}
-              <a href="/contact" className="font-semibold text-electric-600 underline decoration-electric-300 underline-offset-2 hover:text-electric-500 dark:text-electric-400">
+              <Link href="/contact" className="font-semibold text-electric-600 underline decoration-electric-300 underline-offset-2 hover:text-electric-500 dark:text-electric-400">
                 {t("trk.requestDocs")}
-              </a>{" "}
+              </Link>{" "}
               {t("trk.docsNote2")}
             </p>
           </div>
