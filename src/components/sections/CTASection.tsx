@@ -14,6 +14,7 @@ export function CTASection() {
       <div className="pointer-events-none absolute inset-0 bg-noise opacity-40" />
       <div className="pointer-events-none absolute inset-0 bg-grid-dark" />
       <div className="pointer-events-none absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-electric-500/25 blur-[130px]" />
+      <div className="pointer-events-none absolute -bottom-40 right-[-5%] h-96 w-96 rounded-full bg-tech-500/12 blur-[130px]" />
 
       {/* Animated route background */}
       <svg

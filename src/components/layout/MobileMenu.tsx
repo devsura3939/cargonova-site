@@ -33,7 +33,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
           animate={{ opacity: 1 }}
           exit={reduceMotion ? undefined : { opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-40 overflow-y-auto border-t border-white/10 bg-ink-950 pt-24 text-fog-50 xl:hidden"
+          className="fixed inset-0 z-40 overflow-y-auto border-t border-soft bg-surface pt-24 text-strong dark:border-white/10 dark:bg-ink-950 dark:text-fog-50 xl:hidden"
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
@@ -44,7 +44,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
               initial={reduceMotion ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, delay: 0.05 }}
-              className="flex flex-col divide-y divide-white/8"
+              className="flex flex-col divide-y divide-soft dark:divide-white/8"
             >
               {LINKS.map((link, i) => (
                 <motion.div
@@ -56,10 +56,10 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
                   <Link
                     href={link.href}
                     onClick={onClose}
-                    className="flex items-baseline justify-between py-5 text-2xl font-semibold tracking-[-0.02em] text-fog-50"
+                    className="flex items-baseline justify-between py-5 text-2xl font-semibold tracking-[-0.02em] text-strong dark:text-fog-50"
                   >
                     {t(link.label)}
-                    <span className="font-mono text-[10px] tracking-[0.14em] text-fog-600">
+                    <span className="font-mono text-[10px] tracking-[0.14em] text-muted dark:text-fog-600">
                       0{i + 1}
                     </span>
                   </Link>
@@ -73,20 +73,20 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
                 transition={{ duration: 0.3, delay: 0.2 }}
                 className="pt-6"
               >
-                <p className="label text-fog-600">{t("nav.company")}</p>
-                <div className="mt-2 flex flex-col divide-y divide-white/8">
+                <p className="label text-muted dark:text-fog-600">{t("nav.company")}</p>
+                <div className="mt-2 flex flex-col divide-y divide-soft dark:divide-white/8">
                   {COMPANY_LINKS.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
                       onClick={onClose}
-                      className="flex items-center gap-3 py-4 text-[15px] font-medium text-fog-200"
+                      className="flex items-center gap-3 py-4 text-[15px] font-medium text-ink dark:text-fog-200"
                     >
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center border border-white/10 text-signal">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center border border-soft text-signal dark:border-white/10">
                         <link.icon className="h-4 w-4" />
                       </span>
                       {t(link.label)}
-                      <ArrowRight className="ml-auto h-4 w-4 text-fog-600" />
+                      <ArrowRight className="ml-auto h-4 w-4 text-muted dark:text-fog-600" />
                     </Link>
                   ))}
                 </div>

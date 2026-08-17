@@ -190,7 +190,7 @@ export function ModeIndex() {
   const active = modes[activeId];
 
   return (
-    <section className="border-b border-white/10 bg-ink-950">
+    <section className="border-b border-soft bg-surface dark:border-white/10 dark:bg-ink-950">
       <div className="mx-auto max-w-[80rem] px-5 py-16 sm:px-8 lg:py-24">
         <SectionHeading
           index="01"
@@ -198,24 +198,23 @@ export function ModeIndex() {
           align="split"
           title={
             <>
-              {t("mi.title1")} <span className="text-fog-500">{t("mi.title2")}</span>
+              {t("mi.title1")} <span className="text-muted dark:text-fog-500">{t("mi.title2")}</span>
             </>
           }
           action={
             <Link
               href="/services"
-              className="group inline-flex items-center gap-2 border border-white/15 px-4 py-3 text-[13px] text-fog-200 transition-colors duration-150 hover:border-white/35 hover:text-fog-50"
+              className="group inline-flex items-center gap-2 border border-soft px-4 py-3 text-[13px] text-ink transition-colors duration-150 hover:border-signal/60 hover:text-signal-600 dark:border-white/15 dark:text-fog-200 dark:hover:border-white/35 dark:hover:text-fog-50"
             >
               {t("mi.fullDetail")}
               <ArrowRight className="h-3.5 w-3.5 text-signal" aria-hidden="true" />
             </Link>
           }
-          dark
         />
 
-        <div className="mt-12 grid gap-px bg-white/[0.06] lg:grid-cols-[1fr_1.15fr]">
+        <div className="mt-12 grid gap-px bg-soft dark:bg-white/[0.06] lg:grid-cols-[1fr_1.15fr]">
           {/* Image + readouts */}
-          <div className="relative min-h-[280px] overflow-hidden bg-ink-900 lg:min-h-[520px]">
+          <div className="relative min-h-[280px] overflow-hidden bg-ink-950 lg:min-h-[520px]">
             <AnimatePresence initial={false}>
               <motion.img
                 key={active.id}
@@ -237,21 +236,21 @@ export function ModeIndex() {
           </div>
 
           {/* Mode rows */}
-          <ul className="bg-ink-900">
+          <ul className="panel">
             {modes.map((mode, i) => {
               const isActive = i === activeId;
               return (
-                <li key={mode.id} className="border-b border-white/[0.07] last:border-b-0">
+                <li key={mode.id} className="border-b border-soft last:border-b-0 dark:border-white/[0.07]">
                   <button
                     type="button"
                     onClick={() => setActiveId(i)}
                     onMouseEnter={() => setActiveId(i)}
                     aria-expanded={isActive}
-                    className="w-full px-5 py-5 text-left transition-colors duration-150 hover:bg-white/[0.03] sm:px-7"
+                    className="w-full px-5 py-5 text-left transition-colors duration-150 hover:bg-surface-hover dark:hover:bg-white/[0.03] sm:px-7"
                   >
                     <div className="flex items-baseline gap-4">
                       <span
-                        className={`font-mono text-[10px] tracking-[0.14em] ${isActive ? "text-signal" : "text-fog-600"}`}
+                        className={`font-mono text-[10px] tracking-[0.14em] ${isActive ? "text-signal" : "text-muted dark:text-fog-600"}`}
                       >
                         0{i + 1}
                       </span>
@@ -259,16 +258,16 @@ export function ModeIndex() {
                         <span className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                           <span
                             className={`text-[20px] font-semibold tracking-[-0.02em] sm:text-[24px] ${
-                              isActive ? "text-fog-50" : "text-fog-300"
+                              isActive ? "text-strong dark:text-fog-50" : "text-ink dark:text-fog-300"
                             }`}
                           >
                             {mode.label}
                           </span>
-                          <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-fog-600">
+                          <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted dark:text-fog-600">
                             {mode.transit}
                           </span>
                         </span>
-                        <span className="mt-1.5 block text-[14px] leading-snug text-fog-500">
+                        <span className="mt-1.5 block text-[14px] leading-snug text-muted dark:text-fog-500">
                           {mode.headline}
                         </span>
                       </span>
@@ -284,17 +283,17 @@ export function ModeIndex() {
                           transition={{ duration: 0.24, ease: EASE }}
                           className="overflow-hidden"
                         >
-                          <p className="mt-4 max-w-xl pl-8 text-[14px] leading-relaxed text-fog-300">
+                          <p className="mt-4 max-w-xl pl-8 text-[14px] leading-relaxed text-ink dark:text-fog-300">
                             {mode.description}
                           </p>
                           <dl className="mt-4 grid gap-x-8 gap-y-2 pl-8 sm:grid-cols-2">
                             {mode.specs.map((spec) => (
                               <div
                                 key={spec.label}
-                                className="flex items-baseline justify-between gap-3 border-b border-white/[0.07] py-1.5"
+                                className="flex items-baseline justify-between gap-3 border-b border-soft py-1.5 dark:border-white/[0.07]"
                               >
-                                <dt className="label text-fog-600">{spec.label}</dt>
-                                <dd className="text-right font-mono text-[10.5px] text-fog-300">
+                                <dt className="label text-muted dark:text-fog-600">{spec.label}</dt>
+                                <dd className="text-right font-mono text-[10.5px] text-ink dark:text-fog-300">
                                   {spec.value}
                                 </dd>
                               </div>

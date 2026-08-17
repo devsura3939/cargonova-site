@@ -37,7 +37,10 @@ export function Hero() {
 
   return (
     <section className="relative overflow-hidden border-b border-white/10 bg-ink-950 pt-16 text-fog-50">
+      {/* Color atmosphere — signal orange + tech blue, kept subtle */}
       <div className="pointer-events-none absolute inset-0 bg-noise opacity-25" />
+      <div className="pointer-events-none absolute -left-44 top-8 h-96 w-96 rounded-full bg-signal/15 blur-[110px]" />
+      <div className="pointer-events-none absolute right-[-12%] bottom-0 h-[26rem] w-[26rem] rounded-full bg-tech-500/12 blur-[120px]" />
 
       <div className="relative mx-auto grid max-w-[80rem] grid-cols-1 lg:grid-cols-[1.02fr_1fr]">
         {/* Copy */}
@@ -125,21 +128,37 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Visual */}
-        <div className="relative min-h-[300px] border-t border-white/10 sm:min-h-[380px] lg:min-h-0 lg:border-l lg:border-t-0">
-          <motion.img
-            src={images.semiHighway}
-            alt="CargoNova linehaul tractor unit and trailer"
+        {/* Visual — stock video with poster fallback */}
+        <div className="relative min-h-[300px] overflow-hidden border-t border-white/10 sm:min-h-[380px] lg:min-h-0 lg:border-l lg:border-t-0">
+          <motion.div
             initial={reduceMotion ? false : { opacity: 0, scale: 1.02 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, ease: EASE }}
-            className="absolute inset-0 h-full w-full object-cover object-center"
+            className="absolute inset-0"
+          >
+            <video
+              className="h-full w-full object-cover object-center"
+              autoPlay
+              muted
+              loop
+              playsInline
+              disablePictureInPicture
+              preload="metadata"
+              poster={images.semiHighway}
+              aria-label="CargoNova linehaul truck on the highway"
+            >
+              <source src="/videos/trucks-transport-sm.mp4" type="video/mp4" />
+              <source src="/videos/trucks-transport.mp4" type="video/mp4" />
+            </video>
+          </motion.div>
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950/70 via-ink-950/15 to-ink-950/30"
+            aria-hidden="true"
           />
-          <div className="absolute inset-0 bg-ink-950/25" aria-hidden="true" />
-          <div className="absolute bottom-4 left-4 border border-white/12 bg-ink-950/85 px-3 py-2 sm:bottom-6 sm:left-6">
-            <p className="label text-fog-500">{t("hero.fleetLabel")}</p>
+          <div className="glass-dark absolute bottom-4 left-4 px-3 py-2 sm:bottom-6 sm:left-6">
+            <p className="label text-fog-400">{t("hero.fleetLabel")}</p>
             <p className="mt-1.5 font-mono text-[13px] text-fog-50 tnum">{t("hero.fleetUnits")}</p>
-            <p className="mt-0.5 font-mono text-[9.5px] uppercase tracking-[0.12em] text-fog-600">
+            <p className="mt-0.5 font-mono text-[9.5px] uppercase tracking-[0.12em] text-fog-500">
               {t("hero.fleetSub")}
             </p>
           </div>

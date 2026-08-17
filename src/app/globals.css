@@ -26,6 +26,12 @@
   --color-signal-500: #ff5f1f;
   --color-signal-600: #d94f10;
 
+  /* Modern-tech secondary accent (used sparingly for glows & gradients) */
+  --color-tech-600: #2f6fe0;
+  --color-tech-500: #4f8cff;
+  --color-tech-400: #7aa8ff;
+  --color-tech-100: #e3edff;
+
   --color-bone-50: #f2f2ee;
   --color-bone-100: #e9e9e3;
   --color-bone-200: #dcdcd4;
@@ -130,32 +136,37 @@
 }
 
 /* ── Light / dark token values ─────────────────────────────
-   Dark is the default face of the product (ink on black).
-   Light inverts to the "bone" paper tone used in the design. */
+   Light is the bright, glassy, modern-tech face (soft blue-gray with
+   frosted panels). Dark keeps the command-center ink look with the same
+   glass treatment layered on top. */
 :root {
   color-scheme: light;
-  --c-surface: #f2f2ee;
+  --c-surface: #f3f5f9;
   --c-surface-muted: #ffffff;
-  --c-surface-hover: #e9e9e3;
-  --c-strong: #0b0b0b;
-  --c-ink: #3a3d3f;
-  --c-body: #2b2d2f;
-  --c-muted: #8a8e91;
-  --c-border-soft: rgb(11 11 11 / 0.1);
-  --c-border-strong: rgb(11 11 11 / 0.2);
+  --c-surface-hover: #e9edf4;
+  --c-strong: #0b1220;
+  --c-ink: #334155;
+  --c-body: #1c2534;
+  --c-muted: #64748b;
+  --c-border-soft: rgb(15 23 42 / 0.08);
+  --c-border-strong: rgb(15 23 42 / 0.18);
+  --c-panel-bg: rgb(255 255 255 / 0.62);
+  --c-panel-border: rgb(255 255 255 / 0.75);
 }
 
 .dark {
   color-scheme: dark;
-  --c-surface: #0b0b0b;
-  --c-surface-muted: #141414;
-  --c-surface-hover: #1a1a1a;
-  --c-strong: #f4f5f5;
-  --c-ink: #b4b9bd;
-  --c-body: #c9cdcf;
-  --c-muted: #5c6166;
+  --c-surface: #0a0f1c;
+  --c-surface-muted: #111a2c;
+  --c-surface-hover: #17223a;
+  --c-strong: #f1f5f9;
+  --c-ink: #c7d2e0;
+  --c-body: #dbe3ee;
+  --c-muted: #7c8aa0;
   --c-border-soft: rgb(255 255 255 / 0.09);
   --c-border-strong: rgb(255 255 255 / 0.16);
+  --c-panel-bg: rgb(255 255 255 / 0.045);
+  --c-panel-border: rgb(255 255 255 / 0.1);
 }
 
 html {
@@ -201,6 +212,44 @@ body {
 }
 .text-balance { text-wrap: balance; }
 .text-pretty { text-wrap: pretty; }
+
+/* ── Glassmorphism helpers (frosted panels) ────────────── */
+.panel {
+  background: var(--c-panel-bg);
+  border: 1px solid var(--c-panel-border);
+}
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .panel {
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+  }
+}
+.panel-soft {
+  background: var(--c-panel-bg);
+  border: 1px solid var(--c-panel-border);
+}
+.glass {
+  background: var(--c-glass-bg);
+  border: 1px solid var(--c-glass-border);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+:root {
+  --c-glass-bg: rgb(255 255 255 / 0.55);
+  --c-glass-border: rgb(255 255 255 / 0.7);
+}
+.dark {
+  --c-glass-bg: rgb(255 255 255 / 0.06);
+  --c-glass-border: rgb(255 255 255 / 0.12);
+}
+
+/* Frosted panels that sit on top of imagery — always dark for contrast. */
+.glass-dark {
+  background: rgb(10 15 28 / 0.55);
+  border: 1px solid rgb(255 255 255 / 0.14);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
 
 /* ── Utility helpers ───────────────────────────────────── */
 

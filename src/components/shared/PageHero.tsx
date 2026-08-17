@@ -22,12 +22,13 @@ export function PageHero({
   index?: string;
 }) {
   return (
-    <div className="relative overflow-hidden border-b border-white/10 bg-ink-950 text-fog-50">
+    <div className="relative overflow-hidden border-b border-soft bg-surface text-strong dark:border-white/10 dark:bg-ink-950 dark:text-fog-50">
       {/* Atmosphere */}
-      <div className="pointer-events-none absolute inset-0 bg-noise opacity-30" />
-      <div className="pointer-events-none absolute inset-0 bg-grid-dark opacity-70" />
+      <div className="pointer-events-none absolute inset-0 bg-noise opacity-20" />
+      <div className="pointer-events-none absolute inset-0 bg-grid-light opacity-60 dark:bg-grid-dark dark:opacity-70" />
       <div className="pointer-events-none absolute -top-40 right-[-10%] h-105 w-105 rounded-full bg-signal/10 blur-[130px]" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-ink-950" />
+      <div className="pointer-events-none absolute -bottom-52 left-[-5%] h-105 w-105 rounded-full bg-tech-500/10 blur-[130px]" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-surface dark:to-ink-950" />
 
       <Container className={cn("relative", compact ? "py-20 sm:py-24" : "py-24 sm:py-28")}>
         {crumb ? (
@@ -37,7 +38,7 @@ export function PageHero({
         ) : null}
         <Reveal className="max-w-3xl">
           {eyebrow ? (
-            <p className="label flex flex-wrap items-center gap-2.5 text-fog-500">
+            <p className="label flex flex-wrap items-center gap-2.5 text-muted dark:text-fog-500">
               {index ? <span className="text-signal">{index}</span> : null}
               <span>{eyebrow}</span>
             </p>
@@ -46,7 +47,7 @@ export function PageHero({
             {title}
           </h1>
           {description ? (
-            <p className="mt-6 max-w-2xl text-pretty text-[15.5px] leading-relaxed text-fog-500 sm:text-base">
+            <p className="mt-6 max-w-2xl text-pretty text-[15.5px] leading-relaxed text-muted dark:text-fog-500 sm:text-base">
               {description}
             </p>
           ) : null}

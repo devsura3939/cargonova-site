@@ -45,30 +45,30 @@ export function Footer() {
   const { t } = useLang();
 
   return (
-    <footer className="border-t border-white/10 bg-ink-950 text-fog-50">
+    <footer className="border-t border-soft bg-surface text-strong dark:border-white/10 dark:bg-ink-950 dark:text-fog-50">
       <div className="mx-auto max-w-[80rem] px-5 py-14 sm:px-8 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
           {/* Brand */}
           <div>
-            <Link href="/" className="inline-flex text-fog-50">
+            <Link href="/" className="inline-flex text-strong dark:text-fog-50">
               <span className="flex items-center gap-2.5">
                 <LogoMark className="h-6 w-6" />
                 <span className="flex flex-col leading-none">
                   <span className="text-[15px] font-semibold tracking-[0.16em]">
                     CARGO<span className="text-signal">NOVA</span>
                   </span>
-                  <span className="mt-1 font-mono text-[8.5px] uppercase tracking-[0.22em] text-fog-600">
+                  <span className="mt-1 font-mono text-[8.5px] uppercase tracking-[0.22em] text-muted dark:text-fog-600">
                     Logistics
                   </span>
                 </span>
               </span>
             </Link>
-            <p className="mt-6 max-w-xs text-[14px] leading-relaxed text-fog-500">{t("footer.bio")}</p>
+            <p className="mt-6 max-w-xs text-[14px] leading-relaxed text-muted dark:text-fog-500">{t("footer.bio")}</p>
             <div className="mt-8 flex flex-wrap gap-2">
               {CERTIFICATIONS.map((cert) => (
                 <span
                   key={cert}
-                  className="border border-white/10 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-fog-500"
+                  className="border border-soft px-2 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-muted dark:border-white/10 dark:text-fog-500"
                 >
                   {cert}
                 </span>
@@ -79,17 +79,17 @@ export function Footer() {
           {/* Link columns */}
           {COLUMNS.map((col) => (
             <nav key={col.headingKey} aria-label={t(col.headingKey)}>
-              <p className="label mb-5 text-fog-600">{t(col.headingKey)}</p>
+              <p className="label mb-5 text-muted dark:text-fog-600">{t(col.headingKey)}</p>
               <ul className="space-y-3">
                 {col.links.map((link) => (
                   <li key={link.key}>
                     <Link
                       href={link.href}
-                      className="group inline-flex items-center gap-1.5 text-[14px] text-fog-300 transition-colors duration-150 hover:text-fog-50"
+                      className="group inline-flex items-center gap-1.5 text-[14px] text-ink transition-colors duration-150 hover:text-strong dark:text-fog-300 dark:hover:text-fog-50"
                     >
                       {t(link.key)}
                       <ArrowUpRight
-                        className="h-3 w-3 text-fog-600 transition-colors duration-150 group-hover:text-signal"
+                        className="h-3 w-3 text-muted transition-colors duration-150 group-hover:text-signal dark:text-fog-600"
                         aria-hidden="true"
                       />
                     </Link>
@@ -101,17 +101,17 @@ export function Footer() {
 
           {/* Operations */}
           <div>
-            <p className="label mb-5 text-fog-600">{t("footer.ops")}</p>
+            <p className="label mb-5 text-muted dark:text-fog-600">{t("footer.ops")}</p>
             <ul className="space-y-4">
               {OFFICES.map((office) => (
-                <li key={office.city} className="border-b border-white/[0.07] pb-3">
-                  <p className="text-[14px] text-fog-50">{office.city}</p>
-                  <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.12em] text-fog-600">
+                <li key={office.city} className="border-b border-soft pb-3 dark:border-white/[0.07]">
+                  <p className="text-[14px] text-strong dark:text-fog-50">{office.city}</p>
+                  <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.12em] text-muted dark:text-fog-600">
                     {t(office.roleKey)}
                   </p>
                   <a
                     href={`tel:${office.tel.replace(/\s/g, "")}`}
-                    className="mt-1 block font-mono text-[12px] text-fog-300 tnum transition-colors duration-150 hover:text-signal"
+                    className="mt-1 block font-mono text-[12px] text-ink tnum transition-colors duration-150 hover:text-signal dark:text-fog-300"
                   >
                     {office.tel}
                   </a>
@@ -121,14 +121,14 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-3 border-t border-white/10 pt-6 font-mono text-[10px] uppercase tracking-[0.14em] text-fog-600 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 flex flex-col gap-3 border-t border-soft pt-6 font-mono text-[10px] uppercase tracking-[0.14em] text-muted dark:border-white/10 dark:text-fog-600 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} CargoNova Logistics</p>
           <p className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-status-ok" aria-hidden="true" />
             {t("footer.status")}
           </p>
         </div>
-        <p className="mt-4 font-mono text-[9px] uppercase tracking-[0.14em] text-fog-700">
+        <p className="mt-4 font-mono text-[9px] uppercase tracking-[0.14em] text-muted/70 dark:text-fog-700">
           {t("footer.disclaimer")} {t("footer.photoAttrib")}
         </p>
       </div>

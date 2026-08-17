@@ -64,32 +64,31 @@ export function ToolsPreview() {
   const destCity = shipment?.destination.split(",")[0] ?? "";
 
   return (
-    <section className="border-b border-white/10 bg-ink-950">
+    <section className="border-b border-soft bg-surface dark:border-white/10 dark:bg-ink-950">
       <div className="mx-auto max-w-[80rem] px-5 py-16 sm:px-8 lg:py-24">
         <SectionHeading
           index="03"
           eyebrow={t("tp.eyebrow")}
-          dark
           title={
             <>
-              {t("tp.title1")} <span className="text-fog-500">{t("tp.title2")}</span>
+              {t("tp.title1")} <span className="text-muted dark:text-fog-500">{t("tp.title2")}</span>
             </>
           }
           description={t("tp.lead")}
         />
 
-        <div className="mt-12 grid gap-px bg-white/[0.06] lg:grid-cols-2">
+        <div className="mt-12 grid gap-px bg-soft dark:bg-white/[0.06] lg:grid-cols-2">
           {/* Rate engine */}
-          <div className="bg-ink-900 p-5 sm:p-7">
+          <div className="panel p-5 sm:p-7">
             <div className="flex items-center justify-between">
-              <p className="label text-fog-500">{t("tp.rateEngine")}</p>
-              <span className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-fog-600">
+              <p className="label text-muted dark:text-fog-500">{t("tp.rateEngine")}</p>
+              <span className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-muted dark:text-fog-600">
                 {t("tp.liveCost")}
               </span>
             </div>
 
             {/* Mode tabs */}
-            <div className="mt-5 grid grid-cols-4 gap-px bg-white/[0.08]">
+            <div className="mt-5 grid grid-cols-4 gap-px bg-soft dark:bg-white/[0.08]">
               {MODES.map((m) => {
                 const active = m.id === mode;
                 return (
@@ -100,7 +99,9 @@ export function ToolsPreview() {
                     aria-pressed={active}
                     className={cn(
                       "px-2 py-2.5 text-[11px] font-medium uppercase tracking-[0.06em] transition-colors duration-150",
-                      active ? "bg-signal text-ink-950" : "bg-ink-900 text-fog-500 hover:text-fog-200",
+                      active
+                        ? "bg-signal text-ink-950"
+                        : "bg-surface-muted text-muted hover:text-strong dark:bg-ink-900 dark:text-fog-500 dark:hover:text-fog-200",
                     )}
                   >
                     {t(m.labelKey as never)}
@@ -125,22 +126,22 @@ export function ToolsPreview() {
                     inputMode="numeric"
                     value={weight}
                     onChange={(e) => setWeight(e.target.value.replace(/[^0-9]/g, ""))}
-                    className="h-11 w-full border border-white/10 bg-white/[0.03] px-3 pr-14 font-mono text-[13px] text-fog-50 tnum transition-colors duration-150 focus:border-signal focus:outline-none"
+                    className="h-11 w-full border border-soft bg-surface-muted px-3 pr-14 font-mono text-[13px] text-strong tnum transition-colors duration-150 focus:border-signal focus:outline-none dark:border-white/10 dark:bg-white/[0.03] dark:text-fog-50"
                   />
-                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 font-mono text-[10px] uppercase tracking-[0.12em] text-fog-600">
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 font-mono text-[10px] uppercase tracking-[0.12em] text-muted dark:text-fog-600">
                     kg
                   </span>
                 </div>
               </Field>
             </div>
 
-            <div className="mt-6 flex flex-wrap items-end justify-between gap-4 border-t border-white/10 pt-5">
+            <div className="mt-6 flex flex-wrap items-end justify-between gap-4 border-t border-soft pt-5 dark:border-white/10">
               <div>
-                <p className="label mb-2 text-fog-500">{t("tp.indicative")}</p>
-                <p className="font-mono text-[32px] leading-none text-fog-50 tnum">
+                <p className="label mb-2 text-muted dark:text-fog-500">{t("tp.indicative")}</p>
+                <p className="font-mono text-[32px] leading-none text-strong tnum dark:text-fog-50">
                   {sameCity || !estimate ? "—" : `€${fmt(estimate.totalEur)}`}
                 </p>
-                <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.12em] text-fog-600">
+                <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.12em] text-muted dark:text-fog-600">
                   {sameCity
                     ? t("tp.selectTwo")
                     : estimate
@@ -161,10 +162,10 @@ export function ToolsPreview() {
           </div>
 
           {/* Shipment console */}
-          <div className="bg-ink-900 p-5 sm:p-7">
+          <div className="panel p-5 sm:p-7">
             <div className="flex items-center justify-between">
-              <p className="label text-fog-500">{t("tp.console")}</p>
-              <span className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-fog-600">
+              <p className="label text-muted dark:text-fog-500">{t("tp.console")}</p>
+              <span className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-muted dark:text-fog-600">
                 {t("tp.sample")}
               </span>
             </div>
@@ -176,25 +177,27 @@ export function ToolsPreview() {
                     <span className="h-1.5 w-1.5 rounded-full bg-ink-950/70" aria-hidden="true" />
                     {t(`trk.shipmentStatus.${shipment.status}` as never)}
                   </span>
-                  <span className="font-mono text-[15px] text-fog-50 tnum">{shipment.id}</span>
+                  <span className="font-mono text-[15px] text-strong tnum dark:text-fog-50">
+                    {shipment.id}
+                  </span>
                 </div>
 
                 {/* Progress rail */}
                 <div className="mt-6">
                   <div className="flex items-end justify-between gap-4">
                     <div>
-                      <p className="label mb-1.5 text-fog-600">{t("trk.origin")}</p>
-                      <p className="font-mono text-[13px] text-fog-50">{originCity}</p>
+                      <p className="label mb-1.5 text-muted dark:text-fog-600">{t("trk.origin")}</p>
+                      <p className="font-mono text-[13px] text-strong dark:text-fog-50">{originCity}</p>
                     </div>
-                    <div className="pb-1 text-center font-mono text-[10px] uppercase tracking-[0.14em] text-fog-600">
+                    <div className="pb-1 text-center font-mono text-[10px] uppercase tracking-[0.14em] text-muted dark:text-fog-600">
                       {Math.round(shipment.progress)}% {t("tp.complete")}
                     </div>
                     <div className="text-right">
-                      <p className="label mb-1.5 text-fog-600">{t("trk.destination")}</p>
-                      <p className="font-mono text-[13px] text-fog-50">{destCity}</p>
+                      <p className="label mb-1.5 text-muted dark:text-fog-600">{t("trk.destination")}</p>
+                      <p className="font-mono text-[13px] text-strong dark:text-fog-50">{destCity}</p>
                     </div>
                   </div>
-                  <div className="relative mt-4 h-[3px] w-full bg-white/10">
+                  <div className="relative mt-4 h-[3px] w-full bg-soft dark:bg-white/10">
                     <div
                       className="absolute inset-y-0 left-0 bg-signal"
                       style={{ width: `${shipment.progress}%` }}
@@ -216,14 +219,14 @@ export function ToolsPreview() {
 
                 <Link
                   href={`/tracking?code=${shipment.id}`}
-                  className="group mt-6 inline-flex items-center gap-2 border border-white/15 px-4 py-3 text-[13px] text-fog-200 transition-colors duration-150 hover:border-white/35 hover:text-fog-50"
+                  className="group mt-6 inline-flex items-center gap-2 border border-soft px-4 py-3 text-[13px] text-ink transition-colors duration-150 hover:border-signal/60 hover:text-signal-600 dark:border-white/15 dark:text-fog-200 dark:hover:border-white/35 dark:hover:text-fog-50"
                 >
                   {t("tp.openConsole")}
                   <ArrowRight className="h-3.5 w-3.5 text-signal transition-transform duration-150 group-hover:translate-x-0.5" aria-hidden="true" />
                 </Link>
               </>
             ) : (
-              <p className="mt-5 text-[13px] text-fog-500">—</p>
+              <p className="mt-5 text-[13px] text-muted">—</p>
             )}
           </div>
         </div>
@@ -235,7 +238,7 @@ export function ToolsPreview() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="label mb-1.5 block text-fog-600">{label}</span>
+      <span className="label mb-1.5 block text-muted dark:text-fog-600">{label}</span>
       {children}
     </label>
   );
@@ -247,7 +250,7 @@ function CitySelect({ value, onChange }: { value: string; onChange: (v: string) 
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="h-11 w-full border border-white/10 bg-ink-900 px-3 font-mono text-[11.5px] uppercase tracking-[0.04em] text-fog-50 transition-colors duration-150 focus:border-signal focus:outline-none"
+      className="h-11 w-full border border-soft bg-surface-muted px-3 font-mono text-[11.5px] uppercase tracking-[0.04em] text-strong transition-colors duration-150 focus:border-signal focus:outline-none dark:border-white/10 dark:bg-ink-900 dark:text-fog-50"
     >
       {COUNTRIES.flatMap((country) =>
         country.cities.map((city) => (
@@ -262,9 +265,9 @@ function CitySelect({ value, onChange }: { value: string; onChange: (v: string) 
 
 function ConsoleRow({ label, value, mono = false }: { label: string; value: string; mono?: boolean }) {
   return (
-    <div className="border-b border-white/[0.07] py-2.5">
-      <dt className="label mb-1.5 text-fog-600">{label}</dt>
-      <dd className={mono ? "font-mono text-[12px] text-fog-200 tnum" : "text-[13px] text-fog-200"}>
+    <div className="border-b border-soft py-2.5 dark:border-white/[0.07]">
+      <dt className="label mb-1.5 text-muted dark:text-fog-600">{label}</dt>
+      <dd className={mono ? "font-mono text-[12px] text-ink tnum dark:text-fog-200" : "text-[13px] text-ink dark:text-fog-200"}>
         {value}
       </dd>
     </div>

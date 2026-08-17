@@ -24,13 +24,12 @@ export function LogoMark({ className }: { className?: string }) {
   );
 }
 
-export function Logo({
-  dark = false,
-  className,
-}: {
-  dark?: boolean;
-  className?: string;
-}) {
+/**
+ * Brand lockup. The wordmark follows `currentColor`, so callers control the
+ * tone via className — e.g. `text-fog-50` over dark imagery or
+ * `text-strong dark:text-fog-50` on theme-aware surfaces.
+ */
+export function Logo({ className }: { className?: string }) {
   return (
     <Link
       href="/"
@@ -38,21 +37,11 @@ export function Logo({
       aria-label="CargoNova Logistics — home"
     >
       <LogoMark className="text-current" />
-      <span className="flex flex-col leading-none">
-        <span
-          className={cn(
-            "text-[15px] font-semibold tracking-[0.16em]",
-            dark ? "text-fog-50" : "text-strong",
-          )}
-        >
+      <span className="flex flex-col leading-none text-current">
+        <span className="text-[15px] font-semibold tracking-[0.16em]">
           CARGO<span className="text-signal">NOVA</span>
         </span>
-        <span
-          className={cn(
-            "mt-1 font-mono text-[8.5px] uppercase tracking-[0.22em]",
-            dark ? "text-fog-600" : "text-muted",
-          )}
-        >
+        <span className="mt-1 font-mono text-[8.5px] uppercase tracking-[0.22em] opacity-55">
           Logistics
         </span>
       </span>
