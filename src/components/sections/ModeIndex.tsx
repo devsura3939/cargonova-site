@@ -29,10 +29,10 @@ const MODE_DEFS: Record<"en" | "ka", { label: Bi; headline: Bi; description: Bi;
   en: [
     {
       label: { en: "Road freight", ka: "საგზაო გადაზიდვა" },
-      headline: { en: "Own-fleet linehaul across 30+ countries", ka: "საკუთარი ავტოპარკი 30+ ქვეყანაში" },
+      headline: { en: "Reliable transport across Europe and the Caucasus", ka: "საიმედო ტრანსპორტირება ევროპასა და კავკასიაში" },
       description: {
-        en: "Full and part loads on scheduled linehaul, with tail-lift, ADR and temperature-controlled equipment available on every corridor.",
-        ka: "სრული და ნაწილობრივი დატვირთვები დაგეგმილ მარშრუტებზე — ლიფტკარით, ADR და ტემპერატურული რეჟიმის აღჭურვილობით ყველა დერეფანზე.",
+        en: "FTL, LTL and dedicated road transport with scheduled departures, real-time tracking and equipment matched to your cargo.",
+        ka: "FTL, LTL და ინდივიდუალური სახმელეთო გადაზიდვები დაგეგმილი რეისებით, ტვირთის რეალურ დროში თვალთვალითა და ტვირთზე მორგებული ტრანსპორტით.",
       },
       transit: { en: "1–4 days", ka: "1–4 დღე" },
       capacity: { en: "to 24 t / 100 m³", ka: "24 ტ-მდე / 100 მ³" },
@@ -46,10 +46,10 @@ const MODE_DEFS: Record<"en" | "ka", { label: Bi; headline: Bi; description: Bi;
     },
     {
       label: { en: "Rail & intermodal", ka: "სარკინიგზო და ინტერმოდალური" },
-      headline: { en: "Green linehaul on the Caucasus and EU corridors", ka: "მწვანე ტრანსპორტირება კავკასიისა და ევროკავშირის დერეფნებზე" },
+      headline: { en: "Efficient long-distance freight with fewer road miles", ka: "ეფექტური გადაწყვეტა დიდ მანძილზე გადასაზიდი ტვირთისთვის" },
       description: {
-        en: "Scheduled block trains and combined transport that cut road miles by up to 80%, with truck pre- and post-carriage at both ends.",
-        ka: "დაგეგმილი ბლოკ-მატარებლები და კომბინირებული ტრანსპორტი, რომელიც საგზაო კილომეტრებს 80%-მდე ამცირებს, ავტოგადაზიდვით ორივე ბოლოში.",
+        en: "Rail and combined transport solutions for high-volume shipments moving between Europe, Türkiye, the Caucasus and Central Asia.",
+        ka: "სარკინიგზო და კომბინირებული გადაზიდვები მაღალმოცულობიანი ტვირთისთვის ევროპას, თურქეთს, კავკასიასა და ცენტრალურ აზიას შორის.",
       },
       transit: { en: "2–5 days", ka: "2–5 დღე" },
       capacity: { en: "to 26 t / container", ka: "26 ტ-მდე / კონტეინერი" },
@@ -63,10 +63,10 @@ const MODE_DEFS: Record<"en" | "ka", { label: Bi; headline: Bi; description: Bi;
     },
     {
       label: { en: "Air freight", ka: "საჰაერო ტვირთი" },
-      headline: { en: "Priority uplift through partner gateways", ka: "პრიორიტეტული გადაზიდვა პარტნიორი კარიბჭეებით" },
+      headline: { en: "When delivery cannot wait", ka: "როცა დრო გადამწყვეტია" },
       description: {
-        en: "Express air capacity on 190 routes with airport-to-airport tracking, temperature-safe handling and door-to-door options where time is the cargo.",
-        ka: "ექსპრეს ავიატევადობა 190 მარშრუტზე, აეროპორტ-აეროპორტის თვალთვალით, ტემპერატურულად უსაფრთხო მოპყრობით და კარამდე მიტანით, სადაც დრო თავად ტვირთია.",
+        en: "Priority and time-critical air freight for urgent, high-value and sensitive cargo, coordinated from pickup through final delivery.",
+        ka: "სწრაფი და პრიორიტეტული საჰაერო გადაზიდვები სასწრაფო, მაღალი ღირებულებისა და განსაკუთრებული პირობების მქონე ტვირთისთვის — აღებიდან საბოლოო მიწოდებამდე.",
       },
       transit: { en: "12–48 h", ka: "12–48 სთ" },
       capacity: { en: "to 5 t / ULD", ka: "5 ტ-მდე / ULD" },
@@ -80,10 +80,10 @@ const MODE_DEFS: Record<"en" | "ka", { label: Bi; headline: Bi; description: Bi;
     },
     {
       label: { en: "Ocean freight", ka: "საზღვაო ტვირთი" },
-      headline: { en: "FCL and LCL from Poti and Batumi", ka: "FCL და LCL პოტიდან და ბათუმიდან" },
+      headline: { en: "Flexible shipping for global cargo", ka: "გლობალური გადაზიდვები მოქნილი პირობებით" },
       description: {
-        en: "Container services from Georgian Black Sea ports to the world, with fixed weekly rotations, port-to-door tracking and customs-ready documentation.",
-        ka: "კონტეინერული სერვისები საქართველოს შავი ზღვის პორტებიდან მთელ მსოფლიოში, ყოველკვირეული როტაციით, პორტამდე თვალთვალით და საბაჟოსთვის მზა დოკუმენტებით.",
+        en: "FCL and LCL solutions through major international ports, with support for documentation, inland transport and final-mile delivery.",
+        ka: "FCL და LCL გადაზიდვები საერთაშორისო პორტების გავლით, დოკუმენტაციის, სახმელეთო ტრანსპორტირებისა და საბოლოო მიწოდების ორგანიზებით.",
       },
       transit: { en: "12–34 days", ka: "12–34 დღე" },
       capacity: { en: "to 28 t / container", ka: "28 ტ-მდე / კონტეინერი" },
@@ -99,10 +99,10 @@ const MODE_DEFS: Record<"en" | "ka", { label: Bi; headline: Bi; description: Bi;
   ka: [
     {
       label: { en: "Road freight", ka: "საგზაო გადაზიდვა" },
-      headline: { en: "Own-fleet linehaul across 30+ countries", ka: "საკუთარი ავტოპარკი 30+ ქვეყანაში" },
+      headline: { en: "Reliable transport across Europe and the Caucasus", ka: "საიმედო ტრანსპორტირება ევროპასა და კავკასიაში" },
       description: {
-        en: "Full and part loads on scheduled linehaul, with tail-lift, ADR and temperature-controlled equipment available on every corridor.",
-        ka: "სრული და ნაწილობრივი დატვირთვები დაგეგმილ მარშრუტებზე — ლიფტკარით, ADR და ტემპერატურული რეჟიმის აღჭურვილობით ყველა დერეფანზე.",
+        en: "FTL, LTL and dedicated road transport with scheduled departures, real-time tracking and equipment matched to your cargo.",
+        ka: "FTL, LTL და ინდივიდუალური სახმელეთო გადაზიდვები დაგეგმილი რეისებით, ტვირთის რეალურ დროში თვალთვალითა და ტვირთზე მორგებული ტრანსპორტით.",
       },
       transit: { en: "1–4 days", ka: "1–4 დღე" },
       capacity: { en: "to 24 t / 100 m³", ka: "24 ტ-მდე / 100 მ³" },
@@ -116,10 +116,10 @@ const MODE_DEFS: Record<"en" | "ka", { label: Bi; headline: Bi; description: Bi;
     },
     {
       label: { en: "Rail & intermodal", ka: "სარკინიგზო და ინტერმოდალური" },
-      headline: { en: "Green linehaul on the Caucasus and EU corridors", ka: "მწვანე ტრანსპორტირება კავკასიისა და ევროკავშირის დერეფნებზე" },
+      headline: { en: "Efficient long-distance freight with fewer road miles", ka: "ეფექტური გადაწყვეტა დიდ მანძილზე გადასაზიდი ტვირთისთვის" },
       description: {
-        en: "Scheduled block trains and combined transport that cut road miles by up to 80%, with truck pre- and post-carriage at both ends.",
-        ka: "დაგეგმილი ბლოკ-მატარებლები და კომბინირებული ტრანსპორტი, რომელიც საგზაო კილომეტრებს 80%-მდე ამცირებს, ავტოგადაზიდვით ორივე ბოლოში.",
+        en: "Rail and combined transport solutions for high-volume shipments moving between Europe, Türkiye, the Caucasus and Central Asia.",
+        ka: "სარკინიგზო და კომბინირებული გადაზიდვები მაღალმოცულობიანი ტვირთისთვის ევროპას, თურქეთს, კავკასიასა და ცენტრალურ აზიას შორის.",
       },
       transit: { en: "2–5 days", ka: "2–5 დღე" },
       capacity: { en: "to 26 t / container", ka: "26 ტ-მდე / კონტეინერი" },
@@ -133,10 +133,10 @@ const MODE_DEFS: Record<"en" | "ka", { label: Bi; headline: Bi; description: Bi;
     },
     {
       label: { en: "Air freight", ka: "საჰაერო ტვირთი" },
-      headline: { en: "Priority uplift through partner gateways", ka: "პრიორიტეტული გადაზიდვა პარტნიორი კარიბჭეებით" },
+      headline: { en: "When delivery cannot wait", ka: "როცა დრო გადამწყვეტია" },
       description: {
-        en: "Express air capacity on 190 routes with airport-to-airport tracking, temperature-safe handling and door-to-door options where time is the cargo.",
-        ka: "ექსპრეს ავიატევადობა 190 მარშრუტზე, აეროპორტ-აეროპორტის თვალთვალით, ტემპერატურულად უსაფრთხო მოპყრობით და კარამდე მიტანით, სადაც დრო თავად ტვირთია.",
+        en: "Priority and time-critical air freight for urgent, high-value and sensitive cargo, coordinated from pickup through final delivery.",
+        ka: "სწრაფი და პრიორიტეტული საჰაერო გადაზიდვები სასწრაფო, მაღალი ღირებულებისა და განსაკუთრებული პირობების მქონე ტვირთისთვის — აღებიდან საბოლოო მიწოდებამდე.",
       },
       transit: { en: "12–48 h", ka: "12–48 სთ" },
       capacity: { en: "to 5 t / ULD", ka: "5 ტ-მდე / ULD" },
@@ -150,10 +150,10 @@ const MODE_DEFS: Record<"en" | "ka", { label: Bi; headline: Bi; description: Bi;
     },
     {
       label: { en: "Ocean freight", ka: "საზღვაო ტვირთი" },
-      headline: { en: "FCL and LCL from Poti and Batumi", ka: "FCL და LCL პოტიდან და ბათუმიდან" },
+      headline: { en: "Flexible shipping for global cargo", ka: "გლობალური გადაზიდვები მოქნილი პირობებით" },
       description: {
-        en: "Container services from Georgian Black Sea ports to the world, with fixed weekly rotations, port-to-door tracking and customs-ready documentation.",
-        ka: "კონტეინერული სერვისები საქართველოს შავი ზღვის პორტებიდან მთელ მსოფლიოში, ყოველკვირეული როტაციით, პორტამდე თვალთვალით და საბაჟოსთვის მზა დოკუმენტებით.",
+        en: "FCL and LCL solutions through major international ports, with support for documentation, inland transport and final-mile delivery.",
+        ka: "FCL და LCL გადაზიდვები საერთაშორისო პორტების გავლით, დოკუმენტაციის, სახმელეთო ტრანსპორტირებისა და საბოლოო მიწოდების ორგანიზებით.",
       },
       transit: { en: "12–34 days", ka: "12–34 დღე" },
       capacity: { en: "to 28 t / container", ka: "28 ტ-მდე / კონტეინერი" },
@@ -201,6 +201,7 @@ export function ModeIndex() {
               {t("mi.title1")} <span className="text-muted dark:text-fog-500">{t("mi.title2")}</span>
             </>
           }
+          description={t("mi.sub")}
           action={
             <Link
               href="/services"

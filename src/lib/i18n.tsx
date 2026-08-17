@@ -50,12 +50,12 @@ const en = {
 
   // Hero
   "hero.badge": "Tbilisi control tower · 30+ countries · around the clock",
-  "hero.title1": "Where is your truck",
-  "hero.titleAccent": "right now?",
+  "hero.title1": "Move freight without",
+  "hero.titleAccent": "the guesswork.",
   "hero.sub":
-    "412 vehicles, one control tower in Tbilisi, every shipment tracked end-to-end. No more phone calls asking where your load is.",
-  "hero.getQuote": "Get a Quote",
-  "hero.track": "Track Shipment",
+    "Road, rail, air and ocean transport with clear pricing, live shipment visibility and a logistics team that stays ahead of delays. From pickup to final delivery, you know where your cargo is, what comes next and who to call when plans change.",
+  "hero.getQuote": "Get a Freight Quote",
+  "hero.track": "Track a Shipment",
   "hero.trust1": "10 000+ shipments a year",
   "hero.trust2": "98.7% on time",
   "hero.trust3": "30+ countries, one network",
@@ -63,11 +63,11 @@ const en = {
   "hero.eta": "ETA Berlin → Tbilisi",
 
   // Logos
-  "logos.heading": "Trusted by operations teams across 30+ countries",
+  "logos.heading": "Trusted for freight that needs to arrive on time",
 
   // Stats
   "stats.shipments": "Shipments delivered yearly",
-  "stats.ontime": "On-time delivery rate",
+  "stats.ontime": "On-time deliveries",
   "stats.support": "Logistics support & monitoring",
   "stats.regions": "Regions covered across Europe",
 
@@ -112,10 +112,10 @@ const en = {
   "calc.borderOne": "1 border · customs docs",
   "calc.borderTwo": "2 borders · customs docs",
   "calc.recommend": "Recommended vehicle",
-  "calc.mode.ftl": "Full truckload (FTL)",
-  "calc.mode.ltl": "Partial load (LTL)",
-  "calc.mode.express": "Express / urgent",
-  "calc.mode.reefer": "Reefer trailer 13.6 m",
+  "calc.mode.ftl": "Full Truckload (FTL)",
+  "calc.mode.ltl": "Less-than-Truckload (LTL)",
+  "calc.mode.express": "Express / Urgent",
+  "calc.mode.reefer": "Temperature-Controlled",
   "calc.mode.oversized": "Special transport · escort",
   "calc.mode.van": "Sprinter van · 8 m³",
   "calc.mode.small": "Box truck · 20 m³",
@@ -168,11 +168,11 @@ const en = {
   "how.step4d": "On-time delivery with signed proof of delivery and full documentation in your portal — the same day.",
 
   // Coverage
-  "cov.eyebrow": "Coverage & routes",
-  "cov.title": "Where the network reaches",
+  "cov.eyebrow": "Our network",
+  "cov.title": "Strong routes. Reliable departures. Fewer surprises.",
   "cov.sub":
-    "Fixed lanes across Europe's busiest corridors, port hubs at Rotterdam and beyond, and routes extending into Turkey, the Caucasus and Central Asia.",
-  "cov.explore": "Explore full coverage",
+    "Our network connects key European and regional hubs through established road, rail, air and ocean routes. We plan capacity in advance, monitor every active shipment and adjust quickly when borders, weather or schedules affect the route.",
+  "cov.explore": "Explore Our Network",
   "cov.transit": "Transit:",
   "cov.mapHint": "Click a corridor to highlight it",
   "cov.networkMap": "Network map",
@@ -211,12 +211,12 @@ const en = {
 
   // Fleet
   "fleet.eyebrow": "Our fleet",
-  "fleet.title": "412 vehicles. Ready for your cargo.",
+  "fleet.title": "The right vehicle for the job.",
   "fleet.sub":
-    "Every unit checked before dispatch, every driver trained on securing your load. If it's not road-ready, it doesn't leave.",
+    "Different cargo needs different equipment. From urgent small shipments to full truckloads, temperature-sensitive goods and high-volume freight, we match the vehicle to the weight, dimensions, route and handling requirements of your cargo.",
   "fleet.browse": "Browse full fleet",
-  "fleet.recommend": "Tell us what you're shipping. We'll recommend the right vehicle — payload, dimensions, and equipment matched to your cargo.",
-  "fleet.getRecommendation": "Get a recommendation",
+  "fleet.recommend": "Not sure what you need? Tell us what you're shipping and we'll recommend the most suitable vehicle and transport option.",
+  "fleet.getRecommendation": "Find the Right Vehicle",
   "fleet.available": "Available for booking",
   "fleet.onRequest": "Booking on request",
   "fleet.label.payload": "Payload",
@@ -234,9 +234,9 @@ const en = {
   "fleet.cat.standard": "Standard",
   "fleet.cat.refrigerated": "Refrigerated",
   "fleet.cat.heavy": "Heavy Cargo",
-  "fleet.ideal.sprinter": "Parcel freight, express deliveries, small pallets, medical samples",
-  "fleet.ideal.box": "Regional distribution, retail replenishment, 4–8 pallets",
-  "fleet.ideal.semi": "Full loads, 24–33 pallets, long-haul corridors",
+  "fleet.ideal.sprinter": "For urgent deliveries, parcels, samples and small pallet shipments.",
+  "fleet.ideal.box": "For regional distribution, retail replenishment and smaller palletized loads.",
+  "fleet.ideal.semi": "For full truckloads, long-distance transport and high-volume freight.",
 
   // Service card content (homepage + explorers)
   "svc.title.groundFreight": "Ground Freight",
@@ -299,21 +299,21 @@ const en = {
   "ind.view": "View industries",
 
   // Testimonials
-  "test.eyebrow": "Client outcomes",
-  "test.title": "Results our customers measure in their own KPIs",
+  "test.eyebrow": "Customers",
+  "test.title": "Built for businesses that depend on reliable delivery.",
   "test.sub":
-    "Logistics runs on numbers. Here's what our clients say when they measure ours.",
+    "Manufacturers, distributors, retailers and growing businesses use dependable logistics to keep production moving, stock available and customers satisfied. Our role is simple: make transport one less thing your team needs to worry about.",
   "test.placeholder":
-    "Placeholder case studies for demo purposes — replace with customer-approved references.",
+    "Real testimonials, customer logos and short case studies will be added here as they are approved.",
 
   // CTA
-  "cta.badge": "Capacity available this week on core corridors",
-  "cta.title1": "Ship with",
-  "cta.titleAccent": "Confidence.",
+  "cta.badge": "Road, rail, air and ocean — one logistics partner.",
+  "cta.title1": "Planning your next",
+  "cta.titleAccent": "shipment?",
   "cta.sub":
-    "A confirmed price within 4 business hours. 60 minutes if it's urgent. No commitment until you book.",
-  "cta.getQuote": "Get a Quote",
-  "cta.contact": "Contact Logistics Team",
+    "Tell us where it needs to go. We'll take it from there. Send us the origin, destination and cargo details. We'll recommend the right transport option and provide a clear quote.",
+  "cta.getQuote": "Get a Freight Quote",
+  "cta.contact": "Talk to Our Logistics Team",
   "cta.prefers": "Prefer to talk? Call",
   "cta.hoursNote": "— 24/7 for active shipments.",
 
@@ -721,40 +721,42 @@ const en = {
   "pg.svc.next": "Next",
 
   // Redesign — hero
-  "hero.metaLoc": "Tbilisi · est. 2016",
-  "hero.metaModes": "Road · Rail · Air · Ocean",
-  "hero.trackLabel": "Track a consignment",
+  "hero.metaLoc": "Tbilisi-based logistics",
+  "hero.metaModes": "Europe · Caucasus · Central Asia",
+  "hero.trackLabel": "Track a shipment",
   "hero.priceLane": "Price a lane instead",
-  "hero.trackPh": "Enter reference, e.g. CRG-582941",
+  "hero.trackPh": "Enter your shipment reference",
   "hero.demo": "Demo",
   "hero.fleetLabel": "Fleet",
-  "hero.fleetUnits": "412 units",
-  "hero.fleetSub": "Euro 6 · avg. age 2.1 yrs",
+  "hero.fleetUnits": "412 vehicles",
+  "hero.fleetSub": "Matched to your cargo",
 
   // Redesign — stats
-  "stats.inTransit": "In transit now",
-  "stats.inTransitUnit": "loads",
-  "stats.countries": "Countries served",
-  "stats.telemetry": "Telemetry interval",
+  "stats.inTransit": "Active shipments",
+  "stats.inTransitUnit": "in transit",
+  "stats.countries": "Network coverage",
+  "stats.telemetry": "Tracking updates",
   "stats.telemetryVal": "2",
   "stats.telemetryUnit": "min",
   "stats.countriesVal": "30",
   "stats.countriesUnit": "+",
 
   // Redesign — mode index
-  "mi.eyebrow": "Capability index",
-  "mi.title1": "Four modes,",
-  "mi.title2": "one contract and one dataset.",
-  "mi.fullDetail": "Full service detail",
+  "mi.eyebrow": "Freight services",
+  "mi.title1": "One logistics partner.",
+  "mi.title2": "Every way your cargo needs to move.",
+  "mi.sub":
+    "From a single pallet to a full truckload or international multimodal shipment, we choose the route, equipment and transport mode that make sense for your cargo — not simply the option that is easiest for us.",
+  "mi.fullDetail": "Explore All Services",
   "mi.transit": "Transit",
   "mi.capacity": "Capacity",
   "mi.coverage": "Coverage",
 
   // Redesign — network
-  "net.title1": "Fixed corridors,",
-  "net.title2": "not ad-hoc.",
+  "net.title1": "Strong routes.",
+  "net.title2": "Reliable departures. Fewer surprises.",
   "net.lead":
-    "6 corridors, 16 hubs, fixed departures. Capacity is locked weeks ahead — so your load has a slot before you even book.",
+    "Our network connects key European and regional hubs through established road, rail, air and ocean routes. We plan capacity in advance, monitor every active shipment and adjust quickly when borders, weather or schedules affect the route.",
   "net.scheduled": "scheduled",
   "net.depBoard": "Departure board",
   "net.next7": "Next 7 days",
@@ -763,13 +765,13 @@ const en = {
   "net.rail": "Rail",
 
   // Redesign — tools preview
-  "tp.eyebrow": "Operating tools",
-  "tp.title1": "Same rate engine",
-  "tp.title2": "same numbers you see.",
+  "tp.eyebrow": "Instant freight estimate",
+  "tp.title1": "Know the numbers",
+  "tp.title2": "before you make the call.",
   "tp.lead":
-    "No sales gate before a price. The rate you see is the same model behind our own contracts — fully transparent, fully itemised.",
-  "tp.rateEngine": "Rate engine",
-  "tp.liveCost": "Live cost model",
+    "Choose your shipment type, origin, destination and weight to get an indicative transport price. It gives you a practical starting point before speaking with our logistics team — without waiting for a sales callback just to understand the approximate cost.",
+  "tp.rateEngine": "Freight estimate",
+  "tp.liveCost": "Cost breakdown",
   "tp.mode": "Mode",
   "tp.collection": "Collection",
   "tp.delivery": "Delivery",
@@ -777,8 +779,8 @@ const en = {
   "tp.indicative": "Indicative rate",
   "tp.selectTwo": "Select two different cities",
   "tp.refine": "Refine in rate engine",
-  "tp.console": "Shipment console",
-  "tp.sample": "Sample consignment",
+  "tp.console": "Shipment tracking",
+  "tp.sample": "Sample shipment",
   "tp.nextMilestone": "Next milestone",
   "tp.scheduled": "Scheduled",
   "tp.equipment": "Equipment",
@@ -788,37 +790,34 @@ const en = {
   "tp.complete": "complete",
 
   // Redesign — operating standard
-  "as.eyebrow": "Operating standard",
-  "as.title1": "We call you",
-  "as.title2": "before the ETA moves.",
+  "as.eyebrow": "How we work",
+  "as.title1": "You shouldn't have to chase",
+  "as.title2": "your logistics company for answers.",
   "as.sub":
-    "Our planner sees a border delay at 08:00. By 08:15, your phone rings with a revised delivery slot. No emails chasing updates. No silence.",
-  "as.cta": "Request capacity",
-  "as.claims": "Claims ratio",
-  "as.answer": "Avg. answer",
-  "as.retention": "Retention",
-  "as.c1t": "One planner, not a ticket queue",
+    "Freight does not always go exactly to plan. Borders get busy. Ferries move. Weather changes. What matters is how quickly your logistics partner reacts. We monitor active shipments continuously and communicate important changes before they become your problem.",
+  "as.cta": "Get a Freight Quote",
+  "as.c1t": "A real person responsible for your shipment",
   "as.c1b":
-    "Every account has a named planner and a deputy in Tbilisi. They know your docks, your cut-offs, your customers — by name.",
-  "as.c2t": "Exceptions reach you first",
+    "You have a logistics contact who understands your route, cargo and delivery requirements — not just a support ticket number.",
+  "as.c2t": "Problems are communicated early",
   "as.c2b":
-    "If a corridor slips, the console updates and your planner calls before the ETA moves in your own system. Silence is never our default.",
-  "as.c3t": "One price, fully itemised",
+    "If something affects the ETA, we tell you what happened, what it changes and what we're doing about it.",
+  "as.c3t": "Clear pricing",
   "as.c3b":
-    "Linehaul, terminal, fuel index, toll, surcharge — every cost is visible on every quote. Nothing shows up on the invoice that wasn't there before.",
-  "as.c4t": "Documents on delivery, not next week",
+    "Transport, fuel, tolls, terminal charges and applicable surcharges are explained before booking whenever possible.",
+  "as.c4t": "Documents when you need them",
   "as.c4b":
-    "CMR, POD and temperature logs are attached to the shipment record within 20 minutes of unloading.",
+    "Shipment documents, PODs and supporting records are kept together and made available as soon as they are ready.",
 
   // Redesign — footer & nav
   "footer.bio":
-    "European freight operations with an in-house control tower, own fleet and a single data model across road, rail, air and ocean.",
+    "Freight transportation across Europe, the Caucasus and international markets, with road, rail, air and ocean solutions managed through one logistics team.",
   "footer.ops": "Operations",
   "footer.status": "Network status — all corridors operating",
   "footer.roleHQ": "HQ & control tower",
   "footer.roleEast": "Middle-East gateway",
   "footer.roleSouth": "EU hub",
-  "nav.requestCapacity": "Request capacity",
+  "nav.requestCapacity": "Get a Quote",
 
   // Language / theme
   "lang.en": "English",
@@ -1025,12 +1024,12 @@ const ka: Record<keyof typeof en, string> = {
 
   // Hero
   "hero.badge": "თბილისის საკონტროლო ცენტრი · 30+ ქვეყანა · დღე-ღამის რეჟიმში",
-  "hero.title1": "სად არის თქვენი სატვირთო",
-  "hero.titleAccent": "ახლა?",
+  "hero.title1": "გადაზიდვა გაურკვევლობის",
+  "hero.titleAccent": "გარეშე.",
   "hero.sub":
-    "412 მანქანა, ერთი საკონტროლო ცენტრი თბილისში, ყოველი ტვირთი თვალთვალის ქვეშ. აღარ მოგიწევთ ზარი იმის გასარკვევად, სად არის თქვენი ტვირთი.",
-  "hero.getQuote": "მიიღეთ შეთავაზება",
-  "hero.track": "ტვირთის თვალთვალი",
+    "სახმელეთო, სარკინიგზო, საჰაერო და საზღვაო გადაზიდვები — გამჭვირვალე ფასებით, ტვირთის მუდმივი კონტროლით და გუნდით, რომელიც პრობლემებზე თქვენამდე რეაგირებს. ტვირთის აღებიდან საბოლოო მიწოდებამდე ყოველთვის იცით, სად არის თქვენი ტვირთი, რა არის შემდეგი ეტაპი და ვის დაუკავშირდეთ, თუ გეგმა შეიცვალა.",
+  "hero.getQuote": "მიიღეთ გადაზიდვის ფასი",
+  "hero.track": "აკონტროლეთ ტვირთი",
   "hero.trust1": "10 000+ ტვირთი წელიწადში",
   "hero.trust2": "98.7% დროული მიწოდება",
   "hero.trust3": "30+ ქვეყანა, ერთი ქსელი",
@@ -1038,11 +1037,11 @@ const ka: Record<keyof typeof en, string> = {
   "hero.eta": "ETA ბერლინი → თბილისი",
 
   // Logos
-  "logos.heading": "გვენდობიან საოპერაციო გუნდები 30+ ქვეყანაში",
+  "logos.heading": "ლოგისტიკა ბიზნესებისთვის, სადაც დროულ მიწოდებას მნიშვნელობა აქვს",
 
   // Stats
   "stats.shipments": "წლიურად მიწოდებული ტვირთები",
-  "stats.ontime": "დროული მიწოდების მაჩვენებელი",
+  "stats.ontime": "დროული მიწოდება",
   "stats.support": "ლოგისტიკური მხარდაჭერა და მონიტორინგი",
   "stats.regions": "დაფარული რეგიონები ევროპაში",
 
@@ -1090,7 +1089,7 @@ const ka: Record<keyof typeof en, string> = {
   "calc.mode.ftl": "სრული დატვირთვა (FTL)",
   "calc.mode.ltl": "ნაწილობრივი დატვირთვა (LTL)",
   "calc.mode.express": "ექსპრეს / გადაუდებელი",
-  "calc.mode.reefer": "რეფრიჟერატორი 13.6 მ",
+  "calc.mode.reefer": "ტემპერატურული რეჟიმი",
   "calc.mode.oversized": "სპეცტრანსპორტი · ესკორტით",
   "calc.mode.van": "სპრინტერი · 8 მ³",
   "calc.mode.small": "ბოქსი სატვირთო · 20 მ³",
@@ -1143,11 +1142,11 @@ const ka: Record<keyof typeof en, string> = {
   "how.step4d": "დროული მიწოდება ხელმოწერილი ჩაბარების დამადასტურებელი დოკუმენტითა და სრული დოკუმენტაციით თქვენს პორტალში — იმავე დღეს.",
 
   // Coverage
-  "cov.eyebrow": "გეოგრაფია და მარშრუტები",
-  "cov.title": "სად აღწევს ქსელი",
+  "cov.eyebrow": "ჩვენი ქსელი",
+  "cov.title": "გამართული მარშრუტები. სტაბილური რეისები. ნაკლები მოულოდნელობა.",
   "cov.sub":
-    "ფიქსირებული მარშრუტები ევროპის ყველაზე დატვირთულ დერეფნებზე, საპორტო ჰაბები როტერდამში და მის მიღმა, მარშრუტები თურქეთის, კავკასიისა და ცენტრალური აზიის მიმართულებით.",
-  "cov.explore": "სრული გეოგრაფიის ნახვა",
+    "ჩვენი ქსელი ერთმანეთთან აკავშირებს ევროპის, კავკასიისა და რეგიონის მნიშვნელოვან სატრანსპორტო ჰაბებს. სიმძლავრეებს წინასწარ ვგეგმავთ, მიმდინარე გადაზიდვებს მუდმივად ვაკვირდებით და სწრაფად ვრეაგირებთ, თუ მარშრუტზე ვითარება იცვლება.",
+  "cov.explore": "მარშრუტების ნახვა",
   "cov.transit": "ტრანზიტი:",
   "cov.mapHint": "დააწკაპუნეთ დერეფანზე მის გამოსაყოფად",
   "cov.networkMap": "ქსელის რუკა",
@@ -1186,11 +1185,11 @@ const ka: Record<keyof typeof en, string> = {
 
   // Fleet
   "fleet.eyebrow": "ჩვენი ავტოპარკი",
-  "fleet.title": "412 მანქანა. თქვენი ტვირთისთვის მზად.",
-  "fleet.sub": "ყოველი მანქანა გამგზავნამდე შემოწმებული, ყოველი მძღოლი გაწვრთნილი თქვენი ტვირთის სწორად დამაგრებაში. გზისთვის მზად არ არის — არ გადის.",
+  "fleet.title": "სწორი ტრანსპორტი თქვენი ტვირთისთვის.",
+  "fleet.sub": "ყველა ტვირთს ერთი და იგივე ტიპის სატვირთო არ სჭირდება. სასწრაფო მცირე გზავნილებიდან სრულ დატვირთვამდე, ტემპერატურული რეჟიმის მქონე და დიდი მოცულობის ტვირთამდე — ტრანსპორტს ვარჩევთ წონის, ზომების, მარშრუტისა და საჭირო პირობების მიხედვით.",
   "fleet.browse": "მთელი ავტოპარკის ნახვა",
-  "fleet.recommend": "გვითხარით, რას ზიდავთ — შემოგთავაზებთ შესაბამის ტრანსპორტს.",
-  "fleet.getRecommendation": "მიიღეთ რეკომენდაცია",
+  "fleet.recommend": "არ იცით რომელი ტრანსპორტი გჭირდებათ? გვითხარით, რას აგზავნით და ჩვენ შემოგთავაზებთ ყველაზე შესაბამის ვარიანტს.",
+  "fleet.getRecommendation": "შეარჩიეთ ტრანსპორტი",
   "fleet.available": "დაჯავშნა შესაძლებელია",
   "fleet.onRequest": "მოთხოვნით",
   "fleet.label.payload": "ტვირთუნარიანობა",
@@ -1208,9 +1207,9 @@ const ka: Record<keyof typeof en, string> = {
   "fleet.cat.standard": "სტანდარტული",
   "fleet.cat.refrigerated": "რეფრიჟერატორული",
   "fleet.cat.heavy": "მძიმე ტვირთი",
-  "fleet.ideal.sprinter": "პარცელები, ექსპრეს მიწოდება, მცირე პალეტები, სამედიცინო ნიმუშები",
-  "fleet.ideal.box": "რეგიონული დისტრიბუცია, მაღაზიების მარაგის შევსება, 4–8 პალეტი",
-  "fleet.ideal.semi": "სრული დატვირთვები, 24–33 პალეტი, შორ მანძილზე დერეფნები",
+  "fleet.ideal.sprinter": "სასწრაფო გზავნილებისთვის, მცირე ტვირთისთვის, ნიმუშებისა და რამდენიმე პალეტისთვის.",
+  "fleet.ideal.box": "რეგიონული დისტრიბუციისთვის, მაღაზიების მომარაგებისა და მცირე პალეტირებული ტვირთისთვის.",
+  "fleet.ideal.semi": "სრული დატვირთვის, საერთაშორისო სახმელეთო და დიდი მოცულობის გადაზიდვებისთვის.",
 
   // Service card content (homepage + explorers)
   "svc.title.groundFreight": "სახმელეთო ტვირთები",
@@ -1272,19 +1271,19 @@ const ka: Record<keyof typeof en, string> = {
   "ind.view": "ინდუსტრიების ნახვა",
 
   // Testimonials
-  "test.eyebrow": "კლიენტების შედეგები",
-  "test.title": "შედეგები, რომლებსაც კლიენტები საკუთარი KPI-ებით აფასებენ",
-  "test.sub": "ლოგისტიკა ციფრებით მუშაობს. აი, რას ამბობენ ჩვენი კლიენტები, როცა ჩვენს ციფრებს ზომავენ.",
+  "test.eyebrow": "კლიენტები",
+  "test.title": "ბიზნესებისთვის, რომელთათვისაც დროული მიწოდება პროცესის ნაწილია.",
+  "test.sub": "მწარმოებლებს, დისტრიბუტორებს, საცალო ქსელებსა და მზარდ კომპანიებს სტაბილური ლოგისტიკა სჭირდებათ იმისთვის, რომ წარმოება არ გაჩერდეს, პროდუქტი დროულად მივიდეს და მომხმარებელი არ დაელოდოს. ჩვენი ამოცანა მარტივია: ტრანსპორტირება იყოს ერთი საკითხით ნაკლები, რომელზეც თქვენს გუნდს ნერვიულობა უწევს.",
   "test.placeholder":
-    "საჩვენებელი ქეისები დემო მიზნებისთვის — ჩანაცვლდება კლიენტის მიერ დამტკიცებული რეფერენციებით.",
+    "დამტკიცებული კლიენტების შეფასებები, ლოგოები და მოკლე ქეისები აქ დაამატება მათი მოწონების შემდეგ.",
 
   // CTA
-  "cta.badge": "თავისუფალი ტევადობა ამ კვირაში ძირითად დერეფნებზე",
-  "cta.title1": "გადაზიდეთ",
-  "cta.titleAccent": "დარწმუნებით.",
-  "cta.sub": "დადასტურებული ფასი 4 სამუშაო საათში. გადაუდებელი ტვირთისთვის — 60 წუთში. დაჯავშნამდე არანაირი ვალდებულება.",
-  "cta.getQuote": "მიიღეთ შეთავაზება",
-  "cta.contact": "დაუკავშირდით გუნდს",
+  "cta.badge": "სახმელეთო, სარკინიგზო, საჰაერო და საზღვაო — ერთი ლოგისტიკური პარტნიორი.",
+  "cta.title1": "გეგმავთ ახალ",
+  "cta.titleAccent": "გადაზიდვას?",
+  "cta.sub": "გვითხარით, საიდან, სად და რა მიგაქვთ. დანარჩენს ჩვენ მივხედავთ. გამოგვიგზავნეთ გამგზავრების ადგილი, დანიშნულება და ტვირთის მონაცემები. შეგირჩევთ შესაბამის ტრანსპორტს და მოგაწვდით მკაფიო შეთავაზებას.",
+  "cta.getQuote": "მიიღეთ გადაზიდვის ფასი",
+  "cta.contact": "დაუკავშირდით ლოგისტიკის გუნდს",
   "cta.prefers": "გირჩევნიათ ზარი?",
   "cta.hoursNote": "— 24/7 აქტიური გადაზიდვებისთვის.",
 
@@ -1689,40 +1688,42 @@ const ka: Record<keyof typeof en, string> = {
   "faq.replies": "— პასუხი ერთ სამუშაო დღეში.",
 
   // Redesign — hero
-  "hero.metaLoc": "თბილისი · დაარსდა 2016",
-  "hero.metaModes": "საგზაო · სარკინიგზო · საჰაერო · საზღვაო",
-  "hero.trackLabel": "ტვირთის თვალთვალი",
+  "hero.metaLoc": "ლოგისტიკა თბილისიდან",
+  "hero.metaModes": "ევროპა · კავკასია · ცენტრალური აზია",
+  "hero.trackLabel": "აკონტროლეთ ტვირთი",
   "hero.priceLane": "ან დაითვალეთ ფასი",
-  "hero.trackPh": "შეიყვანეთ ნომერი, მაგ. CRG-582941",
+  "hero.trackPh": "შეიყვანეთ ტვირთის ნომერი",
   "hero.demo": "დემო",
   "hero.fleetLabel": "ავტოპარკი",
-  "hero.fleetUnits": "412 ერთეული",
-  "hero.fleetSub": "ევრო 6 · საშ. ასაკი 2.1 წ",
+  "hero.fleetUnits": "412 მანქანა",
+  "hero.fleetSub": "თქვენს ტვირთზე მორგებული",
 
   // Redesign — stats
-  "stats.inTransit": "ახლა ტრანზიტშია",
-  "stats.inTransitUnit": "ტვირთი",
-  "stats.countries": "დაფარული ქვეყნები",
-  "stats.telemetry": "ტელემეტრიის ინტერვალი",
+  "stats.inTransit": "მიმდინარე გადაზიდვები",
+  "stats.inTransitUnit": "ტვირთი გზაში",
+  "stats.countries": "ქვეყნების დაფარვა",
+  "stats.telemetry": "ადგილმდებარეობის განახლება",
   "stats.telemetryVal": "2",
   "stats.telemetryUnit": "წთ",
   "stats.countriesVal": "30",
   "stats.countriesUnit": "+",
 
   // Redesign — mode index
-  "mi.eyebrow": "შესაძლებლობების ინდექსი",
-  "mi.title1": "ოთხი რეჟიმი,",
-  "mi.title2": "ერთი კონტრაქტი და ერთი მონაცემთა ბაზა.",
-  "mi.fullDetail": "სერვისების სრული დეტალები",
+  "mi.eyebrow": "გადაზიდვის სერვისები",
+  "mi.title1": "ერთი ლოგისტიკური პარტნიორი —",
+  "mi.title2": "ყველა საჭირო მიმართულებისთვის.",
+  "mi.sub":
+    "ერთი პალეტიდან სრულ დატვირთვამდე და საერთაშორისო მულტიმოდალურ გადაზიდვებამდე — ვარჩევთ მარშრუტს, ტრანსპორტსა და გადაზიდვის ტიპს თქვენი ტვირთის რეალური საჭიროებების მიხედვით.",
+  "mi.fullDetail": "ყველა სერვისის ნახვა",
   "mi.transit": "ტრანზიტი",
   "mi.capacity": "ტევადობა",
   "mi.coverage": "გეოგრაფია",
 
   // Redesign — network
-  "net.title1": "ფიქსირებული დერეფნები,",
-  "net.title2": "არა შემთხვევითობა.",
+  "net.title1": "გამართული მარშრუტები.",
+  "net.title2": "სტაბილური რეისები. ნაკლები მოულოდნელობა.",
   "net.lead":
-    "6 დერეფანი, 16 ჰაბი, ფიქსირებული გასვლები. ტევადობა კვირებით ადრეა დაჯავშნილი — თქვენი ტვირთი ადგილს იჭერს ჯავშნამდევე.",
+    "ჩვენი ქსელი ერთმანეთთან აკავშირებს ევროპის, კავკასიისა და რეგიონის მნიშვნელოვან სატრანსპორტო ჰაბებს. სიმძლავრეებს წინასწარ ვგეგმავთ, მიმდინარე გადაზიდვებს მუდმივად ვაკვირდებით და სწრაფად ვრეაგირებთ, თუ მარშრუტზე ვითარება იცვლება.",
 
   "net.scheduled": "დაგეგმილი",
   "net.depBoard": "გამგზავრების დაფა",
@@ -1732,13 +1733,13 @@ const ka: Record<keyof typeof en, string> = {
   "net.rail": "სარკინიგზო",
 
   // Redesign — tools preview
-  "tp.eyebrow": "ოპერაციული ინსტრუმენტები",
-  "tp.title1": "იგივე ტარიფების ძრავა",
-  "tp.title2": "იგივე ციფრები, რასაც ჩვენ ვხედავთ.",
+  "tp.eyebrow": "გადაზიდვის ფასის კალკულატორი",
+  "tp.title1": "გაიგეთ სავარაუდო ღირებულება",
+  "tp.title2": "საუბრის დაწყებამდე.",
   "tp.lead":
-    "გაყიდვების ბარიერი ფასის წინ არ დგას. თქვენი შეთავაზება იმავე მოდელიდან მოდის, რომლითაც ჩვენი კონტრაქტები ფასდება — სრული გამჭვირვალობით.",
-  "tp.rateEngine": "ტარიფების კალკულატორი",
-  "tp.liveCost": "ცოცხალი ღირებულების მოდელი",
+    "აირჩიეთ გადაზიდვის ტიპი, გამგზავრებისა და დანიშნულების ადგილი და მიუთითეთ ტვირთის წონა. მიიღებთ სავარაუდო ფასს, რომელიც დაგეხმარებათ წინასწარ დაგეგმოთ ბიუჯეტი და შემდეგ უკვე ჩვენს გუნდთან დააზუსტოთ გადაზიდვის პირობები.",
+  "tp.rateEngine": "ტვირთის შეფასება",
+  "tp.liveCost": "ხარჯების დეტალური გაანგარიშება",
   "tp.mode": "რეჟიმი",
   "tp.collection": "ჩატვირთვა",
   "tp.delivery": "მიწოდება",
@@ -1746,8 +1747,8 @@ const ka: Record<keyof typeof en, string> = {
   "tp.indicative": "სავარაუდო ტარიფი",
   "tp.selectTwo": "აირჩიეთ ორი სხვადასხვა ქალაქი",
   "tp.refine": "დააზუსტეთ ტარიფების კალკულატორში",
-  "tp.console": "ტვირთის კონსოლი",
-  "tp.sample": "სანიმუშო ტვირთი",
+  "tp.console": "ტვირთის კონტროლი",
+  "tp.sample": "სანიმუშო გადაზიდვა",
   "tp.nextMilestone": "შემდეგი ეტაპი",
   "tp.scheduled": "დაგეგმილია",
   "tp.equipment": "ტრანსპორტი",
@@ -1757,37 +1758,34 @@ const ka: Record<keyof typeof en, string> = {
   "tp.complete": "შესრულებულია",
 
   // Redesign — operating standard
-  "as.eyebrow": "ოპერაციული სტანდარტი",
-  "as.title1": "ჩვენ გირეკავთ",
-  "as.title2": "სანამ ETA შეიცვლება.",
+  "as.eyebrow": "როგორ ვმუშაობთ",
+  "as.title1": "ლოგისტიკურ კომპანიას ინფორმაციის მისაღებად",
+  "as.title2": "არ უნდა დასდევდეთ.",
   "as.sub":
-    "ჩვენი პლანერი 08:00-ზე ხვდება საზღვრის შეფერხებას. 08:15-ზე თქვენს ტელეფონზე რეკავს განახლებული მიწოდების დრო. არანაირი ელფოსტა, არანაირი სიჩუმე.",
-  "as.cta": "მოითხოვეთ ტევადობა",
-  "as.claims": "პრეტენზიების კოეფიციენტი",
-  "as.answer": "საშ. პასუხი",
-  "as.retention": "რეტენცია",
-  "as.c1t": "ერთი პლანერი, არა ტიკეტების რიგი",
+    "გადაზიდვისას ყველაფერი ყოველთვის იდეალური გეგმით არ მიდის. შეიძლება გადაიტვირთოს საზღვარი, შეიცვალოს გრაფიკი ან შეფერხდეს მარშრუტი. მთავარია, რამდენად სწრაფად რეაგირებს ამ დროს თქვენი ლოგისტიკური პარტნიორი. ჩვენ მუდმივად ვაკვირდებით მიმდინარე გადაზიდვებს და მნიშვნელოვან ცვლილებებზე წინასწარ გაცნობებთ.",
+  "as.cta": "მიიღეთ გადაზიდვის ფასი",
+  "as.c1t": "თქვენი ტვირთისთვის პასუხისმგებელი რეალური ადამიანი",
   "as.c1b":
-    "თითოეულ ანგარიშზე ერთი პირადი პლანერი და მოადგილე მუშაობს თბილისში. ისინი იცნობენ თქვენს პორტებს, ვადებს, კლიენტებს — სახელით.",
-  "as.c2t": "გადახრები ჯერ თქვენ გაცნობებთ",
+    "თქვენ გყავთ საკონტაქტო პირი, რომელმაც იცის თქვენი მარშრუტი, ტვირთი და მიწოდების მოთხოვნები — და არა უბრალოდ მხარდაჭერის ნომერი.",
+  "as.c2t": "პრობლემების შესახებ წინასწარ იცით",
   "as.c2b":
-    "თუ დერეფანი ჩავარდა, კონსოლი განახლდება და პლანერი დაგირეკავთ მანამ, სანამ ETA შეიცვლება თქვენს სისტემაში. დუმილი არასდროს არის ჩვენი პასუხი.",
-  "as.c3t": "ერთი ფასი, სრულად დათვლილი",
+    "თუ რაიმე მიწოდების დროს ცვლის, გეუბნებით, რა მოხდა, რას ნიშნავს ეს თქვენთვის და რას ვაკეთებთ პრობლემის მოსაგვარებლად.",
+  "as.c3t": "გასაგები ფასი",
   "as.c3b":
-    "ტრანსპორტირება, ტერმინალი, საწვავი, გადასახადი, დანამატი — ყველა ღირებულება ჩანს ყოველ შეთავაზებაში. ინვოისში არაფერი გამოჩნდება, რაც ადრე არ იყო ნაჩვენები.",
-  "as.c4t": "დოკუმენტები მიწოდების დღესვე",
+    "ტრანსპორტირება, საწვავი, გზის გადასახადები, ტერმინალის ხარჯები და სხვა დამატებითი გადასახადები წინასწარ და გასაგებად არის წარმოდგენილი.",
+  "as.c4t": "დოკუმენტები, როცა გჭირდებათ",
   "as.c4b":
-    "CMR, POD და ტემპერატურის ჟურნალები ტვირთის ჩანაწერს ერთვის გადმოტვირთვიდან 20 წუთში.",
+    "გადაზიდვის დოკუმენტები, POD და სხვა საჭირო საბუთები ერთად ინახება და მზადყოფნისთანავე ხელმისაწვდომია.",
 
   // Redesign — footer & nav
   "footer.bio":
-    "ევროპული სატვირთო ოპერაციები საკუთარი საკონტროლო ცენტრით, საკუთარი ავტოპარკით და ერთიანი მონაცემთა მოდელით საგზაო, სარკინიგზო, საჰაერო და საზღვაო ტრანსპორტში.",
+    "სახმელეთო, სარკინიგზო, საჰაერო და საზღვაო გადაზიდვები ევროპაში, კავკასიასა და საერთაშორისო მიმართულებებზე — ერთი ლოგისტიკური გუნდის მართვით.",
   "footer.ops": "ოპერაციები",
   "footer.status": "ქსელის სტატუსი — ყველა დერეფანი მუშაობს",
   "footer.roleHQ": "მთავარი ოფისი და საკონტროლო ცენტრი",
   "footer.roleEast": "ახლო აღმოსავლეთის კარიბჭე",
   "footer.roleSouth": "ევროკავშირის ჰაბი",
-  "nav.requestCapacity": "მოითხოვეთ ტევადობა",
+  "nav.requestCapacity": "მიიღეთ შეთავაზება",
 
   // Language / theme
   "lang.en": "English",

@@ -46,21 +46,6 @@ export function Assurance() {
                 +995 32 255 00 00
               </a>
             </div>
-
-            <dl className="mt-12 grid max-w-md grid-cols-3 gap-6 border-t border-ink-950/15 pt-6">
-              {[
-                { label: t("as.claims"), value: "0.04%" },
-                { label: t("as.answer"), value: "38 s" },
-                { label: t("as.retention"), value: "94%" },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <dt className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-ink-950/50">
-                    {stat.label}
-                  </dt>
-                  <dd className="mt-2 font-mono text-[22px] leading-none tnum">{stat.value}</dd>
-                </div>
-              ))}
-            </dl>
           </div>
 
           {/* Commitments */}
