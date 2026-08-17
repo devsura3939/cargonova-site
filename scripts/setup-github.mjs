@@ -23,7 +23,7 @@ const REPO = "cargonova";
 
 function tokenFromArgv() {
   const arg = process.argv[2];
-  if (arg && arg.startsWith("github_pat_")) return arg;
+  if (arg && (arg.startsWith("github_pat_") || arg.startsWith("ghp_"))) return arg;
   if (process.env.GH_TOKEN) return process.env.GH_TOKEN;
   const candidates = [
     join(dirname(fileURLToPath(import.meta.url)), "..", "..", ".freebuff", "github-token.txt"),
@@ -32,7 +32,7 @@ function tokenFromArgv() {
     try {
       if (existsSync(p)) {
         const t = readFileSync(p, "utf8").trim().split(/\s+/).pop();
-        if (t && t.startsWith("github_pat_")) return t;
+        if (t && (t.startsWith("github_pat_") || t.startsWith("ghp_"))) return t;
       }
     } catch {
       /* keep looking */
