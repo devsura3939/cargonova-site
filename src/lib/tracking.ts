@@ -671,7 +671,7 @@ export function lookupShipment(id: string, lang: Lang = "en"): Shipment | null {
   if (/^[A-Z]{4}\d{7}$/.test(normalized)) {
     const h = hashId(normalized);
     const vessel = OCEAN_VESSELS[h % OCEAN_VESSELS.length];
-    const lane = seaRoutes[(h >> 2) % seaRoutes.length];
+    const lane = seaRoutes[(h >>> 2) % seaRoutes.length];
     const startPort = lane.waypoints[0];
     const endPort = lane.waypoints[lane.waypoints.length - 1];
     const originName = nearestPort(startPort);
