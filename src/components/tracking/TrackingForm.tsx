@@ -6,8 +6,10 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Search, PackageSearch, Loader2, XCircle, AlertCircle } from "lucide-react";
 import { lookupShipment, type Shipment } from "@/lib/tracking";
 import { TrackingResult } from "@/components/tracking/TrackingResult";
+import { FlightResult, FlightUnavailable } from "@/components/tracking/FlightResult";
 import { Skeleton } from "@/components/ui/skeleton";
 import { demoTrackingIds } from "@/lib/tracking";
+import { isFlightNumber, findLiveFlight, type LiveFlight } from "@/lib/live-data";
 import { trackingSchema } from "@/lib/validations";
 import { trackEvent } from "@/lib/analytics";
 import { useLang } from "@/lib/i18n";
@@ -16,7 +18,9 @@ type ViewState =
   | { kind: "idle" }
   | { kind: "loading" }
   | { kind: "error"; message: string }
-  | { kind: "result"; data: { ok: true; shipment: Shipment } };
+  | { kind: "result"; data: { ok: true; shipment: Shipment } }
+  | { kind: "flight"; data: { code: string; flight: LiveFlight } }
+  | { kind: "flight-gone"; data: { code: string } };
 
 export function TrackingForm() {
   const [query, setQuery] = useState("");
@@ -40,6 +44,25 @@ export function TrackingForm() {
       setView({ kind: "error", message: t("trk.emptyMsg") });
       return;
     }
+    const code = trimmed.toUpperCase().replace(/\s+/g, "");
+
+    // Flight numbers (TK1984, LH452…) are tracked LIVE via OpenSky ADS-B.
+    if (isFlightNumber(code)) {
+      lastIdRef.current = code;
+      setView({ kind: "loading" });
+      trackEvent("tracking_search", { id: code });
+      startTransition(async () => {
+        await new Promise((r) => setTimeout(r, 500));
+        const flight = await findLiveFlight(code);
+        if (flight) {
+          setView({ kind: "flight", data: { code, flight } });
+        } else {
+          setView({ kind: "flight-gone", data: { code } });
+        }
+      });
+      return;
+    }
+
     const parsed = trackingSchema.safeParse(trimmed);
     if (!parsed.success) {
       setView({ kind: "error", message: t("trk.invalidMsg") });
@@ -119,6 +142,27 @@ export function TrackingForm() {
             {id}
           </button>
         ))}
+        <span className="hidden h-3 w-px bg-soft sm:block" aria-hidden="true" />
+        <button
+          type="button"
+          onClick={() => {
+            setQuery("TK1984");
+            search("TK1984");
+          }}
+          className="rounded-full border border-purple-300 bg-purple-50 px-3 py-1 font-mono text-xs font-semibold text-purple-700 transition-colors hover:border-purple-400 dark:border-purple-500/40 dark:bg-purple-500/10 dark:text-purple-300"
+        >
+          TK1984 ✈ {t("trk.liveFlightShort")}
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setQuery("123-45678901");
+            search("123-45678901");
+          }}
+          className="rounded-full border border-soft bg-surface px-3 py-1 font-mono text-xs font-semibold text-ink transition-colors hover:border-electric-400 hover:text-electric-600 dark:hover:text-electric-400"
+        >
+          123-45678901 · AWB
+        </button>
       </div>
 
       {/* States */}
@@ -213,6 +257,30 @@ export function TrackingForm() {
                   if (id) search(id);
                 }}
               />
+            </motion.div>
+          ) : null}
+
+          {view.kind === "flight" ? (
+            <motion.div
+              key="flight"
+              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduceMotion ? undefined : { opacity: 0, y: -10 }}
+              transition={{ duration: 0.4 }}
+            >
+              <FlightResult code={view.data.code} flight={view.data.flight} />
+            </motion.div>
+          ) : null}
+
+          {view.kind === "flight-gone" ? (
+            <motion.div
+              key="flight-gone"
+              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduceMotion ? undefined : { opacity: 0, y: -10 }}
+              transition={{ duration: 0.4 }}
+            >
+              <FlightUnavailable code={view.data.code} />
             </motion.div>
           ) : null}
         </AnimatePresence>

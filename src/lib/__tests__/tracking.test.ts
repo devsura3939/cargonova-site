@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { lookupShipment, demoTrackingIds } from "@/lib/tracking";
+import {
+  lookupShipment,
+  demoTrackingIds,
+  isValidTrackingCode,
+  detectCarrier,
+  carrierVerifyUrl,
+} from "@/lib/tracking";
 import { trackingSchema } from "@/lib/validations";
 
 describe("lookupShipment", () => {
@@ -70,5 +76,18 @@ describe("trackingSchema", () => {
     expect(trackingSchema.safeParse("CRG-12").success).toBe(false); // too few digits
     expect(trackingSchema.safeParse("582941").success).toBe(false); // no carrier prefix
     expect(trackingSchema.safeParse("hello world!!").success).toBe(false);
+  });
+});
+
+describe("air waybills (IATA AWB)", () => {
+  it("accepts 123-45678901 style AWBs", () => {
+    expect(isValidTrackingCode("123-45678901")).toBe(true);
+    expect(isValidTrackingCode("020-22345678")).toBe(true);
+    expect(detectCarrier("123-45678901")).toBe("awb");
+    expect(carrierVerifyUrl("123-45678901", "awb")).toContain("cargo-db.com/air-waybill/12345678901");
+  });
+
+  it("resolves to a shipment like any other code", () => {
+    expect(lookupShipment("123-45678901")).not.toBeNull();
   });
 });

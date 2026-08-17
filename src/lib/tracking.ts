@@ -31,6 +31,7 @@ export type Carrier =
   | "ups"
   | "fedex"
   | "usps"
+  | "awb"
   | "generic";
 
 export type TrackingCheckpoint = {
@@ -88,6 +89,7 @@ export function isValidTrackingCode(raw: string): boolean {
   const code = raw.trim().toUpperCase().replace(/\s+/g, "");
   if (code.length < 6 || code.length > 34) return false;
   if (/^[A-Z]{2,8}-?\d{4,14}$/.test(code)) return true;
+  if (/^\d{3}-?\d{8}$/.test(code)) return true; // IATA air waybill: 123-45678901
   if (/^\d{8,24}$/.test(code)) return true;
   if (/^1Z[A-Z0-9]{16}$/.test(code)) return true;
   if (/^JD\d{18}$/.test(code)) return true;
@@ -104,6 +106,7 @@ export function detectCarrier(code: string): Carrier {
   if (/^(JD|JVGL|JJD)/.test(code)) return "dhl";
   if (/^LP\d/.test(code)) return "dhl";
   if (/^(CRG|CN\d)/.test(code)) return "cargonova";
+  if (/^\d{3}-?\d{8}$/.test(code)) return "awb"; // IATA air waybill
   if (/^\d{20,24}$/.test(code) && code.startsWith("9")) return "usps";
   if (/^\d{12,16}$/.test(code)) return "fedex";
   if (/^\d{8,11}$/.test(code)) return "generic";
@@ -123,6 +126,8 @@ export function carrierDisplayName(carrier: Carrier): string {
       return "FedEx";
     case "usps":
       return "USPS";
+    case "awb":
+      return "Air Waybill (IATA)";
     default:
       return "International Carrier";
   }
@@ -242,6 +247,20 @@ const CARRIER_NETWORKS: Record<Carrier, City[]> = {
     { city: "Singapore", country: "Singapore", hub: "DHL South Asia Hub" },
     { city: "Tbilisi", country: "Georgia", hub: "DHL Tbilisi Gateway" },
   ],
+  awb: [
+    { city: "Leipzig", country: "Germany", hub: "Leipzig/Halle Cargo (LEJ)" },
+    { city: "Frankfurt", country: "Germany", hub: "Frankfurt Cargo City (FRA)" },
+    { city: "Liège", country: "Belgium", hub: "Liège Airport Cargo (LGG)" },
+    { city: "Luxembourg", country: "Luxembourg", hub: "Luxembourg Findel Cargo (LUX)" },
+    { city: "Memphis", country: "USA", hub: "Memphis SuperHub (MEM)" },
+    { city: "Cincinnati", country: "USA", hub: "Cincinnati/NKY Cargo (CVG)" },
+    { city: "Louisville", country: "USA", hub: "Louisville Worldport (SDF)" },
+    { city: "Dubai", country: "UAE", hub: "Dubai Cargo Village (DXB)" },
+    { city: "Hong Kong", country: "China", hub: "Hong Kong Air Cargo (HKG)" },
+    { city: "Singapore", country: "Singapore", hub: "Singapore Changi Cargo (SIN)" },
+    { city: "Istanbul", country: "Türkiye", hub: "Istanbul Cargo (IST)" },
+    { city: "Tbilisi", country: "Georgia", hub: "Tbilisi Cargo Terminal (TBS)" },
+  ],
   generic: [
     { city: "Berlin", country: "Germany", hub: "Berlin Cargo Hub" },
     { city: "Tbilisi", country: "Georgia", hub: "Tbilisi Cargo Center" },
@@ -273,6 +292,7 @@ const CARGO_TYPE_KEYS: Record<Carrier, string[]> = {
   fedex: ["Express parcels", "Overnight freight", "Priority packages", "International documents"],
   usps: ["Priority Mail parcels", "First-Class packages", "International shipments", "Media mail"],
   dhl: ["Express worldwide parcels", "Time-definite freight", "Temperature-controlled", "E-commerce parcels"],
+  awb: ["Air freight, priority", "Time-critical air cargo", "High-value consignment", "Perishables by air"],
   generic: ["Palletized cargo", "Mixed consignment", "Urgent freight", "Consolidated parcels"],
 };
 
@@ -740,6 +760,9 @@ export function carrierVerifyUrl(id: string, carrier: Carrier): string {
       return `https://tools.usps.com/go/TrackConfirmAction?tLabels=${q}`;
     case "fedex":
       return `https://www.fedex.com/fedextrack/?trknbr=${q}`;
+    case "awb":
+      // IATA air waybill → free public AWB aggregator.
+      return `https://www.cargo-db.com/air-waybill/${q.replace(/-/g, "")}`;
     default:
       // ISO container numbers and generic codes → aggregator / web lookup.
       return /^[A-Z]{4}\d{7}$/.test(id.trim().toUpperCase())
