@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Menu, Moon, Sun, Globe, ChevronDown, Info, Globe2, Phone, Search } from "lucide-react";
+import { ArrowRight, Menu, Moon, Sun, ChevronDown, Info, Globe2, Phone, Search } from "lucide-react";
 import { Logo } from "@/components/layout/Logo";
 import { Button } from "@/components/ui/button";
 import { MobileMenu } from "@/components/layout/MobileMenu";
@@ -95,7 +95,13 @@ export function Header() {
                   href={item.href}
                   className={cn(
                     "group relative whitespace-nowrap px-3 py-2 text-[13px] font-medium transition-colors duration-150",
-                    active ? "text-strong dark:text-fog-50" : "text-muted hover:text-strong dark:text-fog-500 dark:hover:text-fog-200",
+                    active
+                      ? cn(solid ? "text-strong dark:text-fog-50" : "text-fog-50")
+                      : cn(
+                          solid
+                            ? "text-muted hover:text-strong dark:text-fog-500 dark:hover:text-fog-200"
+                            : "text-fog-400 hover:text-fog-50 dark:text-fog-400 dark:hover:text-fog-50",
+                        ),
                   )}
                 >
                   {t(item.key)}
@@ -123,8 +129,12 @@ export function Header() {
                 className={cn(
                   "group relative flex items-center gap-1 whitespace-nowrap px-3 py-2 text-[13px] font-medium transition-colors duration-150",
                   COMPANY_LINKS.some((l) => pathname.startsWith(l.href))
-                    ? "text-strong dark:text-fog-50"
-                    : "text-muted hover:text-strong dark:text-fog-500 dark:hover:text-fog-200",
+                    ? cn(solid ? "text-strong dark:text-fog-50" : "text-fog-50")
+                    : cn(
+                        solid
+                          ? "text-muted hover:text-strong dark:text-fog-500 dark:hover:text-fog-200"
+                          : "text-fog-400 hover:text-fog-50 dark:text-fog-400 dark:hover:text-fog-50",
+                      ),
                 )}
               >
                 {t("nav.company")}
@@ -203,17 +213,19 @@ export function Header() {
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 placeholder={t("trk.placeholder")}
-                className="h-10 w-[210px] border border-soft bg-white/70 pl-9 pr-3 font-mono text-[11px] uppercase tracking-[0.08em] text-strong backdrop-blur transition-colors duration-150 placeholder:normal-case placeholder:tracking-normal placeholder:text-muted focus:border-signal focus:outline-none dark:border-white/10 dark:bg-white/[0.03] dark:text-fog-50 dark:placeholder:text-fog-600"
+                className="h-10 w-[200px] border border-soft bg-white/70 pl-9 pr-3 font-mono text-[11px] uppercase tracking-[0.08em] text-strong backdrop-blur transition-colors duration-150 placeholder:normal-case placeholder:tracking-normal placeholder:text-muted focus:border-signal focus:outline-none dark:border-white/10 dark:bg-white/[0.03] dark:text-fog-50 dark:placeholder:text-fog-600"
               />
             </form>
 
-            {/* Language toggle */}
+            {/* Language switch — segmented mono control */}
             <div
-              className="flex items-center rounded-[3px] border border-soft p-0.5 dark:border-white/10"
               role="group"
               aria-label="Language"
+              className={cn(
+                "flex h-10 items-stretch border transition-colors duration-300",
+                solid ? "border-soft dark:border-white/10" : "border-white/15",
+              )}
             >
-              <Globe className="ml-2 h-3.5 w-3.5 shrink-0 text-muted dark:text-fog-500" />
               {(["en", "ka"] as Lang[]).map((l) => (
                 <button
                   key={l}
@@ -221,8 +233,14 @@ export function Header() {
                   onClick={() => setLang(l)}
                   aria-pressed={lang === l}
                   className={cn(
-                    "rounded-[2px] px-2 py-1 text-[11px] font-bold transition-colors",
-                    lang === l ? "bg-signal text-ink-950" : "text-muted hover:text-strong dark:text-fog-400 dark:hover:text-fog-50",
+                    "flex w-12 items-center justify-center font-mono text-[10.5px] uppercase tracking-[0.1em] transition-colors duration-150",
+                    l === "ka" && "border-l border-soft dark:border-white/10",
+                    lang === l
+                      ? "bg-ink-950 text-fog-50 dark:bg-white/10"
+                      : cn(
+                          "hover:text-strong dark:hover:text-fog-50",
+                          solid ? "text-muted dark:text-fog-400" : "text-fog-400",
+                        ),
                   )}
                 >
                   {l === "en" ? "EN" : "ქარ"}
@@ -235,7 +253,12 @@ export function Header() {
               type="button"
               onClick={toggleTheme}
               aria-label={t("theme.toggle")}
-              className="inline-flex h-9 w-9 shrink-0 items-center justify-center text-muted transition-colors hover:bg-surface-hover hover:text-strong dark:text-fog-400 dark:hover:bg-white/8 dark:hover:text-fog-50"
+              className={cn(
+                "inline-flex h-10 w-10 shrink-0 items-center justify-center border transition-colors duration-300",
+                solid
+                  ? "border-soft text-muted hover:border-signal/60 hover:text-strong dark:border-white/10 dark:text-fog-400 dark:hover:text-fog-50"
+                  : "border-white/15 text-fog-400 hover:text-fog-50",
+              )}
             >
               {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
@@ -249,34 +272,51 @@ export function Header() {
           </div>
 
           {/* Mobile actions */}
-          <div className="flex items-center gap-1 xl:hidden">
-            <button
-              type="button"
-              onClick={() => setLang(lang === "en" ? "ka" : "en")}
+          <div className="flex items-center gap-1.5 xl:hidden">
+            {/* Language switch — segmented mono control */}
+            <div
+              role="group"
               aria-label="Language"
               className={cn(
-                "inline-flex h-10 shrink-0 items-center rounded-[3px] border px-2.5 text-[11px] font-bold transition-colors",
-                solid
-                  ? "border-soft text-strong dark:border-white/10 dark:text-fog-50"
-                  : "border-white/10 text-fog-50",
+                "flex h-10 items-stretch border transition-colors duration-300",
+                solid ? "border-soft dark:border-white/10" : "border-white/15",
               )}
             >
-              {lang === "en" ? "EN" : "ქარ"}
-            </button>
+              {(["en", "ka"] as Lang[]).map((l) => (
+                <button
+                  key={l}
+                  type="button"
+                  onClick={() => setLang(l)}
+                  aria-pressed={lang === l}
+                  className={cn(
+                    "flex w-11 items-center justify-center font-mono text-[10.5px] uppercase tracking-[0.1em] transition-colors duration-150",
+                    l === "ka" && "border-l border-soft dark:border-white/10",
+                    lang === l
+                      ? "bg-ink-950 text-fog-50 dark:bg-white/10"
+                      : cn(
+                          "hover:text-strong dark:hover:text-fog-50",
+                          solid ? "text-muted dark:text-fog-400" : "text-fog-400",
+                        ),
+                  )}
+                >
+                  {l === "en" ? "EN" : "ქარ"}
+                </button>
+              ))}
+            </div>
             <button
               type="button"
               onClick={toggleTheme}
               aria-label={t("theme.toggle")}
               className={cn(
-                "inline-flex h-10 w-10 shrink-0 items-center justify-center transition-colors",
+                "inline-flex h-10 w-10 shrink-0 items-center justify-center border transition-colors duration-300",
                 solid
-                  ? "text-muted hover:bg-surface-hover hover:text-strong dark:text-fog-50 dark:hover:bg-white/8"
-                  : "text-fog-50 hover:bg-white/8",
+                  ? "border-soft text-muted hover:border-signal/60 hover:text-strong dark:border-white/10 dark:text-fog-400 dark:hover:text-fog-50"
+                  : "border-white/15 text-fog-400 hover:text-fog-50",
               )}
             >
               {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </button>
-            <Button asChild size="sm" className="h-10 px-4">
+            <Button asChild size="sm" className="hidden h-10 px-4 sm:inline-flex">
               <Link href="/quote">{t("nav.requestCapacity")}</Link>
             </Button>
             <button
