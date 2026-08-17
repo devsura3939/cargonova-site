@@ -101,6 +101,18 @@ export function TrackingResult({
       ? `${tPhrase("Container vessel")}${v.slice("Container vessel".length)}`
       : tPhrase(v);
 
+  // Detail cards — keys are explicit and unique per card. Ocean shipments get
+  // both VESSEL and SERVICE; road/air/rail shipments get SERVICE once.
+  const detailItems = [
+    { key: "cargo", icon: Package, label: t("trk.cargo"), value: cargoValue(shipment.cargo.description) },
+    { key: "weight", icon: Weight, label: t("trk.weight"), value: shipment.cargo.weight },
+    ...(shipment.voyage
+      ? [{ key: "vessel", icon: Anchor, label: t("trk.vessel"), value: shipment.voyage.vessel }]
+      : []),
+    { key: "service", icon: Truck, label: t("trk.service"), value: serviceValue(shipment.cargo.service) },
+    { key: "vehicle", icon: Box, label: t("trk.vehicle"), value: vehicleValue(shipment.cargo.vehicle) },
+  ];
+
   const card = (delay: number, children: React.ReactNode) => (
     <motion.div
       initial={reduceMotion ? false : { opacity: 0, y: 14 }}
@@ -231,16 +243,8 @@ export function TrackingResult({
               />
             </div>
             <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:grid-cols-4">
-              {[
-                { icon: Package, label: t("trk.cargo"), value: cargoValue(shipment.cargo.description) },
-                { icon: Weight, label: t("trk.weight"), value: shipment.cargo.weight },
-                ...(shipment.voyage
-                  ? [{ icon: Anchor, label: t("trk.vessel"), value: shipment.voyage.vessel }]
-                  : [{ icon: Truck, label: t("trk.service"), value: serviceValue(shipment.cargo.service) }]),
-                { icon: Truck, label: t("trk.service"), value: serviceValue(shipment.cargo.service) },
-                { icon: Box, label: t("trk.vehicle"), value: vehicleValue(shipment.cargo.vehicle) },
-              ].map((item) => (
-                <div key={item.label}>
+              {detailItems.map((item) => (
+                <div key={item.key}>
                   <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-muted">
                     <item.icon className="h-3 w-3 text-navy-400" /> {item.label}
                   </p>
