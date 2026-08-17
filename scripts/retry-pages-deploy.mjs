@@ -4,20 +4,20 @@
  *
  * GitHub Pages occasionally 503s the deploy API ("No server is currently
  * available"). The build job still succeeds; only the deploy step fails.
- * This script watches the latest workflow run and re-dispatches the workflow
- * every 120s until a run completes with `success`, then prints the live URL.
+ * This script:
+ *   1. Enables Pages (build_type: workflow) if not already enabled.
+ *   2. Watches the latest workflow run and re-dispatches the workflow every
+ *      120s until a run completes with `success`.
  *
- * Usage: node scripts/retry-pages-deploy.mjs [maxMinutes]
+ * Usage: node scripts/retry-pages-deploy.mjs [owner/repo] [maxMinutes]
+ *   default owner/repo: devsura3939/cargonova-site
  */
-import { execSync } from "node:child_process";
 import { readFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const OWNER = "devsura3939";
-const REPO = "Cargonova";
-const WORKFLOW = "deploy-pages.yml";
-const MAX_MINUTES = Number(process.argv[2] || 45);
+const [owner, repo] = (process.argv[2] || "devsura3939/cargonova-site").split("/");
+const MAX_MINUTES = Number(process.argv[3] || 60);
 const log = (msg) => console.log(`[${new Date().toISOString()}] ${msg}`);
 
 function token() {
@@ -46,8 +46,23 @@ async function gh(path, method = "GET", body) {
 }
 
 async function latestRun() {
-  const { data } = await gh(`/repos/${OWNER}/${REPO}/actions/runs?per_page=1`);
+  const { data } = await gh(`/repos/${owner}/${repo}/actions/runs?per_page=1`);
   return data?.workflow_runs?.[0] ?? null;
+}
+
+async function ensurePages() {
+  const { data, status } = await gh(`/repos/${owner}/${repo}/pages`);
+  if (status === 200 && data?.html_url) {
+    log(`Pages already enabled: ${data.html_url}`);
+    return true;
+  }
+  const res = await gh(`/repos/${owner}/${repo}/pages`, "POST", { build_type: "workflow" });
+  if (res.status === 201 || res.status === 200) {
+    log(`✅ Pages enabled: ${res.data?.html_url ?? "see repo settings"}`);
+    return true;
+  }
+  log(`Pages enable deferred (HTTP ${res.status}${res.data?.message ? `: ${res.data.message}` : ""})`);
+  return false;
 }
 
 const deadline = Date.now() + MAX_MINUTES * 60_000;
@@ -55,6 +70,7 @@ let lastId = null;
 
 while (Date.now() < deadline) {
   try {
+    await ensurePages();
     const run = await latestRun();
     if (run && run.id !== lastId) {
       lastId = run.id;
@@ -62,17 +78,17 @@ while (Date.now() < deadline) {
     }
     if (run && run.status === "completed" && run.conclusion === "success") {
       log(`✅ Deploy succeeded on run ${run.id}`);
-      log(`🌐 https://${OWNER}.github.io/${REPO}/`);
+      log(`🌐 https://${owner}.github.io/${repo}/`);
       process.exit(0);
     }
     if (run && run.status === "completed" && run.conclusion !== "success") {
       log(`run ${run.id} failed — re-dispatching workflow`);
       const res = await gh(
-        `/repos/${OWNER}/${REPO}/actions/workflows/${WORKFLOW}/dispatches`,
+        `/repos/${owner}/${repo}/actions/workflows/deploy-pages.yml/dispatches`,
         "POST",
         { ref: "main" },
       );
-      if (!res.ok && res.status !== 204) log(`dispatch warning: HTTP ${res.status}`);
+      if (res.status !== 204) log(`dispatch warning: HTTP ${res.status}${res.data?.message ? `: ${res.data.message}` : ""}`);
       else log("workflow re-dispatched");
       lastId = null; // wait for the NEW run
     }
