@@ -147,8 +147,8 @@ export function Hero() {
               poster={images.semiHighway}
               aria-label="CargoNova linehaul truck on the highway"
             >
+              <source media="(min-width: 1024px)" src="/videos/trucks-transport.mp4" type="video/mp4" />
               <source src="/videos/trucks-transport-sm.mp4" type="video/mp4" />
-              <source src="/videos/trucks-transport.mp4" type="video/mp4" />
             </video>
           </motion.div>
           <div
