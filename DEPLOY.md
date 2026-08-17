@@ -22,6 +22,25 @@ surge.sh, or device DNS). Quick tests: same Wi-Fi as the PC; set device DNS to
 fix is a mainstream CDN domain (Vercel/Netlify/GitHub Pages) which no ISP
 filters — see the GitHub → Vercel option below.
 
+## Zero-account link that works on EVERY network (temporary tunnel)
+
+When surge is blocked on some device (mobile ISP / DNS filters), open a
+Cloudflare Quick Tunnel — no account, no captcha, nothing to install on the
+user's side. It routes through Cloudflare's edge, which no ISP blocks:
+
+```bash
+# 1) serve the built site locally
+node scripts/serve-out.mjs 4310
+# 2) in another terminal, tunnel it (cloudflared needs downloading once)
+cloudflared tunnel --url http://localhost:4310
+# → prints a URL like https://<random>.trycloudflare.com — open it on any device
+```
+
+Caveats: this PC must stay on (the tunnel routes through it), and the URL
+changes each time the tunnel restarts. It is a *test/access* link, not a
+permanent host — for the permanent URL see Option 1 below (one-time GitHub
+account step, then fully automatic).
+
 ## Already live right now (zero-account deploy)
 
 **https://cargonova-live.surge.sh** — published from this machine via the
