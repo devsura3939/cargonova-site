@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { TranslatedPageHero } from "@/components/shared/TranslatedPageHero";
 import { Container } from "@/components/shared/Container";
 import { Reveal } from "@/components/shared/Reveal";
@@ -47,49 +47,47 @@ export default function ServicesPage() {
       {/* Service categories */}
       <section className="bg-surface-muted py-20 sm:py-24">
         <Container>
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-px bg-soft md:grid-cols-2 dark:bg-white/[0.08]">
             {services.map((service, i) => (
-              <Reveal key={service.slug} delay={0.05 * (i % 2)}>
+              <Reveal key={service.slug} delay={0.05 * (i % 2)} className="h-full">
                 <Link
                   href={`/services/${service.slug}`}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-soft bg-surface p-8 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
+                  className="group relative flex h-full flex-col bg-surface p-8 transition-colors duration-150 hover:bg-surface-hover dark:bg-ink-950 dark:hover:bg-white/[0.04] sm:p-9"
                 >
                   <div
                     className={cn(
-                      "pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-gradient-to-br opacity-[0.07] blur-2xl transition-opacity duration-500 group-hover:opacity-[0.14]",
+                      "pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-gradient-to-br opacity-[0.06] blur-2xl transition-opacity duration-500 group-hover:opacity-[0.12]",
                       ACCENT[service.accent],
                     )}
                   />
-                  <div className="flex items-start justify-between">
-                    <span
-                      className={cn(
-                        "inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br text-white shadow-card",
-                        ACCENT[service.accent],
-                      )}
-                    >
-                      <ServiceIcon name={service.icon} className="h-7 w-7" />
+                  <div className="relative flex items-start justify-between">
+                    <span className="font-mono text-[10px] tracking-[0.14em] text-signal">
+                      {String(i + 1).padStart(2, "0")}
                     </span>
-                    <ArrowUpRight className="h-5 w-5 text-navy-200 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-electric-500" />
+                    <ArrowUpRight className="h-4 w-4 text-muted transition-all duration-150 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-signal" />
                   </div>
-                  <h2 className="mt-6 font-display text-2xl font-bold text-strong">
+                  <span className="relative mt-6 inline-flex h-11 w-11 items-center justify-center border border-soft bg-surface-muted text-signal-600 dark:border-white/10 dark:bg-white/[0.06] dark:text-signal-400">
+                    <ServiceIcon name={service.icon} className="h-5 w-5" />
+                  </span>
+                  <h2 className="relative mt-5 font-display text-xl font-semibold text-strong dark:text-fog-50">
                     {serviceTitle(service.slug)}
                   </h2>
-                  <p className="mt-2.5 flex-1 text-sm leading-relaxed text-muted sm:text-base">
+                  <p className="relative mt-2.5 flex-1 text-sm leading-relaxed text-muted sm:text-[15px]">
                     {serviceShort(service.slug)}
                   </p>
-                  <div className="mt-6 flex flex-wrap gap-2">
+                  <div className="relative mt-6 flex flex-wrap gap-1.5">
                     {service.features.slice(0, 3).map((f, fi) => (
                       <span
                         key={f}
-                        className="rounded-full bg-surface-muted px-3 py-1 text-xs font-medium text-ink"
+                        className="border border-soft px-2.5 py-1 font-mono text-[9.5px] uppercase tracking-[0.12em] text-ink dark:border-white/12 dark:text-fog-400"
                       >
                         {FEATURE_KEY[service.slug]?.[fi] ? t(FEATURE_KEY[service.slug][fi] as never) : f}
                       </span>
                     ))}
                   </div>
-                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-electric-600 transition-colors group-hover:text-electric-500">
+                  <span className="relative mt-6 inline-flex items-center gap-2 text-sm font-semibold text-signal-600 transition-colors group-hover:text-signal dark:text-signal-400">
                     {t("pg.services.viewService")}
-                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    <ArrowRight className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5" />
                   </span>
                 </Link>
               </Reveal>
@@ -110,22 +108,24 @@ export default function ServicesPage() {
             </p>
           </Reveal>
           <Reveal delay={0.1}>
-            <div className="mt-10 grid gap-4 sm:grid-cols-3">
+            <div className="mt-10 grid gap-px border border-soft bg-soft sm:grid-cols-3 dark:border-white/10 dark:bg-white/[0.08]">
               {[
                 { title: t("pg.services.tip1t"), text: t("pg.services.tip1d") },
                 { title: t("pg.services.tip2t"), text: t("pg.services.tip2d") },
                 { title: t("pg.services.tip3t"), text: t("pg.services.tip3d") },
-              ].map((tip) => (
-                <div key={tip.title} className="rounded-2xl border border-soft bg-surface-muted/70 p-6 text-center">
-                  <Check className="mx-auto h-5 w-5 text-electric-500" />
-                  <p className="mt-3 font-display text-base font-bold text-strong">{tip.title}</p>
+              ].map((tip, i) => (
+                <div key={tip.title} className="bg-surface p-6 dark:bg-ink-950 sm:p-7">
+                  <span className="font-mono text-[10px] tracking-[0.14em] text-signal">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <p className="mt-4 font-display text-base font-semibold text-strong dark:text-fog-50">{tip.title}</p>
                   <p className="mt-1.5 text-sm leading-relaxed text-muted">{tip.text}</p>
                 </div>
               ))}
             </div>
-            <p className="mt-8 text-center text-sm text-muted">
+            <p className="mt-8 text-center font-mono text-[11px] uppercase tracking-[0.12em] text-muted">
               {t("pg.services.stillUnsure")}{" "}
-              <Link href="/quote" className="font-semibold text-electric-600 underline decoration-electric-300 underline-offset-4 hover:text-electric-500">
+              <Link href="/quote" className="text-signal-600 underline decoration-signal/40 underline-offset-4 hover:text-signal dark:text-signal-400">
                 {t("pg.services.requestQuote")}
               </Link>{" "}
               {t("pg.services.planners")}

@@ -9,13 +9,13 @@ export function ServiceFeatureChips({ service }: { service: ServiceCategory }) {
   const features = lang === "ka" && service.ka ? service.ka.features : service.features;
 
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="flex flex-wrap gap-1.5">
       {features.slice(0, 4).map((f) => (
         <span
           key={f}
-          className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-4 py-1.5 text-xs font-semibold text-navy-100 backdrop-blur"
+          className="inline-flex items-center gap-2 border border-white/12 bg-white/[0.04] px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.12em] text-fog-200 backdrop-blur"
         >
-          <Check className="h-3.5 w-3.5 text-cyan-400" />
+          <Check className="h-3 w-3 text-signal-400" />
           {f}
         </span>
       ))}

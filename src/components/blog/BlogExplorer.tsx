@@ -41,7 +41,7 @@ export function BlogExplorer() {
     <div>
       {/* Controls */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div role="tablist" aria-label="Filter by category" className="flex flex-wrap gap-2">
+        <div role="tablist" aria-label="Filter by category" className="flex flex-wrap gap-1 border border-soft p-1 dark:border-white/10">
           {["All", ...blogCategories].map((cat) => (
             <button
               key={cat}
@@ -49,10 +49,10 @@ export function BlogExplorer() {
               aria-selected={category === cat}
               onClick={() => setCategory(cat)}
               className={cn(
-                "rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200",
+                "px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors duration-150",
                 category === cat
-                  ? "bg-navy-850 text-white"
-                  : "border border-soft bg-surface text-ink hover:border-electric-400 hover:text-electric-600 dark:hover:text-electric-400",
+                  ? "bg-ink-950 text-fog-50 dark:bg-white/10"
+                  : "text-muted hover:text-strong dark:hover:text-fog-50",
               )}
             >
               {catLabel(cat)}
@@ -66,7 +66,7 @@ export function BlogExplorer() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t("blog.searchPh")}
-            className="h-11 w-full rounded-full border border-soft bg-surface pl-10 pr-4 text-sm text-ink placeholder:text-muted focus:border-electric-500 focus:outline-none focus:ring-4 focus:ring-electric-500/15"
+            className="h-11 w-full border border-soft bg-surface pl-10 pr-4 font-mono text-[11px] uppercase tracking-[0.08em] text-ink placeholder:normal-case placeholder:tracking-normal placeholder:text-muted focus:border-signal focus:outline-none dark:border-white/10 dark:bg-ink-950 dark:text-fog-50"
           />
         </label>
       </div>
@@ -75,7 +75,7 @@ export function BlogExplorer() {
       {category === "All" && !query ? (
         <Link
           href={`/blog/${featured.slug}`}
-          className="group relative mt-10 block overflow-hidden rounded-3xl bg-navy-900 text-white shadow-lift transition-all duration-300 hover:-translate-y-1 hover:shadow-glow"
+          className="group relative mt-10 block overflow-hidden border border-white/10 bg-ink-950 text-fog-50"
         >
           <Image
             src={featured.image}
@@ -84,26 +84,29 @@ export function BlogExplorer() {
             sizes="(max-width: 1280px) 100vw, 1280px"
             className="object-cover opacity-30 transition-all duration-700 group-hover:scale-105 group-hover:opacity-40"
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/85 to-navy-950/40" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink-950 via-ink-950/85 to-ink-950/40" />
           <div className="pointer-events-none absolute inset-0 bg-noise opacity-30" />
+          <div className="pointer-events-none absolute inset-0 bg-grid-dark" />
           <div className="relative p-8 sm:p-12">
           <div className="max-w-2xl">
-            <div className="flex flex-wrap items-center gap-3 text-xs font-semibold">
-              <span className="rounded-full bg-electric-500 px-3 py-1 text-white">{t("blog.featured")}</span>
-              <span className="text-navy-300">{catLabel(featured.category)}</span>
-              <span className="flex items-center gap-1 text-navy-300">
-                <Clock className="h-3.5 w-3.5" /> {featured.readTime}
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="border border-signal/50 bg-signal/15 px-2.5 py-1 font-mono text-[9.5px] uppercase tracking-[0.12em] text-signal-400">
+                {t("blog.featured")}
+              </span>
+              <span className="label text-fog-500">{catLabel(featured.category)}</span>
+              <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-fog-500">
+                <Clock className="h-3 w-3" /> {featured.readTime}
               </span>
             </div>
-            <h2 className="mt-5 text-balance font-display text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+            <h2 className="mt-5 text-balance font-display text-3xl font-semibold leading-[1.05] tracking-[-0.025em] sm:text-4xl">
               {postTitle(featured.slug)}
             </h2>
-            <p className="mt-4 text-pretty leading-relaxed text-navy-200">{postExcerpt(featured.slug)}</p>
+            <p className="mt-4 max-w-xl text-pretty leading-relaxed text-fog-400">{postExcerpt(featured.slug)}</p>
             <div className="mt-8 flex items-center justify-between">
-              <p className="text-sm text-navy-300">
+              <p className="font-mono text-[10.5px] uppercase tracking-[0.1em] text-fog-500">
                 {featured.author} · {formatDate(featured.publishedAt)}
               </p>
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white ring-1 ring-inset ring-white/15 transition-all duration-300 group-hover:bg-electric-500">
+              <span className="inline-flex h-10 w-10 items-center justify-center bg-white/[0.06] text-fog-50 transition-colors duration-150 group-hover:bg-signal group-hover:text-ink-950">
                 <ArrowRight className="h-4 w-4" />
               </span>
             </div>
@@ -114,12 +117,12 @@ export function BlogExplorer() {
 
       {/* Grid */}
       {filtered.length > 0 ? (
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-px bg-soft md:grid-cols-2 lg:grid-cols-3 dark:bg-white/[0.08]">
           {filtered.map((post) => (
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="group flex h-full flex-col overflow-hidden rounded-3xl border border-soft bg-surface shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
+              className="group flex h-full flex-col bg-surface transition-colors duration-150 hover:bg-surface-hover dark:bg-ink-950 dark:hover:bg-white/[0.04]"
             >
               <div className="relative h-44 overflow-hidden">
                 <Image
@@ -129,24 +132,28 @@ export function BlogExplorer() {
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-950/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink-950/50 via-transparent to-transparent" />
               </div>
-              <div className="flex flex-1 flex-col p-7 pt-5">
-              <div className="flex items-center gap-2 text-xs font-semibold">
-                <span className="rounded-full bg-electric-100 px-2.5 py-1 text-electric-600">{catLabel(post.category)}</span>
-                <span className="flex items-center gap-1 text-muted">
+              <div className="flex flex-1 flex-col p-6">
+              <div className="flex items-center gap-2">
+                <span className="border border-soft px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-signal-600 dark:border-white/12 dark:text-signal-400">
+                  {catLabel(post.category)}
+                </span>
+                <span className="flex items-center gap-1 font-mono text-[9.5px] uppercase tracking-[0.12em] text-muted">
                   <Clock className="h-3 w-3" /> {post.readTime}
                 </span>
               </div>
-              <h3 className="mt-4 text-balance font-display text-xl font-bold leading-snug text-strong transition-colors group-hover:text-electric-600 dark:group-hover:text-electric-400">
+              <h3 className="mt-4 text-balance font-display text-xl font-semibold leading-snug text-strong transition-colors group-hover:text-signal-600 dark:text-fog-50 dark:group-hover:text-signal-400">
                 {postTitle(post.slug)}
               </h3>
               <p className="mt-2.5 flex-1 text-sm leading-relaxed text-muted">{postExcerpt(post.slug)}</p>
-              <div className="mt-5 flex items-center justify-between border-t border-soft pt-4">
-                <p className="text-xs text-muted">{formatDate(post.publishedAt)}</p>
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-electric-600">
+              <div className="mt-5 flex items-center justify-between border-t border-soft pt-4 dark:border-white/10">
+                <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-muted">
+                  {formatDate(post.publishedAt)}
+                </p>
+                <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-signal-600 dark:text-signal-400">
                   {t("blog.read")}
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5" />
                 </span>
               </div>
               </div>
@@ -154,9 +161,9 @@ export function BlogExplorer() {
           ))}
         </div>
       ) : (
-        <div className="mt-10 rounded-3xl border border-dashed border-navy-200 bg-mist p-12 text-center dark:border-white/15">
-          <p className="font-display text-lg font-bold text-strong">{t("blog.noResults")}</p>
-          <p className="mt-2 text-sm text-muted">{t("blog.noResultsSub")}</p>
+        <div className="mt-10 border border-dashed border-soft p-12 text-center dark:border-white/15">
+          <p className="font-display text-lg font-semibold text-strong dark:text-fog-50">{t("blog.noResults")}</p>
+          <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.12em] text-muted">{t("blog.noResultsSub")}</p>
         </div>
       )}
     </div>

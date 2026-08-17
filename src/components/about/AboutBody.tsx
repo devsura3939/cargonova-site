@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Target, Eye, ShieldCheck, Award, Users, Truck, Network, Leaf, Scale, HeartHandshake } from "lucide-react";
+import { ArrowRight, ShieldCheck, Award, Users, Truck, Network, Leaf, Scale, HeartHandshake } from "lucide-react";
 import { Container } from "@/components/shared/Container";
 import { Section } from "@/components/shared/Section";
 import { SectionHeadingT } from "@/components/shared/SectionHeadingT";
 import { Reveal } from "@/components/shared/Reveal";
+import { Button } from "@/components/ui/button";
 import { useLang, type Lang } from "@/lib/i18n";
 
 type V = { title: string; text: string };
@@ -145,12 +146,12 @@ export function AboutBody() {
 
   return (
     <>
-      {/* Story */}
+      {/* 01 Story + numbers */}
       <Section variant="light">
         <Container>
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <div>
-              <SectionHeadingT eyebrowKey="pg.about.storyEyebrow" titleKey="pg.about.storyTitle" />
+              <SectionHeadingT index="01" eyebrowKey="pg.about.storyEyebrow" titleKey="pg.about.storyTitle" />
               <Reveal delay={0.1}>
                 <div className="mt-6 space-y-5 text-pretty leading-relaxed text-muted">
                   {c.story.map((p) => (
@@ -161,15 +162,17 @@ export function AboutBody() {
             </div>
             {/* Numbers panel */}
             <Reveal delay={0.15}>
-              <div className="relative overflow-hidden rounded-3xl bg-navy-900 p-8 text-white shadow-lift sm:p-10">
+              <div className="relative overflow-hidden border border-white/10 bg-ink-950 text-fog-50">
                 <div className="pointer-events-none absolute inset-0 bg-noise opacity-40" />
                 <div className="pointer-events-none absolute inset-0 bg-grid-dark" />
-                <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-electric-500/25 blur-[80px]" />
-                <div className="relative grid grid-cols-2 gap-6 sm:grid-cols-3">
+                <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-signal/20 blur-[90px]" />
+                <div className="relative grid grid-cols-2 gap-px bg-white/[0.08] sm:grid-cols-3">
                   {c.numbers.map((n) => (
-                    <div key={n.label}>
-                      <p className="font-display text-3xl font-extrabold text-white">{n.value}</p>
-                      <p className="mt-1 text-xs font-medium leading-snug text-navy-300">{n.label}</p>
+                    <div key={n.label} className="bg-ink-950/90 p-6 sm:p-7">
+                      <p className="font-mono text-[26px] font-semibold leading-none text-fog-50 tnum sm:text-3xl">
+                        {n.value}
+                      </p>
+                      <p className="label mt-2.5 text-fog-500">{n.label}</p>
                     </div>
                   ))}
                 </div>
@@ -179,63 +182,81 @@ export function AboutBody() {
         </Container>
       </Section>
 
-      {/* Mission / Vision */}
+      {/* 02 Mission / Vision + values */}
       <Section variant="dark">
-        <div className="pointer-events-none absolute inset-0 bg-noise opacity-30" />
-        <div className="relative grid gap-10 lg:grid-cols-2">
-          <Reveal>
-            <div className="h-full rounded-3xl border border-white/10 bg-white/[0.04] p-8 backdrop-blur-sm sm:p-10">
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-electric-500/20 text-electric-300">
-                <Target className="h-6 w-6" />
-              </span>
-              <h2 className="mt-5 font-display text-2xl font-extrabold tracking-tight text-white">{lang === "ka" ? "მისია" : "Mission"}</h2>
-              <p className="mt-3 text-pretty leading-relaxed text-navy-200">{c.mission}</p>
-            </div>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <div className="h-full rounded-3xl border border-white/10 bg-white/[0.04] p-8 backdrop-blur-sm sm:p-10">
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-500/20 text-cyan-400">
-                <Eye className="h-6 w-6" />
-              </span>
-              <h2 className="mt-5 font-display text-2xl font-extrabold tracking-tight text-white">{lang === "ka" ? "ხედვა" : "Vision"}</h2>
-              <p className="mt-3 text-pretty leading-relaxed text-navy-200">{c.vision}</p>
-            </div>
-          </Reveal>
-        </div>
+        <div className="relative">
+          <div className="pointer-events-none absolute inset-0 bg-noise opacity-30" />
+          <div className="relative grid gap-px bg-white/[0.07] lg:grid-cols-2">
+            <Reveal className="h-full">
+              <div className="flex h-full flex-col justify-center bg-ink-950 p-8 sm:p-10">
+                <div className="flex items-baseline gap-3">
+                  <span className="font-mono text-[10px] tracking-[0.14em] text-signal">01</span>
+                  <p className="label text-fog-500">{lang === "ka" ? "მისია" : "Mission"}</p>
+                </div>
+                <p className="mt-5 font-display text-xl font-semibold leading-snug text-fog-50 sm:text-2xl">
+                  {c.mission}
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.1} className="h-full">
+              <div className="flex h-full flex-col justify-center bg-ink-950 p-8 sm:p-10">
+                <div className="flex items-baseline gap-3">
+                  <span className="font-mono text-[10px] tracking-[0.14em] text-signal">02</span>
+                  <p className="label text-fog-500">{lang === "ka" ? "ხედვა" : "Vision"}</p>
+                </div>
+                <p className="mt-5 font-display text-xl font-semibold leading-snug text-fog-50 sm:text-2xl">
+                  {c.vision}
+                </p>
+              </div>
+            </Reveal>
+          </div>
 
-        {/* Values */}
-        <div className="relative mt-16">
-          <SectionHeadingT dark align="center" eyebrowKey="pg.about.valuesEyebrow" titleKey="pg.about.valuesTitle" />
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {c.values.map((v, i) => {
-              const ValueIcon = [Scale, ShieldCheck, Network, Leaf][i % 4];
-              return (
-                <Reveal key={v.title} delay={0.06 * i}>
-                  <div className="h-full rounded-3xl border border-white/10 bg-white/[0.04] p-7 transition-all duration-300 hover:border-cyan-400/40 hover:bg-white/[0.06]">
-                    <ValueIcon className="h-6 w-6 text-cyan-400" strokeWidth={1.75} />
-                    <h3 className="mt-4 font-display text-lg font-bold text-white">{v.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-navy-200">{v.text}</p>
-                  </div>
-                </Reveal>
-              );
-            })}
+          {/* Values */}
+          <div className="mt-16">
+            <SectionHeadingT dark align="center" index="03" eyebrowKey="pg.about.valuesEyebrow" titleKey="pg.about.valuesTitle" />
+            <div className="mt-12 grid gap-px bg-white/[0.07] sm:grid-cols-2 lg:grid-cols-4">
+              {c.values.map((v, i) => {
+                const ValueIcon = [Scale, ShieldCheck, Network, Leaf][i % 4];
+                return (
+                  <Reveal key={v.title} delay={0.06 * i} className="h-full">
+                    <div className="flex h-full flex-col bg-ink-950 p-7 transition-colors duration-150 hover:bg-white/[0.03]">
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-[10px] tracking-[0.14em] text-signal">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <ValueIcon className="h-5 w-5 text-signal" strokeWidth={1.75} />
+                      </div>
+                      <h3 className="mt-5 font-display text-lg font-semibold text-fog-50">{v.title}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-fog-500">{v.text}</p>
+                    </div>
+                  </Reveal>
+                );
+              })}
+            </div>
           </div>
         </div>
       </Section>
 
-      {/* Operations + Leadership */}
+      {/* 04 Operations + leadership */}
       <Section variant="mist">
         <Container>
           <div className="grid gap-12 lg:grid-cols-2">
             <div>
-              <SectionHeadingT eyebrowKey="pg.about.opsEyebrow" titleKey="pg.about.opsTitle" />
+              <SectionHeadingT index="04" eyebrowKey="pg.about.opsEyebrow" titleKey="pg.about.opsTitle" />
               <Reveal delay={0.1}>
-                <div className="mt-8 space-y-5">
-                  {c.ops.map((item) => (
-                    <div key={item.title} className="flex gap-4 rounded-2xl border border-soft bg-surface p-5 shadow-card">
-                      <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-electric-500" />
+                <div className="mt-8 border-y border-soft dark:border-white/10">
+                  {c.ops.map((item, i) => (
+                    <div
+                      key={item.title}
+                      className="flex gap-5 border-b border-soft py-6 last:border-b-0 dark:border-white/10 sm:gap-8"
+                    >
+                      <span className="mt-0.5 shrink-0 font-mono text-[10px] tracking-[0.14em] text-signal">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
                       <div>
-                        <h3 className="font-display font-bold text-strong">{item.title}</h3>
+                        <h3 className="font-display text-[17px] font-semibold text-strong dark:text-fog-50">
+                          {item.title}
+                        </h3>
                         <p className="mt-1.5 text-sm leading-relaxed text-muted">{item.text}</p>
                       </div>
                     </div>
@@ -245,17 +266,19 @@ export function AboutBody() {
             </div>
 
             <div>
-              <SectionHeadingT eyebrowKey="pg.about.teamEyebrow" titleKey="pg.about.teamTitle" />
-              <div className="mt-8 space-y-4">
+              <SectionHeadingT index="05" eyebrowKey="pg.about.teamEyebrow" titleKey="pg.about.teamTitle" />
+              <div className="mt-8 border-y border-soft dark:border-white/10">
                 {c.team.map((person, i) => (
                   <Reveal key={person.name} delay={0.05 * i}>
-                    <div className="flex items-start gap-4 rounded-2xl border border-soft bg-surface p-5 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift">
-                      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-navy-900 font-display text-lg font-bold text-cyan-400">
+                    <div className="flex items-start gap-4 border-b border-soft py-5 last:border-b-0 dark:border-white/10">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-ink-900 font-mono text-sm font-semibold text-signal-400 dark:bg-white/[0.06]">
                         {person.name.split(" ").map((n) => n[0]).join("")}
                       </span>
                       <div>
-                        <h3 className="font-display font-bold text-strong">{person.name}</h3>
-                        <p className="text-xs font-semibold uppercase tracking-wide text-electric-600">{person.role}</p>
+                        <h3 className="font-display text-[16px] font-semibold text-strong dark:text-fog-50">
+                          {person.name}
+                        </h3>
+                        <p className="label mt-1 text-signal-600 dark:text-signal-400">{person.role}</p>
                         <p className="mt-1.5 text-sm leading-relaxed text-muted">{person.note}</p>
                       </div>
                     </div>
@@ -267,48 +290,60 @@ export function AboutBody() {
         </Container>
       </Section>
 
-      {/* Safety + certifications */}
+      {/* 06 Safety + certifications */}
       <Section variant="light">
         <Container>
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <Reveal>
-              <div className="relative overflow-hidden rounded-3xl bg-navy-900 p-8 text-white shadow-lift sm:p-10">
+              <div className="relative overflow-hidden border border-white/10 bg-ink-950 p-8 text-fog-50 sm:p-10">
                 <div className="pointer-events-none absolute inset-0 bg-noise opacity-40" />
                 <div className="pointer-events-none absolute inset-0 bg-grid-dark" />
-                <div className="pointer-events-none absolute -bottom-20 -right-20 h-56 w-56 rounded-full bg-cyan-500/15 blur-[80px]" />
-                <ShieldCheck className="relative h-8 w-8 text-cyan-400" />
-                <h2 className="relative mt-5 font-display text-2xl font-extrabold tracking-tight">{c.safetyTitle}</h2>
-                <ul className="relative mt-5 space-y-3 text-sm leading-relaxed text-navy-100">
-                  {c.safety.map((item) => (
-                    <li key={item.slice(0, 24)} className="flex items-start gap-2.5">
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-400" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                <div className="pointer-events-none absolute -bottom-20 -right-20 h-56 w-56 rounded-full bg-tech-500/15 blur-[90px]" />
+                <div className="relative">
+                  <div className="flex items-baseline gap-3">
+                    <span className="font-mono text-[10px] tracking-[0.14em] text-signal">06</span>
+                    <p className="label text-fog-500">{c.safetyTitle}</p>
+                  </div>
+                  <ul className="mt-5 divide-y divide-white/[0.08] border-t border-white/10">
+                    {c.safety.map((item) => (
+                      <li
+                        key={item.slice(0, 24)}
+                        className="flex items-start gap-3 py-3.5 text-sm leading-relaxed text-fog-200"
+                      >
+                        <span className="mt-[7px] h-1 w-1 shrink-0 bg-signal" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </Reveal>
 
             <div>
-              <SectionHeadingT eyebrowKey="pg.about.certsEyebrow" titleKey="pg.about.certsTitle" />
+              <SectionHeadingT index="07" eyebrowKey="pg.about.certsEyebrow" titleKey="pg.about.certsTitle" />
               <Reveal delay={0.1}>
-                <div className="mt-8 space-y-4">
+                <div className="mt-8 border-y border-soft dark:border-white/10">
                   {c.certs.map((cert, i) => {
                     const CertIcon = [Award, Truck, Users][i % 3];
                     return (
-                    <div key={cert.title} className="flex gap-4 rounded-2xl border border-soft bg-surface p-5 shadow-card">
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-electric-100 text-electric-600">
-                        <CertIcon className="h-5 w-5" />
-                      </span>
-                      <div>
-                        <h3 className="font-display font-bold text-strong">{cert.title}</h3>
-                        <p className="mt-1 text-sm leading-relaxed text-muted">{cert.text}</p>
+                      <div
+                        key={cert.title}
+                        className="flex gap-4 border-b border-soft py-5 last:border-b-0 dark:border-white/10"
+                      >
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-signal/12 text-signal-600 dark:text-signal-400">
+                          <CertIcon className="h-5 w-5" />
+                        </span>
+                        <div>
+                          <h3 className="font-display text-[16px] font-semibold text-strong dark:text-fog-50">
+                            {cert.title}
+                          </h3>
+                          <p className="mt-1 text-sm leading-relaxed text-muted">{cert.text}</p>
+                        </div>
                       </div>
-                    </div>
                     );
                   })}
-                  <div className="flex items-center gap-3 rounded-2xl bg-surface-muted p-4">
-                    <HeartHandshake className="h-5 w-5 shrink-0 text-electric-500" />
+                  <div className="flex items-center gap-3 border-t border-soft bg-surface-muted px-4 py-4 dark:border-white/10">
+                    <HeartHandshake className="h-5 w-5 shrink-0 text-signal" />
                     <p className="text-xs leading-relaxed text-ink">{c.credsNote}</p>
                   </div>
                 </div>
@@ -321,18 +356,19 @@ export function AboutBody() {
       {/* CTA band */}
       <Section variant="light" className="pt-0">
         <Reveal>
-          <div className="mx-auto flex max-w-3xl flex-col items-center rounded-3xl border border-soft bg-surface-muted p-10 text-center sm:p-12">
-            <h2 className="text-balance font-display text-3xl font-extrabold tracking-tight text-strong sm:text-4xl">
+          <div className="relative mx-auto flex max-w-3xl flex-col items-center overflow-hidden border border-soft bg-surface-muted p-10 text-center sm:p-12 dark:border-white/10">
+            <div className="pointer-events-none absolute inset-0 bg-noise opacity-20" />
+            <span className="label relative text-signal">CargoNova</span>
+            <h2 className="relative mt-3 text-balance font-display text-3xl font-semibold leading-tight tracking-[-0.025em] text-strong sm:text-4xl dark:text-fog-50">
               {c.ctaTitle}
             </h2>
-            <p className="mt-4 max-w-xl text-pretty text-muted sm:text-lg">{c.ctaText}</p>
-            <Link
-              href="/quote"
-              className="group mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-electric-500 px-8 text-sm font-semibold text-white shadow-glow transition-colors hover:bg-electric-400"
-            >
-              {c.ctaButton}
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
+            <p className="relative mt-4 max-w-xl text-pretty text-muted sm:text-lg">{c.ctaText}</p>
+            <Button asChild size="lg" className="relative mt-8">
+              <Link href="/quote">
+                {c.ctaButton}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
           </div>
         </Reveal>
       </Section>

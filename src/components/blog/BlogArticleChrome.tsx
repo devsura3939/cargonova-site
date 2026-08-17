@@ -10,6 +10,7 @@ import { Breadcrumb } from "@/components/shared/Breadcrumb";
 import { Container } from "@/components/shared/Container";
 import { Section } from "@/components/shared/Section";
 import { Reveal } from "@/components/shared/Reveal";
+import { Button } from "@/components/ui/button";
 
 export function BlogArticleChrome({
   post,
@@ -28,10 +29,10 @@ export function BlogArticleChrome({
   return (
     <>
       {/* Article header */}
-      <section className="relative overflow-hidden bg-navy-900 pb-16 pt-28 text-white sm:pt-32">
+      <section className="relative overflow-hidden bg-ink-950 pb-16 pt-28 text-fog-50 sm:pt-32">
         <div className="pointer-events-none absolute inset-0 bg-noise opacity-40" />
         <div className="pointer-events-none absolute inset-0 bg-grid-dark" />
-        <div className="pointer-events-none absolute -top-40 right-[-10%] h-105 w-105 rounded-full bg-electric-500/20 blur-[120px]" />
+        <div className="pointer-events-none absolute -top-40 right-[-10%] h-105 w-105 rounded-full bg-signal/20 blur-[120px]" />
         <Container className="relative">
           <Breadcrumb
             dark
@@ -41,24 +42,24 @@ export function BlogArticleChrome({
             ]}
           />
           <div className="mt-8 max-w-3xl">
-            <div className="flex flex-wrap items-center gap-3 text-xs font-semibold">
-              <span className="rounded-full bg-electric-500 px-3 py-1 text-white">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="border border-signal/50 bg-signal/15 px-2.5 py-1 font-mono text-[9.5px] uppercase tracking-[0.12em] text-signal-400">
                 {catLabel(post.category)}
               </span>
-              <span className="flex items-center gap-1.5 text-navy-300">
-                <Clock className="h-3.5 w-3.5" /> {post.readTime} {t("blog.readTime")}
+              <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-fog-500">
+                <Clock className="h-3 w-3" /> {post.readTime} {t("blog.readTime")}
               </span>
-              <span className="flex items-center gap-1.5 text-navy-300">
-                <CalendarDays className="h-3.5 w-3.5" /> {formatDateLang(post.publishedAt, lang)}
+              <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-fog-500">
+                <CalendarDays className="h-3 w-3" /> {formatDateLang(post.publishedAt, lang)}
               </span>
             </div>
-            <h1 className="mt-5 text-balance font-display text-3xl font-extrabold leading-[1.12] tracking-tight sm:text-4xl lg:text-5xl">
+            <h1 className="mt-5 text-balance font-display text-3xl font-semibold leading-[1.06] tracking-[-0.03em] sm:text-4xl lg:text-5xl">
               {postTitle(post.slug)}
             </h1>
-            <p className="mt-5 text-pretty text-base leading-relaxed text-navy-200 sm:text-lg">
+            <p className="mt-5 text-pretty text-base leading-relaxed text-fog-400 sm:text-lg">
               {postExcerpt(post.slug)}
             </p>
-            <p className="mt-7 text-sm font-semibold text-navy-300">
+            <p className="mt-7 label text-fog-500">
               {t("blog.by")} {post.author}
             </p>
           </div>
@@ -69,7 +70,7 @@ export function BlogArticleChrome({
       <Section variant="light">
         <Container className="max-w-3xl">
           <Reveal>
-            <div className="relative mb-10 h-64 overflow-hidden rounded-3xl shadow-card sm:h-80">
+            <div className="relative mb-10 h-64 overflow-hidden border border-soft dark:border-white/10 sm:h-80">
               <Image
                 src={post.image}
                 alt=""
@@ -77,36 +78,32 @@ export function BlogArticleChrome({
                 sizes="(max-width: 768px) 100vw, 768px"
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-950/30 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink-950/40 to-transparent" />
             </div>
 
             {children}
 
-            <div className="mt-12 rounded-3xl border border-soft bg-surface-muted p-7 sm:p-9">
-              <h2 className="font-display text-xl font-bold text-strong">{t("blog.practiceTitle")}</h2>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{t("blog.practiceSub")}</p>
-              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                <Link
-                  href="/quote"
-                  className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-electric-500 px-6 text-sm font-semibold text-white transition-colors hover:bg-electric-400"
-                >
-                  {t("cta.getQuote")}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="/contact"
-                  className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-soft bg-surface px-6 text-sm font-semibold text-ink transition-colors hover:border-electric-400 hover:text-electric-600 dark:hover:text-electric-400"
-                >
-                  {t("blog.talkSpecialist")}
-                </Link>
+            <div className="mt-12 border border-soft bg-surface-muted p-7 sm:p-9 dark:border-white/10">
+              <p className="label text-signal-600 dark:text-signal-400">{t("blog.practiceTitle")}</p>
+              <p className="mt-3 text-pretty leading-relaxed text-ink dark:text-fog-300">{t("blog.practiceSub")}</p>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <Button asChild>
+                  <Link href="/quote">
+                    {t("cta.getQuote")}
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline">
+                  <Link href="/contact">{t("blog.talkSpecialist")}</Link>
+                </Button>
               </div>
             </div>
 
             <Link
               href="/blog"
-              className="group mt-10 inline-flex items-center gap-2 text-sm font-semibold text-electric-600 transition-colors hover:text-electric-500"
+              className="group mt-10 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.12em] text-signal-600 transition-colors hover:text-signal dark:text-signal-400"
             >
-              <ArrowLeft className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
+              <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-150 group-hover:-translate-x-0.5" />
               {t("blog.backAll")}
             </Link>
           </Reveal>
@@ -117,15 +114,15 @@ export function BlogArticleChrome({
       {related.length > 0 ? (
         <Section variant="mist">
           <Container>
-            <h2 className="font-display text-2xl font-extrabold tracking-tight text-strong">
+            <h2 className="font-display text-2xl font-semibold tracking-[-0.025em] text-strong dark:text-fog-50">
               {t("blog.continueReading")}
             </h2>
-            <div className="mt-8 grid gap-6 md:grid-cols-3">
+            <div className="mt-8 grid gap-px bg-soft md:grid-cols-3 dark:bg-white/[0.08]">
               {related.map((p) => (
                 <Link
                   key={p.slug}
                   href={`/blog/${p.slug}`}
-                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-soft bg-surface shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
+                  className="group flex h-full flex-col bg-surface transition-colors duration-150 hover:bg-surface-hover dark:bg-ink-950 dark:hover:bg-white/[0.04]"
                 >
                   <div className="relative h-36 overflow-hidden">
                     <Image
@@ -137,13 +134,15 @@ export function BlogArticleChrome({
                     />
                   </div>
                   <div className="flex flex-1 flex-col p-6">
-                    <span className="text-xs font-semibold text-electric-600">{catLabel(p.category)}</span>
-                    <h3 className="mt-2.5 flex-1 font-display text-base font-bold leading-snug text-strong transition-colors group-hover:text-electric-600 dark:group-hover:text-electric-400">
+                    <span className="font-mono text-[9.5px] uppercase tracking-[0.12em] text-signal-600 dark:text-signal-400">
+                      {catLabel(p.category)}
+                    </span>
+                    <h3 className="mt-2.5 flex-1 font-display text-base font-semibold leading-snug text-strong transition-colors group-hover:text-signal-600 dark:text-fog-50 dark:group-hover:text-signal-400">
                       {postTitle(p.slug)}
                     </h3>
-                    <span className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-electric-600">
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-signal-600 dark:text-signal-400">
                       {t("blog.readArticle")}
-                      <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                      <ArrowRight className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5" />
                     </span>
                   </div>
                 </Link>

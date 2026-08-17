@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, ArrowLeft, Check, Truck, MessageCircleQuestion } from "lucide-react";
+import { ArrowRight, ArrowLeft, Truck, MessageCircleQuestion } from "lucide-react";
 import { ServiceIcon } from "@/components/icons/ServiceIcon";
 import { Container } from "@/components/shared/Container";
 import { Section } from "@/components/shared/Section";
@@ -39,18 +39,21 @@ export function ServiceDetailBody({
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
           <div>
             <Reveal>
-              <h2 className="text-balance font-display text-3xl font-extrabold tracking-tight text-strong sm:text-4xl">
+              <h2 className="text-balance font-display text-[28px] font-semibold leading-[1.06] tracking-[-0.025em] text-strong sm:text-4xl dark:text-fog-50">
                 {t("pg.svc.why")} {serviceTitle(slug)} {t("pg.svc.withCargoNova")}
               </h2>
-              <div className="mt-6 space-y-5">
-                {benefits.map((b) => (
-                  <div key={b.title} className="flex gap-4">
-                    <span className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-electric-100 text-electric-600">
-                      <Check className="h-4 w-4" />
+              <div className="mt-8 border-y border-soft dark:border-white/10">
+                {benefits.map((b, i) => (
+                  <div
+                    key={b.title}
+                    className="flex gap-5 border-b border-soft py-5 last:border-b-0 dark:border-white/10 sm:gap-7"
+                  >
+                    <span className="mt-0.5 shrink-0 font-mono text-[10px] tracking-[0.14em] text-signal">
+                      {String(i + 1).padStart(2, "0")}
                     </span>
                     <div>
-                      <h3 className="font-display text-lg font-bold text-strong">{b.title}</h3>
-                      <p className="mt-1 text-sm leading-relaxed text-muted sm:text-base">{b.text}</p>
+                      <h3 className="font-display text-[17px] font-semibold text-strong dark:text-fog-50">{b.title}</h3>
+                      <p className="mt-1 text-sm leading-relaxed text-muted sm:text-[15px]">{b.text}</p>
                     </div>
                   </div>
                 ))}
@@ -58,15 +61,14 @@ export function ServiceDetailBody({
             </Reveal>
 
             <Reveal delay={0.1}>
-              <h3 className="mt-12 font-display text-2xl font-bold text-strong">{t("pg.svc.how")}</h3>
-              <ol className="mt-6 grid gap-6 sm:grid-cols-2">
+              <h3 className="mt-14 font-display text-2xl font-semibold tracking-[-0.02em] text-strong dark:text-fog-50">
+                {t("pg.svc.how")}
+              </h3>
+              <ol className="mt-7 grid gap-px border border-soft bg-soft sm:grid-cols-2 dark:border-white/10 dark:bg-white/[0.08]">
                 {process.map((p) => (
-                  <li
-                    key={p.step}
-                    className="relative rounded-2xl border border-soft bg-surface-muted/70 p-5"
-                  >
-                    <span className="font-mono text-xs font-bold text-electric-600">{p.step}</span>
-                    <h4 className="mt-1.5 font-display text-base font-bold text-strong">{p.title}</h4>
+                  <li key={p.step} className="bg-surface p-6 dark:bg-ink-950">
+                    <span className="font-mono text-[10px] tracking-[0.14em] text-signal">{p.step}</span>
+                    <h4 className="mt-3 font-display text-base font-semibold text-strong dark:text-fog-50">{p.title}</h4>
                     <p className="mt-1.5 text-sm leading-relaxed text-muted">{p.text}</p>
                   </li>
                 ))}
@@ -77,17 +79,22 @@ export function ServiceDetailBody({
           {/* Side rail */}
           <div className="space-y-6">
             <Reveal delay={0.1}>
-              <div className="overflow-hidden rounded-3xl border border-soft bg-surface shadow-card">
-                <div className="bg-navy-900 p-6 text-white">
-                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 ring-1 ring-inset ring-white/15">
-                    <ServiceIcon name={service.icon} className="h-6 w-6 text-cyan-400" />
+              <div className="border border-soft dark:border-white/10">
+                <div className="relative overflow-hidden bg-ink-950 p-6 text-fog-50">
+                  <div className="pointer-events-none absolute inset-0 bg-noise opacity-30" />
+                  <div className="pointer-events-none absolute inset-0 bg-grid-dark" />
+                  <span className="relative inline-flex h-11 w-11 items-center justify-center border border-white/10 bg-white/[0.05] text-signal-400">
+                    <ServiceIcon name={service.icon} className="h-5 w-5" />
                   </span>
-                  <h3 className="mt-4 font-display text-xl font-bold">{t("pg.svc.suitableCargo")}</h3>
+                  <h3 className="relative mt-4 font-display text-lg font-semibold">{t("pg.svc.suitableCargo")}</h3>
                 </div>
-                <ul className="divide-y divide-navy-100 p-2">
+                <ul className="divide-y divide-soft bg-surface dark:divide-white/[0.08] dark:bg-ink-950">
                   {suitableCargo.map((c) => (
-                    <li key={c} className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-navy-800 dark:text-navy-200">
-                      <span className="h-1.5 w-1.5 rounded-full bg-cyan-500" />
+                    <li
+                      key={c}
+                      className="flex items-center gap-3 px-5 py-3 font-mono text-[11px] uppercase tracking-[0.1em] text-ink dark:text-fog-300"
+                    >
+                      <span className="h-1 w-1 shrink-0 bg-signal" />
                       {c}
                     </li>
                   ))}
@@ -96,16 +103,18 @@ export function ServiceDetailBody({
             </Reveal>
 
             <Reveal delay={0.15}>
-              <div className="rounded-3xl border border-soft bg-surface p-6 shadow-card">
-                <h3 className="flex items-center gap-2 font-display text-lg font-bold text-strong">
-                  <Truck className="h-5 w-5 text-electric-500" />
+              <div className="border border-soft bg-surface dark:border-white/10 dark:bg-ink-950">
+                <h3 className="flex items-center gap-2 border-b border-soft p-6 pb-4 font-display text-lg font-semibold text-strong dark:border-white/10 dark:text-fog-50">
+                  <Truck className="h-5 w-5 text-signal" />
                   {t("pg.svc.fleetOptions")}
                 </h3>
-                <ul className="mt-4 space-y-2.5">
+                <ul className="divide-y divide-soft dark:divide-white/[0.08]">
                   {service.fleet.map((f) => (
-                    <li key={f} className="flex items-center justify-between rounded-xl bg-surface-muted px-4 py-2.5 text-sm">
-                      <span className="font-semibold text-navy-800 dark:text-navy-200">{f}</span>
-                      <span className="text-xs font-medium text-emerald-600">{t("pg.svc.available")}</span>
+                    <li key={f} className="flex items-center justify-between px-6 py-3 text-sm">
+                      <span className="font-medium text-ink dark:text-fog-200">{f}</span>
+                      <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-status-ok">
+                        {t("pg.svc.available")}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -113,12 +122,14 @@ export function ServiceDetailBody({
             </Reveal>
 
             <Reveal delay={0.2}>
-              <div className="relative overflow-hidden rounded-3xl bg-navy-900 p-7 text-white">
-                <div className="pointer-events-none absolute -right-14 -top-14 h-40 w-40 rounded-full bg-electric-500/25 blur-[60px]" />
-                <h3 className="relative font-display text-lg font-bold">
+              <div className="relative overflow-hidden border border-white/10 bg-ink-950 p-7 text-fog-50">
+                <div className="pointer-events-none absolute inset-0 bg-noise opacity-30" />
+                <div className="pointer-events-none absolute -right-14 -top-14 h-40 w-40 rounded-full bg-signal/20 blur-[70px]" />
+                <p className="relative label text-signal">CargoNova</p>
+                <h3 className="relative mt-3 font-display text-lg font-semibold">
                   {t("pg.svc.ready")} {serviceTitle(slug)}?
                 </h3>
-                <p className="relative mt-2 text-sm leading-relaxed text-navy-200">
+                <p className="relative mt-2 text-sm leading-relaxed text-fog-500">
                   {t("pg.svc.quoteWithin")}
                 </p>
                 <Button asChild size="lg" className="relative mt-5 w-full">
@@ -137,12 +148,12 @@ export function ServiceDetailBody({
       <Section variant="mist">
         <div className="mx-auto max-w-3xl">
           <Reveal className="text-center">
-            <h2 className="text-balance font-display text-3xl font-extrabold tracking-tight text-strong sm:text-4xl">
+            <h2 className="text-balance font-display text-3xl font-semibold tracking-[-0.025em] text-strong sm:text-4xl dark:text-fog-50">
               {serviceTitle(slug)} — {t("pg.svc.questions")}
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <Accordion type="single" collapsible className="mt-10 rounded-3xl border border-soft bg-surface px-6 shadow-card sm:px-8">
+            <Accordion type="single" collapsible className="mt-10 border border-soft bg-surface px-6 dark:border-white/10 dark:bg-ink-950 sm:px-8">
               {faqs.map((faq) => (
                 <AccordionItem key={faq.question} value={faq.question}>
                   <AccordionTrigger>{faq.question}</AccordionTrigger>
@@ -166,26 +177,30 @@ export function ServiceDetailBody({
       {/* Prev / next */}
       <section className="bg-surface py-16">
         <Container>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-px border border-soft bg-soft sm:grid-cols-2 dark:border-white/10 dark:bg-white/[0.08]">
             <Link
               href={`/services/${prev.slug}`}
-              className="group flex items-center gap-4 rounded-2xl border border-soft bg-surface-muted/60 p-5 transition-all duration-300 hover:border-electric-300 hover:bg-surface hover:shadow-card"
+              className="group flex items-center gap-4 bg-surface p-6 transition-colors duration-150 hover:bg-surface-hover dark:bg-ink-950 dark:hover:bg-white/[0.04]"
             >
-              <ArrowLeft className="h-5 w-5 shrink-0 text-muted transition-colors group-hover:text-electric-500" />
+              <ArrowLeft className="h-4 w-4 shrink-0 text-muted transition-colors group-hover:text-signal" />
               <span>
-                <span className="block text-xs font-semibold uppercase tracking-wide text-muted">{t("pg.svc.previous")}</span>
-                <span className="mt-0.5 block font-display font-bold text-strong">{serviceTitle(prev.slug)}</span>
+                <span className="label block text-muted">{t("pg.svc.previous")}</span>
+                <span className="mt-1 block font-display text-base font-semibold text-strong dark:text-fog-50">
+                  {serviceTitle(prev.slug)}
+                </span>
               </span>
             </Link>
             <Link
               href={`/services/${next.slug}`}
-              className="group flex items-center justify-end gap-4 rounded-2xl border border-soft bg-surface-muted/60 p-5 text-right transition-all duration-300 hover:border-electric-300 hover:bg-surface hover:shadow-card"
+              className="group flex items-center justify-end gap-4 bg-surface p-6 text-right transition-colors duration-150 hover:bg-surface-hover dark:bg-ink-950 dark:hover:bg-white/[0.04]"
             >
               <span>
-                <span className="block text-xs font-semibold uppercase tracking-wide text-muted">{t("pg.svc.next")}</span>
-                <span className="mt-0.5 block font-display font-bold text-strong">{serviceTitle(next.slug)}</span>
+                <span className="label block text-muted">{t("pg.svc.next")}</span>
+                <span className="mt-1 block font-display text-base font-semibold text-strong dark:text-fog-50">
+                  {serviceTitle(next.slug)}
+                </span>
               </span>
-              <ArrowRight className="h-5 w-5 shrink-0 text-muted transition-colors group-hover:text-electric-500" />
+              <ArrowRight className="h-4 w-4 shrink-0 text-muted transition-colors group-hover:text-signal" />
             </Link>
           </div>
         </Container>

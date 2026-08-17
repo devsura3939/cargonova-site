@@ -26,7 +26,11 @@ export function FleetExplorer() {
     <Container>
       {/* Filters */}
       <Reveal>
-        <div role="tablist" aria-label="Filter fleet by category" className="flex flex-wrap gap-2">
+        <div
+          role="tablist"
+          aria-label="Filter fleet by category"
+          className="flex flex-wrap gap-1 border border-soft p-1 dark:border-white/10"
+        >
           {fleetCategories.map((cat) => (
             <button
               key={cat.slug}
@@ -34,10 +38,10 @@ export function FleetExplorer() {
               aria-selected={active === cat.slug}
               onClick={() => setActive(cat.slug)}
               className={cn(
-                "rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200",
+                "px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors duration-150",
                 active === cat.slug
-                  ? "bg-navy-850 text-white shadow-card"
-                  : "border border-soft bg-surface text-ink hover:border-electric-400 hover:text-electric-600 dark:hover:text-electric-400",
+                  ? "bg-ink-950 text-fog-50 dark:bg-white/10"
+                  : "text-muted hover:text-strong dark:hover:text-fog-50",
               )}
             >
               {fleetCategory(cat.slug)}
@@ -47,10 +51,10 @@ export function FleetExplorer() {
       </Reveal>
 
       {/* Vehicles */}
-      <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <div className="mt-10 grid gap-px bg-soft md:grid-cols-2 xl:grid-cols-3 dark:bg-white/[0.08]">
         {visible.map((vehicle, i) => (
-          <Reveal key={vehicle.slug} delay={0.05 * (i % 3)}>
-            <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-soft bg-surface shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
+          <Reveal key={vehicle.slug} delay={0.05 * (i % 3)} className="h-full">
+            <article className="group flex h-full flex-col bg-surface transition-colors duration-150 hover:bg-surface-hover dark:bg-ink-950 dark:hover:bg-white/[0.04]">
               {/* Visual */}
               <div className="relative h-48 overflow-hidden">
                 <Image
@@ -60,70 +64,75 @@ export function FleetExplorer() {
                   sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-950/95 via-navy-900/35 to-navy-900/15" />
-                <span className="absolute left-4 top-4 rounded-full bg-navy-950/70 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white ring-1 ring-inset ring-white/20 backdrop-blur">
+                <div className="absolute inset-0 bg-gradient-to-t from-ink-950/95 via-ink-900/40 to-ink-900/20" />
+                <span className="absolute left-4 top-4 border border-white/15 bg-ink-950/75 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-fog-200 backdrop-blur">
                   {fleetCategory(vehicle.category)}
                 </span>
-                <span className="absolute bottom-3 right-4 flex h-9 w-9 items-center justify-center rounded-xl bg-white/15 text-white ring-1 ring-inset ring-white/25 backdrop-blur">
-                  <FleetIcon name={vehicle.icon} className="h-5 w-5" />
+                <span className="absolute bottom-3 right-4 flex h-8 w-8 items-center justify-center border border-white/15 bg-ink-950/60 text-fog-100 backdrop-blur">
+                  <FleetIcon name={vehicle.icon} className="h-4 w-4" />
                 </span>
               </div>
 
               {/* Content */}
               <div className="flex flex-1 flex-col p-6">
                 <div className="flex items-center justify-between">
-                  <h2 className="font-display text-xl font-bold text-strong">{tPhrase(vehicle.name)}</h2>
-                  <FleetIcon name={vehicle.icon} className="h-6 w-6 text-electric-500" />
+                  <h2 className="font-display text-xl font-semibold text-strong dark:text-fog-50">
+                    {tPhrase(vehicle.name)}
+                  </h2>
+                  <FleetIcon name={vehicle.icon} className="h-5 w-5 text-signal" />
                 </div>
 
-                <div className="mt-4 grid grid-cols-3 gap-2 rounded-2xl bg-mist p-3 text-center">
-                  <div>
-                    <p className="flex items-center justify-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-muted">
+                <div className="mt-4 grid grid-cols-3 gap-px border-y border-soft bg-soft dark:border-white/10 dark:bg-white/[0.08]">
+                  <div className="bg-surface px-2 py-3 text-center dark:bg-ink-950">
+                    <p className="flex items-center justify-center gap-1 font-mono text-[8.5px] uppercase tracking-[0.1em] text-muted">
                       <Scale className="h-3 w-3" /> {t("fleet.label.payload")}
                     </p>
-                    <p className="mt-0.5 text-sm font-bold text-strong">{vehicle.payload}</p>
+                    <p className="mt-1 font-mono text-[13px] font-semibold text-strong dark:text-fog-50">{vehicle.payload}</p>
                   </div>
-                  <div>
-                    <p className="flex items-center justify-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-muted">
+                  <div className="bg-surface px-2 py-3 text-center dark:bg-ink-950">
+                    <p className="flex items-center justify-center gap-1 font-mono text-[8.5px] uppercase tracking-[0.1em] text-muted">
                       <Box className="h-3 w-3" /> {t("fleet.label.volume")}
                     </p>
-                    <p className="mt-0.5 text-sm font-bold text-strong">{vehicle.volume}</p>
+                    <p className="mt-1 font-mono text-[13px] font-semibold text-strong dark:text-fog-50">{vehicle.volume}</p>
                   </div>
-                  <div>
-                    <p className="flex items-center justify-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-muted">
+                  <div className="bg-surface px-2 py-3 text-center dark:bg-ink-950">
+                    <p className="flex items-center justify-center gap-1 font-mono text-[8.5px] uppercase tracking-[0.1em] text-muted">
                       <Ruler className="h-3 w-3" /> {t("fleet.label.dimensions")}
                     </p>
-                    <p className="mt-0.5 text-xs font-bold leading-tight text-strong">{vehicle.dimensions}</p>
+                    <p className="mt-1 font-mono text-[11px] font-semibold leading-tight text-strong dark:text-fog-50">{vehicle.dimensions}</p>
                   </div>
                 </div>
 
                 <div className="mt-4">
-                  <p className="text-xs font-bold uppercase tracking-wide text-muted">{t("fleet.idealFor")}</p>
-                  <p className="mt-1 text-sm leading-relaxed text-navy-800 dark:text-navy-200">{fleetIdeal(vehicle.slug)}</p>
+                  <p className="label text-muted">{t("fleet.idealFor")}</p>
+                  <p className="mt-1.5 text-sm leading-relaxed text-ink dark:text-fog-300">{fleetIdeal(vehicle.slug)}</p>
                 </div>
 
                 <ul className="mt-4 grid grid-cols-2 gap-x-3 gap-y-1.5">
                   {vehicle.features.map((f) => (
-                    <li key={f} className="flex items-center gap-1.5 text-xs font-medium text-muted">
-                      <Check className="h-3 w-3 shrink-0 text-emerald-500" />
+                    <li
+                      key={f}
+                      className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.08em] text-muted"
+                    >
+                      <Check className="h-3 w-3 shrink-0 text-status-ok" />
                       {tPhrase(f)}
                     </li>
                   ))}
                 </ul>
 
-                <div className="mt-5 flex items-center justify-between border-t border-soft pt-4">
+                <div className="mt-5 flex items-center justify-between border-t border-soft pt-4 dark:border-white/10">
                   <p
                     className={cn(
-                      "flex items-center gap-2 text-xs font-semibold",
-                      vehicle.available ? "text-emerald-600" : "text-orange-500",
+                      "flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.12em]",
+                      vehicle.available ? "text-status-ok" : "text-status-warn",
                     )}
                   >
                     <span
-                      className={cn("h-2 w-2 rounded-full", vehicle.available ? "bg-emerald-500" : "bg-orange-500")}
+                      className={cn("h-1.5 w-1.5", vehicle.available ? "bg-status-ok" : "bg-status-warn")}
                     />
                     {vehicle.available ? t("fleet.available") : t("fleet.onRequest")}
                   </p>
-                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-navy-300">
+                  <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
                     <ShieldCheck className="h-3.5 w-3.5" /> {tPhrase("Telematics")}
                   </span>
                 </div>
@@ -134,9 +143,9 @@ export function FleetExplorer() {
       </div>
 
       {visible.length === 0 ? (
-        <p className="mt-10 rounded-2xl border border-dashed border-soft bg-surface-muted p-8 text-center text-sm text-muted">
+        <p className="mt-10 border border-dashed border-soft p-8 text-center font-mono text-[11px] uppercase tracking-[0.12em] text-muted dark:border-white/15">
           {t("fleet.empty")}{" "}
-          <Link href="/contact" className="font-semibold text-electric-600">
+          <Link href="/contact" className="text-signal-600 dark:text-signal-400">
             {t("fleet.contactUs")}
           </Link>
           .
@@ -145,19 +154,19 @@ export function FleetExplorer() {
 
       {/* Maintenance note */}
       <Reveal delay={0.1}>
-        <div className="mt-14 flex flex-col items-start justify-between gap-4 rounded-3xl border border-soft bg-surface-muted p-7 sm:flex-row sm:items-center">
+        <div className="mt-14 flex flex-col items-start justify-between gap-4 border border-soft bg-surface-muted p-7 sm:flex-row sm:items-center dark:border-white/10">
           <div className="flex items-center gap-4">
-            <span className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-electric-100 text-electric-600 sm:flex">
+            <span className="hidden h-11 w-11 shrink-0 items-center justify-center bg-signal/12 text-signal-600 sm:flex dark:text-signal-400">
               <ShieldCheck className="h-5 w-5" />
             </span>
-            <p className="text-sm leading-relaxed text-navy-800 dark:text-navy-200 sm:text-base">
-              <span className="font-semibold">{t("fleet.inspectedTitle")}</span>{" "}
+            <p className="text-sm leading-relaxed text-ink dark:text-fog-300 sm:text-[15px]">
+              <span className="font-semibold text-strong dark:text-fog-50">{t("fleet.inspectedTitle")}</span>{" "}
               {t("fleet.inspectedText")}
             </p>
           </div>
           <Link
             href="/quote"
-            className="inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-navy-850 px-6 text-sm font-semibold text-white transition-colors hover:bg-navy-700"
+            className="inline-flex h-10 shrink-0 items-center gap-2 border border-ink-900 bg-ink-900 px-5 text-[13px] font-medium text-fog-50 transition-colors hover:bg-ink-850 dark:border-white/15 dark:bg-white/[0.06] dark:hover:bg-white/10"
           >
             {t("fleet.tellUs")}
             <ArrowRight className="h-4 w-4" />

@@ -17,6 +17,7 @@ export function SectionHeadingT({
   dark?: boolean;
   className?: string;
   as?: "h1" | "h2" | "h3";
+  index?: string;
 }) {
   const { t } = useLang();
   return (
