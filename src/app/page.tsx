@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/sections/Hero";
 import { ClientLogos } from "@/components/sections/ClientLogos";
-import { StatsSection } from "@/components/sections/StatsSection";
-import { FreightCalculator } from "@/components/sections/FreightCalculator";
-import { ServicesOverview } from "@/components/sections/ServicesOverview";
-import { HowItWorks } from "@/components/sections/HowItWorks";
+import { ModeIndex } from "@/components/sections/ModeIndex";
 import { CoverageSection } from "@/components/sections/CoverageSection";
-import { TechnologySection } from "@/components/sections/TechnologySection";
+import { ToolsPreview } from "@/components/sections/ToolsPreview";
+import { Assurance } from "@/components/sections/Assurance";
 import { FleetSection } from "@/components/sections/FleetSection";
-import { IndustriesSection } from "@/components/sections/IndustriesSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { CTASection } from "@/components/sections/CTASection";
-import { Container } from "@/components/shared/Container";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -26,18 +22,11 @@ export default function HomePage() {
     <>
       <Hero />
       <ClientLogos />
-      <StatsSection />
-      <section className="bg-surface py-20 sm:py-24">
-        <Container>
-          <FreightCalculator />
-        </Container>
-      </section>
-      <ServicesOverview />
-      <HowItWorks />
+      <ModeIndex />
       <CoverageSection />
-      <TechnologySection />
+      <ToolsPreview />
+      <Assurance />
       <FleetSection />
-      <IndustriesSection />
       <TestimonialsSection />
       <CTASection />
     </>

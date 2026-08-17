@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Manrope, Noto_Sans_Georgian } from "next/font/google";
+import { Inter, Manrope, Noto_Sans_Georgian, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -24,6 +24,12 @@ const manrope = Manrope({
 const georgian = Noto_Sans_Georgian({
   variable: "--font-georgian",
   subsets: ["latin", "georgian"],
+  display: "swap",
+});
+
+const jetbrains = JetBrains_Mono({
+  variable: "--font-jetbrains",
+  subsets: ["latin"],
   display: "swap",
 });
 
@@ -59,7 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${manrope.variable} ${georgian.variable} h-full antialiased`}
+      className={`${inter.variable} ${manrope.variable} ${georgian.variable} ${jetbrains.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

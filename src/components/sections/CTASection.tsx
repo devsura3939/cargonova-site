@@ -37,15 +37,15 @@ export function CTASection() {
           strokeWidth="14"
           strokeLinecap="round"
         />
-        <circle cx="-40" cy="242" r="6" fill="#2ED3E6" />
-        <circle cx="420" cy="150" r="4.5" fill="#1677FF" />
-        <circle cx="900" cy="130" r="4.5" fill="#FF8A3D" />
-        <circle cx="1300" cy="98" r="6" fill="#2ED3E6" />
+        <circle cx="-40" cy="242" r="6" fill="#FF8047" />
+        <circle cx="420" cy="150" r="4.5" fill="#FF5F1F" />
+        <circle cx="900" cy="130" r="4.5" fill="#FFA878" />
+        <circle cx="1300" cy="98" r="6" fill="#FF5F1F" />
         <defs>
           <linearGradient id="cta-route" x1="0" y1="0" x2="1" y2="0">
-            <stop stopColor="#2ED3E6" />
-            <stop offset="0.5" stopColor="#1677FF" />
-            <stop offset="1" stopColor="#FF8A3D" />
+            <stop stopColor="#FF8047" />
+            <stop offset="0.5" stopColor="#FF5F1F" />
+            <stop offset="1" stopColor="#FFA878" />
           </linearGradient>
         </defs>
       </svg>
@@ -53,12 +53,12 @@ export function CTASection() {
       <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
         <Reveal>
           <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-4 py-1.5 text-xs font-semibold text-navy-100">
-            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+            <span className="h-1.5 w-1.5 rounded-full bg-signal" />
             {t("cta.badge")}
           </p>
           <h2 className="text-balance font-display text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
             {t("cta.title1")}{" "}
-            <span className="bg-gradient-to-r from-electric-400 to-cyan-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-signal-400 to-signal bg-clip-text text-transparent">
               {t("cta.titleAccent")}
             </span>
           </h2>
@@ -83,7 +83,7 @@ export function CTASection() {
           </div>
           <p className="mt-6 text-sm text-navy-300">
             {t("cta.prefers")}{" "}
-            <a href={brand.contact.phoneHref} className="font-semibold text-white underline decoration-cyan-400/60 underline-offset-4 hover:text-cyan-300">
+            <a href={brand.contact.phoneHref} className="font-semibold text-white underline decoration-signal/60 underline-offset-4 hover:text-signal-400">
               {brand.contact.phone}
             </a>{" "}
             {t("cta.hoursNote")}

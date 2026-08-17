@@ -30,10 +30,10 @@ export const brand = {
 
 /** Colors used for inline brand graphics (maps, charts, gradients). */
 export const brandColors = {
-  navy: "#0B1F3A",
-  navyDeep: "#08111F",
-  electric: "#1677FF",
-  cyan: "#2ED3E6",
-  orange: "#FF8A3D",
-  slate: "#7B8794",
+  navy: "#0B0B0B",
+  navyDeep: "#0B0B0B",
+  electric: "#FF5F1F",
+  cyan: "#FF8047",
+  orange: "#FF5F1F",
+  slate: "#7D8388",
 } as const;

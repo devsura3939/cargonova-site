@@ -8,9 +8,9 @@ import { useLang } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 const TIER_COLOR: Record<Hub["tier"], string> = {
-  major: "#3f8fff",
-  regional: "#2ed3e6",
-  gateway: "#ff8a3d",
+  major: "#f4f5f5",
+  regional: "#ff5f1f",
+  gateway: "#ff8047",
 };
 
 const TIER_KEY: Record<Hub["tier"], string> = {
@@ -129,17 +129,17 @@ export function NetworkMap({
       ref={containerRef}
       onMouseMove={handleMouseMove}
       className={cn(
-        "group/panel relative isolate overflow-hidden rounded-3xl border border-white/10 bg-[#050d1c] shadow-lift",
+        "group/panel relative isolate overflow-hidden border border-white/10 bg-ink-950",
         "dark:border-white/10",
         className,
       )}
     >
-      {/* Ambient ocean glow + grid */}
+      {/* Ambient glow + grid */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-electric-500/14 blur-3xl" />
-        <div className="absolute -bottom-32 right-0 h-[28rem] w-[28rem] rounded-full bg-cyan-500/10 blur-3xl" />
+        <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-signal/10 blur-3xl" />
+        <div className="absolute -bottom-32 right-0 h-[28rem] w-[28rem] rounded-full bg-signal-400/8 blur-3xl" />
         <div className="absolute inset-0 bg-grid-dark opacity-60 [background-size:36px_36px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,#050d1c_92%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,#0b0b0b_92%)]" />
       </div>
 
       {/* Map */}
@@ -152,13 +152,13 @@ export function NetworkMap({
       >
         <defs>
           <linearGradient id="nm-land" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#17365f" />
-            <stop offset="100%" stopColor="#0e2442" />
+            <stop offset="0%" stopColor="#22272b" />
+            <stop offset="100%" stopColor="#14171a" />
           </linearGradient>
           <linearGradient id="nm-corridor" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#3f8fff" />
-            <stop offset="55%" stopColor="#2ed3e6" />
-            <stop offset="100%" stopColor="#5ee2ef" />
+            <stop offset="0%" stopColor="#ff5f1f" />
+            <stop offset="55%" stopColor="#ff8047" />
+            <stop offset="100%" stopColor="#ffa878" />
           </linearGradient>
         </defs>
 
@@ -166,8 +166,8 @@ export function NetworkMap({
         <path
           d={LANDMASS_D}
           fill="url(#nm-land)"
-          stroke="#7fb0e3"
-          strokeOpacity={0.28}
+          stroke="#989da2"
+          strokeOpacity={0.35}
           strokeWidth={0.6}
           strokeLinejoin="round"
         />
@@ -178,7 +178,7 @@ export function NetworkMap({
           const isActive = activeCorridorId === c.id;
           const highlighted = isHover || isActive;
           const dim = dimmed && !isActive && !isHover;
-          const mainColor = isActive ? "#ff8a3d" : isHover ? "#5ee2ef" : "#3f8fff";
+          const mainColor = isActive ? "#ff5f1f" : isHover ? "#ffa878" : "#ff8047";
 
           return (
             <g
@@ -224,7 +224,7 @@ export function NetworkMap({
               <path
                 d={d}
                 fill="none"
-                stroke="#dff4ff"
+                stroke="#ffe9d9"
                 strokeWidth={highlighted ? 2 : 1.2}
                 strokeOpacity={dim ? 0.05 : highlighted ? 0.95 : 0.5}
                 className="netmap-dash"
@@ -235,7 +235,7 @@ export function NetworkMap({
                 <circle
                   key={off}
                   r={2.6}
-                  fill={isActive ? "#ffb27a" : "#b8e6ff"}
+                  fill={isActive ? "#ffd2b8" : "#ffc8a8"}
                   className="netmap-travel"
                   style={{
                     offsetPath: `path('${d}')`,
@@ -291,9 +291,9 @@ export function NetworkMap({
                   y={y + off.dy}
                   textAnchor={off.anchor}
                   className="select-none font-semibold"
-                  fill="#bcd6f2"
+                  fill="#d0d3d5"
                   fontSize={11}
-                  style={{ paintOrder: "stroke", stroke: "#050d1c", strokeWidth: 3, letterSpacing: "0.02em" }}
+                  style={{ paintOrder: "stroke", stroke: "#0b0b0b", strokeWidth: 3, letterSpacing: "0.02em" }}
                 >
                   {h.city}
                 </text>
@@ -306,8 +306,8 @@ export function NetworkMap({
       {/* Top-left: live badge */}
       <div className="pointer-events-none absolute left-4 top-4 flex items-center gap-2.5 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 backdrop-blur-md">
         <span className="relative flex h-2 w-2">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-status-ok opacity-70" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-status-ok" />
         </span>
         <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-200">
           {t("cov.live")}
@@ -316,21 +316,21 @@ export function NetworkMap({
 
       {/* Active corridor card */}
       {active ? (
-        <div className="absolute left-4 top-14 w-60 rounded-2xl border border-white/10 bg-[#0a1730]/90 p-3.5 shadow-card backdrop-blur-md">
+        <div className="absolute left-4 top-14 w-60 border border-white/10 bg-ink-900/95 p-3.5 shadow-card backdrop-blur-md">
           <div className="flex items-start justify-between gap-2">
-            <p className="text-sm font-bold text-white">{active.label}</p>
+            <p className="text-sm font-bold text-fog-50">{active.label}</p>
             <button
               onClick={() => onSelectCorridor?.(null)}
-              className="-mr-1 -mt-1 rounded-full p-1 text-slate-400 transition-colors hover:bg-white/10 hover:text-white"
+              className="-mr-1 -mt-1 p-1 text-fog-500 transition-colors hover:bg-white/10 hover:text-fog-50"
               aria-label="Close"
             >
               <X className="h-3.5 w-3.5" />
             </button>
           </div>
-          <p className="mt-1 text-xs text-cyan-300">
+          <p className="mt-1 text-xs text-signal-400">
             {t("cov.transit")} {active.transitDays}
           </p>
-          <p className="mt-1.5 border-t border-white/10 pt-1.5 text-[11px] leading-relaxed text-slate-400">
+          <p className="mt-1.5 border-t border-white/10 pt-1.5 text-[11px] leading-relaxed text-fog-500">
             {corridorPath(active)
               .map((h) => h.city)
               .join(" → ")}
@@ -347,10 +347,10 @@ export function NetworkMap({
         ].map((s) => (
           <div
             key={s.label}
-            className="rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-center backdrop-blur-md"
+            className="border border-white/10 bg-white/5 px-3 py-1.5 text-center backdrop-blur-md"
           >
-            <p className="font-mono text-sm font-bold leading-none text-white">{s.n}</p>
-            <p className="mt-1 text-[9px] font-medium uppercase tracking-[0.14em] text-slate-400">
+            <p className="font-mono text-sm font-bold leading-none text-fog-50 tnum">{s.n}</p>
+            <p className="mt-1 text-[9px] font-medium uppercase tracking-[0.14em] text-fog-500">
               {s.label}
             </p>
           </div>
@@ -358,7 +358,7 @@ export function NetworkMap({
       </div>
 
       {/* Bottom-left: tier legend */}
-      <div className="pointer-events-none absolute bottom-4 left-4 hidden items-center gap-4 rounded-2xl border border-white/10 bg-[#0a1730]/80 px-4 py-2.5 backdrop-blur-md sm:flex">
+      <div className="pointer-events-none absolute bottom-4 left-4 hidden items-center gap-4 border border-white/10 bg-ink-900/85 px-4 py-2.5 backdrop-blur-md sm:flex">
         {(Object.keys(TIER_COLOR) as Hub["tier"][]).map((tier) => (
           <span key={tier} className="flex items-center gap-1.5 text-[10px] font-medium text-slate-300">
             <span
@@ -371,24 +371,24 @@ export function NetworkMap({
       </div>
 
       {/* Bottom-right: hint */}
-      <div className="pointer-events-none absolute bottom-4 right-4 rounded-full border border-white/10 bg-[#0a1730]/80 px-3 py-1.5 text-[10px] font-medium text-slate-300 backdrop-blur-md">
+      <div className="pointer-events-none absolute bottom-4 right-4 border border-white/10 bg-ink-900/85 px-3 py-1.5 text-[10px] font-medium text-fog-300 backdrop-blur-md">
         {t("cov.mapHint")}
       </div>
 
       {/* Floating tooltip */}
       {tooltip && tooltipData ? (
         <div
-          className="pointer-events-none absolute z-10 w-52 rounded-xl border border-white/12 bg-[#0c1d3a]/95 p-3 shadow-lift backdrop-blur-md"
+          className="pointer-events-none absolute z-10 w-52 border border-white/12 bg-ink-900/95 p-3 shadow-lift backdrop-blur-md"
           style={{
             left: Math.min(tooltip.x, 9999),
             top: tooltip.y,
             transform: `translate(${tooltip.x > 420 ? "calc(-100% - 14px)" : "14px"}, ${tooltip.y > 260 ? "calc(-100% - 8px)" : "-130%"})`,
           }}
         >
-          <p className="text-xs font-bold text-white">{tooltipData.title}</p>
-          <p className="mt-0.5 text-[11px] font-semibold text-cyan-300">{tooltipData.sub}</p>
+          <p className="text-xs font-bold text-fog-50">{tooltipData.title}</p>
+          <p className="mt-0.5 text-[11px] font-semibold text-signal-400">{tooltipData.sub}</p>
           {tooltipData.via ? (
-            <p className="mt-1.5 border-t border-white/10 pt-1.5 text-[10.5px] leading-relaxed text-slate-400">
+            <p className="mt-1.5 border-t border-white/10 pt-1.5 text-[10.5px] leading-relaxed text-fog-500">
               {tooltipData.via}
             </p>
           ) : null}

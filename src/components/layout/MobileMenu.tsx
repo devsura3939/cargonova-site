@@ -33,12 +33,12 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
           animate={{ opacity: 1 }}
           exit={reduceMotion ? undefined : { opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-40 overflow-y-auto bg-navy-900 pt-24 text-white xl:hidden"
+          className="fixed inset-0 z-40 overflow-y-auto border-t border-white/10 bg-ink-950 pt-24 text-fog-50 xl:hidden"
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
         >
-          <div className="mx-auto max-w-7xl px-5 pb-16 sm:px-8">
+          <div className="mx-auto max-w-[80rem] px-5 pb-16 sm:px-8">
             <motion.nav
               aria-label="Mobile"
               initial={reduceMotion ? false : { opacity: 0, y: 12 }}
@@ -56,10 +56,12 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
                   <Link
                     href={link.href}
                     onClick={onClose}
-                    className="flex items-center justify-between py-4 text-base font-semibold text-white transition-colors hover:text-white"
+                    className="flex items-baseline justify-between py-5 text-2xl font-semibold tracking-[-0.02em] text-fog-50"
                   >
                     {t(link.label)}
-                    <ArrowRight className="h-4 w-4 text-cyan-400" />
+                    <span className="font-mono text-[10px] tracking-[0.14em] text-fog-600">
+                      0{i + 1}
+                    </span>
                   </Link>
                 </motion.div>
               ))}
@@ -69,24 +71,22 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
                 initial={reduceMotion ? false : { opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.2 }}
-                className="pt-5"
+                className="pt-6"
               >
-                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-navy-300">
-                  {t("nav.company")}
-                </p>
+                <p className="label text-fog-600">{t("nav.company")}</p>
                 <div className="mt-2 flex flex-col divide-y divide-white/8">
                   {COMPANY_LINKS.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
                       onClick={onClose}
-                      className="flex items-center gap-3 py-3.5 text-base font-semibold text-white transition-colors hover:text-white"
+                      className="flex items-center gap-3 py-4 text-[15px] font-medium text-fog-200"
                     >
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/8 text-cyan-400">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center border border-white/10 text-signal">
                         <link.icon className="h-4 w-4" />
                       </span>
                       {t(link.label)}
-                      <ArrowRight className="ml-auto h-4 w-4 text-cyan-400" />
+                      <ArrowRight className="ml-auto h-4 w-4 text-fog-600" />
                     </Link>
                   ))}
                 </div>
@@ -96,7 +96,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
             <div className="mt-8 flex flex-col gap-3">
               <Button asChild size="lg">
                 <Link href="/quote" onClick={onClose}>
-                  {t("nav.getQuote")}
+                  {t("nav.requestCapacity")}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>

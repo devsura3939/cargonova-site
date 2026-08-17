@@ -2,107 +2,126 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Globe2, MapPin } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { NetworkMap } from "@/components/map/NetworkMap";
-import { Section } from "@/components/shared/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
-import { Reveal } from "@/components/shared/Reveal";
-import { corridors, regions } from "@/data/routes";
+import { corridors, getHub } from "@/data/routes";
 import { useLang } from "@/lib/i18n";
-import { useDataT } from "@/lib/data-i18n";
 import { cn } from "@/lib/utils";
 
+/** Deterministic per-corridor load percentage (stable across renders). */
+function loadPct(i: number): number {
+  return 46 + ((i * 17 + 3) % 53);
+}
+
+const RAIL_IDS = new Set(["c3", "c5"]);
+
 export function CoverageSection() {
-  const [active, setActive] = useState<string | null>(null);
+  const [active, setActive] = useState<string | null>(corridors[0]?.id ?? null);
   const { t } = useLang();
-  const { regionNote } = useDataT();
 
   return (
-    <Section variant="light" id="coverage">
-      <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:gap-14">
-        {/* Left — heading, regions, CTA */}
-        <div>
-          <SectionHeading
-            eyebrow={t("cov.eyebrow")}
-            title={t("cov.title")}
-            description={t("cov.sub")}
-          />
-
-          <Reveal delay={0.1}>
-            <ul className="mt-9 grid gap-3 sm:grid-cols-2">
-              {regions.slice(0, 6).map((region, i) => (
-                <li
-                  key={region.id}
-                  className="group flex items-start gap-3 rounded-2xl border border-soft bg-surface p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-electric-400/50 hover:shadow-card"
-                >
-                  <span className="relative mt-0.5 flex h-2.5 w-2.5 shrink-0">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-electric-500/40" />
-                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-electric-500" />
-                  </span>
-                  <div className="min-w-0">
-                    <p className="flex items-center gap-1.5 text-sm font-bold text-strong">
-                      <span className="truncate">{region.name}</span>
-                      {i === 0 ? (
-                        <span className="shrink-0 rounded-full bg-electric-100 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-electric-600">
-                          HQ
-                        </span>
-                      ) : null}
-                    </p>
-                    <p className="mt-1 text-xs leading-relaxed text-muted">{regionNote(region.id)}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-
+    <section className="border-b border-white/10 bg-ink-950">
+      <div className="mx-auto max-w-[80rem] px-5 py-16 sm:px-8 lg:py-24">
+        <SectionHeading
+          index="02"
+          eyebrow={t("cov.eyebrow")}
+          align="split"
+          dark
+          title={
+            <>
+              {t("net.title1")} <span className="text-fog-500">{t("net.title2")}</span>
+            </>
+          }
+          description={t("net.lead")}
+          action={
             <Link
               href="/coverage"
-              className="group mt-8 inline-flex items-center gap-2 rounded-full border border-electric-500/30 bg-electric-100/60 px-5 py-2.5 text-sm font-semibold text-electric-600 transition-all duration-300 hover:bg-electric-500 hover:text-white hover:shadow-glow"
+              className="group inline-flex items-center gap-2 border border-white/15 px-4 py-3 text-[13px] text-fog-200 transition-colors duration-150 hover:border-white/35 hover:text-fog-50"
             >
-              <Globe2 className="h-4 w-4" />
               {t("cov.explore")}
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              <ArrowRight className="h-3.5 w-3.5 text-signal transition-transform duration-150 group-hover:translate-x-0.5" aria-hidden="true" />
             </Link>
-          </Reveal>
-        </div>
+          }
+        />
 
-        {/* Right — the live network panel */}
-        <Reveal delay={0.15}>
-          <div className="relative">
-            <div className="absolute -inset-3 -z-10 rounded-[2rem] bg-gradient-to-br from-electric-500/12 via-transparent to-cyan-500/12 blur-xl" />
-            <NetworkMap
-              activeCorridorId={active}
-              onSelectCorridor={setActive}
-              className="[&_svg]:block"
-            />
+        <div className="mt-12 grid gap-px bg-white/[0.06] lg:grid-cols-[1.5fr_1fr]">
+          {/* Map */}
+          <div className="bg-ink-900 p-2.5 sm:p-3.5">
+            <NetworkMap activeCorridorId={active} onSelectCorridor={setActive} />
+          </div>
 
-            {/* Corridor quick-select */}
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-              {corridors.map((c) => {
-                const on = active === c.id;
+          {/* Departure board */}
+          <div className="bg-ink-900">
+            <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
+              <p className="label text-fog-500">{t("net.depBoard")}</p>
+              <p className="font-mono text-[9.5px] uppercase tracking-[0.12em] text-fog-600">
+                {t("net.next7")}
+              </p>
+            </div>
+            <ul className="max-h-[560px] overflow-y-auto">
+              {corridors.map((lane, i) => {
+                const from = getHub(lane.from)!;
+                const to = getHub(lane.to)!;
+                const isActive = active === lane.id;
+                const mode = RAIL_IDS.has(lane.id) ? "rail" : "road";
+                const load = loadPct(i);
                 return (
-                  <button
-                    key={c.id}
-                    onClick={() => setActive(on ? null : c.id)}
-                    aria-pressed={on}
-                    className={cn(
-                      "inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-all duration-200",
-                      on
-                        ? "border-electric-500 bg-electric-500 text-white shadow-glow"
-                        : "border-soft bg-surface text-ink hover:border-electric-400/60 hover:text-electric-600 dark:hover:text-electric-400",
-                    )}
-                  >
-                    <MapPin className={cn("h-3 w-3", on ? "text-white" : "text-electric-500")} />
-                    <span>{c.label}</span>
-                    <span className={cn("text-[10px] font-medium", on ? "text-white/80" : "text-muted")}>
-                      {c.transitDays}
-                    </span>
-                  </button>
+                  <li key={lane.id}>
+                    <button
+                      type="button"
+                      onMouseEnter={() => setActive(lane.id)}
+                      onFocus={() => setActive(lane.id)}
+                      onClick={() => setActive(isActive ? null : lane.id)}
+                      aria-pressed={isActive}
+                      className={cn(
+                        "group flex w-full items-center gap-3 border-b border-white/[0.07] px-4 py-3 text-left transition-colors duration-150",
+                        isActive ? "bg-white/[0.04]" : "hover:bg-white/[0.03]",
+                      )}
+                    >
+                      <span className="w-[74px] shrink-0 font-mono text-[11.5px] text-fog-50 tnum">
+                        {from.id.toUpperCase()}–{to.id.toUpperCase()}
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[13px] text-fog-300">
+                          {from.city} → {to.city}
+                        </span>
+                        <span className="mt-0.5 block font-mono text-[9.5px] uppercase tracking-[0.12em] text-fog-600">
+                          {lane.transitDays} · {mode}
+                        </span>
+                      </span>
+                      <span className="shrink-0 text-right">
+                        <span className="mt-0.5 flex items-center justify-end gap-1.5">
+                          <span className="block h-[3px] w-10 bg-white/10">
+                            <span
+                              className={cn("block h-full", isActive ? "bg-signal-400" : "bg-signal")}
+                              style={{ width: `${load}%` }}
+                            />
+                          </span>
+                          <span className="font-mono text-[9px] text-fog-600 tnum">{load}%</span>
+                        </span>
+                      </span>
+                      <ArrowRight
+                        className={cn(
+                          "h-3.5 w-3.5 shrink-0 transition-colors duration-150",
+                          isActive ? "text-signal" : "text-fog-600 group-hover:text-signal",
+                        )}
+                        aria-hidden="true"
+                      />
+                    </button>
+                  </li>
                 );
               })}
-            </div>
+            </ul>
+            <Link
+              href="/quote"
+              className="block px-4 py-3 font-mono text-[9.5px] uppercase leading-relaxed tracking-[0.12em] text-fog-600 transition-colors duration-150 hover:text-signal"
+            >
+              {t("net.selectHint")}
+            </Link>
           </div>
-        </Reveal>
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }

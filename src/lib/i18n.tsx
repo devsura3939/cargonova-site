@@ -50,10 +50,10 @@ const en = {
 
   // Hero
   "hero.badge": "European ground freight · 24/7 control tower",
-  "hero.title1": "Logistics That",
-  "hero.titleAccent": "Keep Business Moving",
+  "hero.title1": "Freight that reports",
+  "hero.titleAccent": "on itself.",
   "hero.sub":
-    "Reliable cargo transportation, intelligent route planning, and end-to-end logistics solutions built for businesses that cannot afford delays.",
+    "Own fleet across 30+ countries, one control tower in Tbilisi, and a single data model behind every rate, milestone and document — so you stop calling to ask where the load is.",
   "hero.getQuote": "Get a Quote",
   "hero.track": "Track Shipment",
   "hero.trust1": "10,000+ shipments delivered yearly",
@@ -720,6 +720,106 @@ const en = {
   "pg.svc.previous": "Previous",
   "pg.svc.next": "Next",
 
+  // Redesign — hero
+  "hero.metaLoc": "Tbilisi · est. 2016",
+  "hero.metaModes": "Road · Rail · Air · Ocean",
+  "hero.trackLabel": "Track a consignment",
+  "hero.priceLane": "Price a lane instead",
+  "hero.trackPh": "Enter reference, e.g. CRG-582941",
+  "hero.demo": "Demo",
+  "hero.fleetLabel": "Fleet",
+  "hero.fleetUnits": "412 units",
+  "hero.fleetSub": "Euro 6 · avg. age 2.1 yrs",
+
+  // Redesign — stats
+  "stats.inTransit": "In transit now",
+  "stats.inTransitUnit": "loads",
+  "stats.countries": "Countries served",
+  "stats.telemetry": "Telemetry interval",
+  "stats.telemetryVal": "2",
+  "stats.telemetryUnit": "min",
+  "stats.countriesVal": "30",
+  "stats.countriesUnit": "+",
+
+  // Redesign — mode index
+  "mi.eyebrow": "Capability index",
+  "mi.title1": "Four modes,",
+  "mi.title2": "one contract and one dataset.",
+  "mi.fullDetail": "Full service detail",
+  "mi.transit": "Transit",
+  "mi.capacity": "Capacity",
+  "mi.coverage": "Coverage",
+
+  // Redesign — network
+  "net.title1": "Scheduled corridors,",
+  "net.title2": "not spot chaos.",
+  "net.lead":
+    "Fixed departures on 6 corridors between 16 hubs. Capacity is planned weeks out, so your load has a slot before you book it.",
+  "net.scheduled": "scheduled",
+  "net.depBoard": "Departure board",
+  "net.next7": "Next 7 days",
+  "net.selectHint": "Select a corridor to price it in the rate engine",
+  "net.road": "Road",
+  "net.rail": "Rail",
+
+  // Redesign — tools preview
+  "tp.eyebrow": "Operating tools",
+  "tp.title1": "The tools our planners use",
+  "tp.title2": "are the tools you get.",
+  "tp.lead":
+    "No sales gate in front of a price, and no portal that shows less than our own screens. Rates are generated from the same cost model that prices our contracts.",
+  "tp.rateEngine": "Rate engine",
+  "tp.liveCost": "Live cost model",
+  "tp.mode": "Mode",
+  "tp.collection": "Collection",
+  "tp.delivery": "Delivery",
+  "tp.grossWeight": "Gross weight",
+  "tp.indicative": "Indicative rate",
+  "tp.selectTwo": "Select two different cities",
+  "tp.refine": "Refine in rate engine",
+  "tp.console": "Shipment console",
+  "tp.sample": "Sample consignment",
+  "tp.nextMilestone": "Next milestone",
+  "tp.scheduled": "Scheduled",
+  "tp.equipment": "Equipment",
+  "tp.consignment": "Consignment",
+  "tp.openConsole": "Open live console",
+  "tp.transit": "transit",
+  "tp.complete": "complete",
+
+  // Redesign — operating standard
+  "as.eyebrow": "Operating standard",
+  "as.title1": "Answers before you",
+  "as.title2": "have to ask for them.",
+  "as.sub":
+    "Software gives you the position. People decide what to do about it. We keep both in the same building, so a delayed border crossing turns into a re-planned delivery slot instead of an email thread.",
+  "as.cta": "Request capacity",
+  "as.claims": "Claims ratio",
+  "as.answer": "Avg. answer",
+  "as.retention": "Retention",
+  "as.c1t": "Named planner, not a queue",
+  "as.c1b":
+    "Every account sits with one planner and one deputy in the Tbilisi control tower. They know your docks, your cut-offs and your customers.",
+  "as.c2t": "Exceptions reach you first",
+  "as.c2b":
+    "If a corridor slips, the console updates and your planner calls before the ETA moves in your own system. Silence is never our default.",
+  "as.c3t": "One price, fully built up",
+  "as.c3b":
+    "Linehaul, terminal, fuel index, tolls and surcharges are itemised on every quote. Nothing is discovered on the invoice.",
+  "as.c4t": "Documents on delivery, not next week",
+  "as.c4b":
+    "CMR, POD and temperature logs are attached to the shipment record within 20 minutes of unloading.",
+
+  // Redesign — footer & nav
+  "footer.bio":
+    "European freight operations with an in-house control tower, own fleet and a single data model across road, rail, air and ocean.",
+  "footer.ops": "Operations",
+  "footer.status": "Network status — all corridors operating",
+  "footer.roleHQ": "HQ & control tower",
+  "footer.roleEast": "Middle-East gateway",
+  "footer.roleSouth": "EU hub",
+  "nav.requestCapacity": "Request capacity",
+
   // Language / theme
   "lang.en": "English",
   "lang.ka": "ქართული",
@@ -925,10 +1025,10 @@ const ka: Record<keyof typeof en, string> = {
 
   // Hero
   "hero.badge": "ევროპული სახმელეთო ტვირთები · 24/7 საკონტროლო ცენტრი",
-  "hero.title1": "ლოგისტიკა, რომელიც",
-  "hero.titleAccent": "ბიზნესს მოძრაობაში ინარჩუნებს",
+  "hero.title1": "ტვირთი, რომელიც თავად",
+  "hero.titleAccent": "აბარებს ანგარიშს.",
   "hero.sub":
-    "სანდო სატვირთო გადაზიდვები, ინტელექტუალური მარშრუტების დაგეგმვა და სრული ლოგისტიკური გადაწყვეტილებები ბიზნესებისთვის, რომლებსაც დაგვიანება არ შეუძლიათ.",
+    "საკუთარი ავტოპარკი 30+ ქვეყანაში, ერთი საკონტროლო ცენტრი თბილისში და ერთიანი მონაცემთა მოდელი ყოველი ტარიფის, ეტაპისა და დოკუმენტის უკან — ასე აღარ მოგიწევთ ზარი იმის გასარკვევად, სად არის ტვირთი.",
   "hero.getQuote": "მიიღეთ შეთავაზება",
   "hero.track": "ტვირთის თვალთვალი",
   "hero.trust1": "10,000+ ტვირთი წელიწადში",
@@ -1586,6 +1686,106 @@ const ka: Record<keyof typeof en, string> = {
   "faq.stillHave": "კითხვა მაინც გაქვთ?",
   "faq.contactTeam": "დაუკავშირდით ჩვენს ლოგისტიკურ გუნდს",
   "faq.replies": "— პასუხი ერთ სამუშაო დღეში.",
+
+  // Redesign — hero
+  "hero.metaLoc": "თბილისი · დაარსდა 2016",
+  "hero.metaModes": "საგზაო · სარკინიგზო · საჰაერო · საზღვაო",
+  "hero.trackLabel": "ტვირთის თვალთვალი",
+  "hero.priceLane": "ან დაითვალეთ ფასი",
+  "hero.trackPh": "შეიყვანეთ ნომერი, მაგ. CRG-582941",
+  "hero.demo": "დემო",
+  "hero.fleetLabel": "ავტოპარკი",
+  "hero.fleetUnits": "412 ერთეული",
+  "hero.fleetSub": "ევრო 6 · საშ. ასაკი 2.1 წ",
+
+  // Redesign — stats
+  "stats.inTransit": "ახლა ტრანზიტშია",
+  "stats.inTransitUnit": "ტვირთი",
+  "stats.countries": "მომსახურე ქვეყნები",
+  "stats.telemetry": "ტელემეტრიის ინტერვალი",
+  "stats.telemetryVal": "2",
+  "stats.telemetryUnit": "წთ",
+  "stats.countriesVal": "30",
+  "stats.countriesUnit": "+",
+
+  // Redesign — mode index
+  "mi.eyebrow": "შესაძლებლობების ინდექსი",
+  "mi.title1": "ოთხი რეჟიმი,",
+  "mi.title2": "ერთი კონტრაქტი და ერთი მონაცემთა ბაზა.",
+  "mi.fullDetail": "სერვისების სრული დეტალები",
+  "mi.transit": "ტრანზიტი",
+  "mi.capacity": "ტევადობა",
+  "mi.coverage": "გეოგრაფია",
+
+  // Redesign — network
+  "net.title1": "დაგეგმილი დერეფნები,",
+  "net.title2": "არა შემთხვევითობა.",
+  "net.lead":
+    "ფიქსირებული გამგზავრებები 6 დერეფანზე 16 ჰაბს შორის. ტევადობა დაგეგმილია კვირებით ადრე, ამიტომ თქვენს ტვირთს ადგილი დაჯავშნული აქვს ჯავშნამდე.",
+  "net.scheduled": "დაგეგმილი",
+  "net.depBoard": "გამგზავრების დაფა",
+  "net.next7": "შემდეგი 7 დღე",
+  "net.selectHint": "აირჩიეთ დერეფანი და დაითვალეთ ფასი ტარიფების ძრავაში",
+  "net.road": "საგზაო",
+  "net.rail": "სარკინიგზო",
+
+  // Redesign — tools preview
+  "tp.eyebrow": "ოპერაციული ინსტრუმენტები",
+  "tp.title1": "ინსტრუმენტები, რომლებსაც ჩვენი პლანერები იყენებენ,",
+  "tp.title2": "თქვენც იღებთ.",
+  "tp.lead":
+    "ფასის წინ არ დგას გაყიდვების განყოფილება და არც პორტალი, რომელიც ჩვენსავე ეკრანებზე ნაკლებს აჩვენებს. ტარიფები გენერირდება იმავე ღირებულების მოდელით, რომლითაც ფასდება ჩვენი კონტრაქტები.",
+  "tp.rateEngine": "ტარიფების ძრავა",
+  "tp.liveCost": "ცოცხალი ღირებულების მოდელი",
+  "tp.mode": "რეჟიმი",
+  "tp.collection": "ჩატვირთვა",
+  "tp.delivery": "მიწოდება",
+  "tp.grossWeight": "საერთო წონა",
+  "tp.indicative": "სავარაუდო ტარიფი",
+  "tp.selectTwo": "აირჩიეთ ორი სხვადასხვა ქალაქი",
+  "tp.refine": "დააზუსტეთ ტარიფების ძრავაში",
+  "tp.console": "ტვირთის კონსოლი",
+  "tp.sample": "სანიმუშო ტვირთი",
+  "tp.nextMilestone": "შემდეგი ეტაპი",
+  "tp.scheduled": "დაგეგმილია",
+  "tp.equipment": "ტრანსპორტი",
+  "tp.consignment": "ტვირთი",
+  "tp.openConsole": "გახსენით ცოცხალი კონსოლი",
+  "tp.transit": "ტრანზიტი",
+  "tp.complete": "შესრულებულია",
+
+  // Redesign — operating standard
+  "as.eyebrow": "ოპერაციული სტანდარტი",
+  "as.title1": "პასუხები, სანამ",
+  "as.title2": "კითხვას დასვამთ.",
+  "as.sub":
+    "პროგრამა გაჩვენებთ პოზიციას. გადაწყვეტილებას ადამიანები იღებენ. ორივე ერთ შენობაში გვაქვს, ამიტომ საზღვარზე დაგვიანება იქცევა მიწოდების ახალ ფანჯარად და არა ელფოსტის მიმოწერად.",
+  "as.cta": "მოითხოვეთ ტევადობა",
+  "as.claims": "პრეტენზიების კოეფიციენტი",
+  "as.answer": "საშ. პასუხი",
+  "as.retention": "რეტენცია",
+  "as.c1t": "პერსონალური პლანერი, არა რიგი",
+  "as.c1b":
+    "თითოეულ კლიენტთან ერთი პლანერი და მისი მოადგილე მუშაობს თბილისის საკონტროლო ცენტრში. მათ იციან თქვენი პორტები, ბოლო ვადები და თქვენი კლიენტები.",
+  "as.c2t": "გადახრები ჯერ თქვენ გაცნობებთ",
+  "as.c2b":
+    "თუ დერეფანი ჩავარდა, კონსოლი განახლდება და პლანერი დაგირეკავთ მანამ, სანამ ETA შეიცვლება თქვენს სისტემაში. დუმილი არასდროს არის ჩვენი პასუხი.",
+  "as.c3t": "ერთი ფასი, სრულად დაკონკრეტებული",
+  "as.c3b":
+    "ტრანსპორტირება, ტერმინალი, საწვავის ინდექსი, გადასახადები — ყველაფერი დეტალურად არის ჩამოთვლილი ყოველ შეთავაზებაში. ინვოისში არაფერი აღმოჩნდება მოულოდნელად.",
+  "as.c4t": "დოკუმენტები მიწოდების დღესვე",
+  "as.c4b":
+    "CMR, POD და ტემპერატურის ჟურნალები ტვირთის ჩანაწერს ერთვის გადმოტვირთვიდან 20 წუთში.",
+
+  // Redesign — footer & nav
+  "footer.bio":
+    "ევროპული სატვირთო ოპერაციები საკუთარი საკონტროლო ცენტრით, საკუთარი ავტოპარკით და ერთიანი მონაცემთა მოდელით საგზაო, სარკინიგზო, საჰაერო და საზღვაო ტრანსპორტში.",
+  "footer.ops": "ოპერაციები",
+  "footer.status": "ქსელის სტატუსი — ყველა დერეფანი მუშაობს",
+  "footer.roleHQ": "მთავარი ოფისი და საკონტროლო ცენტრი",
+  "footer.roleEast": "ახლო აღმოსავლეთის კარიბჭე",
+  "footer.roleSouth": "ევროკავშირის ჰაბი",
+  "nav.requestCapacity": "მოითხოვეთ ტევადობა",
 
   // Language / theme
   "lang.en": "English",

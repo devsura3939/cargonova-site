@@ -1,181 +1,197 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Search, ShieldCheck, Clock4, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { fadeUp, stagger } from "@/lib/motion";
+import { ArrowRight, Search } from "lucide-react";
+import { images } from "@/data/images";
 import { useLang } from "@/lib/i18n";
+import { OpsTicker } from "@/components/sections/OpsTicker";
 
-const LogisticsScene = dynamic(() => import("@/components/three/LogisticsScene"), {
-  ssr: false,
-  loading: () => <HeroVisualFallback />,
-});
-
-function HeroVisualFallback() {
-  return (
-    <svg viewBox="0 0 600 460" fill="none" aria-hidden="true" className="h-auto w-full max-w-2xl">
-      <defs>
-        <linearGradient id="hv-road" x1="0" y1="0" x2="0" y2="1">
-          <stop stopColor="#122b50" />
-          <stop offset="1" stopColor="#0a1526" />
-        </linearGradient>
-        <linearGradient id="hv-line" x1="0" y1="0" x2="1" y2="0">
-          <stop stopColor="#1677FF" />
-          <stop offset="1" stopColor="#2ED3E6" />
-        </linearGradient>
-      </defs>
-      {/* road */}
-      <path d="M60 420 C 160 380, 220 320, 300 300 S 480 250, 560 200" stroke="url(#hv-road)" strokeWidth="64" strokeLinecap="round" />
-      {/* route */}
-      <path d="M60 420 C 160 380, 220 320, 300 300 S 480 250, 560 200" stroke="url(#hv-line)" strokeWidth="3" strokeDasharray="2 10" strokeLinecap="round" className="route-line" />
-      {/* truck */}
-      <g transform="translate(215 312) rotate(18)">
-        <rect x="-52" y="-26" width="62" height="34" rx="3" fill="#12315e" />
-        <rect x="20" y="-22" width="26" height="26" rx="3" fill="#1677ff" />
-        <rect x="-48" y="-18" width="8" height="18" rx="1.5" fill="#0a1526" />
-        <circle cx="-30" cy="12" r="6" fill="#0a0f18" />
-        <circle cx="34" cy="12" r="6" fill="#0a0f18" />
-      </g>
-      {/* warehouse */}
-      <g transform="translate(470 200)">
-        <rect x="-70" y="-40" width="140" height="80" rx="6" fill="#132c52" />
-        <rect x="-80" y="-52" width="160" height="14" rx="4" fill="#1e4578" />
-        <rect x="-36" y="-12" width="26" height="52" rx="2" fill="#0b1f3a" />
-        <rect x="10" y="-12" width="26" height="52" rx="2" fill="#0b1f3a" />
-      </g>
-      {/* containers */}
-      <g transform="translate(120 300)">
-        <rect x="0" y="0" width="34" height="26" rx="3" fill="#1677ff" />
-        <rect x="40" y="0" width="34" height="26" rx="3" fill="#ff8a3d" />
-        <rect x="0" y="-30" width="34" height="26" rx="3" fill="#2ed3e6" />
-        <rect x="40" y="-30" width="34" height="26" rx="3" fill="#e3efff" />
-      </g>
-      {/* pins */}
-      <g>
-        <circle cx="60" cy="420" r="10" fill="#2ED3E6" opacity="0.25" />
-        <circle cx="60" cy="420" r="5" fill="#2ED3E6" />
-        <circle cx="560" cy="200" r="10" fill="#FF8A3D" opacity="0.25" />
-        <circle cx="560" cy="200" r="5" fill="#FF8A3D" />
-      </g>
-    </svg>
-  );
-}
-
-const TRUST_KEYS = ["hero.trust1", "hero.trust2", "hero.trust3"] as const;
-const TRUST_ICONS = [ShieldCheck, Clock4, MapPin];
+const EASE = [0.23, 1, 0.32, 1] as const;
 
 export function Hero() {
-  const isDesktop = useMediaQuery("(min-width: 1024px)");
+  const router = useRouter();
   const reduceMotion = useReducedMotion();
   const { t } = useLang();
+  const [code, setCode] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (code.trim().length < 6) {
+      setError(t("trk.invalidMsg"));
+      return;
+    }
+    router.push(`/tracking?code=${encodeURIComponent(code.trim())}`);
+  };
+
+  const fade = (delay: number) =>
+    reduceMotion
+      ? undefined
+      : {
+          initial: { opacity: 0, y: 10 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.32, ease: EASE, delay },
+        };
 
   return (
-    <section className="relative overflow-hidden bg-navy-900 text-white">
-      {/* Atmosphere */}
-      <div className="pointer-events-none absolute inset-0 bg-noise opacity-40" />
-      <div className="pointer-events-none absolute inset-0 bg-grid-dark" />
-      <div className="pointer-events-none absolute -top-56 right-[-15%] h-130 w-130 rounded-full bg-electric-500/25 blur-[140px]" />
-      <div className="pointer-events-none absolute bottom-[-30%] left-[-10%] h-130 w-130 rounded-full bg-cyan-500/12 blur-[140px]" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-navy-900 via-navy-900/60 to-navy-900" />
+    <section className="relative overflow-hidden border-b border-white/10 bg-ink-950 pt-16 text-fog-50">
+      <div className="pointer-events-none absolute inset-0 bg-noise opacity-25" />
 
-      <div className="relative mx-auto grid w-full max-w-7xl gap-12 px-5 pb-20 pt-28 sm:px-8 sm:pt-32 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center lg:gap-8 lg:px-10 lg:pb-28 lg:pt-36">
+      <div className="relative mx-auto grid max-w-[80rem] grid-cols-1 lg:grid-cols-[1.02fr_1fr]">
         {/* Copy */}
-        <motion.div
-          variants={stagger(0.09)}
-          initial={reduceMotion ? false : "hidden"}
-          animate="visible"
-          className="relative z-10 max-w-2xl"
-        >
-          <motion.div variants={fadeUp} className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/5 px-4 py-1.5 backdrop-blur">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-400" />
-            </span>
-            <span className="text-xs font-semibold tracking-wide text-navy-100">
-              {t("hero.badge")}
-            </span>
-          </motion.div>
+        <div className="px-5 pb-12 pt-12 sm:px-8 lg:pb-16 lg:pt-20">
+          <motion.p
+            {...fade(0)}
+            className="label flex flex-wrap items-center gap-x-3 gap-y-2 text-fog-500"
+          >
+            <span className="text-signal">{t("hero.metaLoc")}</span>
+            <span className="hidden h-3 w-px bg-white/15 sm:block" aria-hidden="true" />
+            <span>{t("hero.metaModes")}</span>
+          </motion.p>
 
           <motion.h1
-            variants={fadeUp}
-            className="text-balance font-display text-[2.65rem] font-extrabold leading-[1.06] tracking-tight sm:text-6xl lg:text-[4.25rem]"
+            {...fade(0.04)}
+            className="mt-7 text-balance text-[40px] font-semibold leading-[0.98] tracking-[-0.03em] sm:text-[56px] lg:text-[62px]"
           >
-            {t("hero.title1")}{" "}
-            <span className="bg-gradient-to-r from-electric-400 via-cyan-400 to-electric-400 bg-clip-text text-transparent">
-              {t("hero.titleAccent")}
-            </span>
+            {t("hero.title1")}
+            <br />
+            {t("hero.titleAccent")}
           </motion.h1>
 
           <motion.p
-            variants={fadeUp}
-            className="mt-6 max-w-xl text-pretty text-base leading-relaxed text-navy-200 sm:text-lg"
+            {...fade(0.08)}
+            className="mt-6 max-w-lg text-[16px] leading-relaxed text-fog-500"
           >
             {t("hero.sub")}
           </motion.p>
 
-          <motion.div variants={fadeUp} className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button asChild size="lg">
-              <Link href="/quote">
-                {t("hero.getQuote")}
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="secondary">
-              <Link href="/tracking">
-                <Search className="h-4 w-4" />
-                {t("hero.track")}
-              </Link>
-            </Button>
+          <motion.div {...fade(0.12)} className="mt-9 max-w-xl">
+            <div className="mb-2 flex items-baseline justify-between">
+              <p className="label text-fog-500">{t("hero.trackLabel")}</p>
+              <button
+                type="button"
+                onClick={() => router.push("/quote")}
+                className="group inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-fog-600 transition-colors duration-150 hover:text-signal"
+              >
+                {t("hero.priceLane")}
+                <ArrowRight className="h-3 w-3 transition-transform duration-150 group-hover:translate-x-0.5" aria-hidden="true" />
+              </button>
+            </div>
+            <form onSubmit={submit} className="flex">
+              <div className="relative flex-1">
+                <Search
+                  className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-fog-600"
+                  aria-hidden="true"
+                />
+                <input
+                  value={code}
+                  onChange={(e) => {
+                    setCode(e.target.value);
+                    setError(null);
+                  }}
+                  placeholder={t("hero.trackPh")}
+                  aria-label={t("hero.trackLabel")}
+                  className="h-12 w-full border border-white/10 bg-white/[0.03] pl-10 pr-3 font-mono text-[12px] uppercase tracking-[0.08em] text-fog-50 transition-colors duration-150 placeholder:normal-case placeholder:tracking-normal placeholder:text-fog-600 focus:border-signal focus:outline-none"
+                />
+              </div>
+              <button
+                type="submit"
+                className="flex h-12 shrink-0 items-center gap-2 bg-signal px-5 text-[14px] font-medium text-ink-950 transition-colors duration-150 hover:bg-signal-400"
+              >
+                {t("trk.search")}
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </button>
+            </form>
+            {error ? (
+              <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.1em] text-status-crit">
+                {error}
+              </p>
+            ) : null}
+            <div className="mt-2.5 flex flex-wrap items-center gap-2">
+              <span className="label text-fog-600">{t("hero.demo")}</span>
+              {["CRG-582941", "CRG-729103"].map((demo) => (
+                <button
+                  key={demo}
+                  type="button"
+                  onClick={() => router.push(`/tracking?code=${demo}`)}
+                  className="border border-white/10 px-2 py-1 font-mono text-[10px] tracking-[0.08em] text-fog-500 transition-colors duration-150 hover:border-signal/50 hover:text-signal-400"
+                >
+                  {demo}
+                </button>
+              ))}
+            </div>
           </motion.div>
-
-          <motion.ul variants={fadeUp} className="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/10 pt-7">
-            {TRUST_KEYS.map((key, i) => (
-              <li key={key} className="flex items-center gap-2.5 text-sm font-medium text-navy-100">
-                {(() => {
-                  const Icon = TRUST_ICONS[i];
-                  return <Icon className="h-4 w-4 text-cyan-400" />;
-                })()}
-                {t(key)}
-              </li>
-            ))}
-          </motion.ul>
-        </motion.div>
+        </div>
 
         {/* Visual */}
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, scale: 0.97 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 0.61, 0.36, 1] }}
-          className="relative hidden lg:block"
-        >
-          <div className="absolute inset-0 -z-0 rounded-[2.5rem] bg-gradient-to-br from-electric-500/15 via-transparent to-cyan-500/10 blur-2xl" />
-          <div className="relative h-[540px] overflow-hidden rounded-[2.5rem] border border-white/10 bg-navy-950/60 shadow-[0_40px_80px_-24px_rgb(0_0_0/0.6)] backdrop-blur-sm">
-            {isDesktop ? <LogisticsScene /> : <HeroVisualFallback />}
-            {/* ground grid for depth */}
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 [background-image:linear-gradient(rgb(46_211_230/0.05)_1px,transparent_1px),linear-gradient(90deg,rgb(46_211_230/0.05)_1px,transparent_1px)] [background-size:36px_36px] [mask-image:linear-gradient(to_top,black,transparent)]" />
-            {/* HUD overlay */}
-            <div className="pointer-events-none absolute inset-0 rounded-[2.5rem] ring-1 ring-inset ring-white/5" />
-            <div className="pointer-events-none absolute left-5 top-5 rounded-xl border border-white/10 bg-navy-900/70 px-4 py-3 backdrop-blur-md">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-400">{t("hero.liveNetwork")}</p>
-              <p className="mt-1 font-mono text-sm font-semibold text-white">CRG-582941 · In Transit</p>
-            </div>
-            <div className="pointer-events-none absolute bottom-5 right-5 rounded-xl border border-white/10 bg-navy-900/70 px-4 py-3 text-right backdrop-blur-md">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-navy-300">{t("hero.eta")}</p>
-              <p className="mt-1 font-mono text-sm font-semibold text-white">Aug 18 · 62% complete</p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Mobile/tablet visual */}
-        <div className="relative -mx-5 sm:-mx-8 lg:hidden">
-          <div className="rounded-3xl border border-white/10 bg-navy-950/70 p-2">
-            <HeroVisualFallback />
+        <div className="relative min-h-[300px] border-t border-white/10 sm:min-h-[380px] lg:min-h-0 lg:border-l lg:border-t-0">
+          <motion.img
+            src={images.semiHighway}
+            alt="CargoNova linehaul tractor unit and trailer"
+            initial={reduceMotion ? false : { opacity: 0, scale: 1.02 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, ease: EASE }}
+            className="absolute inset-0 h-full w-full object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-ink-950/25" aria-hidden="true" />
+          <div className="absolute bottom-4 left-4 border border-white/12 bg-ink-950/85 px-3 py-2 sm:bottom-6 sm:left-6">
+            <p className="label text-fog-500">{t("hero.fleetLabel")}</p>
+            <p className="mt-1.5 font-mono text-[13px] text-fog-50 tnum">{t("hero.fleetUnits")}</p>
+            <p className="mt-0.5 font-mono text-[9.5px] uppercase tracking-[0.12em] text-fog-600">
+              {t("hero.fleetSub")}
+            </p>
           </div>
         </div>
       </div>
+
+      {/* Stats strip */}
+      <div className="relative border-t border-white/10">
+        <div className="mx-auto grid max-w-[80rem] grid-cols-2 gap-px bg-white/[0.06] md:grid-cols-4">
+          <Stat label={t("stats.inTransit")} value="1 284" unit={t("stats.inTransitUnit")} emphasis />
+          <Stat label={t("stats.ontime")} value="98.7" unit="%" />
+          <Stat label={t("stats.telemetry")} value={t("stats.telemetryVal")} unit={t("stats.telemetryUnit")} />
+          <Stat label={t("stats.countries")} value={t("stats.countriesVal")} unit={t("stats.countriesUnit")} />
+        </div>
+      </div>
+
+      {/* Ops ticker */}
+      <div className="relative border-t border-white/10">
+        <div className="mx-auto max-w-[80rem] px-5 sm:px-8">
+          <OpsTicker />
+        </div>
+      </div>
     </section>
+  );
+}
+
+function Stat({
+  label,
+  value,
+  unit,
+  emphasis = false,
+}: {
+  label: string;
+  value: string;
+  unit: string;
+  emphasis?: boolean;
+}) {
+  return (
+    <div className="bg-ink-950 px-5 py-6 sm:px-8">
+      <p className="label mb-3 text-fog-500">{label}</p>
+      <p
+        className={`font-mono leading-none text-fog-50 tnum ${
+          emphasis ? "text-[30px] sm:text-[40px]" : "text-[22px] sm:text-[26px]"
+        }`}
+      >
+        {value}
+        {unit ? (
+          <span className="ml-1.5 text-[11px] uppercase tracking-[0.12em] text-fog-500">
+            {unit}
+          </span>
+        ) : null}
+      </p>
+    </div>
   );
 }

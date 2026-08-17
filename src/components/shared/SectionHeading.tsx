@@ -9,15 +9,68 @@ export function SectionHeading({
   dark = false,
   className,
   as: Tag = "h2",
+  index,
+  action,
 }: {
   eyebrow?: string;
   title: React.ReactNode;
   description?: string;
-  align?: "left" | "center";
+  align?: "left" | "center" | "split";
   dark?: boolean;
   className?: string;
   as?: "h1" | "h2" | "h3";
+  /** Mono index shown before the eyebrow, e.g. "01". */
+  index?: string;
+  /** Right-aligned action (split layout only). */
+  action?: React.ReactNode;
 }) {
+  const label = (
+    <p
+      className={cn(
+        "label flex flex-wrap items-center gap-2.5",
+        align === "center" && "justify-center",
+      )}
+    >
+      {index ? <span className="text-signal">{index}</span> : null}
+      <span className={dark ? "text-fog-500" : "text-muted"}>{eyebrow}</span>
+    </p>
+  );
+
+  const heading = (
+    <Tag
+      className={cn(
+        "text-balance font-display text-[28px] font-semibold leading-[1.06] tracking-[-0.025em] sm:text-4xl lg:text-[44px]",
+        dark ? "text-fog-50" : "text-strong",
+      )}
+    >
+      {title}
+    </Tag>
+  );
+
+  const lead = description ? (
+    <p
+      className={cn(
+        "mt-5 max-w-xl text-pretty text-[15.5px] leading-relaxed",
+        dark ? "text-fog-500" : "text-muted",
+      )}
+    >
+      {description}
+    </p>
+  ) : null;
+
+  if (align === "split") {
+    return (
+      <Reveal className={cn("lg:flex lg:items-end lg:justify-between lg:gap-10", className)}>
+        <div className="max-w-2xl">
+          {eyebrow ? label : null}
+          <div className="mt-5">{heading}</div>
+          {lead}
+        </div>
+        {action ? <div className="mt-8 shrink-0 lg:mt-0">{action}</div> : null}
+      </Reveal>
+    );
+  }
+
   return (
     <Reveal
       className={cn(
@@ -26,39 +79,9 @@ export function SectionHeading({
         className,
       )}
     >
-      {eyebrow ? (
-        <p
-          className={cn(
-            "mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em]",
-            align === "center" && "justify-center",
-            dark ? "text-cyan-400" : "text-electric-600",
-          )}
-        >
-          <span className={cn("h-px w-8", dark ? "bg-cyan-400/60" : "bg-electric-500/60")} />
-          {eyebrow}
-          {align === "center" ? (
-            <span className={cn("h-px w-8", dark ? "bg-cyan-400/60" : "bg-electric-500/60")} />
-          ) : null}
-        </p>
-      ) : null}
-      <Tag
-        className={cn(
-          "text-balance font-display text-3xl font-extrabold leading-[1.12] tracking-tight sm:text-4xl lg:text-[2.75rem]",
-          dark ? "text-white" : "text-strong",
-        )}
-      >
-        {title}
-      </Tag>
-      {description ? (
-        <p
-          className={cn(
-            "mt-5 text-pretty text-base leading-relaxed sm:text-lg",
-            dark ? "text-navy-200" : "text-muted",
-          )}
-        >
-          {description}
-        </p>
-      ) : null}
+      {eyebrow ? label : null}
+      <div className="mt-5">{heading}</div>
+      {lead}
     </Reveal>
   );
 }

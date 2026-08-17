@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Menu, Moon, Sun, Globe, ChevronDown, Info, Globe2, Phone } from "lucide-react";
+import { ArrowRight, Menu, Moon, Sun, Globe, ChevronDown, Info, Globe2, Phone, Search } from "lucide-react";
 import { Logo } from "@/components/layout/Logo";
 import { Button } from "@/components/ui/button";
 import { MobileMenu } from "@/components/layout/MobileMenu";
@@ -33,8 +33,10 @@ export function Header() {
   );
   const [menuOpen, setMenuOpen] = useState(false);
   const [companyOpen, setCompanyOpen] = useState(false);
+  const [code, setCode] = useState("");
   const reduceMotion = useReducedMotion();
   const pathname = usePathname();
+  const router = useRouter();
   const { theme, toggleTheme } = useTheme();
   const { t, lang, setLang } = useLang();
 
@@ -45,6 +47,12 @@ export function Header() {
   }, []);
 
   useEffect(() => {
+    // Close the dropdown whenever the route changes (incl. keyboard nav).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCompanyOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
@@ -52,6 +60,14 @@ export function Header() {
   }, [menuOpen]);
 
   const solid = scrolled || menuOpen;
+
+  const submitTrack = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!code.trim()) return;
+    router.push(`/tracking?code=${encodeURIComponent(code.trim())}`);
+    setCode("");
+    setMenuOpen(false);
+  };
 
   return (
     <>
@@ -62,12 +78,12 @@ export function Header() {
         className={cn(
           "fixed inset-x-0 top-0 z-50 transition-all duration-300",
           solid
-            ? "border-b border-white/10 bg-navy-900/90 shadow-[0_8px_32px_-12px_rgb(0_0_0/0.5)] backdrop-blur-xl"
-            : "bg-transparent",
+            ? "border-b border-white/10 bg-ink-950/92 backdrop-blur-xl"
+            : "border-b border-transparent bg-transparent",
         )}
       >
-        <div className="mx-auto flex h-16 w-full max-w-[100rem] items-center justify-between gap-3 px-4 sm:h-18 sm:px-6 lg:px-8">
-          <Logo dark />
+        <div className="mx-auto flex h-16 w-full max-w-[80rem] items-center justify-between gap-4 px-5 sm:px-8">
+          <Logo dark className="text-fog-50" />
 
           {/* Desktop nav */}
           <nav aria-label="Main" className="hidden items-center gap-0.5 xl:flex">
@@ -78,15 +94,15 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "group relative whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium transition-colors duration-200",
-                    active ? "text-white" : "text-navy-200 hover:text-white",
+                    "group relative whitespace-nowrap px-3 py-2 text-[13px] font-medium transition-colors duration-150",
+                    active ? "text-fog-50" : "text-fog-500 hover:text-fog-200",
                   )}
                 >
                   {t(item.key)}
                   <span
                     className={cn(
-                      "absolute inset-x-3 -bottom-0.5 h-px origin-left scale-x-0 bg-cyan-400 transition-transform duration-300 group-hover:scale-x-100",
-                      active && "scale-x-100",
+                      "absolute inset-x-3 -bottom-[1px] h-[2px] origin-left bg-signal transition-transform duration-200",
+                      active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100",
                     )}
                   />
                 </Link>
@@ -105,10 +121,10 @@ export function Header() {
                 aria-expanded={companyOpen}
                 aria-haspopup="menu"
                 className={cn(
-                  "group relative flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium transition-colors duration-200",
+                  "group relative flex items-center gap-1 whitespace-nowrap px-3 py-2 text-[13px] font-medium transition-colors duration-150",
                   COMPANY_LINKS.some((l) => pathname.startsWith(l.href))
-                    ? "text-white"
-                    : "text-navy-200 hover:text-white",
+                    ? "text-fog-50"
+                    : "text-fog-500 hover:text-fog-200",
                 )}
               >
                 {t("nav.company")}
@@ -117,7 +133,7 @@ export function Header() {
                 />
                 <span
                   className={cn(
-                    "absolute inset-x-3 -bottom-0.5 h-px origin-left bg-cyan-400 transition-transform duration-300",
+                    "absolute inset-x-3 -bottom-[1px] h-[2px] bg-signal transition-transform duration-200",
                     COMPANY_LINKS.some((l) => pathname.startsWith(l.href)) || companyOpen
                       ? "scale-x-100"
                       : "scale-x-0 group-hover:scale-x-100",
@@ -129,13 +145,13 @@ export function Header() {
                 {companyOpen ? (
                   <motion.div
                     role="menu"
-                    initial={reduceMotion ? false : { opacity: 0, y: 8, scale: 0.98 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={reduceMotion ? undefined : { opacity: 0, y: 6, scale: 0.98 }}
+                    initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={reduceMotion ? undefined : { opacity: 0, y: 6 }}
                     transition={{ duration: 0.18, ease: [0.22, 0.61, 0.36, 1] }}
-                    className="absolute left-1/2 top-full z-50 mt-3 w-64 -translate-x-1/2 overflow-hidden rounded-2xl border border-white/12 bg-navy-900/95 p-1.5 shadow-[0_24px_60px_-12px_rgb(0_0_0/0.6)] backdrop-blur-xl"
+                    className="absolute left-1/2 top-full z-50 mt-3 w-64 -translate-x-1/2 border border-white/10 bg-ink-900 p-1 shadow-[0_24px_60px_-12px_rgb(0_0_0/0.7)]"
                   >
-                    {COMPANY_LINKS.map((l) => {
+                    {COMPANY_LINKS.map((l, i) => {
                       const active = pathname.startsWith(l.href);
                       return (
                         <Link
@@ -144,27 +160,22 @@ export function Header() {
                           onClick={() => setCompanyOpen(false)}
                           role="menuitem"
                           className={cn(
-                            "flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-colors duration-150",
-                            active
-                              ? "bg-white/10 text-white"
-                              : "text-navy-200 hover:bg-white/5 hover:text-white",
+                            "flex items-center gap-3 px-3.5 py-2.5 text-[13px] font-medium transition-colors duration-150",
+                            active ? "bg-white/8 text-fog-50" : "text-fog-400 hover:bg-white/5 hover:text-fog-50",
                           )}
                         >
                           <span
                             className={cn(
-                              "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg",
-                              active ? "bg-cyan-500/15 text-cyan-400" : "bg-white/5 text-navy-300",
+                              "flex h-8 w-8 shrink-0 items-center justify-center border",
+                              active
+                                ? "border-signal/50 text-signal"
+                                : "border-white/10 text-fog-500",
                             )}
                           >
                             <l.icon className="h-4 w-4" />
                           </span>
                           {t(l.key)}
-                          <ArrowRight
-                            className={cn(
-                              "ml-auto h-3.5 w-3.5 transition-transform duration-200",
-                              active ? "text-cyan-400" : "text-navy-400 group-hover:translate-x-0.5",
-                            )}
-                          />
+                          <span className="ml-auto font-mono text-[9px] text-fog-600">0{i + 1}</span>
                         </Link>
                       );
                     })}
@@ -175,14 +186,32 @@ export function Header() {
           </nav>
 
           {/* Right actions */}
-          <div className="hidden shrink-0 items-center gap-1.5 xl:flex">
+          <div className="hidden shrink-0 items-center gap-2 xl:flex">
+            {/* Tracking search */}
+            <form onSubmit={submitTrack} className="relative hidden 2xl:block">
+              <label htmlFor="header-track" className="sr-only">
+                {t("trk.placeholder")}
+              </label>
+              <Search
+                className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-fog-600"
+                aria-hidden="true"
+              />
+              <input
+                id="header-track"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                placeholder={t("trk.placeholder")}
+                className="h-10 w-[210px] border border-white/10 bg-white/[0.03] pl-9 pr-3 font-mono text-[11px] uppercase tracking-[0.08em] text-fog-50 transition-colors duration-150 placeholder:normal-case placeholder:tracking-normal placeholder:text-fog-600 focus:border-signal focus:outline-none"
+              />
+            </form>
+
             {/* Language toggle */}
             <div
-              className="flex items-center rounded-full border border-white/12 bg-white/5 p-0.5 backdrop-blur"
+              className="flex items-center rounded-[3px] border border-white/10 p-0.5"
               role="group"
               aria-label="Language"
             >
-              <Globe className="ml-2 h-3.5 w-3.5 shrink-0 text-navy-300" />
+              <Globe className="ml-2 h-3.5 w-3.5 shrink-0 text-fog-500" />
               {(["en", "ka"] as Lang[]).map((l) => (
                 <button
                   key={l}
@@ -190,8 +219,8 @@ export function Header() {
                   onClick={() => setLang(l)}
                   aria-pressed={lang === l}
                   className={cn(
-                    "rounded-full px-2 py-1 text-xs font-bold transition-colors",
-                    lang === l ? "bg-white text-navy-900" : "text-navy-200 hover:text-white",
+                    "rounded-[2px] px-2 py-1 text-[11px] font-bold transition-colors",
+                    lang === l ? "bg-signal text-ink-950" : "text-fog-400 hover:text-fog-50",
                   )}
                 >
                   {l === "en" ? "EN" : "ქარ"}
@@ -204,46 +233,46 @@ export function Header() {
               type="button"
               onClick={toggleTheme}
               aria-label={t("theme.toggle")}
-              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-navy-200 transition-colors hover:bg-white/10 hover:text-white"
+              className="inline-flex h-9 w-9 shrink-0 items-center justify-center text-fog-400 transition-colors hover:bg-white/8 hover:text-fog-50"
             >
               {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
 
-            <Button asChild size="default" className="whitespace-nowrap">
+            <Button asChild size="default" className="h-10 px-5">
               <Link href="/quote">
-                {t("nav.getQuote")}
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+                {t("nav.requestCapacity")}
+                <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
           </div>
 
           {/* Mobile actions */}
-          <div className="flex items-center gap-1.5 xl:hidden">
-            <button
-              type="button"
-              onClick={toggleTheme}
-              aria-label={t("theme.toggle")}
-              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10"
-            >
-              {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            </button>
+          <div className="flex items-center gap-1 xl:hidden">
             <button
               type="button"
               onClick={() => setLang(lang === "en" ? "ka" : "en")}
               aria-label="Language"
-              className="inline-flex h-10 shrink-0 items-center rounded-full px-2 text-xs font-bold text-white transition-colors hover:bg-white/10"
+              className="inline-flex h-10 shrink-0 items-center rounded-[3px] border border-white/10 px-2.5 text-[11px] font-bold text-fog-50 transition-colors hover:bg-white/8"
             >
               {lang === "en" ? "EN" : "ქარ"}
             </button>
-            <Button asChild size="sm" className="h-10 whitespace-nowrap">
-              <Link href="/quote">{t("nav.getQuote")}</Link>
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label={t("theme.toggle")}
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center text-fog-50 transition-colors hover:bg-white/8"
+            >
+              {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </button>
+            <Button asChild size="sm" className="h-10 px-4">
+              <Link href="/quote">{t("nav.requestCapacity")}</Link>
             </Button>
             <button
               type="button"
               onClick={() => setMenuOpen((v) => !v)}
               aria-expanded={menuOpen}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
-              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10"
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center text-fog-50 transition-colors hover:bg-white/8"
             >
               {menuOpen ? (
                 <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
