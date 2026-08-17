@@ -46,3 +46,52 @@ describe("ocean shipment timeline dates", () => {
     expect(checked).toBeGreaterThan(20);
   });
 });
+
+describe("ISO container code lookups", () => {
+  // Real container-owner prefixes; digits are deterministic but varied so the
+  // sweep covers both small and large hashId values (the signed right-shift
+  // `h >> 2` used to turn large hashes negative and index seaRoutes[-1]).
+  const PREFIXES = [
+    "MSKU", "CMAU", "TRLU", "MSCU", "TEMU", "CSLU", "GESU", "MAEU",
+    "HLXU", "OOLU", "CNTR", "TTNU", "MEDU", "PCIU", "SZLU", "FCIU",
+    "DFSU", "TCLU", "UACU", "SEGU", "XUTR", "BMOU", "APLU", "HLBU",
+    "ONEU", "COSU", "EMCU", "WHLU", "TGHU", "YMLU",
+  ];
+
+  const containerCodes = (): string[] => {
+    const codes: string[] = [];
+    for (const prefix of PREFIXES) {
+      for (let i = 0; i < 15; i++) {
+        codes.push(`${prefix}${1000000 + ((i * 137 + prefix.charCodeAt(3)) % 8999999)}`);
+      }
+    }
+    return codes;
+  };
+
+  it("every ISO container number resolves to a complete ocean shipment without throwing", () => {
+    const codes = containerCodes();
+    let checked = 0;
+    for (const code of codes) {
+      const s = lookupShipment(code);
+      expect(s, `lookup ${code}`).not.toBeNull();
+      expect(s!.mode, `mode ${code}`).toBe("ocean");
+      expect(s!.voyage, `voyage ${code}`).toBeDefined();
+      expect(s!.voyage!.route.length, `route ${code}`).toBeGreaterThanOrEqual(2);
+      expect(s!.origin, `origin ${code}`).toBeTruthy();
+      expect(s!.destination, `destination ${code}`).toBeTruthy();
+      expect(s!.voyage!.vessel, `vessel ${code}`).toBeTruthy();
+      expect(s!.checkpoints.length, `checkpoints ${code}`).toBeGreaterThanOrEqual(3);
+      checked++;
+    }
+    expect(checked).toBeGreaterThanOrEqual(400);
+  });
+
+  it("resolves the exact code that crashed (MSKU3128457) and its siblings", () => {
+    for (const code of ["MSKU3128457", "MSKU3128458", "MSKU3128459"]) {
+      const s = lookupShipment(code);
+      expect(s).not.toBeNull();
+      expect(s!.mode).toBe("ocean");
+      expect(s!.voyage!.route.length).toBeGreaterThanOrEqual(2);
+    }
+  });
+});

@@ -5,6 +5,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { Shipment } from "@/lib/tracking";
 import { cityByName } from "@/lib/geo";
+import { tileConfig } from "@/lib/mapTiles";
 import { useTheme } from "@/lib/theme";
 import { useLang } from "@/lib/i18n";
 
@@ -139,17 +140,11 @@ export function RouteMap({ shipment }: { shipment: Shipment }) {
     });
     mapRef.current = map;
 
-    const tile = L.tileLayer(
-      dark
-        ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-        : "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-      {
-        subdomains: dark ? "abcd" : "abc",
-        attribution: dark
-          ? '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
-          : '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      },
-    ).addTo(map);
+    const cfg = tileConfig(dark);
+    const tile = L.tileLayer(cfg.url, {
+      subdomains: cfg.subdomains,
+      attribution: cfg.attribution,
+    }).addTo(map);
     tileRef.current = tile;
 
     const first = routePts[0];
@@ -208,12 +203,9 @@ export function RouteMap({ shipment }: { shipment: Shipment }) {
     // (which trips over React StrictMode's double-mount in dev).
     const tile = tileRef.current;
     if (!tile) return;
-    tile.setUrl(
-      dark
-        ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-        : "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-    );
-    tile.options.subdomains = dark ? "abcd" : "abc";
+    const cfg = tileConfig(dark);
+    tile.setUrl(cfg.url);
+    tile.options.subdomains = cfg.subdomains;
   }, [dark]);
 
   if (!resolvable) {
