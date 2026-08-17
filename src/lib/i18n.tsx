@@ -49,21 +49,21 @@ const en = {
   "common.required": "required",
 
   // Hero
-  "hero.badge": "European ground freight · 24/7 control tower",
-  "hero.title1": "Freight that reports",
-  "hero.titleAccent": "on itself.",
+  "hero.badge": "Tbilisi control tower · 30+ countries · around the clock",
+  "hero.title1": "Where is your truck",
+  "hero.titleAccent": "right now?",
   "hero.sub":
-    "Own fleet across 30+ countries, one control tower in Tbilisi, and a single data model behind every rate, milestone and document — so you stop calling to ask where the load is.",
+    "412 vehicles, one control tower in Tbilisi, every shipment tracked end-to-end. No more phone calls asking where your load is.",
   "hero.getQuote": "Get a Quote",
   "hero.track": "Track Shipment",
-  "hero.trust1": "10,000+ shipments delivered yearly",
-  "hero.trust2": "98.7% on-time delivery rate",
-  "hero.trust3": "30+ regions across Europe & beyond",
+  "hero.trust1": "10 000+ shipments a year",
+  "hero.trust2": "98.7% on time",
+  "hero.trust3": "30+ countries, one network",
   "hero.liveNetwork": "Live Network",
   "hero.eta": "ETA Berlin → Tbilisi",
 
   // Logos
-  "logos.heading": "Trusted by operations teams across Europe",
+  "logos.heading": "Trusted by operations teams across 30+ countries",
 
   // Stats
   "stats.shipments": "Shipments delivered yearly",
@@ -122,9 +122,9 @@ const en = {
 
   // Services section
   "svc.eyebrow": "What we move",
-  "svc.title": "Freight solutions for every load, every corridor",
+  "svc.title": "One network, every kind of freight",
   "svc.sub":
-    "Eight core services covering the full logistics lifecycle — from a single pallet to project-scale special transport.",
+    "From a single pallet to a 40-tonne project load — eight services, one platform, one accountable team.",
   "svc.explore": "Explore all services",
   "svc.learnMore": "Learn more",
 
@@ -156,8 +156,8 @@ const en = {
 
   // How it works
   "how.eyebrow": "How it works",
-  "how.title": "From request to delivery in four steps",
-  "how.sub": "A simple, transparent process — you always know where your cargo is and what happens next.",
+  "how.title": "Request to delivery in four steps",
+  "how.sub": "No black boxes. You see every step from the moment you call to the moment it's signed for.",
   "how.step1t": "Request",
   "how.step1d": "Share your route, cargo, and timing. Get a confirmed quote within 4 business hours — 60 minutes for urgent loads.",
   "how.step2t": "Planning",
@@ -169,9 +169,9 @@ const en = {
 
   // Coverage
   "cov.eyebrow": "Coverage & routes",
-  "cov.title": "A network that reaches where your freight needs to go",
+  "cov.title": "Where the network reaches",
   "cov.sub":
-    "Scheduled lanes across Europe's core corridors, gateway hubs at key ports, and an international corridor network that extends beyond the EU.",
+    "Fixed lanes across Europe's busiest corridors, port hubs at Rotterdam and beyond, and routes extending into Turkey, the Caucasus and Central Asia.",
   "cov.explore": "Explore full coverage",
   "cov.transit": "Transit:",
   "cov.mapHint": "Click a corridor to highlight it",
@@ -197,23 +197,23 @@ const en = {
   "cov.countries": "Countries",
   "cov.tierMajor": "Major hub",
   "cov.tierRegional": "Regional hub",
-  "cov.tierGateway": "Gateway",
+  "cov.tierGateway": "Port hub",
   "cov.hoverHint": "Hover to trace",
   "cov.departures": "Weekly departures",
   "cov.lanes": "Daily scheduled lanes",
 
   // Technology
   "tech.eyebrow": "Technology",
-  "tech.title": "A control tower for your entire freight operation",
+  "tech.title": "Your freight, in one view",
   "tech.sub":
-    "Every CargoNova shipment runs through the same platform — tracking, routing, telemetry, and documentation working as one system.",
+    "Tracking, routing, telemetry, documents — all in one system, live for every shipment.",
   "tech.seeHow": "See how the platform works",
 
   // Fleet
   "fleet.eyebrow": "Our fleet",
-  "fleet.title": "Modern equipment for every kind of freight",
+  "fleet.title": "412 vehicles. Ready for your cargo.",
   "fleet.sub":
-    "Vetted vehicles with telematics, maintenance programs, and drivers trained to your cargo's requirements.",
+    "Every unit checked before dispatch, every driver trained on securing your load. If it's not road-ready, it doesn't leave.",
   "fleet.browse": "Browse full fleet",
   "fleet.recommend": "Tell us what you're shipping. We'll recommend the right vehicle — payload, dimensions, and equipment matched to your cargo.",
   "fleet.getRecommendation": "Get a recommendation",
@@ -302,16 +302,16 @@ const en = {
   "test.eyebrow": "Client outcomes",
   "test.title": "Results our customers measure in their own KPIs",
   "test.sub":
-    "Enterprise logistics is judged by numbers. These are the numbers our clients report after moving freight with CargoNova.",
+    "Logistics runs on numbers. Here's what our clients say when they measure ours.",
   "test.placeholder":
     "Placeholder case studies for demo purposes — replace with customer-approved references.",
 
   // CTA
   "cta.badge": "Capacity available this week on core corridors",
-  "cta.title1": "Move Your Cargo With",
-  "cta.titleAccent": "Confidence",
+  "cta.title1": "Ship with",
+  "cta.titleAccent": "Confidence.",
   "cta.sub":
-    "Get a confirmed quote within 4 business hours — or talk to a logistics specialist about your network today.",
+    "A confirmed price within 4 business hours. 60 minutes if it's urgent. No commitment until you book.",
   "cta.getQuote": "Get a Quote",
   "cta.contact": "Contact Logistics Team",
   "cta.prefers": "Prefer to talk? Call",
@@ -320,11 +320,11 @@ const en = {
   // Footer
   "footer.hours": "Mon – Fri, 08:00 – 20:00 CET · 24/7 for active shipments",
   "footer.photoAttrib": "Photography via Unsplash. Placeholder imagery — replace with licensed brand photography.",
-  "footer.motto": "Move Smarter. Deliver Better.",
-  "footer.disclaimer": "Demo website — placeholder company details. Certifications shown are illustrative.",
-  "footer.tagline": "Ground freight, FTL/LTL, express, refrigerated, oversized, and warehousing — built for businesses that cannot afford delays.",
-  "footer.newsletterTitle": "Freight brief, monthly",
-  "footer.newsletterSub": "Corridor updates, capacity notes, and logistics insights. No noise.",
+  "footer.motto": "Fewer surprises. More deliveries.",
+  "footer.disclaimer": "Demo website — illustrative company details and certifications.",
+  "footer.tagline": "FTL, LTL, express, refrigerated, oversized freight and warehousing — for businesses that ship on schedule.",
+  "footer.newsletterTitle": "Monthly freight brief",
+  "footer.newsletterSub": "Corridor updates, capacity notes, logistics thinking. Short, sharp, useful.",
   "footer.newsletterCta": "Subscribe",
   "footer.newsletterPlaceholder": "you@company.com",
   "footer.subscribed": "You're subscribed. First brief arrives next month.",
@@ -751,10 +751,10 @@ const en = {
   "mi.coverage": "Coverage",
 
   // Redesign — network
-  "net.title1": "Scheduled corridors,",
-  "net.title2": "not spot chaos.",
+  "net.title1": "Fixed corridors,",
+  "net.title2": "not ad-hoc.",
   "net.lead":
-    "Fixed departures on 6 corridors between 16 hubs. Capacity is planned weeks out, so your load has a slot before you book it.",
+    "6 corridors, 16 hubs, fixed departures. Capacity is locked weeks ahead — so your load has a slot before you even book.",
   "net.scheduled": "scheduled",
   "net.depBoard": "Departure board",
   "net.next7": "Next 7 days",
@@ -764,10 +764,10 @@ const en = {
 
   // Redesign — tools preview
   "tp.eyebrow": "Operating tools",
-  "tp.title1": "The tools our planners use",
-  "tp.title2": "are the tools you get.",
+  "tp.title1": "Same rate engine",
+  "tp.title2": "same numbers you see.",
   "tp.lead":
-    "No sales gate in front of a price, and no portal that shows less than our own screens. Rates are generated from the same cost model that prices our contracts.",
+    "No sales gate before a price. The rate you see is the same model behind our own contracts — fully transparent, fully itemised.",
   "tp.rateEngine": "Rate engine",
   "tp.liveCost": "Live cost model",
   "tp.mode": "Mode",
@@ -789,23 +789,23 @@ const en = {
 
   // Redesign — operating standard
   "as.eyebrow": "Operating standard",
-  "as.title1": "Answers before you",
-  "as.title2": "have to ask for them.",
+  "as.title1": "We call you",
+  "as.title2": "before the ETA moves.",
   "as.sub":
-    "Software gives you the position. People decide what to do about it. We keep both in the same building, so a delayed border crossing turns into a re-planned delivery slot instead of an email thread.",
+    "Our planner sees a border delay at 08:00. By 08:15, your phone rings with a revised delivery slot. No emails chasing updates. No silence.",
   "as.cta": "Request capacity",
   "as.claims": "Claims ratio",
   "as.answer": "Avg. answer",
   "as.retention": "Retention",
-  "as.c1t": "Named planner, not a queue",
+  "as.c1t": "One planner, not a ticket queue",
   "as.c1b":
-    "Every account sits with one planner and one deputy in the Tbilisi control tower. They know your docks, your cut-offs and your customers.",
+    "Every account has a named planner and a deputy in Tbilisi. They know your docks, your cut-offs, your customers — by name.",
   "as.c2t": "Exceptions reach you first",
   "as.c2b":
     "If a corridor slips, the console updates and your planner calls before the ETA moves in your own system. Silence is never our default.",
-  "as.c3t": "One price, fully built up",
+  "as.c3t": "One price, fully itemised",
   "as.c3b":
-    "Linehaul, terminal, fuel index, tolls and surcharges are itemised on every quote. Nothing is discovered on the invoice.",
+    "Linehaul, terminal, fuel index, toll, surcharge — every cost is visible on every quote. Nothing shows up on the invoice that wasn't there before.",
   "as.c4t": "Documents on delivery, not next week",
   "as.c4b":
     "CMR, POD and temperature logs are attached to the shipment record within 20 minutes of unloading.",
@@ -1024,21 +1024,21 @@ const ka: Record<keyof typeof en, string> = {
   "common.required": "აუცილებელი",
 
   // Hero
-  "hero.badge": "ევროპული სახმელეთო ტვირთები · 24/7 საკონტროლო ცენტრი",
-  "hero.title1": "ტვირთი, რომელიც თავად",
-  "hero.titleAccent": "აბარებს ანგარიშს.",
+  "hero.badge": "თბილისის საკონტროლო ცენტრი · 30+ ქვეყანა · დღე-ღამის რეჟიმში",
+  "hero.title1": "სად არის თქვენი სატვირთო",
+  "hero.titleAccent": "ახლა?",
   "hero.sub":
-    "საკუთარი ავტოპარკი 30+ ქვეყანაში, ერთი საკონტროლო ცენტრი თბილისში და ერთიანი მონაცემთა მოდელი ყოველი ტარიფის, ეტაპისა და დოკუმენტის უკან — ასე აღარ მოგიწევთ ზარი იმის გასარკვევად, სად არის ტვირთი.",
+    "412 მანქანა, ერთი საკონტროლო ცენტრი თბილისში, ყოველი ტვირთი თვალთვალის ქვეშ. აღარ მოგიწევთ ზარი იმის გასარკვევად, სად არის თქვენი ტვირთი.",
   "hero.getQuote": "მიიღეთ შეთავაზება",
   "hero.track": "ტვირთის თვალთვალი",
-  "hero.trust1": "10,000+ ტვირთი წელიწადში",
+  "hero.trust1": "10 000+ ტვირთი წელიწადში",
   "hero.trust2": "98.7% დროული მიწოდება",
-  "hero.trust3": "30+ რეგიონი ევროპასა და მის ფარგლებს გარეთ",
+  "hero.trust3": "30+ ქვეყანა, ერთი ქსელი",
   "hero.liveNetwork": "ცოცხალი ქსელი",
   "hero.eta": "ETA ბერლინი → თბილისი",
 
   // Logos
-  "logos.heading": "გვენდობიან ოპერაციული გუნდები მთელ ევროპაში",
+  "logos.heading": "გვენდობიან საოპერაციო გუნდები 30+ ქვეყანაში",
 
   // Stats
   "stats.shipments": "წლიურად მიწოდებული ტვირთები",
@@ -1050,7 +1050,7 @@ const ka: Record<keyof typeof en, string> = {
   "calc.eyebrow": "ტვირთის კალკულატორი",
   "calc.title": "რეალური მარშრუტი, რეალური მანძილი, რეალური შეფასება",
   "calc.sub":
-    "აირჩიეთ რეალური ქალაქები — ჩვენ ვითვლით საგზაო მანძილს და ვაფასებთ ტვირთის ღირებულებას კილომეტრზე, პალეტზე და სრულ დატვირთვაზე. რეგისტრაციის გარეშე, მყისიერად.",
+    "აირჩიეთ რეალური ქალაქები — ჩვენ ვითვლით საგზაო მანძილს და ვაფასებთ ტვირთის ღირებულებას კილომეტრზე, პალეტზე და სრულ დატვირთვაზე. რეგისტრაციის გარეშე, მყისიერად მუშაობს.",
   "calc.origin": "ჩატვირთვის ქვეყანა",
   "calc.originCity": "ჩატვირთვის ქალაქი",
   "calc.dest": "მიწოდების ქვეყანა",
@@ -1070,8 +1070,8 @@ const ka: Record<keyof typeof en, string> = {
   "calc.inGel": "ლარში",
   "calc.eur": "EUR",
   "calc.gel": "GEL",
-  "calc.note": "სავარაუდო გაანგარიშება — საბოლოო ფასს ადასტურებს ჩვენი პლანერების გუნდი 4 სამუშაო საათში.",
-  "calc.request": "მოითხოვეთ ეს ზუსტად ასე",
+  "calc.note": "ეს სავარაუდო შეფასებაა — საბოლოო ფასს ჩვენი სპეციალისტები დაადასტურებენ 4 სამუშაო საათში.",
+  "calc.request": "მოითხოვეთ ეს კონკრეტული შეთავაზება",
   "calc.palletLoad": "სრული დატვირთვა (FTL)",
   "calc.partialLoad": "ნაწილობრივი დატვირთვა (LTL)",
   "calc.express": "ექსპრეს / გადაუდებელი",
@@ -1097,9 +1097,9 @@ const ka: Record<keyof typeof en, string> = {
 
   // Services section
   "svc.eyebrow": "რას ვაზიდავთ",
-  "svc.title": "სატვირთო გადაწყვეტილებები ნებისმიერი დატვირთვისთვის",
+  "svc.title": "ერთი ქსელი, ნებისმიერი სახის ტვირთი",
   "svc.sub":
-    "რვა ძირითადი სერვისი ლოგისტიკის სრულ ციკლზე — ერთი პალეტიდან პროექტული მასშტაბის სპეციალურ ტრანსპორტირებამდე.",
+    "ერთი პალეტიდან 40-ტონიან პროექტამდე — რვა სერვისი, ერთი პლატფორმა, ერთი პასუხისმგებელი გუნდი.",
   "svc.explore": "ყველა სერვისის ნახვა",
   "svc.learnMore": "დეტალურად",
 
@@ -1132,24 +1132,24 @@ const ka: Record<keyof typeof en, string> = {
   // How it works
   "how.eyebrow": "როგორ მუშაობს",
   "how.title": "მოთხოვნიდან მიწოდებამდე — ოთხი ნაბიჯი",
-  "how.sub": "მარტივი და გამჭვირვალე პროცესი — თქვენ ყოველთვის იცით, სად არის თქვენი ტვირთი.",
+  "how.sub": "არანაირი შავი ყუთი — ყოველი ნაბიჯი ხილვადია ზარიდან ხელმოწერამდე.",
   "how.step1t": "მოთხოვნა",
-  "how.step1d": "გააზიარეთ მარშრუტი, ტვირთი და ვადები. დადასტურებულ ფასს მიიღებთ 4 სამუშაო საათში — გადაუდებლად 60 წუთში.",
+  "how.step1d": "მიუთითეთ მარშრუტი, ტვირთი და ვადები. დადასტურებულ ფასს მიიღებთ 4 სამუშაო საათში — გადაუდებელი ტვირთისთვის 60 წუთში.",
   "how.step2t": "დაგეგმვა",
-  "how.step2d": "ჩვენი პლანერები შეარჩევენ შესაბამის ტრანსპორტს და მარშრუტს და დაგინიშნავთ ჩატვირთვის დროს.",
+  "how.step2d": "ჩვენი პლანერები შეარჩევენ შესაბამის ტრანსპორტსა და მარშრუტს, შეამოწმებენ დერეფნების მდგომარეობას და დაგინიშნავთ ჩატვირთვას თქვენთვის მოსახერხებელ დროს.",
   "how.step3t": "ტრანსპორტირება",
-  "how.step3d": "თქვენი ტვირთი მოძრაობს ცოცხალი GPS თვალთვალით, საკონტროლო პუნქტების განახლებით და მრგვალი საათის მონიტორინგით.",
+  "how.step3d": "თქვენი ტვირთი მოძრაობს ცოცხალი GPS თვალთვალით, საკონტროლო პუნქტების განახლებებით და დღე-ღამის მონიტორინგით.",
   "how.step4t": "მიწოდება",
-  "how.step4d": "დროული მიწოდება ხელმოწერილი ჩაბარების დამადასტურებელი დოკუმენტით — იმავე დღეს.",
+  "how.step4d": "დროული მიწოდება ხელმოწერილი ჩაბარების დამადასტურებელი დოკუმენტითა და სრული დოკუმენტაციით თქვენს პორტალში — იმავე დღეს.",
 
   // Coverage
   "cov.eyebrow": "გეოგრაფია და მარშრუტები",
-  "cov.title": "ქსელი, რომელიც თქვენს ტვირთს ყველგან მიაწვდის",
+  "cov.title": "სად აღწევს ქსელი",
   "cov.sub":
-    "დაგეგმილი რეისები ევროპის ძირითად დერეფნებზე, საკვანძო პორტები და საერთაშორისო დერეფნები ევროკავშირის მიღმაც.",
+    "ფიქსირებული მარშრუტები ევროპის ყველაზე დატვირთულ დერეფნებზე, საპორტო ჰაბები როტერდამში და მის მიღმა, მარშრუტები თურქეთის, კავკასიისა და ცენტრალური აზიის მიმართულებით.",
   "cov.explore": "სრული გეოგრაფიის ნახვა",
   "cov.transit": "ტრანზიტი:",
-  "cov.mapHint": "დააწკაპუნეთ დერეფანზე გასანათებლად",
+  "cov.mapHint": "დააწკაპუნეთ დერეფანზე მის გამოსაყოფად",
   "cov.networkMap": "ქსელის რუკა",
   "cov.networkTitle": "გამოიკვლიეთ ქსელი",
   "cov.networkSub": "გადაუსვით კურსორი დერეფანს ან აირჩიეთ ქვემოთ, რომ მიკვლიოთ მისი მარშრუტი ჰაბების ქსელში.",
@@ -1165,29 +1165,29 @@ const ka: Record<keyof typeof en, string> = {
   "cov.offCorridorSub": "ჩვენი ქსელი ამ დერეფნების მიღმაც ვრცელდება შემოწმებული პარტნიორების მეშვეობით. ჰკითხეთ თქვენს მარშრუტზე — თუ საგზაო ტრანსპორტით გადასატანია, ფასს გამოგითვლით.",
   "cov.requestQuote": "მოითხოვეთ მარშრუტის შეთავაზება",
   "cov.note":
-    "დერეფანზე გადაიტანეთ კურსორი ხაზგასასმელად. საჩვენებელი მონაცემები — რეალური კოორდინატები ამ კომპონენტს უკან უერთდება.",
+    "დერეფანზე გადაიტანეთ კურსორი ხაზგასასმელად. საჩვენებელი მონაცემები — რეალური კოორდინატები ამ მოდულში მოგვიანებით ჩაერთვება.",
   "cov.live": "ცოცხალი ქსელი",
   "cov.hubs": "ჰაბები",
   "cov.corridorsShort": "დერეფნები",
   "cov.countries": "ქვეყნები",
   "cov.tierMajor": "მთავარი ჰაბი",
   "cov.tierRegional": "რეგიონული ჰაბი",
-  "cov.tierGateway": "საკარიბჭე ჰაბი",
+  "cov.tierGateway": "საპორტო ჰაბი",
   "cov.hoverHint": "გადაიტანეთ კურსორი მარშრუტზე",
   "cov.departures": "კვირაში რეისები",
   "cov.lanes": "ყოველდღიური რეისები",
 
   // Technology
   "tech.eyebrow": "ტექნოლოგია",
-  "tech.title": "საკონტროლო ცენტრი თქვენი ტვირთბრუნვისთვის",
+  "tech.title": "თქვენი ტვირთი, ერთ ხედში",
   "tech.sub":
-    "ყველა ტვირთი მოძრაობს ერთ პლატფორმაზე — თვალთვალი, მარშრუტიზაცია, ტელემეტრია და დოკუმენტაცია ერთ სისტემად.",
+    "თვალთვალი, მარშრუტი, ტელემეტრია, დოკუმენტები — ყველაფერი ერთ სისტემაში, ყოველი ტვირთისთვის ცოცხლად.",
   "tech.seeHow": "ნახეთ, როგორ მუშაობს პლატფორმა",
 
   // Fleet
   "fleet.eyebrow": "ჩვენი ავტოპარკი",
-  "fleet.title": "თანამედროვე ტექნიკა ნებისმიერი ტვირთისთვის",
-  "fleet.sub": "შემოწმებული მანქანები ტელემეტრიით, მოვლის პროგრამით და გაწვრთნილი მძღოლებით.",
+  "fleet.title": "412 მანქანა. თქვენი ტვირთისთვის მზად.",
+  "fleet.sub": "ყოველი მანქანა გამგზავნამდე შემოწმებული, ყოველი მძღოლი გაწვრთნილი თქვენი ტვირთის სწორად დამაგრებაში. გზისთვის მზად არ არის — არ გადის.",
   "fleet.browse": "მთელი ავტოპარკის ნახვა",
   "fleet.recommend": "გვითხარით, რას ზიდავთ — შემოგთავაზებთ შესაბამის ტრანსპორტს.",
   "fleet.getRecommendation": "მიიღეთ რეკომენდაცია",
@@ -1225,7 +1225,7 @@ const ka: Record<keyof typeof en, string> = {
   "svc.short.ftl": "ცალკეული ტრანსპორტის ტევადობა დიდი ტვირთებისთვის — სწრაფად, გადატვირთვის გარეშე.",
   "svc.short.ltl": "ეკონომიური გაზიარებული ტრანსპორტირება პალეტებისა და ტვირთის ერთეულებისთვის.",
   "svc.short.express": "პრიორიტეტული მიწოდება ტვირთებისთვის, რომლებიც ვერ ლოდინობენ.",
-  "svc.short.refrigerated": "ტემპერატურული რეჟიმით ლოგისტიკა ცივი ჯაჭვის სრული კონტროლით.",
+  "svc.short.refrigerated": "ტემპერატურული რეჟიმის ლოგისტიკა ცივი ჯაჭვის სრული კონტროლით.",
   "svc.short.oversized": "სპეციალური ტრანსპორტირების დაგეგმვა მძიმე და განსაკუთრებული ტვირთებისთვის.",
   "svc.short.warehousing": "შენახვა, დისტრიბუცია და კროს-დოკინგი ერთ ჭერქვეშ.",
   "svc.short.consulting": "მორგებული ლოგისტიკური გადაწყვეტილებები საწარმოებისა და რთული მიწოდების ჯაჭვებისთვის.",
@@ -1274,15 +1274,15 @@ const ka: Record<keyof typeof en, string> = {
   // Testimonials
   "test.eyebrow": "კლიენტების შედეგები",
   "test.title": "შედეგები, რომლებსაც კლიენტები საკუთარი KPI-ებით აფასებენ",
-  "test.sub": "საწარმოთა ლოგისტიკას ციფრები აფასებენ. ეს ის ციფრებია, რასაც კლიენტები იუწყებიან.",
+  "test.sub": "ლოგისტიკა ციფრებით მუშაობს. აი, რას ამბობენ ჩვენი კლიენტები, როცა ჩვენს ციფრებს ზომავენ.",
   "test.placeholder":
     "საჩვენებელი ქეისები დემო მიზნებისთვის — ჩანაცვლდება კლიენტის მიერ დამტკიცებული რეფერენციებით.",
 
   // CTA
   "cta.badge": "თავისუფალი ტევადობა ამ კვირაში ძირითად დერეფნებზე",
-  "cta.title1": "გადააადგილეთ თქვენი ტვირთი",
-  "cta.titleAccent": "დარწმუნებით",
-  "cta.sub": "დადასტურებული ფასი 4 სამუშაო საათში — ან ესაუბრეთ ლოგისტიკის სპეციალისტს დღესვე.",
+  "cta.title1": "გადაზიდეთ",
+  "cta.titleAccent": "დარწმუნებით.",
+  "cta.sub": "დადასტურებული ფასი 4 სამუშაო საათში. გადაუდებელი ტვირთისთვის — 60 წუთში. დაჯავშნამდე არანაირი ვალდებულება.",
   "cta.getQuote": "მიიღეთ შეთავაზება",
   "cta.contact": "დაუკავშირდით გუნდს",
   "cta.prefers": "გირჩევნიათ ზარი?",
@@ -1291,11 +1291,11 @@ const ka: Record<keyof typeof en, string> = {
   // Footer
   "footer.hours": "ორშ – პარ, 08:00 – 20:00 CET · 24/7 აქტიური გადაზიდვებისთვის",
   "footer.photoAttrib": "ფოტოები Unsplash-დან. ადგილზე დაცული სურათები — შეცვალეთ ლიცენზირებული ბრენდის ფოტოებით.",
-  "footer.motto": "გადაადგილდით უფრო ჭკვიანად. მიაწოდეთ უკეთესად.",
-  "footer.disclaimer": "საცდელი ვებგვერდი — კომპანიის მონაცემები საილუსტრაციოა. სერტიფიკატები ასევე საილუსტრაციოა.",
-  "footer.tagline": "სახმელეთო ტვირთები, FTL/LTL, ექსპრეს, რეფრიჟერატორული და სასაწყობო სერვისები — ბიზნესებისთვის, რომლებსაც დაგვიანება არ შეუძლიათ.",
-  "footer.newsletterTitle": "ყოველთვიური ბიულეტენი",
-  "footer.newsletterSub": "დერეფნების განახლებები, ტევადობის ინფორმაცია და ლოგისტიკური მიმოხილვები. ზედმეტი ინფორმაციის გარეშე.",
+  "footer.motto": "ნაკლები სიურპრიზი. მეტი მიწოდება.",
+  "footer.disclaimer": "საცდელი ვებგვერდი — საილუსტრაციო კომპანიის მონაცემები და სერტიფიკატები.",
+  "footer.tagline": "FTL, LTL, ექსპრეს, რეფრიჟერატორული, განსაკუთრებული ტვირთები და საწყობი — ბიზნესებისთვის, რომლებიც დროულად გზავნიან.",
+  "footer.newsletterTitle": "ყოველთვიური ტვირთების ბიულეტენი",
+  "footer.newsletterSub": "დერეფნები, ტევადობა, ლოგისტიკა — მოკლედ, სასარგებლოდ.",
   "footer.newsletterCta": "გამოწერა",
   "footer.newsletterPlaceholder": "you@company.com",
   "footer.subscribed": "გამოწერილია. პირველი ბიულეტენი მომავალ თვეში.",
@@ -1330,7 +1330,7 @@ const ka: Record<keyof typeof en, string> = {
   "trk.timeline": "ტვირთის ვადები",
   "trk.refresh": "განახლება",
   "trk.updated": "ბოლო განახლება",
-  "trk.etaIn": "ჩასვლა დაახლოებით",
+  "trk.etaIn": "სავარაუდო ჩასვლა",
   "trk.arrived": "ჩაბარებულია",
   "trk.justNow": "ახლახან",
   "trk.secondsAgo": "წმ წინ",
@@ -1342,7 +1342,7 @@ const ka: Record<keyof typeof en, string> = {
   "trk.emptyMsg": "შეიყვანეთ ტვირთის ნომერი ძებნისთვის.",
   "trk.clear": "ძებნის გასუფთავება",  "trk.docsNote1": "გჭირდებათ ჩაბარების დამადასტურებელი დოკუმენტი ან ტემპერატურის ჟურნალი?",
   "trk.docsNote2": "— ხელმისაწვდომია თქვენს პორტალში მოთხოვნით.",
-  "trk.verifyNote": "ეს ცოცხალი სიმულაციაა. დაგეგმვამდე გადაამოწმეთ ნომერი რეალურ გადამზიდავთან.",
+  "trk.verifyNote": "ეს ცოცხალი სიმულაციაა. გადაზიდვის დაგეგმვამდე გადაამოწმეთ ნომერი რეალურ გადამზიდავთან.",
   "trk.verifyCta": "შემოწმება გადამზიდავის საიტზე",
   "trk.requestDocs": "დოკუმენტების მოთხოვნა",
   "trk.step.pickup": "ჩატვირთვა",
@@ -1383,7 +1383,8 @@ const ka: Record<keyof typeof en, string> = {
   // Quote form
   "quote.eyebrow": "მიიღეთ შეთავაზება",
   "quote.title": "გვითხარით, რას ზიდავთ",
-  "quote.sub": "ხუთი მოკლე ნაბიჯი. დადასტურებული ფასი 4 სამუშაო საათში — გადაუდებელი ტვირთისთვის 60 წუთში. დაჯავშნამდე არაფერი ვალდებულება.",
+  "quote.sub": "ხუთი მოკლე ნაბიჯი. დადასტურებული ფასი 4 სამუშაო საათში — გადაუდებელი ტვირთისთვის 60 წუთში. დაჯავშნამდე არანაირი ვალდებულება.",
+
   "quote.step.route": "მარშრუტი",
   "quote.step.cargo": "ტვირთი",
   "quote.step.transport": "ტრანსპორტი",
@@ -1437,7 +1438,7 @@ const ka: Record<keyof typeof en, string> = {
   "quote.company": "კომპანია (არასავალდებულო)",
   "quote.phone": "ტელეფონი",
   "quote.email": "ელფოსტა",
-  "quote.prefersPhone": "გირჩევნიათ ზარი? დარეკეთ +49 30 1234 5678 — გადაუდებელ შემთხვევებში წუთებში გიპასუხებთ.",
+  "quote.prefersPhone": "გირჩევნიათ ზარი? დარეკეთ +995 32 255 00 00 — გადაუდებელი ტვირთისთვის წუთებში გიპასუხებთ.",
   "quote.reviewTitle": "შეამოწმეთ თქვენი მოთხოვნა",
   "quote.reviewSub": "შეამოწმეთ დეტალები და გაგზავნეთ. ფასს მიიღებთ ელფოსტაზე.",
   "quote.submit": "მოთხოვნის გაგზავნა",
@@ -1482,7 +1483,7 @@ const ka: Record<keyof typeof en, string> = {
   "map.imo": "IMO",
   "map.mmsi": "MMSI",
   "map.distLeft": "დარჩენილი მანძილი",
-  "map.etaIn": "ჩასვლა დაახლოებით",
+  "map.etaIn": "სავარაუდო ჩასვლა",
   "map.temp": "რეფრიჟერატორის ტემპერატურა",
   "map.updated": "განახლდა",
   "map.speed": "სიჩქარე",
@@ -1503,11 +1504,11 @@ const ka: Record<keyof typeof en, string> = {
   "pg.tracking.eyebrow": "ტვირთის თვალთვალი",
   "pg.tracking.mapLink": "უყურეთ ყველა ტვირთს ცოცხალ რუკაზე",
   "pg.services.eyebrow": "სერვისები",
-  "pg.services.title": "ტვირთების გადაწყვეტილებები თქვენი ბიზნესის გარშემო",
+  "pg.services.title": "სატვირთო გადაწყვეტილებები თქვენი ბიზნესის საჭიროებებზე მორგებული",
   "pg.services.sub": "რვა ძირითადი სერვისი, რომელიც მოიცავს ლოგისტიკის მთელ ციკლს — ერთი პლატიდან დაწყებული პროექტული მასშტაბის სპეცტრანსპორტირებამდე. ყველა სერვისი მუშაობს ერთ ქსელზე, ერთ თვალთვალზე და ერთ პასუხისმგებელ გუნდზე.",
   "pg.services.viewService": "სერვისის ნახვა",
   "pg.services.notSure": "არ ხართ დარწმუნებული, რომელი სერვისი ჯდება?",
-  "pg.services.notSureSub": "ტვირთების უმეტესობა ორ შაბლონში ჯდება: სრული დატვირთვა ყველაზე სწრაფია FTL-ით, ნაწილობრივი — იაფი LTL-ით. ყველაფერი დანარჩენი საუბრის ღირსია.",
+  "pg.services.notSureSub": "ტვირთების უმეტესობა ორ ფორმატში ჯდება: სრული დატვირთვები ყველაზე სწრაფად მოძრაობს FTL-ით, ნაწილობრივი — ყველაზე ეკონომიურად LTL-ით. ყველაფერი დანარჩენი საუბრის ღირსია.",
   "pg.services.tip1t": "24+ პლატა",
   "pg.services.tip1d": "სრული დატვირთვა (FTL) — დათმობილი ტრანსპორტი, პირდაპირი მარშრუტი.",
   "pg.services.tip2t": "1–15 პლატა",
@@ -1518,7 +1519,7 @@ const ka: Record<keyof typeof en, string> = {
   "pg.services.requestQuote": "მოითხოვეთ შეთავაზება",
   "pg.services.planners": "და ჩვენი პლანერები გირჩევენ საუკეთესო ვარიანტს.",
   "pg.industries.eyebrow": "ინდუსტრიები",
-  "pg.industries.title": "ლოგისტიკა თქვენი ინდუსტრიის პრობლემების გარშემო",
+  "pg.industries.title": "ლოგისტიკა თქვენი ინდუსტრიის პრობლემებზე მორგებული",
   "pg.industries.sub": "ყველა ინდუსტრიას აქვს წარუმატებლობის მოდელი, რომელიც ფულს კარგავს. ჩვენ ვაშენებთ სატრანსპორტო პროგრამებს იმ პრობლემის გარშემო, რომელსაც თქვენი მიწოდების ჯაჭვი რეალურად აწყდება — და მერე ვზომავთ შედეგს.",
   "pg.industries.problem": "პრობლემა",
   "pg.industries.solution": "გადაწყვეტა",
@@ -1536,7 +1537,7 @@ const ka: Record<keyof typeof en, string> = {
   "pg.about.title": "სატვირთო კომპანია, აშენებული როგორც ლოგისტიკური ოპერატორი",
   "pg.about.sub": "CargoNova დაარსდა მარტივ დაკვირვებაზე: ევროპულ სახმელეთო გადაზიდვებში სხვაობა იმას შორის, რასაც გადამზიდავები ჰპირდებიან და რასაც რეალურად აწვდიან, ნამდვილი პრობლემაა. ჩვენ ავაშენეთ ქსელი, ტექნოლოგია და გუნდი ამ სხვაობის დასახურად.",
   "pg.about.storyEyebrow": "ჩვენი ისტორია",
-  "pg.about.storyTitle": "დაფუძნებული დერეფნის სიმჭიდროვეზე, არა ამბიციაზე",
+  "pg.about.storyTitle": "დაფუძნებული დერეფნების ინტენსივობაზე, არა ამბიციაზე",
   "pg.about.valuesEyebrow": "რას ვაფასებთ",
   "pg.about.valuesTitle": "ოთხი ღირებულება, რომელიც რეალობას უძლებს",
   "pg.about.opsEyebrow": "როგორ ვმუშაობთ",
@@ -1566,7 +1567,7 @@ const ka: Record<keyof typeof en, string> = {
   "pg.careers.rolesTitle": "სად ვიღებთ თანამშრომლებს ახლავე",
   "pg.careers.rolesSub": "ახალი პოზიციები დერეფნების ზრდასთან ერთად ჩნდება. თუ არაფერი ჯდება, ღია განაცხადი მაინც მიაღწევს სწორ განყოფილებას.",
   "contact.name": "სრული სახელი",
-  "contact.namePh": "მაგ. ანა მეიერი",
+  "contact.namePh": "მაგ. ანა ბერიძე",
   "contact.department": "განყოფილება",
   "contact.deptSales": "გაყიდვები და შეთავაზებები",
   "contact.deptSupport": "ლოგისტიკური მხარდაჭერა",
@@ -1587,7 +1588,7 @@ const ka: Record<keyof typeof en, string> = {
   "contact.sendAnother": "სხვა შეტყობინების გაგზავნა",
   "contact.error": "შეტყობინების გაგზავნა ვერ მოხერხდა. სცადეთ თავიდან.",
   "career.name": "სრული სახელი",
-  "career.namePh": "მაგ. თომას ნოვაკი",
+  "career.namePh": "მაგ. გიორგი ბერიძე",
   "career.applyingFor": "რომელ პოზიციაზე განაცხადებთ",
   "career.selectRole": "აირჩიეთ პოზიცია",
   "career.openApp": "ღია განაცხადი",
@@ -1718,10 +1719,11 @@ const ka: Record<keyof typeof en, string> = {
   "mi.coverage": "გეოგრაფია",
 
   // Redesign — network
-  "net.title1": "დაგეგმილი დერეფნები,",
+  "net.title1": "ფიქსირებული დერეფნები,",
   "net.title2": "არა შემთხვევითობა.",
   "net.lead":
-    "ფიქსირებული გამგზავრებები 6 დერეფანზე 16 ჰაბს შორის. ტევადობა კვირებით ადრე იგეგმება, ამიტომ თქვენი ტვირთის ადგილი ჯავშნამდეც გარანტირებულია.",
+    "6 დერეფანი, 16 ჰაბი, ფიქსირებული გასვლები. ტევადობა კვირებით ადრეა დაჯავშნილი — თქვენი ტვირთი ადგილს იჭერს ჯავშნამდევე.",
+
   "net.scheduled": "დაგეგმილი",
   "net.depBoard": "გამგზავრების დაფა",
   "net.next7": "შემდეგი 7 დღე",
@@ -1731,10 +1733,10 @@ const ka: Record<keyof typeof en, string> = {
 
   // Redesign — tools preview
   "tp.eyebrow": "ოპერაციული ინსტრუმენტები",
-  "tp.title1": "ინსტრუმენტები, რომლებსაც ჩვენი პლანერები იყენებენ,",
-  "tp.title2": "თქვენც იღებთ.",
+  "tp.title1": "იგივე ტარიფების ძრავა",
+  "tp.title2": "იგივე ციფრები, რასაც ჩვენ ვხედავთ.",
   "tp.lead":
-    "ფასის წინ არ დგას გაყიდვების განყოფილება და არც პორტალი, რომელიც ჩვენსავე ეკრანებზე ნაკლებს აჩვენებს. ტარიფები გენერირდება იმავე ღირებულების მოდელით, რომლითაც ფასდება ჩვენი კონტრაქტები.",
+    "გაყიდვების ბარიერი ფასის წინ არ დგას. თქვენი შეთავაზება იმავე მოდელიდან მოდის, რომლითაც ჩვენი კონტრაქტები ფასდება — სრული გამჭვირვალობით.",
   "tp.rateEngine": "ტარიფების კალკულატორი",
   "tp.liveCost": "ცოცხალი ღირებულების მოდელი",
   "tp.mode": "რეჟიმი",
@@ -1756,23 +1758,23 @@ const ka: Record<keyof typeof en, string> = {
 
   // Redesign — operating standard
   "as.eyebrow": "ოპერაციული სტანდარტი",
-  "as.title1": "პასუხები, სანამ",
-  "as.title2": "კითხვას დასვამთ.",
+  "as.title1": "ჩვენ გირეკავთ",
+  "as.title2": "სანამ ETA შეიცვლება.",
   "as.sub":
-    "პროგრამა გაჩვენებთ პოზიციას. გადაწყვეტილებას ადამიანები იღებენ. ორივე ერთ შენობაში გვაქვს, ამიტომ საზღვარზე დაგვიანება იქცევა მიწოდების ახალ ფანჯარად და არა ელფოსტის მიმოწერად.",
+    "ჩვენი პლანერი 08:00-ზე ხვდება საზღვრის შეფერხებას. 08:15-ზე თქვენს ტელეფონზე რეკავს განახლებული მიწოდების დრო. არანაირი ელფოსტა, არანაირი სიჩუმე.",
   "as.cta": "მოითხოვეთ ტევადობა",
   "as.claims": "პრეტენზიების კოეფიციენტი",
   "as.answer": "საშ. პასუხი",
   "as.retention": "რეტენცია",
-  "as.c1t": "პერსონალური პლანერი, არა რიგი",
+  "as.c1t": "ერთი პლანერი, არა ტიკეტების რიგი",
   "as.c1b":
-    "თითოეულ კლიენტთან ერთი პლანერი და მისი მოადგილე მუშაობს თბილისის საკონტროლო ცენტრში. მათ იციან თქვენი პორტები, ბოლო ვადები და თქვენი კლიენტები.",
+    "თითოეულ ანგარიშზე ერთი პირადი პლანერი და მოადგილე მუშაობს თბილისში. ისინი იცნობენ თქვენს პორტებს, ვადებს, კლიენტებს — სახელით.",
   "as.c2t": "გადახრები ჯერ თქვენ გაცნობებთ",
   "as.c2b":
     "თუ დერეფანი ჩავარდა, კონსოლი განახლდება და პლანერი დაგირეკავთ მანამ, სანამ ETA შეიცვლება თქვენს სისტემაში. დუმილი არასდროს არის ჩვენი პასუხი.",
-  "as.c3t": "ერთი ფასი, სრულად დაკონკრეტებული",
+  "as.c3t": "ერთი ფასი, სრულად დათვლილი",
   "as.c3b":
-    "ტრანსპორტირება, ტერმინალი, საწვავის ინდექსი, გადასახადები — ყველაფერი დეტალურად არის ჩამოთვლილი ყოველ შეთავაზებაში. ინვოისში არაფერი აღმოჩნდება მოულოდნელად.",
+    "ტრანსპორტირება, ტერმინალი, საწვავი, გადასახადი, დანამატი — ყველა ღირებულება ჩანს ყოველ შეთავაზებაში. ინვოისში არაფერი გამოჩნდება, რაც ადრე არ იყო ნაჩვენები.",
   "as.c4t": "დოკუმენტები მიწოდების დღესვე",
   "as.c4b":
     "CMR, POD და ტემპერატურის ჟურნალები ტვირთის ჩანაწერს ერთვის გადმოტვირთვიდან 20 წუთში.",

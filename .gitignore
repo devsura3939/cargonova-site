@@ -8,3 +8,4 @@ out
 next-env.d.ts
 cargonova-static.zip
 scripts/.world.geo.json
+.freebuff-watch*.log
