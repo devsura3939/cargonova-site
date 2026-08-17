@@ -220,6 +220,8 @@ export function ModeIndex() {
                 key={active.id}
                 src={active.image}
                 alt={`${active.label} operations`}
+                loading="lazy"
+                decoding="async"
                 initial={reduceMotion ? false : { opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={reduceMotion ? undefined : { opacity: 0 }}

@@ -1701,7 +1701,7 @@ const ka: Record<keyof typeof en, string> = {
   // Redesign — stats
   "stats.inTransit": "ახლა ტრანზიტშია",
   "stats.inTransitUnit": "ტვირთი",
-  "stats.countries": "მომსახურე ქვეყნები",
+  "stats.countries": "დაფარული ქვეყნები",
   "stats.telemetry": "ტელემეტრიის ინტერვალი",
   "stats.telemetryVal": "2",
   "stats.telemetryUnit": "წთ",
@@ -1721,11 +1721,11 @@ const ka: Record<keyof typeof en, string> = {
   "net.title1": "დაგეგმილი დერეფნები,",
   "net.title2": "არა შემთხვევითობა.",
   "net.lead":
-    "ფიქსირებული გამგზავრებები 6 დერეფანზე 16 ჰაბს შორის. ტევადობა დაგეგმილია კვირებით ადრე, ამიტომ თქვენს ტვირთს ადგილი დაჯავშნული აქვს ჯავშნამდე.",
+    "ფიქსირებული გამგზავრებები 6 დერეფანზე 16 ჰაბს შორის. ტევადობა კვირებით ადრე იგეგმება, ამიტომ თქვენი ტვირთის ადგილი ჯავშნამდეც გარანტირებულია.",
   "net.scheduled": "დაგეგმილი",
   "net.depBoard": "გამგზავრების დაფა",
   "net.next7": "შემდეგი 7 დღე",
-  "net.selectHint": "აირჩიეთ დერეფანი და დაითვალეთ ფასი ტარიფების ძრავაში",
+  "net.selectHint": "აირჩიეთ დერეფანი და დაითვალეთ ფასი კალკულატორში",
   "net.road": "საგზაო",
   "net.rail": "სარკინიგზო",
 
@@ -1735,7 +1735,7 @@ const ka: Record<keyof typeof en, string> = {
   "tp.title2": "თქვენც იღებთ.",
   "tp.lead":
     "ფასის წინ არ დგას გაყიდვების განყოფილება და არც პორტალი, რომელიც ჩვენსავე ეკრანებზე ნაკლებს აჩვენებს. ტარიფები გენერირდება იმავე ღირებულების მოდელით, რომლითაც ფასდება ჩვენი კონტრაქტები.",
-  "tp.rateEngine": "ტარიფების ძრავა",
+  "tp.rateEngine": "ტარიფების კალკულატორი",
   "tp.liveCost": "ცოცხალი ღირებულების მოდელი",
   "tp.mode": "რეჟიმი",
   "tp.collection": "ჩატვირთვა",
@@ -1743,7 +1743,7 @@ const ka: Record<keyof typeof en, string> = {
   "tp.grossWeight": "საერთო წონა",
   "tp.indicative": "სავარაუდო ტარიფი",
   "tp.selectTwo": "აირჩიეთ ორი სხვადასხვა ქალაქი",
-  "tp.refine": "დააზუსტეთ ტარიფების ძრავაში",
+  "tp.refine": "დააზუსტეთ ტარიფების კალკულატორში",
   "tp.console": "ტვირთის კონსოლი",
   "tp.sample": "სანიმუშო ტვირთი",
   "tp.nextMilestone": "შემდეგი ეტაპი",
@@ -1816,7 +1816,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Read persisted language after mount so the initial SSR render is stable.
-    const stored = localStorage.getItem("cargonova-lang") as Lang | null;
+    let stored: Lang | null = null;
+    try {
+      stored = localStorage.getItem("cargonova-lang") as Lang | null;
+    } catch {
+      /* storage blocked */
+    }
     if (stored === "en" || stored === "ka") {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setLangState(stored);

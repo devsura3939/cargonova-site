@@ -137,7 +137,7 @@ export function Hero() {
             className="absolute inset-0"
           >
             <video
-              className="h-full w-full object-cover object-center"
+              className="h-full w-full object-cover object-center saturate-[0.82] brightness-[0.88] contrast-[1.04]"
               autoPlay
               muted
               loop
@@ -151,8 +151,9 @@ export function Hero() {
               <source src="/videos/trucks-transport-sm.mp4" type="video/mp4" />
             </video>
           </motion.div>
+          <div className="pointer-events-none absolute inset-0 bg-ink-950/30" aria-hidden="true" />
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950/70 via-ink-950/15 to-ink-950/30"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950/90 via-ink-950/30 to-ink-950/45"
             aria-hidden="true"
           />
           <div className="glass-dark absolute bottom-4 left-4 px-3 py-2 sm:bottom-6 sm:left-6">

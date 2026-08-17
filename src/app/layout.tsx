@@ -24,6 +24,7 @@ const manrope = Manrope({
 const georgian = Noto_Sans_Georgian({
   variable: "--font-georgian",
   subsets: ["latin", "georgian"],
+  weight: "variable",
   display: "swap",
 });
 
@@ -70,6 +71,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://images.pexels.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://tile.openstreetmap.org" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://basemaps.cartocdn.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+        <link rel="dns-prefetch" href="https://images.pexels.com" />
+        <link rel="dns-prefetch" href="https://tile.openstreetmap.org" />
+        <link rel="dns-prefetch" href="https://basemaps.cartocdn.com" />
       </head>
       <body className="flex min-h-full flex-col pb-16 lg:pb-0">
         <script

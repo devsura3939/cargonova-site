@@ -171,12 +171,14 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
   @apply bg-surface font-sans text-body antialiased;
   text-rendering: optimizeLegibility;
   transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: clip;
 }
 
 ::selection {
@@ -197,6 +199,28 @@ body {
   border-radius: 999px;
   border: 2px solid transparent;
   background-clip: content-box;
+}
+
+/* ── Georgian (ქართული) typography ────────────────────────
+   Noto Sans Georgian has no latin-case distinction and wide, tall
+   letterforms (ღ ყ ფ descend below the baseline), so headings need
+   slightly more line-height and less negative tracking than Latin. */
+html[lang="ka"] body {
+  font-family: var(--font-georgian), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+html[lang="ka"] .font-display,
+html[lang="ka"] h1,
+html[lang="ka"] h2,
+html[lang="ka"] h3 {
+  font-family: var(--font-georgian), var(--font-manrope), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+}
+html[lang="ka"] .label {
+  letter-spacing: 0.08em;
+}
+html[lang="ka"] .font-mono {
+  font-family: var(--font-jetbrains), var(--font-georgian), ui-monospace, monospace;
 }
 
 /* ── Typography helpers ────────────────────────────────── */
