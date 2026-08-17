@@ -8,8 +8,9 @@ import { Reveal } from "@/components/shared/Reveal";
 import { useLang } from "@/lib/i18n";
 
 export function TestimonialsSection() {
-  const { t } = useLang();
-  const [featured, ...rest] = testimonials;
+  const { t, lang } = useLang();
+  const pick = (x: (typeof testimonials)[number]) => (lang === "ka" && x.ka ? { ...x, ...x.ka } : x);
+  const [featured, ...rest] = testimonials.map(pick);
 
   return (
     <Section variant="mist" id="testimonials">
@@ -51,7 +52,7 @@ export function TestimonialsSection() {
 
         {/* Standard cards */}
         {rest.map((t, i) => (
-          <Reveal key={t.company} delay={0.06 * i}>
+          <Reveal key={t.company + i} delay={0.06 * i}>
             <figure className="flex h-full flex-col rounded-3xl border border-soft bg-surface p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
               <blockquote className="flex-1 text-pretty text-sm leading-relaxed text-ink">
                 “{t.quote}”

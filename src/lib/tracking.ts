@@ -13,6 +13,7 @@
  */
 
 import { seaRoutes } from "@/data/sea-routes";
+import { formatEtaLang } from "@/lib/utils";
 import { ports, distKm } from "@/data/ports";
 import { computeLiveFleet, type LiveUnit } from "@/lib/fleet";
 
@@ -132,6 +133,13 @@ const MONTHS_LONG = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December",
 ];
+const KA_MONTHS = ["იან", "თებ", "მარ", "აპრ", "მაი", "ივნ", "ივლ", "აგვ", "სექ", "ოქტ", "ნოე", "დეკ"];
+const KA_MONTHS_LONG = [
+  "იანვარი", "თებერვალი", "მარტი", "აპრილი", "მაისი", "ივნისი",
+  "ივლისი", "აგვისტო", "სექტემბერი", "ოქტომბერი", "ნოემბერი", "დეკემბერი",
+];
+
+type Lang = "en" | "ka";
 
 function at(daysFromToday: number, hour: number, minute = 0): Date {
   const d = new Date();
@@ -140,14 +148,17 @@ function at(daysFromToday: number, hour: number, minute = 0): Date {
   return d;
 }
 
-function fmtDay(d: Date): string {
-  return `${MONTHS_LONG[d.getMonth()]} ${d.getDate()}`;
+function fmtDay(d: Date, lang: Lang = "en"): string {
+  return lang === "ka"
+    ? `${KA_MONTHS_LONG[d.getMonth()]} ${d.getDate()}`
+    : `${MONTHS_LONG[d.getMonth()]} ${d.getDate()}`;
 }
 
-function fmtTs(d: Date): string {
+function fmtTs(d: Date, lang: Lang = "en"): string {
   const hh = String(d.getHours()).padStart(2, "0");
   const mm = String(d.getMinutes()).padStart(2, "0");
-  return `${MONTHS[d.getMonth()]} ${d.getDate()} · ${hh}:${mm}`;
+  const m = lang === "ka" ? KA_MONTHS[d.getMonth()] : MONTHS[d.getMonth()];
+  return `${m} ${d.getDate()} · ${hh}:${mm}`;
 }
 
 function isSameDay(a: Date, b: Date): boolean {
@@ -155,10 +166,13 @@ function isSameDay(a: Date, b: Date): boolean {
 }
 
 /** ETA label that reads naturally: "Today, 14:30" / "August 18". */
-function etaLabel(d: Date, today: Date): string {
-  if (isSameDay(d, today)) return `Today, ${String(d.getHours()).padStart(2, "0")}:30`;
-  if (isSameDay(d, at(1, 12))) return "Tomorrow";
-  return fmtDay(d);
+function etaLabel(d: Date, today: Date, lang: Lang = "en"): string {
+  if (isSameDay(d, today)) {
+    const time = `${String(d.getHours()).padStart(2, "0")}:30`;
+    return lang === "ka" ? `დღეს, ${time}` : `Today, ${time}`;
+  }
+  if (isSameDay(d, at(1, 12))) return lang === "ka" ? "ხვალ" : "Tomorrow";
+  return fmtDay(d, lang);
 }
 
 /* ── Realistic network data ───────────────────────────────── */
@@ -321,7 +335,7 @@ type ShipmentOverrides = Partial<Shipment> & {
   totalDays?: number;
 };
 
-function buildShipment(id: string, overrides: ShipmentOverrides): Shipment {
+function buildShipment(id: string, overrides: ShipmentOverrides, lang: Lang = "en"): Shipment {
   const h = hashId(id);
   const today = new Date();
   const totalDays = overrides.totalDays ?? daysFor(h);
@@ -356,7 +370,7 @@ function buildShipment(id: string, overrides: ShipmentOverrides): Shipment {
       return {
         label,
         location: originLoc.city,
-        timestamp: fmtTs(pickup),
+        timestamp: fmtTs(pickup, lang),
         status: "picked_up",
         note: "Freight collected at shipper facility.",
       };
@@ -365,7 +379,7 @@ function buildShipment(id: string, overrides: ShipmentOverrides): Shipment {
       return {
         label,
         location: originLoc.hub,
-        timestamp: fmtTs(at(-totalDays, 14, 5)),
+        timestamp: fmtTs(at(-totalDays, 14, 5), lang),
         status: "picked_up",
         note: "Consolidated and secured for linehaul.",
       };
@@ -374,7 +388,7 @@ function buildShipment(id: string, overrides: ShipmentOverrides): Shipment {
       return {
         label,
         location: international ? `Corridor · ${destLoc.country} border region` : `Corridor · ${destLoc.country}`,
-        timestamp: fmtTs(mid),
+        timestamp: fmtTs(mid, lang),
         status: "in_transit",
         note: "In linehaul across the corridor.",
       };
@@ -383,7 +397,7 @@ function buildShipment(id: string, overrides: ShipmentOverrides): Shipment {
       return {
         label,
         location: "Border crossing · customs office",
-        timestamp: fmtTs(at(-1, 10, 2)),
+        timestamp: fmtTs(at(-1, 10, 2), lang),
         status: "customs",
         note: "Customs documentation pre-cleared.",
       };
@@ -392,7 +406,7 @@ function buildShipment(id: string, overrides: ShipmentOverrides): Shipment {
       return {
         label,
         location: destLoc.hub,
-        timestamp: fmtTs(at(-1, 8, 10)),
+        timestamp: fmtTs(at(-1, 8, 10), lang),
         status: status === "delivered" || status === "out_for_delivery" ? "in_transit" : "pending",
       };
     }
@@ -401,7 +415,7 @@ function buildShipment(id: string, overrides: ShipmentOverrides): Shipment {
       label,
       location: destLoc.city,
       timestamp:
-        status === "delivered" ? fmtTs(at(0, 13, 10)) : etaLabel(eta, today),
+        status === "delivered" ? fmtTs(at(0, 13, 10), lang) : etaLabel(eta, today, lang),
       status: status === "delivered" ? "delivered" : status === "out_for_delivery" ? "out_for_delivery" : "pending",
       note: status === "delivered" ? "Signed for by recipient. POD available on request." : "Delivery window confirmed.",
     };
@@ -415,8 +429,8 @@ function buildShipment(id: string, overrides: ShipmentOverrides): Shipment {
     status,
     origin: originName,
     destination: destinationName,
-    currentCheckpoint: status === "delivered" ? "Delivered" : checkpoints.find((c) => c.status === status)?.location ?? checkpoints[0].location,
-    eta: status === "delivered" ? `Delivered ${fmtDay(at(0, 13, 10))}` : etaLabel(eta, today),
+    currentCheckpoint: status === "delivered" ? (lang === "ka" ? "მიწოდებულია" : "Delivered") : checkpoints.find((c) => c.status === status)?.location ?? checkpoints[0].location,
+    eta: status === "delivered" ? `${lang === "ka" ? "მიწოდებულია" : "Delivered"} ${fmtDay(at(0, 13, 10), lang)}` : etaLabel(eta, today, lang),
     progress,
     route,
     checkpoints,
@@ -445,7 +459,7 @@ type OceanInput = {
   fleetStatus: "In Transit" | "At Port" | "Delivering";
 };
 
-function buildOceanShipment(id: string, input: OceanInput): Shipment {
+function buildOceanShipment(id: string, input: OceanInput, lang: Lang = "en"): Shipment {
   // One coherent clock: every checkpoint date derives from the ETA timestamp and
   // the current progress — no separate hash-based dates that can contradict the
   // status (the old code showed "Port of Call Aug 14" as future on Aug 16).
@@ -505,7 +519,7 @@ function buildOceanShipment(id: string, input: OceanInput): Shipment {
   const checkpoints: TrackingCheckpoint[] = raw.map((step, i) => ({
     label: step.label,
     location: step.location,
-    timestamp: fmtTs(new Date(step.ts)),
+    timestamp: fmtTs(new Date(step.ts), lang),
     status: step.status,
     note: step.note,
     done: i < stage,
@@ -521,11 +535,11 @@ function buildOceanShipment(id: string, input: OceanInput): Shipment {
     destination: input.destination,
     currentCheckpoint:
       input.fleetStatus === "At Port"
-        ? `Berthed · ${input.destination}`
+        ? `${lang === "ka" ? "ნავსადგურშია" : "Berthed"} · ${input.destination}`
         : stage === 3
-          ? `Arrived · ${input.destination}`
-          : `At sea · ${input.routeName}`,
-    eta: input.eta,
+          ? `${lang === "ka" ? "ჩავიდა" : "Arrived"} · ${input.destination}`
+          : `${lang === "ka" ? "ღია ზღვაში" : "At sea"} · ${input.routeName}`,
+    eta: lang === "ka" ? formatEtaLang(input.etaMs, "ka") : input.eta,
     progress: Math.round(p),
     route,
     checkpoints,
@@ -570,8 +584,8 @@ function nearestPort(pos: [number, number]): string {
   return bestD < 500 ? best : `Offshore ${pos[0].toFixed(1)}°, ${pos[1].toFixed(1)}°`;
 }
 
-function fmtEtaDays(days: number): string {
-  return fmtDay(at(days, 14, 30));
+function fmtEtaDays(days: number, lang: Lang = "en"): string {
+  return fmtDay(at(days, 14, 30), lang);
 }
 
 /* ── Crafted showcase shipments (dates always relative) ───── */
@@ -602,19 +616,23 @@ function findFleetUnit(id: string) {
   }
 }
 
-export function lookupShipment(id: string): Shipment | null {
+export function lookupShipment(id: string, lang: Lang = "en"): Shipment | null {
   const normalized = id.trim().toUpperCase();
   if (!isValidTrackingCode(normalized)) return null;
 
   // 1) Crafted showcase shipments (quick-lookup chips).
   const showcase = SHOWCASE.find((s) => s.id === normalized);
   if (showcase) {
-    return buildShipment(normalized, {
-      status: showcase.status,
-      origin: showcase.origin,
-      destination: showcase.destination,
-      carrier: showcase.carrier,
-    });
+    return buildShipment(
+      normalized,
+      {
+        status: showcase.status,
+        origin: showcase.origin,
+        destination: showcase.destination,
+        carrier: showcase.carrier,
+      },
+      lang,
+    );
   }
 
   // 2) A shipment on the live map: return its actual voyage — same vessel,
@@ -622,23 +640,27 @@ export function lookupShipment(id: string): Shipment | null {
   const unit = findFleetUnit(normalized);
   if (unit && unit.kind === "ship") {
     const lane = seaRoutes.find((r) => r.id === unit.routeId);
-    return buildOceanShipment(normalized, {
-      origin: unit.origin,
-      destination: unit.destination,
-      vessel: unit.name,
-      flag: unit.flag,
-      mmsi: unit.mmsi,
-      routeName: unit.routeName,
-      waypoints: lane?.waypoints ?? [unit.originLatLon, unit.destLatLon],
-      teu: unit.shipment.teu,
-      cargo: unit.shipment.cargo,
-      weight: unit.shipment.weight,
-      consignee: unit.shipment.consignee,
-      progress: unit.progress,
-      eta: unit.eta,
-      etaMs: unit.etaMs,
-      fleetStatus: unit.status,
-    });
+    return buildOceanShipment(
+      normalized,
+      {
+        origin: unit.origin,
+        destination: unit.destination,
+        vessel: unit.name,
+        flag: unit.flag,
+        mmsi: unit.mmsi,
+        routeName: unit.routeName,
+        waypoints: lane?.waypoints ?? [unit.originLatLon, unit.destLatLon],
+        teu: unit.shipment.teu,
+        cargo: unit.shipment.cargo,
+        weight: unit.shipment.weight,
+        consignee: unit.shipment.consignee,
+        progress: unit.progress,
+        eta: unit.eta,
+        etaMs: unit.etaMs,
+        fleetStatus: unit.status,
+      },
+      lang,
+    );
   }
 
   // 3) ISO container numbers (CNTR…, [A-Z]{4}[0-9]{7}) are ocean freight.
@@ -651,21 +673,25 @@ export function lookupShipment(id: string): Shipment | null {
     const originName = nearestPort(startPort);
     const destinationName = nearestPort(endPort);
     const status = STATUS_ORDER[h % STATUS_ORDER.length];
-    return buildOceanShipment(normalized, {
-      origin: originName,
-      destination: destinationName,
-      vessel,
-      routeName: lane.name,
-      waypoints: lane.waypoints,
-      teu: 24 + (h % 800),
-      cargo: CARGO_TYPE_KEYS.generic[h % CARGO_TYPE_KEYS.generic.length],
-      weight: weightFor(h),
-      consignee: CONSIGNEES_OCEAN[h % CONSIGNEES_OCEAN.length],
-      progress: status === "picked_up" ? 12 : status === "customs" ? 78 : status === "delivered" ? 100 : 45 + (h % 40),
-      eta: fmtEtaDays(2 + (h % 12)),
-      etaMs: Date.now() + (2 + (h % 12)) * 86400000,
-      fleetStatus: "In Transit",
-    });
+    return buildOceanShipment(
+      normalized,
+      {
+        origin: originName,
+        destination: destinationName,
+        vessel,
+        routeName: lane.name,
+        waypoints: lane.waypoints,
+        teu: 24 + (h % 800),
+        cargo: CARGO_TYPE_KEYS.generic[h % CARGO_TYPE_KEYS.generic.length],
+        weight: weightFor(h),
+        consignee: CONSIGNEES_OCEAN[h % CONSIGNEES_OCEAN.length],
+        progress: status === "picked_up" ? 12 : status === "customs" ? 78 : status === "delivered" ? 100 : 45 + (h % 40),
+        eta: fmtEtaDays(2 + (h % 12), lang),
+        etaMs: Date.now() + (2 + (h % 12)) * 86400000,
+        fleetStatus: "In Transit",
+      },
+      lang,
+    );
   }
 
   // 4) Any other well-formed ID resolves to a realistic road shipment.
@@ -679,12 +705,16 @@ export function lookupShipment(id: string): Shipment | null {
   const international = origin.country !== dest.country;
   const pool = international ? STATUS_ORDER : STATUS_ORDER_DOMESTIC;
   const status = pool[h % pool.length];
-  return buildShipment(normalized, {
-    status,
-    origin: `${origin.city}, ${origin.country}`,
-    destination: `${dest.city}, ${dest.country}`,
-    carrier,
-  });
+  return buildShipment(
+    normalized,
+    {
+      status,
+      origin: `${origin.city}, ${origin.country}`,
+      destination: `${dest.city}, ${dest.country}`,
+      carrier,
+    },
+    lang,
+  );
 }
 
 /** Demo IDs surfaced in the UI so visitors can try the tool. */

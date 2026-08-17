@@ -11,19 +11,26 @@ export function LegalPage({
   title,
   updated,
   sections,
+  titleKa,
+  sectionsKa,
 }: {
   title: string;
   updated: string;
   sections: { heading: string; body: string[] }[];
+  titleKa?: string;
+  sectionsKa?: { heading: string; body: string[] }[];
 }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const isKa = lang === "ka";
+  const heading = isKa && titleKa ? titleKa : title;
+  const content = isKa && sectionsKa ? sectionsKa : sections;
 
   return (
     <>
       <PageHero
-        crumb={[{ name: title, path: "" }]}
+        crumb={[{ name: heading, path: "" }]}
         eyebrow={t("legal.eyebrow")}
-        title={title}
+        title={heading}
         description={`${t("legal.lastUpdated")}: ${updated}. ${t("legal.appliesTo")} ${brand.name}.`}
         compact
       />
@@ -31,7 +38,7 @@ export function LegalPage({
         <Container className="max-w-3xl">
           <Reveal>
             <div className="space-y-10">
-              {sections.map((section) => (
+              {content.map((section) => (
                 <section key={section.heading}>
                   <h2 className="font-display text-2xl font-bold tracking-tight text-strong">
                     {section.heading}

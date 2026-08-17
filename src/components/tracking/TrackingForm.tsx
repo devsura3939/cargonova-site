@@ -23,7 +23,7 @@ export function TrackingForm() {
   const [view, setView] = useState<ViewState>({ kind: "idle" });
   const [isPending, startTransition] = useTransition();
   const reduceMotion = useReducedMotion();
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const searchParams = useSearchParams();
 
   // Deep link: /tracking?code=CRG-582941 auto-runs the lookup.
@@ -52,7 +52,7 @@ export function TrackingForm() {
       // Short delay so the loading state is visible; the lookup itself is
       // deterministic and runs fully client-side (works on static hosting).
       await new Promise((r) => setTimeout(r, 500));
-      const shipment = lookupShipment(parsed.data);
+      const shipment = lookupShipment(parsed.data, lang);
       if (shipment) {
         setView({ kind: "result", data: { ok: true, shipment } });
       } else {

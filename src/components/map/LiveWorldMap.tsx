@@ -9,7 +9,7 @@ import { ports, type Port } from "@/data/ports";
 import { seaRoutes } from "@/data/sea-routes";
 import { useTheme } from "@/lib/theme";
 import { useLang } from "@/lib/i18n";
-import { cn } from "@/lib/utils";
+import { cn, formatEtaLang } from "@/lib/utils";
 import {
   X,
   Ship,
@@ -314,7 +314,7 @@ export function LiveWorldMap() {
   const layerRef = useRef<FleetCanvasLayer | null>(null);
   const tileRef = useRef<L.TileLayer | null>(null);
   const { theme } = useTheme();
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [filter, setFilter] = useState<Filter>("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [fleet, setFleet] = useState<LiveUnit[]>([]);
@@ -614,7 +614,7 @@ export function LiveWorldMap() {
                 <span className="text-muted">{t("map.status")}</span>
                 <span className="text-right font-semibold text-strong">{t(`map.${selected.status === "In Transit" ? "inTransit" : selected.status === "At Port" ? "atPort" : "delivering"}` as never)}</span>
                 <span className="text-muted">{t("map.eta")}</span>
-                <span className="text-right font-semibold text-strong">{selected.eta}</span>
+                <span className="text-right font-semibold text-strong">{formatEtaLang(selected.etaMs, lang)}</span>
               </div>
             </div>
 

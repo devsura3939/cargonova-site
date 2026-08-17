@@ -23,8 +23,14 @@ export function ServiceDetailBody({
   prev: { slug: string; title: string };
   next: { slug: string; title: string };
 }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const { serviceTitle } = useDataT();
+  const isKa = lang === "ka";
+  const k = service.ka;
+  const benefits = isKa && k ? k.benefits : service.benefits;
+  const process = isKa && k ? service.process.map((p, i) => ({ step: p.step, ...k.process[i] })) : service.process;
+  const suitableCargo = isKa && k ? k.suitableCargo : service.suitableCargo;
+  const faqs = isKa && k ? k.faqs : service.faqs;
 
   return (
     <>
@@ -37,7 +43,7 @@ export function ServiceDetailBody({
                 {t("pg.svc.why")} {serviceTitle(slug)} {t("pg.svc.withCargoNova")}
               </h2>
               <div className="mt-6 space-y-5">
-                {service.benefits.map((b) => (
+                {benefits.map((b) => (
                   <div key={b.title} className="flex gap-4">
                     <span className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-electric-100 text-electric-600">
                       <Check className="h-4 w-4" />
@@ -54,7 +60,7 @@ export function ServiceDetailBody({
             <Reveal delay={0.1}>
               <h3 className="mt-12 font-display text-2xl font-bold text-strong">{t("pg.svc.how")}</h3>
               <ol className="mt-6 grid gap-6 sm:grid-cols-2">
-                {service.process.map((p) => (
+                {process.map((p) => (
                   <li
                     key={p.step}
                     className="relative rounded-2xl border border-soft bg-surface-muted/70 p-5"
@@ -79,7 +85,7 @@ export function ServiceDetailBody({
                   <h3 className="mt-4 font-display text-xl font-bold">{t("pg.svc.suitableCargo")}</h3>
                 </div>
                 <ul className="divide-y divide-navy-100 p-2">
-                  {service.suitableCargo.map((c) => (
+                  {suitableCargo.map((c) => (
                     <li key={c} className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-navy-800 dark:text-navy-200">
                       <span className="h-1.5 w-1.5 rounded-full bg-cyan-500" />
                       {c}
@@ -137,7 +143,7 @@ export function ServiceDetailBody({
           </Reveal>
           <Reveal delay={0.1}>
             <Accordion type="single" collapsible className="mt-10 rounded-3xl border border-soft bg-surface px-6 shadow-card sm:px-8">
-              {service.faqs.map((faq) => (
+              {faqs.map((faq) => (
                 <AccordionItem key={faq.question} value={faq.question}>
                   <AccordionTrigger>{faq.question}</AccordionTrigger>
                   <AccordionContent>{faq.answer}</AccordionContent>

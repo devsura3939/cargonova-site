@@ -7,3 +7,4 @@ out
 *.tsbuildinfo
 next-env.d.ts
 cargonova-static.zip
+scripts/.world.geo.json

@@ -13,6 +13,13 @@ export type ServiceCategory = {
   process: { step: string; title: string; text: string }[];
   fleet: string[];
   faqs: { question: string; answer: string }[];
+  ka?: {
+    features: string[];
+    benefits: { title: string; text: string }[];
+    suitableCargo: string[];
+    process: { title: string; text: string }[];
+    faqs: { question: string; answer: string }[];
+  };
 };
 
 export type Industry = {
@@ -52,6 +59,12 @@ export type Testimonial = {
   quote: string;
   metric?: string;
   metricLabel?: string;
+  ka?: {
+    company: string;
+    role: string;
+    quote: string;
+    metricLabel: string;
+  };
 };
 
 export type FaqItem = {

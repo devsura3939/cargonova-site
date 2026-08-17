@@ -206,67 +206,32 @@ body {
   70%, 100% { transform: scale(2); opacity: 0; }
 }
 
-/* ── Network map hub markers ─────────────────────────── */
-.network-hub {
-  position: relative;
-  width: 0;
-  height: 0;
+/* ── Network map (premium SVG) ──────────────────────── */
+.netmap-travel {
+  animation: netmap-travel 8s linear infinite;
 }
-.network-hub__dot {
-  position: absolute;
-  left: -5px;
-  top: -5px;
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: var(--hub);
-  border: 2px solid rgb(255 255 255 / 0.85);
-  box-shadow: 0 0 0 4px rgb(0 0 0 / 0.18), 0 2px 6px rgb(0 0 0 / 0.4);
-  transition: transform 150ms ease;
+@keyframes netmap-travel {
+  from { offset-distance: 0%; }
+  to { offset-distance: 100%; }
 }
-.leaflet-marker-icon:hover .network-hub__dot {
-  transform: scale(1.45);
+
+.netmap-dash {
+  stroke-dasharray: 1 9;
+  stroke-linecap: round;
+  animation: netmap-dash-flow 1.5s linear infinite;
 }
-.network-hub__label {
-  position: absolute;
-  left: 9px;
-  top: -20px;
-  white-space: nowrap;
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  color: #16335c;
-  text-shadow: 0 1px 0 rgb(255 255 255 / 0.6);
-  pointer-events: none;
+@keyframes netmap-dash-flow {
+  to { stroke-dashoffset: -20; }
 }
-.leaflet-tooltip.network-tooltip {
-  background: rgb(255 255 255 / 0.96);
-  border: 1px solid rgb(11 31 58 / 0.12);
-  color: #0b1f3a;
-  font-size: 11px;
-  font-weight: 600;
-  border-radius: 8px;
-  padding: 4px 9px;
-  box-shadow: 0 6px 18px rgb(11 31 58 / 0.12);
+
+.netmap-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: netmap-pulse 2.8s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
-.leaflet-tooltip-top.network-tooltip::before {
-  border-top-color: rgb(255 255 255 / 0.96);
-}
-.dark .network-hub__label {
-  color: #dbe9ff;
-  text-shadow: 0 1px 2px rgb(0 0 0 / 0.8);
-}
-.dark .network-hub__dot {
-  border-color: rgb(255 255 255 / 0.85);
-}
-.dark .leaflet-tooltip.network-tooltip {
-  background: rgb(11 31 58 / 0.92);
-  border-color: rgb(255 255 255 / 0.14);
-  color: #fff;
-  box-shadow: 0 6px 18px rgb(0 0 0 / 0.35);
-}
-.dark .leaflet-tooltip-top.network-tooltip::before {
-  border-top-color: rgb(255 255 255 / 0.14);
+@keyframes netmap-pulse {
+  0% { transform: scale(0.55); opacity: 0.85; }
+  75%, 100% { transform: scale(2.6); opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

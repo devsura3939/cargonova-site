@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Search, ArrowRight, Clock } from "lucide-react";
 import { posts, blogCategories } from "@/data/blog";
-import { cn } from "@/lib/utils";
+import { cn, formatDateLang } from "@/lib/utils";
 import { useLang, type DictKey } from "@/lib/i18n";
 
 export function BlogExplorer() {
@@ -34,8 +34,7 @@ export function BlogExplorer() {
   }, [category, query, rest]);
 
   function formatDate(iso: string) {
-    const locale = lang === "ka" ? "ka-GE" : "en-US";
-    return new Intl.DateTimeFormat(locale, { month: "long", day: "numeric", year: "numeric" }).format(new Date(iso));
+    return formatDateLang(iso, lang);
   }
 
   return (

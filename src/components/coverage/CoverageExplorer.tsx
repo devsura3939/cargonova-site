@@ -27,7 +27,8 @@ export function CoverageExplorer() {
           description={t("cov.networkSub")}
         />
         <Reveal delay={0.1} className="mt-10">
-          <div className="rounded-3xl border border-navy-100 bg-mist p-4 shadow-card sm:p-8 dark:border-white/10">
+          <div className="relative">
+            <div className="absolute -inset-3 -z-10 rounded-[2rem] bg-gradient-to-br from-electric-500/12 via-transparent to-cyan-500/12 blur-xl" />
             <NetworkMap
               activeCorridorId={active}
               onSelectCorridor={setActive}

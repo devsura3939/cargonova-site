@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Search, ArrowRight } from "lucide-react";
+import { useLang } from "@/lib/i18n";
 
 const HIDDEN_ON = ["/quote", "/tracking", "/contact", "/tracking/"];
 
 export function MobileCta() {
   const pathname = usePathname();
+  const { t } = useLang();
   if (HIDDEN_ON.some((p) => pathname === p || pathname.startsWith(p))) return null;
 
   return (
@@ -18,13 +20,13 @@ export function MobileCta() {
           className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-full border border-soft bg-surface text-sm font-semibold text-ink transition-colors active:bg-surface-hover"
         >
           <Search className="h-4 w-4" />
-          Track
+          {t("mcta.track")}
         </Link>
         <Link
           href="/quote"
           className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-full bg-electric-500 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgb(22_119_255/0.7)] transition-colors active:bg-electric-400"
         >
-          Get Quote
+          {t("mcta.quote")}
           <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
