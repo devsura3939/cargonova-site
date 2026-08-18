@@ -37,28 +37,38 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(brand.url),
   title: {
-    default: `${brand.name} — Ground Freight & Cargo Transportation`,
+    default: `${brand.name} — Bridging Routes, Building Reach`,
     template: `%s | ${brand.name}`,
   },
   description: brand.description,
   applicationName: brand.name,
   keywords: [
     "logistics",
-    "ground freight",
+    "freight transport",
     "FTL",
     "LTL",
-    "cargo transport",
-    "trucking",
+    "cargo",
+    "supply chain",
     "warehousing",
     "temperature controlled freight",
     "Georgia",
-    "Caucasus corridor",
+    "Caucasus",
   ],
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
   openGraph: {
     siteName: brand.name,
     type: "website",
     locale: "en_US",
     alternateLocale: "ka_GE",
+    images: [{ url: "/images/og-default.svg", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/images/og-default.svg"],
   },
 };
 
