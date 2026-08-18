@@ -42,7 +42,7 @@ export function DashboardMockup({ className }: { className?: string }) {
         className,
       )}
       role="img"
-      aria-label="Illustration of the CargoNova logistics control tower dashboard"
+      aria-label="Illustration of the BRB Enterprise logistics control tower dashboard"
     >
       {/* Window bar */}
       <div className="flex items-center justify-between border-b border-white/8 bg-navy-900/80 px-4 py-2.5">

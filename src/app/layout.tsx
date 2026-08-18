@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Manrope, Noto_Sans_Georgian, JetBrains_Mono } from "next/font/google";
+import { DM_Sans, League_Spartan, Noto_Sans_Georgian, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -9,14 +9,14 @@ import { LanguageProvider } from "@/lib/i18n";
 import { brand } from "@/lib/constants";
 import { organizationJsonLd } from "@/lib/seo";
 
-const inter = Inter({
-  variable: "--font-inter",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
   display: "swap",
 });
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const leagueSpartan = League_Spartan({
+  variable: "--font-league-spartan",
   subsets: ["latin"],
   display: "swap",
 });
@@ -66,7 +66,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${manrope.variable} ${georgian.variable} ${jetbrains.variable} h-full antialiased`}
+      className={`${dmSans.variable} ${leagueSpartan.variable} ${georgian.variable} ${jetbrains.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

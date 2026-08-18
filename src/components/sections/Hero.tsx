@@ -150,7 +150,7 @@ export function Hero() {
               disablePictureInPicture
               preload="metadata"
               poster={images.semiHighway}
-              aria-label="CargoNova linehaul truck on the highway"
+              aria-label="BRB Enterprise linehaul truck on the highway"
             >
               <source media="(min-width: 1024px)" src={`${ASSET_ROOT}/videos/trucks-transport.mp4`} type="video/mp4" />
               <source src={`${ASSET_ROOT}/videos/trucks-transport-sm.mp4`} type="video/mp4" />

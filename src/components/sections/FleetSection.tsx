@@ -45,7 +45,7 @@ export function FleetSection() {
               <div className="relative h-44 overflow-hidden">
                 <Image
                   src={vehicle.image}
-                  alt={`${vehicle.name} in the CargoNova fleet`}
+                  alt={`${vehicle.name} in the BRB Enterprise fleet`}
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"

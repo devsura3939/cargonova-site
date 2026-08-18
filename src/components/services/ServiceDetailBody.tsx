@@ -40,7 +40,7 @@ export function ServiceDetailBody({
           <div>
             <Reveal>
               <h2 className="text-balance font-display text-[28px] font-semibold leading-[1.06] tracking-[-0.025em] text-strong sm:text-4xl dark:text-fog-50">
-                {t("pg.svc.why")} {serviceTitle(slug)} {t("pg.svc.withCargoNova")}
+                {t("pg.svc.why")} {serviceTitle(slug)} {t("pg.svc.withBRB")}
               </h2>
               <div className="mt-8 border-y border-soft dark:border-white/10">
                 {benefits.map((b, i) => (
@@ -125,7 +125,7 @@ export function ServiceDetailBody({
               <div className="relative overflow-hidden border border-white/10 bg-ink-950 p-7 text-fog-50">
                 <div className="pointer-events-none absolute inset-0 bg-noise opacity-30" />
                 <div className="pointer-events-none absolute -right-14 -top-14 h-40 w-40 rounded-full bg-signal/20 blur-[70px]" />
-                <p className="relative label text-signal">CargoNova</p>
+                <p className="relative label text-signal">BRB Enterprise</p>
                 <h3 className="relative mt-3 font-display text-lg font-semibold">
                   {t("pg.svc.ready")} {serviceTitle(slug)}?
                 </h3>

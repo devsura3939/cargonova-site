@@ -471,7 +471,7 @@ function Warehouse({ position }: { position: [number, number, number] }) {
         <boxGeometry args={[0.14, 0.14, 0.02]} />
         <meshBasicMaterial color="#2ED3E6" />
       </mesh>
-      {/* "CargoNova" sign glow */}
+      {/* "BRB Enterprise" sign glow */}
       <mesh position={[0, 2.02, 0.1]}>
         <boxGeometry args={[1.5, 0.12, 0.04]} />
         <meshStandardMaterial color="#e3efff" emissive="#ffffff" emissiveIntensity={0.5} />

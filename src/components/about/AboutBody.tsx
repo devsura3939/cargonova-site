@@ -30,8 +30,8 @@ const CONTENT: Record<Lang, {
 }> = {
   en: {
     story: [
-      "CargoNova started in 2012 with three trucks and one scheduled lane between Berlin and Warsaw. The founding bet was that shippers didn't need more promises — they needed a carrier that treated a schedule as a contract.",
-      "That lane grew into a corridor. The corridor grew into a network. Today we move more than 10,000 shipments a year across 30+ regions, with 14 owned hubs, a 240-vehicle vetted network, and a control tower that watches every load around the clock.",
+      "BRB Enterprise was founded on the principle that businesses need a logistics partner, not just a carrier. We engineer optimal connection routes between businesses and geographies.",
+      "From our founding, we've grown into a full-scale logistics company with integrated transportation, supply chain management, and analytical services. Today we move thousands of shipments across 30+ countries.",
       "The technology we run on — live tracking, smart routing, telemetry, and digital documentation — exists for one reason: to make our delivery windows hold. The platform is the tool; reliability is the product.",
     ],
     mission:
@@ -85,8 +85,8 @@ const CONTENT: Record<Lang, {
   },
   ka: {
     story: [
-      "CargoNova დაარსდა 2012 წელს სამი სატვირთოთი და ერთი დაგეგმილი მიმართულებით ბერლინსა და ვარშავას შორის. დამფუძნებლების მთავარი აზრი იყო: გამგზავნებს მეტი დაპირებები კი არ სჭირდებოდათ, არამედ გადამზიდავი, რომელიც განრიგს კონტრაქტად ეპყრობა.",
-      "მიმართულება გადაიზარდა დერეფნად, დერეფანი კი — ქსელად. დღეს ჩვენ წელიწადში 10 000-ზე მეტ გადაზიდვას ვასრულებთ 30-ზე მეტ რეგიონში, გვაქვს 14 საკუთარი ჰაბი, 240-ზე მეტი შემოწმებული სატრანსპორტო საშუალების ქსელი და საკონტროლო ცენტრი, რომელიც თითოეულ ტვირთს საათის განმავლობაში აკვირდება.",
+      "BRB Enterprise დაარსდა პრინციპით, რომ ბიზნესებს ლოგისტიკური პარტნიორი სჭირდებათ, არა მხოლოდ გადამზიდავი. ჩვენ ოპტიმალურ საკავშირო მარშრუტებს ვაყალიბებთ ბიზნესებსა და გეოგრაფიებს შორის.",
+      "დაარსებიდან ჩვენ გავიზარდეთ სრულმასშტაბიან ლოგისტიკურ კომპანიად ინტეგრირებული ტრანსპორტირების, მიწოდებათა ჯაჭვის მართვისა და ანალიტიკური სერვისებით. დღეს ათასობით გადაზიდვას ვასრულებთ 30-ზე მეტ ქვეყანაში.",
       "ტექნოლოგია, რომელზეც ჩვენ ვმუშაობთ — ცოცხალი თვალთვალი, ჭკვიანი მარშრუტიზაცია, ტელემეტრია და ციფრული დოკუმენტაცია — ერთი მიზნისთვის არსებობს: მიწოდების ვადები რომ საიმედოდ დავიცვათ. პლატფორმა ხელსაწყოა; სანდოობა — პროდუქტი.",
     ],
     mission:
@@ -358,7 +358,7 @@ export function AboutBody() {
         <Reveal>
           <div className="relative mx-auto flex max-w-3xl flex-col items-center overflow-hidden border border-soft bg-surface-muted p-10 text-center sm:p-12 dark:border-white/10">
             <div className="pointer-events-none absolute inset-0 bg-noise opacity-20" />
-            <span className="label relative text-signal">CargoNova</span>
+            <span className="label relative text-signal">BRB Enterprise</span>
             <h2 className="relative mt-3 text-balance font-display text-3xl font-semibold leading-tight tracking-[-0.025em] text-strong sm:text-4xl dark:text-fog-50">
               {c.ctaTitle}
             </h2>

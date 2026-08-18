@@ -4,75 +4,81 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* ── CargoNova palette — ink / fog / signal (Nordvia-style) ───── */
-  --color-ink-950: #0b0b0b;
-  --color-ink-900: #141414;
-  --color-ink-850: #1a1a1a;
-  --color-ink-800: #1f1f1f;
-  --color-ink-700: #262626;
-  --color-ink-600: #303030;
+  /* ── BRB Enterprise palette — Deep Blue / Indigo / Gold ───── */
+  --color-ink-950: #1B1F2A;
+  --color-ink-900: #1B1F2A;
+  --color-ink-850: #232836;
+  --color-ink-800: #2A3042;
+  --color-ink-700: #353C50;
+  --color-ink-600: #4A5268;
 
-  --color-fog-50: #f4f5f5;
-  --color-fog-100: #e8eaeb;
-  --color-fog-200: #d0d3d5;
-  --color-fog-300: #b4b9bd;
-  --color-fog-400: #989da2;
-  --color-fog-500: #7d8388;
-  --color-fog-600: #5c6166;
-  --color-fog-700: #45494d;
+  --color-fog-50: #F9FAFB;
+  --color-fog-100: #F0F2F5;
+  --color-fog-200: #E0E4EA;
+  --color-fog-300: #C0C5CE;
+  --color-fog-400: #9BA2AE;
+  --color-fog-500: #6B7280;
+  --color-fog-600: #4B5563;
+  --color-fog-700: #374151;
 
-  --color-signal: #ff5f1f;
-  --color-signal-400: #ff8047;
-  --color-signal-500: #ff5f1f;
-  --color-signal-600: #d94f10;
+  --color-signal: #F5A623;
+  --color-signal-400: #F7B84D;
+  --color-signal-500: #F5A623;
+  --color-signal-600: #D4911C;
 
-  /* Modern-tech secondary accent (used sparingly for glows & gradients) */
-  --color-tech-600: #2f6fe0;
-  --color-tech-500: #4f8cff;
-  --color-tech-400: #7aa8ff;
-  --color-tech-100: #e3edff;
+  /* BRB primary accent — Deep Blue */
+  --color-tech-600: #004E89;
+  --color-tech-500: #1E81B0;
+  --color-tech-400: #3A9FD4;
+  --color-tech-100: #E0F0FA;
 
-  --color-bone-50: #f2f2ee;
-  --color-bone-100: #e9e9e3;
-  --color-bone-200: #dcdcd4;
+  /* BRB secondary accent — Indigo */
+  --color-indigo-600: #3A0066;
+  --color-indigo-500: #4B0082;
+  --color-indigo-400: #6B20A8;
+  --color-indigo-100: #EDE0F8;
+
+  --color-bone-50: #F9FAFB;
+  --color-bone-100: #F0F2F5;
+  --color-bone-200: #E0E4EA;
 
   --color-status-ok: #3fcf8e;
   --color-status-crit: #ff4d4d;
   --color-status-warn: #f5c451;
 
-  /* ── Legacy aliases → new palette (keeps old components on-brand) ── */
-  --color-navy-950: #0b0b0b;
-  --color-navy-900: #141414;
-  --color-navy-850: #1a1a1a;
-  --color-navy-800: #1f1f1f;
-  --color-navy-700: #262626;
-  --color-navy-600: #303030;
-  --color-navy-500: #45494d;
-  --color-navy-400: #5c6166;
-  --color-navy-300: #7d8388;
-  --color-navy-200: #b4b9bd;
-  --color-navy-100: #d0d3d5;
+  /* ── Legacy aliases → BRB palette ── */
+  --color-navy-950: #1B1F2A;
+  --color-navy-900: #1B1F2A;
+  --color-navy-850: #232836;
+  --color-navy-800: #2A3042;
+  --color-navy-700: #353C50;
+  --color-navy-600: #4A5268;
+  --color-navy-500: #6B7280;
+  --color-navy-400: #9BA2AE;
+  --color-navy-300: #C0C5CE;
+  --color-navy-200: #E0E4EA;
+  --color-navy-100: #F0F2F5;
 
-  --color-electric-600: #d94f10;
-  --color-electric-500: #ff5f1f;
-  --color-electric-400: #ff8047;
-  --color-electric-300: #ffa878;
-  --color-electric-100: #ffe9d9;
+  --color-electric-600: #004E89;
+  --color-electric-500: #1E81B0;
+  --color-electric-400: #3A9FD4;
+  --color-electric-300: #6BB8E0;
+  --color-electric-100: #E0F0FA;
 
-  --color-cyan-600: #d94f10;
-  --color-cyan-500: #ff5f1f;
-  --color-cyan-400: #ff8047;
-  --color-cyan-100: #ffe9d9;
+  --color-cyan-600: #3A0066;
+  --color-cyan-500: #4B0082;
+  --color-cyan-400: #6B20A8;
+  --color-cyan-100: #EDE0F8;
 
-  --color-orange-600: #d94f10;
-  --color-orange-500: #ff5f1f;
-  --color-orange-400: #ff8047;
-  --color-orange-100: #ffe9d9;
+  --color-orange-600: #C48A1A;
+  --color-orange-500: #F5A623;
+  --color-orange-400: #F7B84D;
+  --color-orange-100: #FDF2D9;
 
   --color-mist: var(--c-surface-muted);
   --color-slate: var(--c-muted);
   --color-ink: var(--c-ink);
-  --color-night: #0b0b0b;
+  --color-night: #1B1F2A;
 
   /* ── Semantic surface & text tokens (theme-aware) ────── */
   --color-surface: var(--c-surface);
@@ -84,15 +90,15 @@
   --color-soft: var(--c-border-soft);
   --color-soft-strong: var(--c-border-strong);
 
-  /* ── Typography ──────────────────────────────────────── */
-  --font-sans: var(--font-inter), var(--font-georgian), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-manrope), var(--font-georgian), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* ── Typography — BRB Enterprise ──────────────────────── */
+  --font-sans: var(--font-dm-sans), var(--font-georgian), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-league-spartan), var(--font-georgian), var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   /* ── Elevation & surfaces ────────────────────────────── */
-  --shadow-card: 0 1px 2px rgb(11 11 11 / 0.04), 0 8px 24px -8px rgb(11 11 11 / 0.14);
-  --shadow-lift: 0 2px 4px rgb(11 11 11 / 0.06), 0 16px 40px -12px rgb(11 11 11 / 0.22);
-  --shadow-glow: 0 0 0 1px rgb(255 95 31 / 0.2), 0 12px 40px -8px rgb(255 95 31 / 0.4);
+  --shadow-card: 0 1px 2px rgb(27 31 42 / 0.04), 0 8px 24px -8px rgb(27 31 42 / 0.14);
+  --shadow-lift: 0 2px 4px rgb(27 31 42 / 0.06), 0 16px 40px -12px rgb(27 31 42 / 0.22);
+  --shadow-glow: 0 0 0 1px rgb(30 129 176 / 0.2), 0 12px 40px -8px rgb(30 129 176 / 0.4);
 
   --radius-2xl: 1.25rem;
   --radius-3xl: 1.75rem;
@@ -135,37 +141,36 @@
   }
 }
 
-/* ── Light / dark token values ─────────────────────────────
-   Light is the bright, glassy, modern-tech face (soft blue-gray with
-   frosted panels). Dark keeps the command-center ink look with the same
-   glass treatment layered on top. */
+/* ── Light / dark token values — BRB Enterprise ──────────────
+   Light: clean, professional with Deep Blue accents
+   Dark: sophisticated navy with gold highlights */
 :root {
   color-scheme: light;
-  --c-surface: #f3f5f9;
-  --c-surface-muted: #ffffff;
-  --c-surface-hover: #e9edf4;
-  --c-strong: #0b1220;
-  --c-ink: #334155;
-  --c-body: #1c2534;
-  --c-muted: #64748b;
-  --c-border-soft: rgb(15 23 42 / 0.08);
-  --c-border-strong: rgb(15 23 42 / 0.18);
-  --c-panel-bg: rgb(255 255 255 / 0.62);
-  --c-panel-border: rgb(255 255 255 / 0.75);
+  --c-surface: #F9FAFB;
+  --c-surface-muted: #FFFFFF;
+  --c-surface-hover: #F0F2F5;
+  --c-strong: #1B1F2A;
+  --c-ink: #374151;
+  --c-body: #1B1F2A;
+  --c-muted: #6B7280;
+  --c-border-soft: rgb(27 31 42 / 0.08);
+  --c-border-strong: rgb(27 31 42 / 0.18);
+  --c-panel-bg: rgb(255 255 255 / 0.72);
+  --c-panel-border: rgb(255 255 255 / 0.85);
 }
 
 .dark {
   color-scheme: dark;
-  --c-surface: #0a0f1c;
-  --c-surface-muted: #111a2c;
-  --c-surface-hover: #17223a;
-  --c-strong: #f1f5f9;
-  --c-ink: #c7d2e0;
-  --c-body: #dbe3ee;
-  --c-muted: #7c8aa0;
-  --c-border-soft: rgb(255 255 255 / 0.09);
-  --c-border-strong: rgb(255 255 255 / 0.16);
-  --c-panel-bg: rgb(255 255 255 / 0.045);
+  --c-surface: #1B1F2A;
+  --c-surface-muted: #232836;
+  --c-surface-hover: #2A3042;
+  --c-strong: #F9FAFB;
+  --c-ink: #C0C5CE;
+  --c-body: #E0E4EA;
+  --c-muted: #9BA2AE;
+  --c-border-soft: rgb(255 255 255 / 0.08);
+  --c-border-strong: rgb(255 255 255 / 0.14);
+  --c-panel-bg: rgb(255 255 255 / 0.05);
   --c-panel-border: rgb(255 255 255 / 0.1);
 }
 
@@ -182,12 +187,12 @@ body {
 }
 
 ::selection {
-  background: rgb(255 95 31 / 0.28);
+  background: rgb(30 129 176 / 0.28);
   color: var(--c-strong);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-signal-500);
+  outline: 2px solid var(--color-tech-500);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -201,18 +206,18 @@ body {
   background-clip: content-box;
 }
 
-/* ── Georgian (ქართული) typography ────────────────────────
+/* ── Georgian (ქართული) typography — BRB Enterprise ─────────
    Noto Sans Georgian has no latin-case distinction and wide, tall
    letterforms (ღ ყ ფ descend below the baseline), so headings need
    slightly more line-height and less negative tracking than Latin. */
 html[lang="ka"] body {
-  font-family: var(--font-georgian), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-georgian), var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
 }
 html[lang="ka"] .font-display,
 html[lang="ka"] h1,
 html[lang="ka"] h2,
 html[lang="ka"] h3 {
-  font-family: var(--font-georgian), var(--font-manrope), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-georgian), var(--font-league-spartan), var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
   letter-spacing: -0.01em;
   line-height: 1.08;
 }

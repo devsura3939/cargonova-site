@@ -52,13 +52,13 @@ export function Footer() {
           <div>
             <Link href="/" className="inline-flex text-strong dark:text-fog-50">
               <span className="flex items-center gap-2.5">
-                <LogoMark className="h-6 w-6" />
+                <LogoMark className="h-6 w-8" />
                 <span className="flex flex-col leading-none">
-                  <span className="text-[15px] font-semibold tracking-[0.16em]">
-                    CARGO<span className="text-signal">NOVA</span>
+                  <span className="text-[15px] font-bold tracking-[0.12em]">
+                    BRB
                   </span>
-                  <span className="mt-1 font-mono text-[8.5px] uppercase tracking-[0.22em] text-muted dark:text-fog-600">
-                    Logistics
+                  <span className="mt-1 font-mono text-[8px] uppercase tracking-[0.2em] text-muted dark:text-fog-600">
+                    Enterprise
                   </span>
                 </span>
               </span>
@@ -122,7 +122,7 @@ export function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col gap-3 border-t border-soft pt-6 font-mono text-[10px] uppercase tracking-[0.14em] text-muted dark:border-white/10 dark:text-fog-600 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} CargoNova Logistics</p>
+          <p>© {new Date().getFullYear()} BRB Enterprise</p>
           <p className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-status-ok" aria-hidden="true" />
             {t("footer.status")}

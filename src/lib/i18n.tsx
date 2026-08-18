@@ -24,7 +24,7 @@ const en = {
   "nav.faq": "FAQ",
   "nav.contact": "Contact",
   "nav.liveMap": "Live Map",
-  "nav.getQuote": "Get a Quote",
+  "nav.getQuote": "Request Capacity",
   "nav.track": "Track Shipment",
   "mcta.track": "Track",
   "mcta.quote": "Get Quote",
@@ -48,22 +48,22 @@ const en = {
   "common.submit": "Submit",
   "common.required": "required",
 
-  // Hero
-  "hero.badge": "Tbilisi control tower · 30+ countries · around the clock",
-  "hero.title1": "Move freight without",
-  "hero.titleAccent": "the guesswork.",
+  // Hero — BRB Enterprise
+  "hero.badge": "Global logistics · 30+ countries · around the clock",
+  "hero.title1": "Bridging Routes,",
+  "hero.titleAccent": "Building Reach.",
   "hero.sub":
-    "Road, rail, air and ocean transport with clear pricing, live shipment visibility and a logistics team that stays ahead of delays. From pickup to final delivery, you know where your cargo is, what comes next and who to call when plans change.",
-  "hero.getQuote": "Get a Freight Quote",
-  "hero.track": "Track a Shipment",
+    "Full-scale logistics company engineering optimal connection routes between businesses and geographies through integrated transportation, supply chain management, and analytical services.",
+  "hero.getQuote": "Request Capacity",
+  "hero.track": "Track Shipment",
   "hero.trust1": "10 000+ shipments a year",
   "hero.trust2": "98.7% on time",
   "hero.trust3": "30+ countries, one network",
   "hero.liveNetwork": "Live Network",
-  "hero.eta": "ETA Berlin → Tbilisi",
+  "hero.eta": "ETA Tbilisi → Rotterdam",
 
-  // Logos
-  "logos.heading": "Trusted for freight that needs to arrive on time",
+  // Logos — BRB Enterprise
+  "logos.heading": "Trusted by businesses that depend on reliable delivery",
 
   // Stats
   "stats.shipments": "Shipments delivered yearly",
@@ -120,12 +120,12 @@ const en = {
   "calc.mode.van": "Sprinter van · 8 m³",
   "calc.mode.small": "Box truck · 20 m³",
 
-  // Services section
-  "svc.eyebrow": "What we move",
-  "svc.title": "One network, every kind of freight",
+  // Services section — BRB Enterprise
+  "svc.eyebrow": "Our Services",
+  "svc.title": "Integrated Logistics Solutions",
   "svc.sub":
-    "From a single pallet to a 40-tonne project load — eight services, one platform, one accountable team.",
-  "svc.explore": "Explore all services",
+    "Strategic & Analytical Services · Supply Chain Management · Transportation & Freight · Value-Added Logistics · Customs & Documentation · Last-Mile Delivery",
+  "svc.explore": "Explore All Services",
   "svc.learnMore": "Learn more",
 
   // Service listing feature chips
@@ -211,9 +211,9 @@ const en = {
 
   // Fleet
   "fleet.eyebrow": "Our fleet",
-  "fleet.title": "The right vehicle for the job.",
+  "fleet.title": "Engineered for Your Cargo",
   "fleet.sub":
-    "Different cargo needs different equipment. From urgent small shipments to full truckloads, temperature-sensitive goods and high-volume freight, we match the vehicle to the weight, dimensions, route and handling requirements of your cargo.",
+    "BRB matches the right vehicle to the weight, dimensions, route and handling requirements of your cargo. From urgent small shipments to full truckloads, temperature-sensitive goods and high-volume freight.",
   "fleet.browse": "Browse full fleet",
   "fleet.recommend": "Not sure what you need? Tell us what you're shipping and we'll recommend the most suitable vehicle and transport option.",
   "fleet.getRecommendation": "Find the Right Vehicle",
@@ -307,22 +307,22 @@ const en = {
     "Real testimonials, customer logos and short case studies will be added here as they are approved.",
 
   // CTA
-  "cta.badge": "Road, rail, air and ocean — one logistics partner.",
-  "cta.title1": "Planning your next",
-  "cta.titleAccent": "shipment?",
+  "cta.badge": "Bridging Routes, Building Reach.",
+  "cta.title1": "Ready to Ship with",
+  "cta.titleAccent": "BRB?",
   "cta.sub":
-    "Tell us where it needs to go. We'll take it from there. Send us the origin, destination and cargo details. We'll recommend the right transport option and provide a clear quote.",
-  "cta.getQuote": "Get a Freight Quote",
+    "BRB engineers optimal connection routes between businesses and geographies. Send us your shipment details and we'll compose the best pathway.",
+  "cta.getQuote": "Request Capacity",
   "cta.contact": "Talk to Our Logistics Team",
   "cta.prefers": "Prefer to talk? Call",
   "cta.hoursNote": "— 24/7 for active shipments.",
 
-  // Footer
-  "footer.hours": "Mon – Fri, 08:00 – 20:00 CET · 24/7 for active shipments",
+  // Footer — BRB Enterprise
+  "footer.hours": "Mon – Fri, 08:00 – 18:00 GET · 24/7 for active shipments",
   "footer.photoAttrib": "Photography via Unsplash. Placeholder imagery — replace with licensed brand photography.",
-  "footer.motto": "Fewer surprises. More deliveries.",
+  "footer.motto": "Bridging Routes, Building Reach.",
   "footer.disclaimer": "Demo website — illustrative company details and certifications.",
-  "footer.tagline": "FTL, LTL, express, refrigerated, oversized freight and warehousing — for businesses that ship on schedule.",
+  "footer.tagline": "Full-scale logistics company engineering optimal connection routes between businesses and geographies.",
   "footer.newsletterTitle": "Monthly freight brief",
   "footer.newsletterSub": "Corridor updates, capacity notes, logistics thinking. Short, sharp, useful.",
   "footer.newsletterCta": "Subscribe",
@@ -674,7 +674,7 @@ const en = {
   "pg.careers.eyebrow": "Careers",
   "pg.careers.title": "Build a career where schedules are promises",
   "pg.careers.sub": "We're a logistics company run by logistics people. Predictable routes, modern equipment, transparent pay, and a culture that treats drivers and planners as the business — because they are.",
-  "pg.careers.whyEyebrow": "Why CargoNova",
+  "pg.careers.whyEyebrow": "Why BRB",
   "pg.careers.whyTitle": "What working here actually looks like",
   "pg.careers.whySub": "The industry has a reputation for chaos. We're building the opposite, deliberately.",
   "pg.careers.rolesEyebrow": "Open roles",
@@ -746,7 +746,7 @@ const en = {
   "pg.blog.sub": "Corridor intelligence, service guides, and supply chain analysis from the team that runs freight every day.",
   "pg.svc.eyebrow": "Service",
   "pg.svc.why": "Why",
-  "pg.svc.withCargoNova": "with CargoNova",
+  "pg.svc.withBRB": "with BRB Enterprise",
   "pg.svc.how": "How it works",
   "pg.svc.suitableCargo": "Suitable cargo",
   "pg.svc.fleetOptions": "Fleet options",
@@ -793,10 +793,10 @@ const en = {
   "mi.coverage": "Coverage",
 
   // Redesign — network
-  "net.title1": "Strong routes.",
-  "net.title2": "Reliable departures. Fewer surprises.",
+  "net.title1": "Connection Routes Engineer",
+  "net.title2": "Optimal pathways between businesses and geographies.",
   "net.lead":
-    "Our network connects key European and regional hubs through established road, rail, air and ocean routes. We plan capacity in advance, monitor every active shipment and adjust quickly when borders, weather or schedules affect the route.",
+    "BRB engineers the shortest, spot-on, and mutually beneficial connective infrastructure for commercial and transit relations. We compose optimal pathways through integrated logistical support.",
   "net.scheduled": "scheduled",
   "net.depBoard": "Departure board",
   "net.next7": "Next 7 days",
@@ -805,11 +805,11 @@ const en = {
   "net.rail": "Rail",
 
   // Redesign — tools preview
-  "tp.eyebrow": "Instant freight estimate",
-  "tp.title1": "Know the numbers",
-  "tp.title2": "before you make the call.",
+  "tp.eyebrow": "Freight Estimate",
+  "tp.title1": "Supply-Demand",
+  "tp.title2": "Deal-Maker.",
   "tp.lead":
-    "Choose your shipment type, origin, destination and weight to get an indicative transport price. It gives you a practical starting point before speaking with our logistics team — without waiting for a sales callback just to understand the approximate cost.",
+    "BRB composes optimal pathways between businesses and geographies. Choose your shipment type, origin, destination and weight to get an indicative transport price.",
   "tp.rateEngine": "Freight estimate",
   "tp.liveCost": "Cost breakdown",
   "tp.mode": "Mode",
@@ -830,11 +830,11 @@ const en = {
   "tp.complete": "complete",
 
   // Redesign — operating standard
-  "as.eyebrow": "How we work",
-  "as.title1": "You shouldn't have to chase",
-  "as.title2": "your logistics company for answers.",
+  "as.eyebrow": "Our Approach",
+  "as.title1": "Composed, Fearless",
+  "as.title2": "Solid.",
   "as.sub":
-    "Freight does not always go exactly to plan. Borders get busy. Ferries move. Weather changes. What matters is how quickly your logistics partner reacts. We monitor active shipments continuously and communicate important changes before they become your problem.",
+    "BRB operates with the confidence of an experienced logistics operator. We compose optimal pathways, communicate proactively, and deliver with precision.",
   "as.cta": "Get a Freight Quote",
   "as.c1t": "A real person responsible for your shipment",
   "as.c1b":
@@ -851,7 +851,7 @@ const en = {
 
   // Redesign — footer & nav
   "footer.bio":
-    "Freight transportation across Europe, the Caucasus and international markets, with road, rail, air and ocean solutions managed through one logistics team.",
+    "BRB Enterprise — full-scale logistics company engineering optimal connection routes between businesses and geographies through integrated transportation, supply chain management, and analytical services.",
   "footer.ops": "Operations",
   "footer.status": "Network status — all corridors operating",
   "footer.roleHQ": "HQ & control tower",
@@ -1038,7 +1038,7 @@ const ka: Record<keyof typeof en, string> = {
   "nav.faq": "კითხვა-პასუხი",
   "nav.contact": "კონტაქტი",
   "nav.liveMap": "ცოცხალი რუკა",
-  "nav.getQuote": "მიიღეთ შეთავაზება",
+  "nav.getQuote": "მოითხოვეთ ტევადობა",
   "nav.track": "ტვირთის თვალთვალი",
   "mcta.track": "თვალთვალი",
   "mcta.quote": "შეთავაზება",
@@ -1062,19 +1062,19 @@ const ka: Record<keyof typeof en, string> = {
   "common.submit": "გაგზავნა",
   "common.required": "აუცილებელი",
 
-  // Hero
-  "hero.badge": "თბილისის საკონტროლო ცენტრი · 30+ ქვეყანა · დღე-ღამის რეჟიმში",
-  "hero.title1": "გადაზიდვა გაურკვევლობის",
-  "hero.titleAccent": "გარეშე.",
+  // Hero — BRB Enterprise
+  "hero.badge": "გლობალური ლოგისტიკა · 30+ ქვეყანა · დღე-ღამის რეჟიმში",
+  "hero.title1": "მარშრუტების დაკავშირება,",
+  "hero.titleAccent": "ხელმისაწვდომობის გაფართოება.",
   "hero.sub":
-    "სახმელეთო, სარკინიგზო, საჰაერო და საზღვაო გადაზიდვები — გამჭვირვალე ფასებით, ტვირთის მუდმივი კონტროლით და გუნდით, რომელიც პრობლემებზე თქვენამდე რეაგირებს. ტვირთის აღებიდან საბოლოო მიწოდებამდე ყოველთვის იცით, სად არის თქვენი ტვირთი, რა არის შემდეგი ეტაპი და ვის დაუკავშირდეთ, თუ გეგმა შეიცვალა.",
-  "hero.getQuote": "მიიღეთ გადაზიდვის ფასი",
-  "hero.track": "აკონტროლეთ ტვირთი",
+    "სრულმასშტაბიანი ლოგისტიკური კომპანია, რომელიც ოპტიმალურ საკავშირო მარშრუტებს აყალიბებს ბიზნესებსა და გეოგრაფიებს შორის ინტეგრირებული ტრანსპორტირების, მიწოდებათა ჯაჭვის მართვისა და ანალიტიკური სერვისების მეშვეობით.",
+  "hero.getQuote": "მოითხოვეთ ტევადობა",
+  "hero.track": "ტვირთის თვალთვალი",
   "hero.trust1": "10 000+ ტვირთი წელიწადში",
   "hero.trust2": "98.7% დროული მიწოდება",
   "hero.trust3": "30+ ქვეყანა, ერთი ქსელი",
   "hero.liveNetwork": "ცოცხალი ქსელი",
-  "hero.eta": "ETA ბერლინი → თბილისი",
+  "hero.eta": "ETA თბილისი → როტერდამი",
 
   // Logos
   "logos.heading": "ლოგისტიკა ბიზნესებისთვის, სადაც დროულ მიწოდებას მნიშვნელობა აქვს",
@@ -1225,8 +1225,8 @@ const ka: Record<keyof typeof en, string> = {
 
   // Fleet
   "fleet.eyebrow": "ჩვენი ავტოპარკი",
-  "fleet.title": "სწორი ტრანსპორტი თქვენი ტვირთისთვის.",
-  "fleet.sub": "ყველა ტვირთს ერთი და იგივე ტიპის სატვირთო არ სჭირდება. სასწრაფო მცირე გზავნილებიდან სრულ დატვირთვამდე, ტემპერატურული რეჟიმის მქონე და დიდი მოცულობის ტვირთამდე — ტრანსპორტს ვარჩევთ წონის, ზომების, მარშრუტისა და საჭირო პირობების მიხედვით.",
+  "fleet.title": "თქვენი ტვირთისთვის ინჟინერიულად შექმნილი",
+  "fleet.sub": "BRB სწორ ტრანსპორტს არჩევს წონის, ზომების, მარშრუტისა და საჭირო პირობების მიხედვით. სასწრაფო მცირე გზავნილებიდან სრულ დატვირთვამდე.",
   "fleet.browse": "მთელი ავტოპარკის ნახვა",
   "fleet.recommend": "არ იცით რომელი ტრანსპორტი გჭირდებათ? გვითხარით, რას აგზავნით და ჩვენ შემოგთავაზებთ ყველაზე შესაბამის ვარიანტს.",
   "fleet.getRecommendation": "შეარჩიეთ ტრანსპორტი",
@@ -1318,21 +1318,21 @@ const ka: Record<keyof typeof en, string> = {
     "დამტკიცებული კლიენტების შეფასებები, ლოგოები და მოკლე ქეისები აქ დაამატება მათი მოწონების შემდეგ.",
 
   // CTA
-  "cta.badge": "სახმელეთო, სარკინიგზო, საჰაერო და საზღვაო — ერთი ლოგისტიკური პარტნიორი.",
-  "cta.title1": "გეგმავთ ახალ",
-  "cta.titleAccent": "გადაზიდვას?",
-  "cta.sub": "გვითხარით, საიდან, სად და რა მიგაქვთ. დანარჩენს ჩვენ მივხედავთ. გამოგვიგზავნეთ გამგზავრების ადგილი, დანიშნულება და ტვირთის მონაცემები. შეგირჩევთ შესაბამის ტრანსპორტს და მოგაწვდით მკაფიო შეთავაზებას.",
+  "cta.badge": "მარშრუტების დაკავშირება, ხელმისაწვდომობის გაფართოება.",
+  "cta.title1": "მზად ხართ გადაზიდვისთვის",
+  "cta.titleAccent": "BRB-თან?",
+  "cta.sub": "BRB აოპტიმალურ საკავშირო მარშრუტებს აყალიბებს ბიზნესებსა და გეოგრაფიებს შორის. გამოგვიგზავნეთ თქვენი გადაზიდვის მონაცემეbi.",
   "cta.getQuote": "მიიღეთ გადაზიდვის ფასი",
   "cta.contact": "დაუკავშირდით ლოგისტიკის გუნდს",
   "cta.prefers": "გირჩევნიათ ზარი?",
   "cta.hoursNote": "— 24/7 აქტიური გადაზიდვებისთვის.",
 
-  // Footer
-  "footer.hours": "ორშ – პარ, 08:00 – 20:00 CET · 24/7 აქტიური გადაზიდვებისთვის",
+  // Footer — BRB Enterprise
+  "footer.hours": "ორშ – პარ, 08:00 – 18:00 GET · 24/7 აქტიური გადაზიდვებისთვის",
   "footer.photoAttrib": "ფოტოები Unsplash-დან. ადგილზე დაცული სურათები — შეცვალეთ ლიცენზირებული ბრენდის ფოტოებით.",
-  "footer.motto": "ნაკლები სიურპრიზი. მეტი მიწოდება.",
+  "footer.motto": "მარშრუტების დაკავშირება, ხელმისაწვდომობის გაფართოება.",
   "footer.disclaimer": "საცდელი ვებგვერდი — საილუსტრაციო კომპანიის მონაცემები და სერტიფიკატები.",
-  "footer.tagline": "FTL, LTL, ექსპრეს, რეფრიჟერატორული, განსაკუთრებული ტვირთები და საწყობი — ბიზნესებისთვის, რომლებიც დროულად გზავნიან.",
+  "footer.tagline": "სრულმასშტაბიანი ლოგისტიკური კომპანია, რომელიც ოპტიმალურ საკავშირო მარშრუტებს აყალიბებს ბიზნესებსა და გეოგრაფიებს შორის.",
   "footer.newsletterTitle": "ყოველთვიური ტვირთების ბიულეტენი",
   "footer.newsletterSub": "დერეფნები, ტევადობა, ლოგისტიკა — მოკლედ, სასარგებლოდ.",
   "footer.newsletterCta": "გამოწერა",
@@ -1639,7 +1639,7 @@ const ka: Record<keyof typeof en, string> = {
   "pg.careers.eyebrow": "კარიერა",
   "pg.careers.title": "ააშენეთ კარიერა, სადაც გრაფიკი დაპირებაა",
   "pg.careers.sub": "ჩვენ ლოგისტიკური კომპანია ვართ, რომელსაც ლოგისტიკოსები მართავენ. პროგნოზირებადი მარშრუტები, თანამედროვე ტექნიკა, გამჭვირვალე ანაზღაურება და კულტურა, რომელიც მძღოლებსა და პლანერებს ბიზნესად ეპყრობა — რადგან ისინი არიან.",
-  "pg.careers.whyEyebrow": "რატომ CargoNova",
+  "pg.careers.whyEyebrow": "რატომ BRB",
   "pg.careers.whyTitle": "როგორ გამოიყურება აქ მუშაობა სინამდვილეში",
   "pg.careers.whySub": "ინდუსტრიას ქაოსის რეპუტაცია აქვს. ჩვენ შეგნებულად ვაშენებთ საპირისპიროს.",
   "pg.careers.rolesEyebrow": "ვაკანსიები",
@@ -1711,7 +1711,7 @@ const ka: Record<keyof typeof en, string> = {
   "pg.blog.sub": "დერეფნების ანალიტიკა, სერვისების გიდები და მიწოდების ჯაჭვის ანალიზი გუნდისგან, რომელიც ყოველდღე მართავს ტვირთებს.",
   "pg.svc.eyebrow": "სერვისი",
   "pg.svc.why": "რატომ",
-  "pg.svc.withCargoNova": "CargoNova-სთან",
+  "pg.svc.withBRB": "BRB Enterprise-თან",
   "pg.svc.how": "როგორ მუშაობს",
   "pg.svc.suitableCargo": "შესაფერისი ტვირთი",
   "pg.svc.fleetOptions": "ტრანსპორტის ვარიანტები",
@@ -1800,10 +1800,10 @@ const ka: Record<keyof typeof en, string> = {
   "mi.coverage": "გეოგრაფია",
 
   // Redesign — network
-  "net.title1": "გამართული მარშრუტები.",
-  "net.title2": "სტაბილური რეისები. ნაკლები მოულოდნელობა.",
+  "net.title1": "საკავშირო მარშრუტების ინჟინერი",
+  "net.title2": "ოპტიმალური ბილიკეbi ბიზნესებსა და გეოგრაფიებს შორის.",
   "net.lead":
-    "ჩვენი ქსელი ერთმანეთთან აკავშირებს ევროპის, კავკასიისა და რეგიონის მნიშვნელოვან სატრანსპორტო ჰაბებს. სიმძლავრეებს წინასწარ ვგეგმავთ, მიმდინარე გადაზიდვებს მუდმივად ვაკვირდებით და სწრაფად ვრეაგირებთ, თუ მარშრუტზე ვითარება იცვლება.",
+    "BRB აოპტიმალურ საკავშირო ინფრასტრუქტურას აყალიბებს კომერციული და ტრანზიტული ურთიერთობებისთვის. ჩვენ ვაყალიბებთ ოპტიმალურ ბილიკებს ინტეგრირებული ლოგისტიკური მხარდაჭერის მეშვეობით.",
 
   "net.scheduled": "დაგეგმილი",
   "net.depBoard": "გამგზავრების დაფა",
@@ -1813,11 +1813,11 @@ const ka: Record<keyof typeof en, string> = {
   "net.rail": "სარკინიგზო",
 
   // Redesign — tools preview
-  "tp.eyebrow": "გადაზიდვის ფასის კალკულატორი",
-  "tp.title1": "გაიგეთ სავარაუდო ღირებულება",
-  "tp.title2": "საუბრის დაწყებამდე.",
+  "tp.eyebrow": "ტვირთის შეფასება",
+  "tp.title1": "მიწოდება-მოთხოვნა",
+  "tp.title2": "გარიგების შუამავალი.",
   "tp.lead":
-    "აირჩიეთ გადაზიდვის ტიპი, გამგზავრებისა და დანიშნულების ადგილი და მიუთითეთ ტვირთის წონა. მიიღებთ სავარაუდო ფასს, რომელიც დაგეხმარებათ წინასწარ დაგეგმოთ ბიუჯეტი და შემდეგ უკვე ჩვენს გუნდთან დააზუსტოთ გადაზიდვის პირობები.",
+    "BRB ოპტიმალურ საკავშირო მარშრუტებს აყალიბებს ბიზნესებსა და გეოგრაფიებს შორის. აირჩიეთ გადაზიდვის ტიპი, წარმოშობა, დანიშნულება და წონა.",
   "tp.rateEngine": "ტვირთის შეფასება",
   "tp.liveCost": "ხარჯების დეტალური გაანგარიშება",
   "tp.mode": "რეჟიმი",
@@ -1838,11 +1838,11 @@ const ka: Record<keyof typeof en, string> = {
   "tp.complete": "შესრულებულია",
 
   // Redesign — operating standard
-  "as.eyebrow": "როგორ ვმუშაობთ",
-  "as.title1": "ლოგისტიკურ კომპანიას ინფორმაციის მისაღებად",
-  "as.title2": "არ უნდა დასდევდეთ.",
+  "as.eyebrow": "ჩვენი მიდგომა",
+  "as.title1": "შემდგარი, უშიში",
+  "as.title2": "მყარი.",
   "as.sub":
-    "გადაზიდვისას ყველაფერი ყოველთვის იდეალური გეგმით არ მიდის. შეიძლება გადაიტვირთოს საზღვარი, შეიცვალოს გრაფიკი ან შეფერხდეს მარშრუტი. მთავარია, რამდენად სწრაფად რეაგირებს ამ დროს თქვენი ლოგისტიკური პარტნიორი. ჩვენ მუდმივად ვაკვირდებით მიმდინარე გადაზიდვებს და მნიშვნელოვან ცვლილებებზე წინასწარ გაცნობებთ.",
+    "BRB მოქმედებს გამოცდილი ლოგისტიკური ოპერატორის ნდობით. ჩვენ ვაყალიბებთ ოპტიმალურ საკავშირო მარშრუტებს, პროაქტიულად ვურთიერთობთ და სიზუსტით ვასრულებთ.",
   "as.cta": "მიიღეთ გადაზიდვის ფასი",
   "as.c1t": "თქვენი ტვირთისთვის პასუხისმგებელი რეალური ადამიანი",
   "as.c1b":
@@ -1859,7 +1859,7 @@ const ka: Record<keyof typeof en, string> = {
 
   // Redesign — footer & nav
   "footer.bio":
-    "სახმელეთო, სარკინიგზო, საჰაერო და საზღვაო გადაზიდვები ევროპაში, კავკასიასა და საერთაშორისო მიმართულებებზე — ერთი ლოგისტიკური გუნდის მართვით.",
+    "BRB Enterprise — სრულმასშტაბიანი ლოგისტიკური კომპანია, რომელიც ოპტიმალურ საკავშირო მარშრუტებს აყალიბებს ბიზნესებსა და გეოგრაფიებს შორის ინტეგრირებული ტრანსპორტირების, მიწოდებათა ჯაჭვის მართვისა და ანალიტიკური სერვისების მეშვეობით.",
   "footer.ops": "ოპერაციები",
   "footer.status": "ქსელის სტატუსი — ყველა დერეფანი მუშაობს",
   "footer.roleHQ": "მთავარი ოფისი და საკონტროლო ცენტრი",
