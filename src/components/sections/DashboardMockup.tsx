@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 const KPIS = [
   { label: "In transit", value: "128", trend: "+12 today" },
-  { label: "On-time rate", value: "98.7%", trend: "+0.4 pts" },
+  { label: "On-time rate", value: "—", trend: "" },
   { label: "Avg. ETA delay", value: "-0.4 h", trend: "ahead" },
   { label: "Active alerts", value: "3", trend: "2 resolved" },
 ];

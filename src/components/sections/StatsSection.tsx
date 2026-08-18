@@ -51,7 +51,7 @@ function CountUp({
 const STAT_KEYS = ["stats.shipments", "stats.ontime", "stats.support", "stats.regions"] as const;
 const STATS = [
   { value: 10000, suffix: "+", decimals: 0 },
-  { value: 98.7, suffix: "%", decimals: 1 },
+  { value: 0, suffix: "%", decimals: 1 },
   { value: 24, suffix: "/7", decimals: 0 },
   { value: 30, suffix: "+", decimals: 0 },
 ];

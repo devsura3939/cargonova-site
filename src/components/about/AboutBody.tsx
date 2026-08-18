@@ -76,7 +76,7 @@ const CONTENT: Record<Lang, {
     ctaButton: "Request a quote",
     numbers: [
       { value: "10,000+", label: "shipments a year" },
-      { value: "98.7%", label: "on-time delivery" },
+      { value: "—", label: "on-time delivery target" },
       { value: "14", label: "owned and operated hubs" },
       { value: "240+", label: "vetted vehicles in network" },
       { value: "30+", label: "regions served" },
@@ -130,8 +130,8 @@ const CONTENT: Record<Lang, {
       "შეთავაზება, ტესტური მიმართულება თუ პროგრამის სრული მიმოხილვა — გადამზიდავის შესაფასებლად ყველაზე სწრაფი გზა ერთი დატვირთვის მიცემაა.",
     ctaButton: "მოითხოვეთ შეთავაზება",
     numbers: [
-      { value: "10 000+", label: "გადაზიდვა წელიწადში" },
-      { value: "98.7%", label: "ვადების დაცვა" },
+      { value: "—", label: "მართული გადაზიდვები" },
+      { value: "—", label: "დროული მიწოდების მიზანი" },
       { value: "14", label: "საკუთარი ჰაბი" },
       { value: "240+", label: "შემოწმებული ავტოპარკი" },
       { value: "30+", label: "მომსახურე რეგიონი" },

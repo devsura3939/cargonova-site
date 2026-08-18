@@ -48,28 +48,28 @@ const en = {
   "common.submit": "Submit",
   "common.required": "required",
 
-  // Hero — BRB Enterprise
-  "hero.badge": "Global logistics · 30+ countries · around the clock",
+  // Hero — BRB Enterprise (spec copy)
+  "hero.badge": "Full-scale logistics · Europe · Caucasus · Central Asia · Global routes",
   "hero.title1": "Bridging Routes,",
   "hero.titleAccent": "Building Reach.",
   "hero.sub":
-    "Full-scale logistics company engineering optimal connection routes between businesses and geographies through integrated transportation, supply chain management, and analytical services.",
-  "hero.getQuote": "Request Capacity",
-  "hero.track": "Track Shipment",
-  "hero.trust1": "10 000+ shipments a year",
-  "hero.trust2": "98.7% on time",
-  "hero.trust3": "30+ countries, one network",
+    "Integrated logistics for businesses that need more than shipment execution. BRB Enterprise connects manufacturers, traders and growing businesses through road, rail, air and ocean freight, supported by route planning, customs coordination, supply-chain management and last-mile delivery.",
+  "hero.getQuote": "Plan a Shipment",
+  "hero.track": "Track a Shipment",
+  "hero.trust1": "30+ countries served",
+  "hero.trust2": "Road · Rail · Air · Ocean",
+  "hero.trust3": "One logistics partner",
   "hero.liveNetwork": "Live Network",
   "hero.eta": "ETA Tbilisi → Rotterdam",
 
-  // Logos — BRB Enterprise
-  "logos.heading": "Trusted by businesses that depend on reliable delivery",
+  // Trust strip
+  "logos.heading": "Better routes create stronger business connections.",
 
-  // Stats
-  "stats.shipments": "Shipments delivered yearly",
-  "stats.ontime": "On-time deliveries",
+  // Stats (neutral — no invented metrics)
+  "stats.shipments": "Shipments managed",
+  "stats.ontime": "On-time delivery target",
   "stats.support": "Logistics support & monitoring",
-  "stats.regions": "Regions covered across Europe",
+  "stats.regions": "Regions covered",
 
   // Calculator
   "calc.eyebrow": "Freight calculator",
@@ -120,12 +120,12 @@ const en = {
   "calc.mode.van": "Sprinter van · 8 m³",
   "calc.mode.small": "Box truck · 20 m³",
 
-  // Services section — BRB Enterprise
-  "svc.eyebrow": "Our Services",
-  "svc.title": "Integrated Logistics Solutions",
+  // Services section — BRB Enterprise (spec copy)
+  "svc.eyebrow": "Full-scale services",
+  "svc.title": "More than transport. A complete logistics connection.",
   "svc.sub":
-    "Strategic & Analytical Services · Supply Chain Management · Transportation & Freight · Value-Added Logistics · Customs & Documentation · Last-Mile Delivery",
-  "svc.explore": "Explore All Services",
+    "Every shipment sits inside a larger supply chain. We combine transportation with planning, coordination, documentation and delivery support so your cargo moves through the most practical route — with fewer handoffs and clearer responsibility.",
+  "svc.explore": "Explore Our Services",
   "svc.learnMore": "Learn more",
 
   // Service listing feature chips
@@ -167,11 +167,11 @@ const en = {
   "how.step4t": "Delivery",
   "how.step4d": "On-time delivery with signed proof of delivery and full documentation in your portal — the same day.",
 
-  // Coverage
+  // Coverage — spec copy
   "cov.eyebrow": "Our network",
-  "cov.title": "Strong routes. Reliable departures. Fewer surprises.",
+  "cov.title": "Routes are not lines on a map. They are business connections.",
   "cov.sub":
-    "Our network connects key European and regional hubs through established road, rail, air and ocean routes. We plan capacity in advance, monitor every active shipment and adjust quickly when borders, weather or schedules affect the route.",
+    "BRB plans routes around geography, cost, time, border conditions and the commercial priorities behind each shipment. Our goal is not simply to move cargo from A to B, but to build a connection that works for the business on both sides.",
   "cov.explore": "Explore Our Network",
   "cov.transit": "Transit:",
   "cov.mapHint": "Click a corridor to highlight it",
@@ -292,28 +292,28 @@ const en = {
   "ind.problem.industrial": "Heavy machinery is slow to load, hard to move, and expensive to damage.",
 
   // Industries
-  "ind.eyebrow": "Industries we serve",
-  "ind.title": "Logistics designed around your industry's pressure points",
+  "ind.eyebrow": "Industries",
+  "ind.title": "Built for businesses with real supply-chain pressure.",
   "ind.sub":
-    "We build transport programs around how your supply chain actually behaves — not a generic one-size-fits-all model.",
+    "Manufacturers, wholesale and retail companies, business owners and decision-makers need logistics that protects continuity, improves reach and creates room for growth.",
   "ind.view": "View industries",
 
-  // Testimonials
-  "test.eyebrow": "Customers",
-  "test.title": "Built for businesses that depend on reliable delivery.",
+  // Audience / Industries — spec copy
+  "test.eyebrow": "Audience",
+  "test.title": "Built for businesses with real supply-chain pressure.",
   "test.sub":
-    "Manufacturers, distributors, retailers and growing businesses use dependable logistics to keep production moving, stock available and customers satisfied. Our role is simple: make transport one less thing your team needs to worry about.",
+    "Manufacturers, wholesale and retail companies, business owners and decision-makers need logistics that protects continuity, improves reach and creates room for growth.",
   "test.placeholder":
-    "Real testimonials, customer logos and short case studies will be added here as they are approved.",
+    "Real customer stories and case studies will be added here once approved by existing partners.",
 
-  // CTA
+  // CTA section — spec copy
   "cta.badge": "Bridging Routes, Building Reach.",
-  "cta.title1": "Ready to Ship with",
-  "cta.titleAccent": "BRB?",
+  "cta.title1": "Build the next route",
+  "cta.titleAccent": "with BRB.",
   "cta.sub":
-    "BRB engineers optimal connection routes between businesses and geographies. Send us your shipment details and we'll compose the best pathway.",
-  "cta.getQuote": "Request Capacity",
-  "cta.contact": "Talk to Our Logistics Team",
+    "Tell us where the cargo starts, where it needs to go and what the shipment requires. We will help define the most practical way to connect the two.",
+  "cta.getQuote": "Plan a Shipment",
+  "cta.contact": "Talk to BRB",
   "cta.prefers": "Prefer to talk? Call",
   "cta.hoursNote": "— 24/7 for active shipments.",
 
@@ -322,7 +322,7 @@ const en = {
   "footer.photoAttrib": "Photography via Unsplash. Placeholder imagery — replace with licensed brand photography.",
   "footer.motto": "Bridging Routes, Building Reach.",
   "footer.disclaimer": "Demo website — illustrative company details and certifications.",
-  "footer.tagline": "Full-scale logistics company engineering optimal connection routes between businesses and geographies.",
+  "footer.tagline": "Full-scale logistics connecting businesses through strategic planning, supply-chain management, freight transportation, customs support and last-mile delivery.",
   "footer.newsletterTitle": "Monthly freight brief",
   "footer.newsletterSub": "Corridor updates, capacity notes, logistics thinking. Short, sharp, useful.",
   "footer.newsletterCta": "Subscribe",
@@ -337,10 +337,10 @@ const en = {
   "footer.privacy": "Privacy Policy",
   "footer.terms": "Terms of Service",
 
-  // Tracking
-  "trk.title": "Track your shipment in real time",
+  // Tracking — spec copy
+  "trk.title": "Stay connected to the shipment.",
   "trk.sub":
-    "Enter your tracking number to see exactly where your cargo is, what happened at every checkpoint, and when it arrives.",
+    "Track current shipment status, route progress, estimated arrival and key milestones in one place. When something important changes, communication should be proactive — not something you have to chase.",
   "trk.placeholder": "Enter shipment ID, e.g. CRG-582941",
   "trk.search": "Track",
   "trk.quick": "Quick lookup:",
@@ -618,8 +618,8 @@ const en = {
   "faq.contactTeam": "Contact our logistics team",
   "faq.replies": "— replies within one business day.",
   "pg.services.eyebrow": "Services",
-  "pg.services.title": "Freight solutions built around your business",
-  "pg.services.sub": "Eight core services that cover the full logistics lifecycle — from a single pallet to project-scale special transport. Every service runs on the same network, the same tracking, and the same accountable team.",
+  "pg.services.title": "More than transport. A complete logistics connection.",
+  "pg.services.sub": "Every shipment sits inside a larger supply chain. We combine transportation with planning, coordination, documentation and delivery support so your cargo moves through the most practical route — with fewer handoffs and clearer responsibility.",
   "pg.services.viewService": "View service",
   "pg.services.notSure": "Not sure which service fits?",
   "pg.services.notSureSub": "Most shipments fit one of two patterns: full loads move fastest on FTL, partial loads cost least on LTL. Everything else is a conversation worth having.",
@@ -648,8 +648,8 @@ const en = {
   "pg.fleet.title": "Modern equipment for every kind of freight",
   "pg.fleet.sub": "Every vehicle runs with telematics, scheduled maintenance, and drivers trained on securing your cargo correctly. Filter by service type to find the right unit.",
   "pg.about.eyebrow": "About us",
-  "pg.about.title": "A freight company built like a logistics operator",
-  "pg.about.sub": "BRB Enterprise was founded on a simple observation: in European road freight, the gap between what carriers promise and what they deliver is the real problem. We built the network, the technology, and the team to close it.",
+  "pg.about.title": "A broad-picture logistics partner",
+  "pg.about.sub": "BRB Enterprise is built to support businesses that think beyond a single shipment. Manufacturers, wholesale and retail companies, business owners and decision-makers need logistics that protects continuity, improves reach and creates room for growth.",
   "pg.about.storyEyebrow": "Our story",
   "pg.about.storyTitle": "Founded on corridor density, not ambition",
   "pg.about.valuesEyebrow": "What we stand for",
@@ -761,42 +761,42 @@ const en = {
   "pg.svc.next": "Next",
 
   // Redesign — hero
-  "hero.metaLoc": "Tbilisi-based logistics",
-  "hero.metaModes": "Europe · Caucasus · Central Asia",
+  "hero.metaLoc": "Full-scale logistics",
+  "hero.metaModes": "Europe · Caucasus · Central Asia · Global routes",
   "hero.trackLabel": "Track a shipment",
   "hero.priceLane": "Price a lane instead",
   "hero.trackPh": "Enter your shipment reference",
   "hero.demo": "Demo",
   "hero.fleetLabel": "Fleet",
-  "hero.fleetUnits": "412 vehicles",
-  "hero.fleetSub": "Matched to your cargo",
+  "hero.fleetUnits": "Road · Rail · Air · Ocean",
+  "hero.fleetSub": "Multiple transport modes",
 
-  // Redesign — stats
-  "stats.inTransit": "Active shipments",
-  "stats.inTransitUnit": "in transit",
-  "stats.countries": "Network coverage",
-  "stats.telemetry": "Tracking updates",
-  "stats.telemetryVal": "2",
-  "stats.telemetryUnit": "min",
+  // Stats (neutral — no invented metrics)
+  "stats.inTransit": "Shipments managed",
+  "stats.inTransitUnit": "annually",
+  "stats.countries": "Regions served",
+  "stats.telemetry": "Shipment visibility",
+  "stats.telemetryVal": "24/7",
+  "stats.telemetryUnit": "",
   "stats.countriesVal": "30",
   "stats.countriesUnit": "+",
 
-  // Redesign — mode index
-  "mi.eyebrow": "Freight services",
-  "mi.title1": "One logistics partner.",
-  "mi.title2": "Every way your cargo needs to move.",
+  // Transport modes — spec copy
+  "mi.eyebrow": "Transport modes",
+  "mi.title1": "One network.",
+  "mi.title2": "Multiple ways to move.",
   "mi.sub":
-    "From a single pallet to a full truckload or international multimodal shipment, we choose the route, equipment and transport mode that make sense for your cargo — not simply the option that is easiest for us.",
+    "Road, rail, air and ocean freight for regional and international cargo, matched to the shipment, route and required delivery speed.",
   "mi.fullDetail": "Explore All Services",
   "mi.transit": "Transit",
   "mi.capacity": "Capacity",
   "mi.coverage": "Coverage",
 
-  // Redesign — network
-  "net.title1": "Connection Routes Engineer",
-  "net.title2": "Optimal pathways between businesses and geographies.",
+  // Network section — spec copy
+  "net.title1": "Routes are not lines on a map.",
+  "net.title2": "They are business connections.",
   "net.lead":
-    "BRB engineers the shortest, spot-on, and mutually beneficial connective infrastructure for commercial and transit relations. We compose optimal pathways through integrated logistical support.",
+    "BRB plans routes around geography, cost, time, border conditions and the commercial priorities behind each shipment. Our goal is not simply to move cargo from A to B, but to build a connection that works for the business on both sides.",
   "net.scheduled": "scheduled",
   "net.depBoard": "Departure board",
   "net.next7": "Next 7 days",
@@ -804,12 +804,12 @@ const en = {
   "net.road": "Road",
   "net.rail": "Rail",
 
-  // Redesign — tools preview
-  "tp.eyebrow": "Freight Estimate",
-  "tp.title1": "Supply-Demand",
-  "tp.title2": "Deal-Maker.",
+  // Calculator section — spec copy
+  "tp.eyebrow": "Freight estimate",
+  "tp.title1": "Start with",
+  "tp.title2": "the route.",
   "tp.lead":
-    "BRB composes optimal pathways between businesses and geographies. Choose your shipment type, origin, destination and weight to get an indicative transport price.",
+    "Enter your origin, destination and cargo details to receive an indicative transport estimate. For complex shipments, our team can review the route and recommend a more suitable transport plan.",
   "tp.rateEngine": "Freight estimate",
   "tp.liveCost": "Cost breakdown",
   "tp.mode": "Mode",
@@ -829,25 +829,25 @@ const en = {
   "tp.transit": "transit",
   "tp.complete": "complete",
 
-  // Redesign — operating standard
-  "as.eyebrow": "Our Approach",
-  "as.title1": "Composed, Fearless",
-  "as.title2": "Solid.",
+  // How BRB works — spec copy
+  "as.eyebrow": "How BRB works",
+  "as.title1": "We engineer connections,",
+  "as.title2": "not just deliveries.",
   "as.sub":
-    "BRB operates with the confidence of an experienced logistics operator. We compose optimal pathways, communicate proactively, and deliver with precision.",
-  "as.cta": "Get a Freight Quote",
-  "as.c1t": "A real person responsible for your shipment",
+    "A shipment is a chain of decisions: route, timing, capacity, border process, handoff and final delivery. BRB brings those decisions together under one logistics partner.",
+  "as.cta": "Plan a Shipment",
+  "as.c1t": "Route thinking",
   "as.c1b":
-    "You have a logistics contact who understands your route, cargo and delivery requirements — not just a support ticket number.",
-  "as.c2t": "Problems are communicated early",
+    "We look at the whole movement before choosing the transport solution.",
+  "as.c2t": "Clear responsibility",
   "as.c2b":
-    "If something affects the ETA, we tell you what happened, what it changes and what we're doing about it.",
-  "as.c3t": "Clear pricing",
+    "You know who is responsible for your shipment and where to get an answer.",
+  "as.c3t": "Proactive communication",
   "as.c3b":
-    "Transport, fuel, tolls, terminal charges and applicable surcharges are explained before booking whenever possible.",
-  "as.c4t": "Documents when you need them",
+    "If the route changes, we explain what happened, what it affects and what comes next.",
+  "as.c4t": "Practical decisions",
   "as.c4b":
-    "Shipment documents, PODs and supporting records are kept together and made available as soon as they are ready.",
+    "We focus on solutions that make operational and commercial sense, not unnecessary complexity.",
 
   // Redesign — footer & nav
   "footer.bio":
@@ -1062,28 +1062,28 @@ const ka: Record<keyof typeof en, string> = {
   "common.submit": "გაგზავნა",
   "common.required": "აუცილებელი",
 
-  // Hero — BRB Enterprise
-  "hero.badge": "გლობალური ლოგისტიკა · 30+ ქვეყანა · დღე-ღამის რეჟიმში",
+  // Hero — BRB Enterprise (spec KA copy)
+  "hero.badge": "სრული ლოგისტიკური სერვისი · ევროპა · კავკასია · ცენტრალური აზია · გლობალური მარშრუტები",
   "hero.title1": "მარშრუტების დაკავშირება,",
   "hero.titleAccent": "ხელმისაწვდომობის გაფართოება.",
   "hero.sub":
-    "სრულმასშტაბიანი ლოგისტიკური კომპანია, რომელიც ოპტიმალურ საკავშირო მარშრუტებს აყალიბებს ბიზნესებსა და გეოგრაფიებს შორის ინტეგრირებული ტრანსპორტირების, მიწოდებათა ჯაჭვის მართვისა და ანალიტიკური სერვისების მეშვეობით.",
-  "hero.getQuote": "მოითხოვეთ ტევადობა",
-  "hero.track": "ტვირთის თვალთვალი",
-  "hero.trust1": "10 000+ ტვირთი წელიწადში",
-  "hero.trust2": "98.7% დროული მიწოდება",
-  "hero.trust3": "30+ ქვეყანა, ერთი ქსელი",
+    "ლოგისტიკა ბიზნესებისთვის, რომლებსაც მხოლოდ ტვირთის გადაზიდვაზე მეტი სჭირდებათ. BRB Enterprise მწარმოებლებს, სავაჭრო კომპანიებსა და მზარდ ბიზნესებს აკავშირებს სახმელეთო, სარკინიგზო, საჰაერო და საზღვაო გადაზიდვებით, მარშრუტის დაგეგმვით, საბაჟო კოორდინაციით, მიწოდების ჯაჭვის მართვითა და ბოლო მონაკვეთის მიწოდებით.",
+  "hero.getQuote": "დაგეგმეთ გადაზიდვა",
+  "hero.track": "აკონტროლეთ ტვირთი",
+  "hero.trust1": "30+ მომსახურე ქვეყანა",
+  "hero.trust2": "სახმელეთო · სარკინიგზო · საჰაერო · საზღვაო",
+  "hero.trust3": "ერთი ლოგისტიკური პარტნიორი",
   "hero.liveNetwork": "ცოცხალი ქსელი",
   "hero.eta": "ETA თბილისი → როტერდამი",
 
-  // Logos
-  "logos.heading": "ლოგისტიკა ბიზნესებისთვის, სადაც დროულ მიწოდებას მნიშვნელობა აქვს",
+  // Trust strip
+  "logos.heading": "უკეთესი მარშრუტები ქმნის უფრო ძლიერ ბიზნესკავშირებს.",
 
   // Stats
-  "stats.shipments": "წლიურად მიწოდებული ტვირთები",
-  "stats.ontime": "დროული მიწოდება",
+  "stats.shipments": "მართული გადაზიდვები",
+  "stats.ontime": "დროული მიწოდების მიზანი",
   "stats.support": "ლოგისტიკური მხარდაჭერა და მონიტორინგი",
-  "stats.regions": "დაფარული რეგიონები ევროპაში",
+  "stats.regions": "მომსახურე რეგიონები",
 
   // Calculator
   "calc.eyebrow": "ტვირთის კალკულატორი",
@@ -1311,19 +1311,20 @@ const ka: Record<keyof typeof en, string> = {
   "ind.view": "ინდუსტრიების ნახვა",
 
   // Testimonials
-  "test.eyebrow": "კლიენტები",
-  "test.title": "ბიზნესებისთვის, რომელთათვისაც დროული მიწოდება პროცესის ნაწილია.",
-  "test.sub": "მწარმოებლებს, დისტრიბუტორებს, საცალო ქსელებსა და მზარდ კომპანიებს სტაბილური ლოგისტიკა სჭირდებათ იმისთვის, რომ წარმოება არ გაჩერდეს, პროდუქტი დროულად მივიდეს და მომხმარებელი არ დაელოდოს. ჩვენი ამოცანა მარტივია: ტრანსპორტირება იყოს ერთი საკითხით ნაკლები, რომელზეც თქვენს გუნდს ნერვიულობა უწევს.",
+  // Audience — KA spec copy
+  "test.eyebrow": "აუდიტორია",
+  "test.title": "ბიზნესებისთვის, სადაც მიწოდების ჯაჭვს რეალური წნეხი აქვს.",
+  "test.sub": "მწარმოებლები, საბითუმო და საცალო კომპანიები, ბიზნესის მფლობელები და გადაწყვეტილების მიმღებები საჭიროებენ ლოგისტიკას, რომელიც იცავს პროცესის უწყვეტობას, ზრდის დაფარვას და ქმნის განვითარების შესაძლებლობას.",
   "test.placeholder":
     "დამტკიცებული კლიენტების შეფასებები, ლოგოები და მოკლე ქეისები აქ დაამატება მათი მოწონების შემდეგ.",
 
   // CTA
   "cta.badge": "მარშრუტების დაკავშირება, ხელმისაწვდომობის გაფართოება.",
-  "cta.title1": "მზად ხართ გადაზიდვისთვის",
-  "cta.titleAccent": "BRB-თან?",
-  "cta.sub": "BRB აოპტიმალურ საკავშირო მარშრუტებს აყალიბებს ბიზნესებსა და გეოგრაფიებს შორის. გამოგვიგზავნეთ თქვენი გადაზიდვის მონაცემეbi.",
-  "cta.getQuote": "მიიღეთ გადაზიდვის ფასი",
-  "cta.contact": "დაუკავშირდით ლოგისტიკის გუნდს",
+  "cta.title1": "ააშენეთ შემდეგი მარშრუტი",
+  "cta.titleAccent": "BRB-სთან ერთად.",
+  "cta.sub": "გვითხარით საიდან იწყება ტვირთის გზა, სად უნდა მივიდეს და რა პირობები სჭირდება. ჩვენ დაგეხმარებით ორ წერტილს შორის ყველაზე პრაქტიკული კავშირის დაგეგმვაში.",
+  "cta.getQuote": "დაგეგმეთ გადაზიდვა",
+  "cta.contact": "დაუკავშირდით BRB-ს",
   "cta.prefers": "გირჩევნიათ ზარი?",
   "cta.hoursNote": "— 24/7 აქტიური გადაზიდვებისთვის.",
 
@@ -1332,7 +1333,7 @@ const ka: Record<keyof typeof en, string> = {
   "footer.photoAttrib": "ფოტოები Unsplash-დან. ადგილზე დაცული სურათები — შეცვალეთ ლიცენზირებული ბრენდის ფოტოებით.",
   "footer.motto": "მარშრუტების დაკავშირება, ხელმისაწვდომობის გაფართოება.",
   "footer.disclaimer": "საცდელი ვებგვერდი — საილუსტრაციო კომპანიის მონაცემები და სერტიფიკატები.",
-  "footer.tagline": "სრულმასშტაბიანი ლოგისტიკური კომპანია, რომელიც ოპტიმალურ საკავშირო მარშრუტებს აყალიბებს ბიზნესებსა და გეოგრაფიებს შორის.",
+  "footer.tagline": "სრული ლოგისტიკური მომსახურება, რომელიც ბიზნესებს აკავშირებს სტრატეგიული დაგეგმვით, მიწოდების ჯაჭვის მართვით, სატვირთო გადაზიდვებით, საბაჟო მხარდაჭერითა და ბოლო მონაკვეთის მიწოდებით.",
   "footer.newsletterTitle": "ყოველთვიური ტვირთების ბიულეტენი",
   "footer.newsletterSub": "დერეფნები, ტევადობა, ლოგისტიკა — მოკლედ, სასარგებლოდ.",
   "footer.newsletterCta": "გამოწერა",
@@ -1583,8 +1584,9 @@ const ka: Record<keyof typeof en, string> = {
   "pg.tracking.eyebrow": "ტვირთის თვალთვალი",
   "pg.tracking.mapLink": "უყურეთ ყველა ტვირთს ცოცხალ რუკაზე",
   "pg.services.eyebrow": "სერვისები",
-  "pg.services.title": "სატვირთო გადაწყვეტილებები თქვენი ბიზნესის საჭიროებებზე მორგებული",
-  "pg.services.sub": "რვა ძირითადი სერვისი, რომელიც მოიცავს ლოგისტიკის მთელ ციკლს — ერთი პლატიდან დაწყებული პროექტული მასშტაბის სპეცტრანსპორტირებამდე. ყველა სერვისი მუშაობს ერთ ქსელზე, ერთ თვალთვალზე და ერთ პასუხისმგებელ გუნდზე.",
+  // Services page — KA spec copy
+  "pg.services.title": "მეტი, ვიდრე ტრანსპორტირება. სრული ლოგისტიკური კავშირი.",
+  "pg.services.sub": "ყველა გადაზიდვა უფრო დიდი მიწოდების ჯაჭვის ნაწილია. ტრანსპორტირებას ვაერთიანებთ დაგეგმვასთან, კოორდინაციასთან, დოკუმენტაციასთან და საბოლოო მიწოდებასთან, რათა ტვირთმა გაიაროს პრაქტიკული მარშრუტით — ნაკლები გადაბარებით და უფრო მკაფიო პასუხისმგებლობით.",
   "pg.services.viewService": "სერვისის ნახვა",
   "pg.services.notSure": "არ ხართ დარწმუნებული, რომელი სერვისი ჯდება?",
   "pg.services.notSureSub": "ტვირთების უმეტესობა ორ ფორმატში ჯდება: სრული დატვირთვები ყველაზე სწრაფად მოძრაობს FTL-ით, ნაწილობრივი — ყველაზე ეკონომიურად LTL-ით. ყველაფერი დანარჩენი საუბრის ღირსია.",
@@ -1597,9 +1599,10 @@ const ka: Record<keyof typeof en, string> = {
   "pg.services.stillUnsure": "კვლავ გაურკვეველია?",
   "pg.services.requestQuote": "მოითხოვეთ შეთავაზება",
   "pg.services.planners": "და ჩვენი პლანერები გირჩევენ საუკეთესო ვარიანტს.",
-  "pg.industries.eyebrow": "ინდუსტრიები",
-  "pg.industries.title": "ლოგისტიკა თქვენი ინდუსტრიის პრობლემებზე მორგებული",
-  "pg.industries.sub": "ყველა ინდუსტრიას აქვს წარუმატებლობის მოდელი, რომელიც ფულს კარგავს. ჩვენ ვაშენებთ სატრანსპორტო პროგრამებს იმ პრობლემის გარშემო, რომელსაც თქვენი მიწოდების ჯაჭვი რეალურად აწყდება — და მერე ვზომავთ შედეგს.",
+  // Industries — KA spec copy
+  "pg.industries.eyebrow": "აუდიტორია",
+  "pg.industries.title": "ბიზნესებისთვის, სადაც მიწოდების ჯაჭვს რეალური წნეხი აქვს.",
+  "pg.industries.sub": "მწარმოებლები, საბითუმო და საცალო კომპანიები, ბიზნესის მფლობელები და გადაწყვეტილების მიმღებები საჭიროებენ ლოგისტიკას, რომელიც იცავს პროცესის უწყვეტობას, ზრდის დაფარვას და ქმნის განვითარების შესაძლებლობას.",
   "pg.industries.problem": "პრობლემა",
   "pg.industries.solution": "გადაწყვეტა",
   "pg.industries.outcome": "შედეგი:",
@@ -1607,14 +1610,16 @@ const ka: Record<keyof typeof en, string> = {
   "pg.industries.notHereSub": "ჩვენ ვქმნით პროგრამებს ნიშური მიწოდების ჯაჭვებისთვისაც. მოგვიყევით, როგორ მოძრაობს თქვენი ტვირთი.",
   "pg.industries.talk": "ესაუბრეთ ლოგისტიკურ გუნდს",
   "pg.coverage.eyebrow": "გეოგრაფია და მარშრუტები",
-  "pg.coverage.title": "ერთი ქსელი. ექვსი დერეფანი. ოცდაათი რეგიონი.",
+  // Coverage — KA spec copy
+  "pg.coverage.title": "მარშრუტი რუკაზე გავლებული ხაზი არ არის. ის ბიზნესკავშირია.",
   "pg.coverage.sub": "დაგეგმილი მარშრუტები ევროპის ძირითად დერეფნებზე, საკვანძო პორტების კარიბჭეები და საერთაშორისო დერეფნების ქსელი, რომელიც ევროკავშირს სცილდება.",
   "pg.fleet.eyebrow": "ჩვენი ავტოპარკი",
   "pg.fleet.title": "თანამედროვე ტექნიკა ნებისმიერი სახის ტვირთისთვის",
   "pg.fleet.sub": "ყველა მანქანა აღჭურვილია ტელემატიკით, გეგმიური მომსახურებით და მძღოლებით, რომლებიც გაწვრთნილები არიან თქვენი ტვირთის სწორად დამაგრებაში. გაფილტრეთ სერვისის ტიპის მიხედვით.",
+  // About — KA spec copy
   "pg.about.eyebrow": "ჩვენ შესახებ",
-  "pg.about.title": "სატვირთო კომპანია, აშენებული როგორც ლოგისტიკური ოპერატორი",
-  "pg.about.sub": "BRB Enterprise დაარსდა მარტივ დაკვირვებაზე: ევროპულ სახმელეთო გადაზიდვებში სხვაობა იმას შორის, რასაც გადამზიდავები ჰპირდებიან და რასაც რეალურად აწვდიან, ნამდვილი პრობლემაა. ჩვენ ავაშენეთ ქსელი, ტექნოლოგია და გუნდი ამ სხვაობის დასახურად.",
+  "pg.about.title": "ლოგისტიკური პარტნიორი ფართო ხედვით",
+  "pg.about.sub": "BRB Enterprise შექმნილია ბიზნესებისთვის, რომლებიც ერთ გადაზიდვაზე უფრო შორს ფიქრობენ. მწარმოებლებს, საბითუმო და საცალო კომპანიებს, ბიზნესის მფლობელებსა და გადაწყვეტილების მიმღებებს სჭირდებათ ლოგისტიკა, რომელიც იცავს პროცესის უწყვეტობას, ზრდის დაფარვას და ქმნის განვითარების შესაძლებლობას.",
   "pg.about.storyEyebrow": "ჩვენი ისტორია",
   "pg.about.storyTitle": "დაფუძნებული დერეფნების ინტენსივობაზე, არა ამბიციაზე",
   "pg.about.valuesEyebrow": "რას ვაფასებთ",
@@ -1767,43 +1772,44 @@ const ka: Record<keyof typeof en, string> = {
   "faq.contactTeam": "დაუკავშირდით ჩვენს ლოგისტიკურ გუნდს",
   "faq.replies": "— პასუხი ერთ სამუშაო დღეში.",
 
-  // Redesign — hero
-  "hero.metaLoc": "ლოგისტიკა თბილისიდან",
-  "hero.metaModes": "ევროპა · კავკასია · ცენტრალური აზია",
+  // Hero redesign — KA spec
+  "hero.metaLoc": "სრული ლოგისტიკური სერვისი",
+  "hero.metaModes": "ევროპა · კავკასია · ცენტრალური აზია · გლობალური მარშრუტები",
   "hero.trackLabel": "აკონტროლეთ ტვირთი",
   "hero.priceLane": "ან დაითვალეთ ფასი",
   "hero.trackPh": "შეიყვანეთ ტვირთის ნომერი",
   "hero.demo": "დემო",
-  "hero.fleetLabel": "ავტოპარკი",
-  "hero.fleetUnits": "412 მანქანა",
-  "hero.fleetSub": "თქვენს ტვირთზე მორგებული",
+  "hero.fleetLabel": "ტრანსპორტი",
+  "hero.fleetUnits": "სახმელეთო · სარკინიგზო · საჰაერო · საზღვაო",
+  "hero.fleetSub": "რამდენიმე გადაზიდვის რეჟიმი",
 
-  // Redesign — stats
-  "stats.inTransit": "მიმდინარე გადაზიდვები",
-  "stats.inTransitUnit": "ტვირთი გზაში",
-  "stats.countries": "ქვეყნების დაფარვა",
-  "stats.telemetry": "ადგილმდებარეობის განახლება",
-  "stats.telemetryVal": "2",
-  "stats.telemetryUnit": "წთ",
+  // Stats — KA neutral
+  "stats.inTransit": "მართული გადაზიდვები",
+  "stats.inTransitUnit": "წლიურად",
+  "stats.countries": "მომსახურე რეგიონები",
+  "stats.telemetry": "ტვირთის მონიტორინგი",
+  "stats.telemetryVal": "24/7",
+  "stats.telemetryUnit": "",
   "stats.countriesVal": "30",
   "stats.countriesUnit": "+",
 
-  // Redesign — mode index
-  "mi.eyebrow": "გადაზიდვის სერვისები",
-  "mi.title1": "ერთი ლოგისტიკური პარტნიორი —",
-  "mi.title2": "ყველა საჭირო მიმართულებისთვის.",
+  // Transport modes — KA spec copy
+  "mi.eyebrow": "გადაზიდვის რეჟიმები",
+  "mi.title1": "ერთი ქსელი.",
+  "mi.title2": "გადაადგილების რამდენიმე გზა.",
   "mi.sub":
-    "ერთი პალეტიდან სრულ დატვირთვამდე და საერთაშორისო მულტიმოდალურ გადაზიდვებამდე — ვარჩევთ მარშრუტს, ტრანსპორტსა და გადაზიდვის ტიპს თქვენი ტვირთის რეალური საჭიროებების მიხედვით.",
+    "სახმელეთო, სარკინიგზო, საჰაერო და საზღვაო გადაზიდვები რეგიონულ და საერთაშორისო მიმართულებებზე, ტვირთის, მარშრუტისა და საჭირო დროის მიხედვით.",
   "mi.fullDetail": "ყველა სერვისის ნახვა",
   "mi.transit": "ტრანზიტი",
   "mi.capacity": "ტევადობა",
   "mi.coverage": "გეოგრაფია",
 
   // Redesign — network
-  "net.title1": "საკავშირო მარშრუტების ინჟინერი",
-  "net.title2": "ოპტიმალური ბილიკეbi ბიზნესებსა და გეოგრაფიებს შორის.",
+  // Network — KA spec copy
+  "net.title1": "მარშრუტი რუკაზე გავლებული ხაზი არ არის.",
+  "net.title2": "ის ბიზნესკავშირია.",
   "net.lead":
-    "BRB აოპტიმალურ საკავშირო ინფრასტრუქტურას აყალიბებს კომერციული და ტრანზიტული ურთიერთობებისთვის. ჩვენ ვაყალიბებთ ოპტიმალურ ბილიკებს ინტეგრირებული ლოგისტიკური მხარდაჭერის მეშვეობით.",
+    "BRB მარშრუტს გეგმავს გეოგრაფიის, ფასის, დროის, სასაზღვრო პირობებისა და თითოეული გადაზიდვის კომერციული მიზნების გათვალისწინებით. ჩვენი მიზანი მხოლოდ ტვირთის A წერტილიდან B წერტილამდე გადატანა არ არის — ჩვენ ვქმნით კავშირს, რომელიც ორივე მხარის ბიზნესისთვის მუშაობს.",
 
   "net.scheduled": "დაგეგმილი",
   "net.depBoard": "გამგზავრების დაფა",
@@ -1812,12 +1818,12 @@ const ka: Record<keyof typeof en, string> = {
   "net.road": "საგზაო",
   "net.rail": "სარკინიგზო",
 
-  // Redesign — tools preview
+  // Calculator — KA spec copy
   "tp.eyebrow": "ტვირთის შეფასება",
-  "tp.title1": "მიწოდება-მოთხოვნა",
-  "tp.title2": "გარიგების შუამავალი.",
+  "tp.title1": "დაიწყეთ",
+  "tp.title2": "მარშრუტით.",
   "tp.lead":
-    "BRB ოპტიმალურ საკავშირო მარშრუტებს აყალიბებს ბიზნესებსა და გეოგრაფიებს შორის. აირჩიეთ გადაზიდვის ტიპი, წარმოშობა, დანიშნულება და წონა.",
+    "მიუთითეთ გამგზავრების ადგილი, დანიშნულება და ტვირთის მონაცემები, რათა მიიღოთ სავარაუდო ფასი. რთული გადაზიდვის შემთხვევაში ჩვენს გუნდს შეუძლია მარშრუტის განხილვა და უფრო პრაქტიკული სატრანსპორტო გეგმის შეთავაზება.",
   "tp.rateEngine": "ტვირთის შეფასება",
   "tp.liveCost": "ხარჯების დეტალური გაანგარიშება",
   "tp.mode": "რეჟიმი",
@@ -1837,23 +1843,23 @@ const ka: Record<keyof typeof en, string> = {
   "tp.transit": "ტრანზიტი",
   "tp.complete": "შესრულებულია",
 
-  // Redesign — operating standard
-  "as.eyebrow": "ჩვენი მიდგომა",
-  "as.title1": "შემდგარი, უშიში",
-  "as.title2": "მყარი.",
+  // How BRB works — KA spec copy
+  "as.eyebrow": "როგორ მუშაობს BRB",
+  "as.title1": "ჩვენ ვქმნით კავშირებს",
+  "as.title2": "და არა მხოლოდ მიწოდებებს.",
   "as.sub":
-    "BRB მოქმედებს გამოცდილი ლოგისტიკური ოპერატორის ნდობით. ჩვენ ვაყალიბებთ ოპტიმალურ საკავშირო მარშრუტებს, პროაქტიულად ვურთიერთობთ და სიზუსტით ვასრულებთ.",
-  "as.cta": "მიიღეთ გადაზიდვის ფასი",
-  "as.c1t": "თქვენი ტვირთისთვის პასუხისმგებელი რეალური ადამიანი",
+    "გადაზიდვა გადაწყვეტილებების ჯაჭვია: მარშრუტი, დრო, ტევადობა, საზღვარი, გადაბარება და საბოლოო მიწოდება. BRB ამ გადაწყვეტილებებს ერთი ლოგისტიკური პარტნიორის ქვეშ აერთიანებს.",
+  "as.cta": "დაგეგმეთ გადაზიდვა",
+  "as.c1t": "მარშრუტის ხედვა",
   "as.c1b":
-    "თქვენ გყავთ საკონტაქტო პირი, რომელმაც იცის თქვენი მარშრუტი, ტვირთი და მიწოდების მოთხოვნები — და არა უბრალოდ მხარდაჭერის ნომერი.",
-  "as.c2t": "პრობლემების შესახებ წინასწარ იცით",
+    "ტრანსპორტის არჩევამდე მთლიან გადაადგილებას ვაანალიზებთ.",
+  "as.c2t": "მკაფიო პასუხისმგებლობა",
   "as.c2b":
-    "თუ რაიმე მიწოდების დროს ცვლის, გეუბნებით, რა მოხდა, რას ნიშნავს ეს თქვენთვის და რას ვაკეთებთ პრობლემის მოსაგვარებლად.",
-  "as.c3t": "გასაგები ფასი",
+    "ყოველთვის იცით, ვინ არის პასუხისმგებელი თქვენს გადაზიდვაზე და ვისგან მიიღებთ პასუხს.",
+  "as.c3t": "პროაქტიული კომუნიკაცია",
   "as.c3b":
-    "ტრანსპორტირება, საწვავი, გზის გადასახადები, ტერმინალის ხარჯები და სხვა დამატებითი გადასახადები წინასწარ და გასაგებად არის წარმოდგენილი.",
-  "as.c4t": "დოკუმენტები, როცა გჭირდებათ",
+    "თუ მარშრუტი იცვლება, გეუბნებით რა მოხდა, რას ცვლის ეს და რა იქნება შემდეგი ნაბიჯი.",
+  "as.c4t": "პრაქტიკული გადაწყვეტილებები",
   "as.c4b":
     "გადაზიდვის დოკუმენტები, POD და სხვა საჭირო საბუთები ერთად ინახება და მზადყოფნისთანავე ხელმისაწვდომია.",
 

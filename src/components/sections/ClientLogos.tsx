@@ -1,51 +1,24 @@
 "use client";
 
-import { useReducedMotion } from "framer-motion";
-import { cn } from "@/lib/utils";
 import { useLang } from "@/lib/i18n";
 
 /**
- * Client marks — fictional names rendered as styled wordmarks.
- * Swap for real client logos (grayscale) when approved for publication.
+ * Trust strip — no fake client names.
+ * Shows the brand positioning statement per spec.
+ * Replace with real client logos once approved for publication.
  */
-const CLIENT_NAMES = [
-  "Helvetia Components",
-  "Nordic Fresh",
-  "Baumgartner Bau",
-  "Vela Retail",
-  "MediCore",
-  "Atlas Commerce",
-  "Rheinwerk AG",
-  "Aurora Foods",
-];
-
 export function ClientLogos() {
-  const reduceMotion = useReducedMotion();
   const { t } = useLang();
-  const row = [...CLIENT_NAMES, ...CLIENT_NAMES];
 
   return (
-    <section className="border-b border-soft bg-surface py-12 dark:border-white/10 dark:bg-ink-950">
-      <p className="text-center font-mono text-[10px] uppercase tracking-[0.22em] text-muted dark:text-fog-600">
-        {t("logos.heading")}
-      </p>
-      <div className="relative mx-auto mt-8 max-w-6xl overflow-hidden px-5 [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
-        <div
-          className={cn(
-            "flex w-max items-center gap-14",
-            !reduceMotion && "animate-marquee",
-          )}
-        >
-          {row.map((name, i) => (
-            <span
-              key={`${name}-${i}`}
-              className="whitespace-nowrap font-display text-lg font-bold tracking-tight text-muted transition-colors duration-300 hover:text-ink dark:text-fog-600 dark:hover:text-fog-300"
-              aria-hidden={i >= CLIENT_NAMES.length}
-            >
-              {name}
-            </span>
-          ))}
-        </div>
+    <section className="border-b border-soft bg-surface py-10 dark:border-white/10 dark:bg-ink-950">
+      <div className="mx-auto max-w-4xl px-5 text-center">
+        <p className="font-display text-lg font-semibold tracking-tight text-strong dark:text-fog-50 sm:text-xl">
+          {t("logos.heading")}
+        </p>
+        <p className="mt-3 text-[14px] leading-relaxed text-muted dark:text-fog-500">
+          Manufacturers, wholesale and retail companies, business owners and decision-makers rely on BRB for integrated logistics across road, rail, air and ocean.
+        </p>
       </div>
     </section>
   );

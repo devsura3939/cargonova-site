@@ -174,8 +174,8 @@ export function Hero() {
       {/* Stats strip */}
       <div className="relative border-t border-white/10">
         <div className="mx-auto grid max-w-[80rem] grid-cols-2 gap-px bg-white/[0.06] md:grid-cols-4">
-          <Stat label={t("stats.inTransit")} value="1 284" unit={t("stats.inTransitUnit")} emphasis />
-          <Stat label={t("stats.ontime")} value="98.7" unit="%" />
+          <Stat label={t("stats.inTransit")} value="—" unit={t("stats.inTransitUnit")} emphasis />
+          <Stat label={t("stats.ontime")} value="—" unit="" />
           <Stat label={t("stats.telemetry")} value={t("stats.telemetryVal")} unit={t("stats.telemetryUnit")} />
           <Stat label={t("stats.countries")} value={t("stats.countriesVal")} unit={t("stats.countriesUnit")} />
         </div>
