@@ -9,8 +9,8 @@ import { cn } from "@/lib/utils";
 
 const TIER_COLOR: Record<Hub["tier"], string> = {
   major: "#f4f5f5",
-  regional: "#ff5f1f",
-  gateway: "#ff8047",
+  regional: "#1E81B0",
+  gateway: "#3A9FD4",
 };
 
 const TIER_KEY: Record<Hub["tier"], string> = {
@@ -156,9 +156,9 @@ export function NetworkMap({
             <stop offset="100%" stopColor="#14171a" />
           </linearGradient>
           <linearGradient id="nm-corridor" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#ff5f1f" />
-            <stop offset="55%" stopColor="#ff8047" />
-            <stop offset="100%" stopColor="#ffa878" />
+            <stop offset="0%" stopColor="#1E81B0" />
+            <stop offset="55%" stopColor="#3A9FD4" />
+            <stop offset="100%" stopColor="#6BB8E0" />
           </linearGradient>
         </defs>
 
@@ -178,7 +178,7 @@ export function NetworkMap({
           const isActive = activeCorridorId === c.id;
           const highlighted = isHover || isActive;
           const dim = dimmed && !isActive && !isHover;
-          const mainColor = isActive ? "#ff5f1f" : isHover ? "#ffa878" : "#ff8047";
+          const mainColor = isActive ? "#1E81B0" : isHover ? "#6BB8E0" : "#3A9FD4";
 
           return (
             <g

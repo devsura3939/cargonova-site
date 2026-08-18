@@ -4,7 +4,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
   title: "Privacy Policy",
-  description: "How CargoNova Logistics collects, uses, and protects your personal data.",
+  description: "How BRB Enterprise collects, uses, and protects your personal data.",
   path: "/privacy",
 });
 
@@ -18,7 +18,7 @@ export default function PrivacyPage() {
         {
           heading: "Who we are",
           body: [
-            "CargoNova Logistics operates this website. This policy explains what personal data we collect, why we collect it, and the rights you have over it. This is a demo website; contact details below are placeholders.",
+            "BRB Enterprise operates this website. This policy explains what personal data we collect, why we collect it, and the rights you have over it. This is a demo website; contact details below are placeholders.",
           ],
         },
         {
@@ -57,7 +57,7 @@ export default function PrivacyPage() {
         {
           heading: "Contact",
           body: [
-            "Data protection questions: hello@cargonova.example.com. CargoNova Logistics, Kurfürstendamm 21, 10719 Berlin, Germany.",
+            "Data protection questions: hello@hello@brb-enterprise.com. BRB Enterprise, Tbilisi, Georgia.",
           ],
         },
       ]}
@@ -65,7 +65,7 @@ export default function PrivacyPage() {
         {
           heading: "ვინ ვართ ჩვენ",
           body: [
-            "ეს ვებსაიტი მართავს CargoNova Logistics-ს. ეს პოლიტიკა განმარტავს, რომელ პერსონალურ მონაცემებს ვაგროვებთ, რატომ და რა უფლებები გაქვთ მათზე. ეს საჩვენებელი ვებსაიტია; ქვემოთ მოცემული საკონტაქტო მონაცემები ადგილმდებელია.",
+            "ეს ვებსაიტი მართავს BRB Enterprise-ს. ეს პოლიტიკა განმარტავს, რომელ პერსონალურ მონაცემებს ვაგროვებთ, რატომ და რა უფლებები გაქვთ მათზე. ეს საჩვენებელი ვებსაიტია; ქვემოთ მოცემული საკონტაქტო მონაცემები ადგილმდებელია.",
           ],
         },
         {
@@ -104,7 +104,7 @@ export default function PrivacyPage() {
         {
           heading: "კონტაქტი",
           body: [
-            "მონაცემთა დაცვის კითხვები: hello@cargonova.example.com. CargoNova Logistics, Kurfürstendamm 21, 10719 Berlin, Germany.",
+            "მონაცემთა დაცვის კითხვები: hello@hello@brb-enterprise.com. BRB Enterprise, Tbilisi, Georgia.",
           ],
         },
       ]}

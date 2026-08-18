@@ -42,7 +42,7 @@ import {
 } from "lucide-react";
 
 const SHIP_COLOR = "#2ED3E6";
-const TRUCK_COLOR = "#FF8A3D";
+const TRUCK_COLOR = "#1E81B0";
 const PORT_COLOR = "#7fb4ff";
 const AIR_COLOR = "#C084FC";
 const AIRPORT_COLOR = "#A78BFA";
@@ -56,9 +56,9 @@ type FeedEvent = { id: number; kind: string; actor: string; target: string; at: 
 const KIND_COLOR: Record<string, string> = {
   departed: "#2ED3E6",
   berthed: "#7fb4ff",
-  midway: "#FF8A3D",
+  midway: "#1E81B0",
   arrived: "#10b981",
-  delivering: "#FF8A3D",
+  delivering: "#1E81B0",
 };
 
 const WIND_DIRS = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
@@ -835,7 +835,7 @@ export function LiveWorldMap() {
                         background: isUnit
                           ? hit.unit.kind === "ship"
                             ? "rgba(46,211,230,0.14)"
-                            : "rgba(255,138,61,0.14)"
+                            : "rgba(30,129,176,0.14)"
                           : "rgba(192,132,252,0.14)",
                         color: isUnit ? (hit.unit.kind === "ship" ? SHIP_COLOR : TRUCK_COLOR) : AIR_COLOR,
                       }}

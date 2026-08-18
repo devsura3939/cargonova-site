@@ -9,7 +9,7 @@ export const phoneSchema = z
   .min(7, "Enter a valid phone number.")
   .max(24, "Enter a valid phone number.");
 
-/** Shipment IDs: CargoNova (CRG-582941), UPS (1Z…), DHL (JD…), FedEx/USPS digits, or generic letter+digit codes. */
+/** Shipment IDs: BRB Enterprise (CRG-582941), UPS (1Z…), DHL (JD…), FedEx/USPS digits, or generic letter+digit codes. */
 export const trackingSchema = z
   .string()
   .trim()

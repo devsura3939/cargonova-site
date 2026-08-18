@@ -7,7 +7,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({
   title: "Careers",
   description:
-    "Join CargoNova: operations, drivers, network planning, sales, and quality roles in Berlin — predictable routes, modern equipment, and a team that plans your week.",
+    "Join BRB Enterprise: operations, drivers, network planning, sales, and quality roles in Berlin — predictable routes, modern equipment, and a team that plans your week.",
   path: "/careers",
 });
 

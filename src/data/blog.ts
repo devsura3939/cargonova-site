@@ -20,7 +20,7 @@ export const posts: BlogPost[] = [
     category: "Freight",
     publishedAt: "2026-08-04",
     readTime: "8 min",
-    author: "CargoNova Insights",
+    author: "BRB Insights",
     image: images.containersAerial,
     featured: true,
     body: [
@@ -39,7 +39,7 @@ export const posts: BlogPost[] = [
     category: "Guides",
     publishedAt: "2026-07-22",
     readTime: "6 min",
-    author: "CargoNova Insights",
+    author: "BRB Insights",
     image: images.semiHighway,
     body: [
       "The FTL vs. LTL decision comes down to three variables: volume, urgency, and the value of direct handling.",
@@ -57,7 +57,7 @@ export const posts: BlogPost[] = [
     category: "Supply Chain",
     publishedAt: "2026-07-10",
     readTime: "7 min",
-    author: "CargoNova Insights",
+    author: "BRB Insights",
     image: images.warehouseShelf,
     body: [
       "A cold-chain audit is a documentation exercise with physical consequences. Auditors are not checking whether your cargo was cold — they are checking whether you can prove it was, continuously, and what you did when it was not.",
@@ -75,7 +75,7 @@ export const posts: BlogPost[] = [
     category: "Transportation",
     publishedAt: "2026-06-28",
     readTime: "9 min",
-    author: "CargoNova Insights",
+    author: "BRB Insights",
     image: images.portCranes,
     body: [
       "An oversized move fails or succeeds in the planning phase. The truck is the simple part; the route is where the work is.",
@@ -93,7 +93,7 @@ export const posts: BlogPost[] = [
     category: "Warehousing",
     publishedAt: "2026-06-14",
     readTime: "5 min",
-    author: "CargoNova Insights",
+    author: "BRB Insights",
     image: images.warehouseForklift,
     body: [
       "Peak season pressure is not a transport problem; it is a timing problem. The freight that arrives late in Q4 usually failed to be staged early in Q4.",
@@ -111,7 +111,7 @@ export const posts: BlogPost[] = [
     category: "Business Logistics",
     publishedAt: "2026-05-30",
     readTime: "7 min",
-    author: "CargoNova Insights",
+    author: "BRB Insights",
     image: images.opsTablet,
     body: [
       "Most logistics dashboards are full of numbers that nobody acts on. A useful KPI set is small, measurable, and tied to a decision someone can make this week.",

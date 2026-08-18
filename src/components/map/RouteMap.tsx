@@ -155,7 +155,7 @@ export function RouteMap({ shipment }: { shipment: Shipment }) {
     L.polyline(routePts, { color: "#2ED3E6", weight: 5, opacity: 0.18 }).addTo(map);
 
     L.marker(first, { icon: pinIcon("#10b981", "A"), title: shipment.origin }).addTo(map);
-    L.marker(last, { icon: pinIcon("#ff8a3d", "B"), title: shipment.destination }).addTo(map);
+    L.marker(last, { icon: pinIcon("#1E81B0", "B"), title: shipment.destination }).addTo(map);
 
     // Checkpoint dots at resolvable locations (road shipments only).
     if (!oceanPts) {

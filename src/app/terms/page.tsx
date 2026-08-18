@@ -4,7 +4,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
   title: "Terms of Service",
-  description: "Terms governing the use of the CargoNova Logistics website and services.",
+  description: "Terms governing the use of the BRB Enterprise website and services.",
   path: "/terms",
 });
 
@@ -18,7 +18,7 @@ export default function TermsPage() {
         {
           heading: "Using this website",
           body: [
-            "This website provides information about CargoNova Logistics services and tools for requesting quotes and tracking shipments. By using it you agree to these terms. This is a demo website; no binding transport contracts are formed through it.",
+            "This website provides information about BRB Enterprise services and tools for requesting quotes and tracking shipments. By using it you agree to these terms. This is a demo website; no binding transport contracts are formed through it.",
           ],
         },
         {
@@ -49,7 +49,7 @@ export default function TermsPage() {
         {
           heading: "Contact",
           body: [
-            "Questions about these terms: hello@cargonova.example.com. CargoNova Logistics, Kurfürstendamm 21, 10719 Berlin, Germany.",
+            "Questions about these terms: hello@hello@brb-enterprise.com. BRB Enterprise, Tbilisi, Georgia.",
           ],
         },
       ]}
@@ -57,7 +57,7 @@ export default function TermsPage() {
         {
           heading: "ვებსაიტის გამოყენება",
           body: [
-            "ეს ვებსაიტი გთავაზობთ ინფორმაციას CargoNova Logistics-ის მომსახურებებისა და ხელსაწყოების შესახებ შეთავაზების მოთხოვნისა და ტვირთების თვალთვალისთვის. მისი გამოყენებით თქვენ ეთანხმებით ამ პირობებს. ეს საჩვენებელი ვებსაიტია; მისი მეშვეობით სავალდებულო სატრანსპორტო ხელშეკრულებები არ იდება.",
+            "ეს ვებსაიტი გთავაზობთ ინფორმაციას BRB Enterprise-ის მომსახურებებისა და ხელსაწყოების შესახებ შეთავაზების მოთხოვნისა და ტვირთების თვალთვალისთვის. მისი გამოყენებით თქვენ ეთანხმებით ამ პირობებს. ეს საჩვენებელი ვებსაიტია; მისი მეშვეობით სავალდებულო სატრანსპორტო ხელშეკრულებები არ იდება.",
           ],
         },
         {
@@ -88,7 +88,7 @@ export default function TermsPage() {
         {
           heading: "კონტაქტი",
           body: [
-            "კითხვები ამ პირობებთან დაკავშირებით: hello@cargonova.example.com. CargoNova Logistics, Kurfürstendamm 21, 10719 Berlin, Germany.",
+            "კითხვები ამ პირობებთან დაკავშირებით: hello@hello@brb-enterprise.com. BRB Enterprise, Tbilisi, Georgia.",
           ],
         },
       ]}

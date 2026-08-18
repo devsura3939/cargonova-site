@@ -6,14 +6,14 @@ export const testimonials: Testimonial[] = [
     person: "Marta Kowalska",
     role: "Head of Supply Chain",
     quote:
-      "We moved our inbound component network to CargoNova two years ago. Line-stoppage risk is down, and for the first time we can show the board a real on-time number — 99.1% across the program.",
+      "We moved our inbound component network to BRB Enterprise two years ago. Line-stoppage risk is down, and for the first time we can show the board a real on-time number — 99.1% across the program.",
     metric: "99.1%",
     metricLabel: "program on-time delivery",
     ka: {
       company: "Helvetia Industrial Components",
       role: "მიწოდების ჯაჭვის ხელმძღვანელი",
       quote:
-        "შემომავალი კომპონენტების ქსელი CargoNova-ზე ორი წლის წინ გადავიყვანეთ. საწარმოო გაჩერებების რისკი შემცირდა და პირველად შეგვიძლია გამგეობას რეალური დროულობის მაჩვენებელი ვაჩვენოთ — 99.1% მთელ პროგრამაზე.",
+        "შემომავალი კომპონენტების ქსელი BRB Enterprise-ზე ორი წლის წინ გადავიყვანეთ. საწარმოო გაჩერებების რისკი შემცირდა და პირველად შეგვიძლია გამგეობას რეალური დროულობის მაჩვენებელი ვაჩვენოთ — 99.1% მთელ პროგრამაზე.",
       metricLabel: "პროგრამის დროული მიწოდება",
     },
   },

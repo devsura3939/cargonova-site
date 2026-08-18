@@ -9,7 +9,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({
   title: "Insights & Guides",
   description:
-    "Freight, supply chain, transportation, and warehousing insights from the CargoNova team — practical guides for logistics professionals.",
+    "Freight, supply chain, transportation, and warehousing insights from the BRB Enterprise team — practical guides for logistics professionals.",
   path: "/blog",
 });
 

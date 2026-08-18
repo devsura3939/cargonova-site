@@ -7,7 +7,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({
   title: "FAQ",
   description:
-    "Answers about shipments, pricing, tracking, insurance, cargo requirements, and international transport with CargoNova Logistics.",
+    "Answers about shipments, pricing, tracking, insurance, cargo requirements, and international transport with BRB Enterprise.",
   path: "/faq",
 });
 

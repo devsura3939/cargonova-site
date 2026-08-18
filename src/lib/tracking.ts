@@ -1,7 +1,7 @@
 /**
  * Shipment tracking service.
  *
- * Accepts real-world carrier tracking numbers — CargoNova (CRG-…), UPS (1Z…),
+ * Accepts real-world carrier tracking numbers — BRB Enterprise (CRG-…), UPS (1Z…),
  * DHL Express (JD…/JVGL…), FedEx, USPS, ISO container numbers (CNTR…)— plus
  * generic letter+digit codes, and resolves every well-formed number to a
  * realistic shipment (deterministic per ID, dates relative to today).
@@ -117,7 +117,7 @@ export function detectCarrier(code: string): Carrier {
 export function carrierDisplayName(carrier: Carrier): string {
   switch (carrier) {
     case "cargonova":
-      return "CargoNova Logistics";
+      return "BRB Enterprise";
     case "dhl":
       return "DHL Express";
     case "ups":
@@ -551,7 +551,7 @@ function buildOceanShipment(id: string, input: OceanInput, lang: Lang = "en"): S
   return {
     id,
     carrier: "cargonova",
-    carrierName: "CargoNova Ocean Freight",
+    carrierName: "BRB Enterprise Ocean Freight",
     mode: "ocean",
     status,
     origin: input.origin,
@@ -746,7 +746,7 @@ export const demoTrackingIds = SHOWCASE.map((s) => s.id);
 
 /**
  * Where the visitor can re-verify this tracking number against the real carrier.
- * CargoNova's own demo data is simulated, so we always link out to the genuine
+ * BRB Enterprise's own demo data is simulated, so we always link out to the genuine
  * source for the carrier format the code belongs to.
  */
 export function carrierVerifyUrl(id: string, carrier: Carrier): string {

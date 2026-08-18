@@ -342,8 +342,8 @@ export function CareersBody() {
                 </div>
                 <p className="mt-8 text-sm text-navy-300">
                   {c.applyNote1}{" "}
-                  <a href="mailto:careers@cargonova.example.com" className="font-semibold text-white underline decoration-cyan-400/60 underline-offset-4">
-                    careers@cargonova.example.com
+                  <a href="mailto:careers@brb-enterprise.com" className="font-semibold text-white underline decoration-cyan-400/60 underline-offset-4">
+                    careers@brb-enterprise.com
                   </a>
                 </p>
               </div>

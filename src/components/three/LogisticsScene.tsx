@@ -110,11 +110,11 @@ function Truck({ curve }: { curve: THREE.CatmullRomCurve3 }) {
       {/* taillights */}
       <mesh position={[-1.61, 0.62, 0.38]}>
         <boxGeometry args={[0.02, 0.07, 0.12]} />
-        <meshStandardMaterial color="#ff8a3d" emissive="#ff3b1d" emissiveIntensity={1.2} />
+        <meshStandardMaterial color="#1E81B0" emissive="#004E89" emissiveIntensity={1.2} />
       </mesh>
       <mesh position={[-1.61, 0.62, -0.38]}>
         <boxGeometry args={[0.02, 0.07, 0.12]} />
-        <meshStandardMaterial color="#ff8a3d" emissive="#ff3b1d" emissiveIntensity={1.2} />
+        <meshStandardMaterial color="#1E81B0" emissive="#004E89" emissiveIntensity={1.2} />
       </mesh>
       {/* chassis */}
       <mesh position={[0.05, 0.08, 0]}>
@@ -232,7 +232,7 @@ function CargoPlane() {
       {/* nav light */}
       <mesh position={[-2.42, 0.04, 0.1]}>
         <sphereGeometry args={[0.05, 8, 8]} />
-        <meshBasicMaterial color="#ff3b1d" />
+        <meshBasicMaterial color="#004E89" />
       </mesh>
       <mesh position={[2.42, 0.04, 0.1]}>
         <sphereGeometry args={[0.05, 8, 8]} />
@@ -483,7 +483,7 @@ function Warehouse({ position }: { position: [number, number, number] }) {
 function Containers({ position }: { position: [number, number, number] }) {
   const stack = [
     { pos: [-1.35, 0.62, 1.1], color: "#1677ff" },
-    { pos: [-0.45, 0.62, 1.1], color: "#ff8a3d" },
+    { pos: [-0.45, 0.62, 1.1], color: "#1E81B0" },
     { pos: [-0.45, 1.36, 1.1], color: "#2ed3e6" },
     { pos: [-1.35, 1.36, 1.1], color: "#e3efff" },
     { pos: [-0.9, 2.1, 1.1], color: "#1677ff" },
@@ -612,7 +612,7 @@ export default function LogisticsScene() {
         <AnimatedRoute curve={curve} />
         <Truck curve={curve} />
         <HubPin position={[-6.2, 0, 3.4]} color="#2ed3e6" />
-        <HubPin position={[6.4, 0, -2.6]} color="#ff8a3d" />
+        <HubPin position={[6.4, 0, -2.6]} color="#1E81B0" />
         <HubPin position={[1.6, 0, -0.9]} color="#1677ff" />
         <Warehouse position={[-4.6, 0, -1.6]} />
         <Containers position={[4.1, 0, 1.7]} />

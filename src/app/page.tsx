@@ -11,9 +11,9 @@ import { CTASection } from "@/components/sections/CTASection";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Ground Freight, FTL, LTL & Cargo Transport",
+  title: "Bridging Routes, Building Reach — Global Logistics",
   description:
-    "CargoNova Logistics moves your cargo across Europe with ground freight, FTL, LTL, express, refrigerated, and oversized transport — 98.7% on-time.",
+    "BRB Enterprise — full-scale logistics company engineering optimal connection routes between businesses and geographies through integrated transportation, supply chain management, and analytical services.",
   path: "/",
 });
 

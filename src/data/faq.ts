@@ -24,10 +24,10 @@ export const faqCategoryKa: Record<string, string> = {
 export const faqs: FaqItem[] = [
   {
     category: "General",
-    question: "What does CargoNova Logistics do?",
+    question: "What does BRB Enterprise do?",
     answer:
       "We provide ground freight, FTL and LTL transport, express cargo, refrigerated logistics, oversized transport, warehousing, and managed logistics programs for B2B customers across Europe and international corridors.",
-    questionKa: "რას აკეთებს CargoNova Logistics?",
+    questionKa: "რას აკეთებს BRB Enterprise?",
     answerKa:
       "ჩვენ გთავაზობთ სახმელეთო ტვირთებს, FTL და LTL ტრანსპორტირებას, ექსპრეს ტვირთებს, რეფრიჟერატორულ ლოგისტიკას, მსხვილი ტვირთების გადაზიდვას, საწყობსა და მართულ ლოგისტიკურ პროგრამებს B2B კლიენტებისთვის ევროპასა და საერთაშორისო დერეფნებზე.",
   },

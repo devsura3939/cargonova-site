@@ -38,14 +38,14 @@ export function CTASection() {
           strokeWidth="14"
           strokeLinecap="round"
         />
-        <circle cx="-40" cy="242" r="6" fill="#FF8047" />
-        <circle cx="420" cy="150" r="4.5" fill="#FF5F1F" />
+        <circle cx="-40" cy="242" r="6" fill="#F7B84D" />
+        <circle cx="420" cy="150" r="4.5" fill="#F5A623" />
         <circle cx="900" cy="130" r="4.5" fill="#FFA878" />
-        <circle cx="1300" cy="98" r="6" fill="#FF5F1F" />
+        <circle cx="1300" cy="98" r="6" fill="#F5A623" />
         <defs>
           <linearGradient id="cta-route" x1="0" y1="0" x2="1" y2="0">
-            <stop stopColor="#FF8047" />
-            <stop offset="0.5" stopColor="#FF5F1F" />
+            <stop stopColor="#F7B84D" />
+            <stop offset="0.5" stopColor="#F5A623" />
             <stop offset="1" stopColor="#FFA878" />
           </linearGradient>
         </defs>

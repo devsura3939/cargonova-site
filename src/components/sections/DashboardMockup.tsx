@@ -52,7 +52,7 @@ export function DashboardMockup({ className }: { className?: string }) {
             <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
             <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
           </div>
-          <span className="font-mono text-[11px] text-navy-300">control.cargonova.io/tower</span>
+          <span className="font-mono text-[11px] text-navy-300">control.brb-enterprise.com/tower</span>
         </div>
         <span className="inline-flex items-center gap-1.5 rounded-full bg-cyan-500/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-cyan-400">
           <span className="relative flex h-1.5 w-1.5">

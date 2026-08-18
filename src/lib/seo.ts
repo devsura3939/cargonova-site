@@ -55,23 +55,21 @@ export function organizationJsonLd() {
     telephone: brand.contact.phone,
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Kurfürstendamm 21",
-      postalCode: "10719",
-      addressLocality: "Berlin",
-      addressCountry: "DE",
+      addressLocality: "Tbilisi",
+      addressCountry: "GE",
     },
     contactPoint: [
       {
         "@type": "ContactPoint",
         contactType: "sales",
         email: brand.contact.salesEmail,
-        availableLanguage: ["English", "German"],
+        availableLanguage: ["English", "Georgian"],
       },
       {
         "@type": "ContactPoint",
         contactType: "customer support",
         email: brand.contact.supportEmail,
-        availableLanguage: ["English", "German"],
+        availableLanguage: ["English", "Georgian"],
       },
     ],
   };

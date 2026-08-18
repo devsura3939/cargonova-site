@@ -77,11 +77,11 @@ export function ServicesOverview() {
               />
               <circle cx="10" cy="90" r="5" fill="#2ED3E6" />
               <circle cx="210" cy="40" r="4" fill="#1677FF" />
-              <circle cx="390" cy="15" r="5" fill="#FF8A3D" />
+              <circle cx="390" cy="15" r="5" fill="#1E81B0" />
               <defs>
                 <linearGradient id="svc-route" x1="0" y1="0" x2="1" y2="0">
                   <stop stopColor="#2ED3E6" />
-                  <stop offset="1" stopColor="#FF8A3D" />
+                  <stop offset="1" stopColor="#1E81B0" />
                 </linearGradient>
               </defs>
             </svg>

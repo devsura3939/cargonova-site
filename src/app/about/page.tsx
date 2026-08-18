@@ -5,9 +5,9 @@ import { CTASection } from "@/components/sections/CTASection";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "About CargoNova",
+  title: "About BRB Enterprise",
   description:
-    "CargoNova Logistics is a Berlin-based ground freight and cargo transport company moving 10,000+ shipments a year across Europe with 98.7% on-time delivery.",
+    "BRB Enterprise is a Berlin-based ground freight and cargo transport company moving 10,000+ shipments a year across Europe with 98.7% on-time delivery.",
   path: "/about",
 });
 
