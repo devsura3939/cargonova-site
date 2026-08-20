@@ -99,18 +99,21 @@ export function Header() {
                       ? cn(solid ? "text-strong dark:text-fog-50" : "text-fog-50")
                       : cn(
                           solid
-                            ? "text-muted hover:text-strong dark:text-fog-500 dark:hover:text-fog-200"
+                            ? "text-ink hover:text-strong dark:text-fog-300 dark:hover:text-fog-50"
                             : "text-fog-400 hover:text-fog-50 dark:text-fog-400 dark:hover:text-fog-50",
                         ),
                   )}
                 >
                   {t(item.key)}
-                  <span
-                    className={cn(
-                      "absolute inset-x-3 -bottom-[1px] h-[2px] origin-left bg-signal transition-transform duration-200",
-                      active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100",
-                    )}
-                  />
+                <span
+                  className={cn(
+                    "absolute inset-x-3 -bottom-[1px] h-[2.5px] origin-left bg-signal transition-transform duration-200",
+                    active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100",
+                  )}
+                />
+                {active ? (
+                  <span className="absolute -top-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-signal" />
+                ) : null}
                 </Link>
               );
             })}
@@ -132,7 +135,7 @@ export function Header() {
                     ? cn(solid ? "text-strong dark:text-fog-50" : "text-fog-50")
                     : cn(
                         solid
-                          ? "text-muted hover:text-strong dark:text-fog-500 dark:hover:text-fog-200"
+                          ? "text-ink hover:text-strong dark:text-fog-300 dark:hover:text-fog-50"
                           : "text-fog-400 hover:text-fog-50 dark:text-fog-400 dark:hover:text-fog-50",
                       ),
                 )}

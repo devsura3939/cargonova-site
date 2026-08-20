@@ -405,7 +405,18 @@ class FleetCanvasLayer extends L.Layer {
 
     /* Aircraft — real ADS-B positions from OpenSky Network */
     if (filter !== "ship" && filter !== "truck" && filter !== "port") {
-      for (const a of this.state.aircraft) {
+      // Show only cargo-relevant flights + a curated sample of major carriers.
+      // This keeps the map readable — ships and trucks are the priority.
+      const CARGO_PREFIXES = new Set(["FX","5X","UPS","FDX","BOX","GEC","CWC","ICV","ABD","BCS","DHK","QY","3S","K4","CKS","ATN","GTI","PAC","PO","ABY","Y8","CK","KZ","NCA","TK","LH","BA","AF","KL","EK","QR","CV","PW"]);
+      const filtered = this.state.aircraft.filter((a) => {
+        const prefix = a.callsign.replace(/\d+$/, "");
+        if (isCargoAirline(prefix)) return true; // always show cargo
+        if (CARGO_PREFIXES.has(prefix)) return true; // major carriers on cargo routes
+        return false;
+      });
+      // Cap at ~80 to keep the map clean
+      const displayAircraft = filtered.slice(0, 80);
+      for (const a of displayAircraft) {
         if (!inView(a.lat, a.lon)) continue;
         const [x, y] = this.project(a.lat, a.lon);
         const isSelA = a.callsign === selectedId;

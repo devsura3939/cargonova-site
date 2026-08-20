@@ -12,7 +12,7 @@
  * tracking API later without touching any UI code.
  */
 
-import { seaRoutes } from "@/data/sea-routes";
+import { seaRoutes, truckCorridors } from "@/data/sea-routes";
 import { formatEtaLang } from "@/lib/utils";
 import { ports, distKm } from "@/data/ports";
 import { computeLiveFleet, type LiveUnit } from "@/lib/fleet";
@@ -74,6 +74,23 @@ export type Shipment = {
     route: [number, number][];
   };
 };
+
+/** Resolve the real corridor waypoints for a fleet truck by matching its routeId. */
+function truckRouteWaypoints(unit: LiveUnit): [number, number][] {
+  const corridor = truckCorridors.find((c) => c.id === unit.routeId);
+  if (corridor) return corridor.waypoints.slice(1, -1); // exclude first/last (added by caller)
+  // Fallback: interpolate between origin and destination
+  const steps = 8;
+  const pts: [number, number][] = [];
+  for (let i = 1; i < steps; i++) {
+    const t = i / steps;
+    pts.push([
+      unit.originLatLon[0] + (unit.destLatLon[0] - unit.originLatLon[0]) * t,
+      unit.originLatLon[1] + (unit.destLatLon[1] - unit.originLatLon[1]) * t,
+    ]);
+  }
+  return pts;
+}
 
 /* ── Tracking number validation & carrier detection ──────── */
 
@@ -685,6 +702,57 @@ export function lookupShipment(id: string, lang: Lang = "en"): Shipment | null {
       },
       lang,
     );
+  }
+
+  // 2b) A truck on the live map: return the actual road shipment — matching
+  //     origin, destination, cargo and route from the fleet engine.
+  if (unit && unit.kind === "truck") {
+    const fleetStatus = unit.progress >= 100 ? "delivered" as ShipmentStatus
+      : unit.status === "Delivering" ? "out_for_delivery" as ShipmentStatus
+      : unit.progress > 0 ? "in_transit" as ShipmentStatus
+      : "picked_up" as ShipmentStatus;
+    const progressPct = STATUS_PROGRESS[fleetStatus];
+    const routeSteps = ["Pickup", "Origin Hub", "Transit", "Destination Hub", "Delivery"];
+    const today = new Date();
+    const pickup = at(-3, 8, 40);
+    const mid = at(-1, 9, 12);
+    const eta = new Date(unit.etaMs);
+    const intl = unit.origin !== unit.destination;
+    const checkpoints: TrackingCheckpoint[] = routeSteps.map((label, i) => {
+      if (label === "Pickup") return { label, location: unit.origin, timestamp: fmtTs(pickup, lang), status: "picked_up" as ShipmentStatus, note: "Freight collected at shipper facility." };
+      if (label === "Origin Hub") return { label, location: `${unit.origin} Logistics Hub`, timestamp: fmtTs(at(-2, 14, 5), lang), status: "picked_up" as ShipmentStatus, note: "Consolidated and secured for linehaul." };
+      if (label === "Transit") return { label, location: `${unit.routeName}`, timestamp: fmtTs(mid, lang), status: "in_transit" as ShipmentStatus, note: "In linehaul across the corridor." };
+      if (label === "Destination Hub") return { label, location: `${unit.destination} Distribution Centre`, timestamp: fmtTs(at(-1, 8, 10), lang), status: fleetStatus === "delivered" || fleetStatus === "out_for_delivery" ? "in_transit" as ShipmentStatus : "pending" as ShipmentStatus };
+      return { label, location: unit.destination, timestamp: fleetStatus === "delivered" ? fmtTs(at(0, 13, 10), lang) : unit.eta, status: fleetStatus === "delivered" ? "delivered" as ShipmentStatus : "pending" as ShipmentStatus, note: "Delivery window confirmed." };
+    });
+    return {
+      id: normalized,
+      carrier: "cargonova",
+      carrierName: "BRB Enterprise Road Freight",
+      mode: "road",
+      status: fleetStatus,
+      origin: unit.origin,
+      destination: unit.destination,
+      currentCheckpoint: fleetStatus === "delivered" ? (lang === "ka" ? "მიწოდებულია" : "Delivered") : checkpoints.find((c) => c.status === fleetStatus)?.location ?? unit.origin,
+      eta: unit.eta,
+      etaMs: unit.etaMs,
+      progress: Math.round(unit.progress),
+      route: routeSteps,
+      checkpoints,
+      cargo: {
+        description: unit.shipment.cargo,
+        weight: unit.shipment.weight,
+        service: unit.type.includes("FTL") ? "Full Truckload (FTL)" : unit.type.includes("Reefer") ? "Refrigerated Transport" : "Less-than-Truckload (LTL)",
+        vehicle: unit.type,
+      },
+      voyage: {
+        vessel: unit.name,
+        flag: unit.flag,
+        mmsi: unit.mmsi,
+        routeName: unit.routeName,
+        route: [unit.originLatLon, ...truckRouteWaypoints(unit), unit.destLatLon],
+      },
+    };
   }
 
   // 3) ISO container numbers (CNTR…, [A-Z]{4}[0-9]{7}) are ocean freight.

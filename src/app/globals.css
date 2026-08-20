@@ -224,6 +224,11 @@ html[lang="ka"] h3 {
 html[lang="ka"] .label {
   letter-spacing: 0.08em;
 }
+/* Georgian nav items are naturally wider — shrink slightly to match English width */
+html[lang="ka"] nav a,
+html[lang="ka"] nav button {
+  font-size: 12px;
+}
 html[lang="ka"] .font-mono {
   font-family: var(--font-jetbrains), var(--font-georgian), ui-monospace, monospace;
 }

@@ -114,10 +114,10 @@ export function RouteMap({ shipment }: { shipment: Shipment }) {
   const origin = cityByName(originCity);
   const dest = cityByName(destCity);
 
-  // Ocean shipments draw the real sea lane (landmask-validated waypoints);
-  // road shipments use the great-circle between two resolvable cities.
-  const oceanPts = shipment.voyage?.route?.length ? shipment.voyage.route : null;
-  const roadPts: [number, number][] | null =
+  // Voyage route (real sea lane or fleet corridor waypoints) takes priority;
+  // fall back to great-circle between two resolvable cities.
+  const voyagePts = shipment.voyage?.route?.length ? shipment.voyage.route : null;
+  const greatCirclePts: [number, number][] | null =
     origin && dest
       ? (() => {
           const pts: [number, number][] = [];
@@ -127,7 +127,7 @@ export function RouteMap({ shipment }: { shipment: Shipment }) {
           return pts;
         })()
       : null;
-  const routePts = oceanPts ?? roadPts;
+  const routePts = voyagePts ?? greatCirclePts;
   const resolvable = Boolean(routePts);
 
   useEffect(() => {
@@ -151,14 +151,14 @@ export function RouteMap({ shipment }: { shipment: Shipment }) {
     const last = routePts[routePts.length - 1];
 
     // Route polyline — real sea lane for ocean, great circle for road.
-    L.polyline(routePts, { color: "#1677FF", weight: 3, opacity: 0.85, dashArray: "1 10" }).addTo(map);
-    L.polyline(routePts, { color: "#2ED3E6", weight: 5, opacity: 0.18 }).addTo(map);
+    L.polyline(routePts, { color: "#1E81B0", weight: 3, opacity: 0.85, dashArray: "1 10" }).addTo(map);
+    L.polyline(routePts, { color: "#1E81B0", weight: 5, opacity: 0.18 }).addTo(map);
 
     L.marker(first, { icon: pinIcon("#10b981", "A"), title: shipment.origin }).addTo(map);
     L.marker(last, { icon: pinIcon("#1E81B0", "B"), title: shipment.destination }).addTo(map);
 
     // Checkpoint dots at resolvable locations (road shipments only).
-    if (!oceanPts) {
+    if (!voyagePts) {
       for (const cp of shipment.checkpoints) {
         const loc = cp.location.split(",")[0]?.trim() ?? "";
         const firstToken = loc.split(/[\s·]+/)[0];
@@ -196,7 +196,7 @@ export function RouteMap({ shipment }: { shipment: Shipment }) {
       map.remove();
       mapRef.current = null;
     };
-  }, [oceanPts, roadPts, shipment.id]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [voyagePts, greatCirclePts, shipment.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     // Swap the tile URL in place — safer than removing/re-adding layers
