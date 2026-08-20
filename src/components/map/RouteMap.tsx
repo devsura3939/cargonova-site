@@ -94,7 +94,7 @@ function liveIcon(color: string): L.DivIcon {
     className: "",
     html: `<div style="width:22px;height:22px;transform:translate(-50%,-50%)">
       <div style="position:absolute;inset:-8px;border-radius:999px;background:${color};opacity:.25;animation:route-ping 1.8s cubic-bezier(0,0,.2,1) infinite"></div>
-      <svg viewBox="0 0 24 24" width="22" height="22" style="filter:drop-shadow(0 2px 3px rgb(8 17 31/0.5))"><rect x="2" y="6" width="14" height="10" rx="2" fill="${color}"/><rect x="16" y="9" width="6" height="7" rx="1.5" fill="${color}"/><circle cx="7" cy="17.5" r="2.5" fill="#0b1f3a"/><circle cx="18" cy="17.5" r="2.5" fill="#0b1f3a"/></svg>
+      <svg viewBox="0 0 24 24" width="22" height="22" style="filter:drop-shadow(0 2px 3px rgb(8 17 31/0.5))"><rect x="2" y="6" width="14" height="10" rx="2" fill="${color}"/><rect x="16" y="9" width="6" height="7" rx="1.5" fill="${color}"/><circle cx="7" cy="17.5" r="2.5" fill="#1B1F2A"/><circle cx="18" cy="17.5" r="2.5" fill="#1B1F2A"/></svg>
     </div>`,
     iconSize: [22, 22],
     iconAnchor: [11, 11],
@@ -180,7 +180,7 @@ export function RouteMap({ shipment }: { shipment: Shipment }) {
     // Live position marker along the drawn lane.
     const p = Math.min(100, Math.max(0, shipment.progress)) / 100;
     const [plat, plon] = pointAlongPoly(routePts, p);
-    L.marker([plat, plon], { icon: liveIcon("#1677ff"), zIndexOffset: 1000, title: "Live position" })
+    L.marker([plat, plon], { icon: liveIcon("#1E81B0"), zIndexOffset: 1000, title: "Live position" })
       .addTo(map)
       .bindTooltip(`Live position · ${shipment.progress}% complete`, { direction: "top" });
 

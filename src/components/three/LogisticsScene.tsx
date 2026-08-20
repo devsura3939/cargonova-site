@@ -77,35 +77,35 @@ function Truck({ curve }: { curve: THREE.CatmullRomCurve3 }) {
       {/* cargo box */}
       <mesh position={[-0.55, 0.55, 0]} castShadow>
         <boxGeometry args={[2.1, 1.15, 1.05]} />
-        <meshStandardMaterial color="#12315e" metalness={0.25} roughness={0.55} />
+        <meshStandardMaterial color="#004E89" metalness={0.25} roughness={0.55} />
       </mesh>
       <mesh position={[-0.55, 1.14, 0]}>
         <boxGeometry args={[2.12, 0.04, 1.07]} />
-        <meshStandardMaterial color="#1e4578" metalness={0.4} roughness={0.4} />
+        <meshStandardMaterial color="#004E89" metalness={0.4} roughness={0.4} />
       </mesh>
       {/* brand stripe on the box */}
       <mesh position={[-0.55, 0.52, 0.532]}>
         <boxGeometry args={[2.12, 0.07, 0.01]} />
-        <meshStandardMaterial color="#2ed3e6" emissive="#2ed3e6" emissiveIntensity={0.35} />
+        <meshStandardMaterial color="#1E81B0" emissive="#004E89" emissiveIntensity={0.35} />
       </mesh>
       {/* cabin */}
       <mesh position={[0.85, 0.62, 0]}>
         <boxGeometry args={[0.95, 1.0, 1.02]} />
-        <meshStandardMaterial color="#1677ff" metalness={0.35} roughness={0.35} />
+        <meshStandardMaterial color="#1E81B0" metalness={0.35} roughness={0.35} />
       </mesh>
       {/* windshield */}
       <mesh position={[0.85, 0.88, 0.53]}>
         <boxGeometry args={[0.82, 0.34, 0.02]} />
-        <meshStandardMaterial color="#0b1f3a" roughness={0.2} metalness={0.6} />
+        <meshStandardMaterial color="#1B1F2A" roughness={0.2} metalness={0.6} />
       </mesh>
       {/* headlights */}
       <mesh position={[1.34, 0.62, 0.36]}>
         <boxGeometry args={[0.02, 0.09, 0.14]} />
-        <meshStandardMaterial color="#e3efff" emissive="#e3efff" emissiveIntensity={1.6} />
+        <meshStandardMaterial color="#F9FAFB" emissive="#F9FAFB" emissiveIntensity={1.6} />
       </mesh>
       <mesh position={[1.34, 0.62, -0.36]}>
         <boxGeometry args={[0.02, 0.09, 0.14]} />
-        <meshStandardMaterial color="#e3efff" emissive="#e3efff" emissiveIntensity={1.6} />
+        <meshStandardMaterial color="#F9FAFB" emissive="#F9FAFB" emissiveIntensity={1.6} />
       </mesh>
       {/* taillights */}
       <mesh position={[-1.61, 0.62, 0.38]}>
@@ -119,7 +119,7 @@ function Truck({ curve }: { curve: THREE.CatmullRomCurve3 }) {
       {/* chassis */}
       <mesh position={[0.05, 0.08, 0]}>
         <boxGeometry args={[3.4, 0.16, 0.5]} />
-        <meshStandardMaterial color="#08111f" roughness={0.7} />
+        <meshStandardMaterial color="#1B1F2A" roughness={0.7} />
       </mesh>
       {/* wheels (spin in useFrame) */}
       {[-1.25, -0.35, 0.75, 1.45].map((x, i) => (
@@ -128,19 +128,19 @@ function Truck({ curve }: { curve: THREE.CatmullRomCurve3 }) {
             <group key={z} position={[x, 0.16, z]} ref={wheelRef(i * 2 + (z > 0 ? 0 : 1))}>
               <mesh rotation={[0, 0, 0]}>
                 <cylinderGeometry args={[0.24, 0.24, 0.16, 14]} />
-                <meshStandardMaterial color="#0a0f18" roughness={0.9} />
+                <meshStandardMaterial color="#1B1F2A" roughness={0.9} />
               </mesh>
               {/* hub cap */}
               <mesh position={[0, 0, 0.082]}>
                 <cylinderGeometry args={[0.1, 0.1, 0.01, 10]} />
-                <meshStandardMaterial color="#2a5592" metalness={0.6} roughness={0.4} />
+                <meshStandardMaterial color="#004E89" metalness={0.6} roughness={0.4} />
               </mesh>
             </group>
           ))}
         </group>
       ))}
       {/* headlight glow cone ahead of the truck */}
-      <pointLight position={[2.1, 0.7, 0]} intensity={10} distance={5.5} color="#bfe3ff" />
+      <pointLight position={[2.1, 0.7, 0]} intensity={10} distance={5.5} color="#F9FAFB" />
     </group>
   );
 }
@@ -190,43 +190,43 @@ function CargoPlane() {
       {/* fuselage (pointing +z) */}
       <mesh rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.3, 0.34, 2.5, 12]} />
-        <meshStandardMaterial color="#d6e3f2" metalness={0.4} roughness={0.35} />
+        <meshStandardMaterial color="#F9FAFB" metalness={0.4} roughness={0.35} />
       </mesh>
       {/* nose */}
       <mesh position={[0, 0, 1.32]} rotation={[Math.PI / 2, 0, 0]}>
         <coneGeometry args={[0.3, 0.55, 12]} />
-        <meshStandardMaterial color="#e3efff" metalness={0.35} roughness={0.4} />
+        <meshStandardMaterial color="#F9FAFB" metalness={0.35} roughness={0.4} />
       </mesh>
       {/* cockpit window band */}
       <mesh position={[0, 0.06, 1.12]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[0.29, 0.29, 0.3, 12, 1, false, Math.PI, Math.PI]} />
-        <meshStandardMaterial color="#0b1f3a" metalness={0.7} roughness={0.2} />
+        <meshStandardMaterial color="#1B1F2A" metalness={0.7} roughness={0.2} />
       </mesh>
       {/* main wings */}
       <group position={[0, 0.04, 0.1]}>
         <mesh rotation={[0, 0, 0.04]}>
           <boxGeometry args={[4.8, 0.07, 1.15]} />
-          <meshStandardMaterial color="#c3d6ec" metalness={0.35} roughness={0.45} />
+          <meshStandardMaterial color="#F9FAFB" metalness={0.35} roughness={0.45} />
         </mesh>
         {/* engine pods */}
         <mesh position={[1.15, -0.16, 0.35]} rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.13, 0.13, 0.5, 10]} />
-          <meshStandardMaterial color="#8fa3bd" metalness={0.6} roughness={0.3} />
+          <meshStandardMaterial color="#C0C5CE" metalness={0.6} roughness={0.3} />
         </mesh>
         <mesh position={[-1.15, -0.16, 0.35]} rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.13, 0.13, 0.5, 10]} />
-          <meshStandardMaterial color="#8fa3bd" metalness={0.6} roughness={0.3} />
+          <meshStandardMaterial color="#C0C5CE" metalness={0.6} roughness={0.3} />
         </mesh>
       </group>
       {/* tail */}
       <group position={[0, 0.1, -1.18]}>
         <mesh position={[0, 0.55, 0]}>
           <boxGeometry args={[0.06, 1.15, 0.5]} />
-          <meshStandardMaterial color="#1677ff" metalness={0.4} roughness={0.4} />
+          <meshStandardMaterial color="#1E81B0" metalness={0.4} roughness={0.4} />
         </mesh>
         <mesh position={[0, 0.28, 0]}>
           <boxGeometry args={[1.6, 0.06, 0.45]} />
-          <meshStandardMaterial color="#c3d6ec" metalness={0.35} roughness={0.45} />
+          <meshStandardMaterial color="#F9FAFB" metalness={0.35} roughness={0.45} />
         </mesh>
       </group>
       {/* nav light */}
@@ -308,7 +308,7 @@ function CitySkyline() {
             >
               <planeGeometry args={[b.size[0] * 0.8, b.size[1] * 0.5]} />
               <meshBasicMaterial
-                color={w % 2 === 0 ? "#2ed3e6" : "#1677ff"}
+                color={w % 2 === 0 ? "#1E81B0" : "#004E89"}
                 transparent
                 opacity={0.16 + rand() * 0.25}
               />
@@ -401,8 +401,7 @@ function AnimatedRoute({ curve }: { curve: THREE.CatmullRomCurve3 }) {
 }
 
 function HubPin({
-  position,
-  color = "#1677ff",
+  position,color="#1E81B0",
 }: {
   position: [number, number, number];
   color?: string;
@@ -453,13 +452,13 @@ function Warehouse({ position }: { position: [number, number, number] }) {
       {/* roof */}
       <mesh position={[0, 1.78, 0]}>
         <boxGeometry args={[2.7, 0.14, 2.1]} />
-        <meshStandardMaterial color="#1e4578" metalness={0.3} roughness={0.5} />
+        <meshStandardMaterial color="#004E89" metalness={0.3} roughness={0.5} />
       </mesh>
       {/* doors */}
       {[-0.6, 0.6].map((x) => (
         <mesh key={x} position={[x, 0.55, 0.92]}>
           <boxGeometry args={[0.7, 1.1, 0.02]} />
-          <meshStandardMaterial color="#0b1f3a" roughness={0.8} />
+          <meshStandardMaterial color="#1B1F2A" roughness={0.8} />
         </mesh>
       ))}
       {/* dock lights */}
@@ -474,7 +473,7 @@ function Warehouse({ position }: { position: [number, number, number] }) {
       {/* "BRB Enterprise" sign glow */}
       <mesh position={[0, 2.02, 0.1]}>
         <boxGeometry args={[1.5, 0.12, 0.04]} />
-        <meshStandardMaterial color="#e3efff" emissive="#ffffff" emissiveIntensity={0.5} />
+        <meshStandardMaterial color="#F9FAFB" emissive="#ffffff" emissiveIntensity={0.5} />
       </mesh>
     </group>
   );
@@ -482,11 +481,11 @@ function Warehouse({ position }: { position: [number, number, number] }) {
 
 function Containers({ position }: { position: [number, number, number] }) {
   const stack = [
-    { pos: [-1.35, 0.62, 1.1], color: "#1677ff" },
+    { pos: [-1.35, 0.62, 1.1], color: "#004E89" },
     { pos: [-0.45, 0.62, 1.1], color: "#1E81B0" },
-    { pos: [-0.45, 1.36, 1.1], color: "#2ed3e6" },
-    { pos: [-1.35, 1.36, 1.1], color: "#e3efff" },
-    { pos: [-0.9, 2.1, 1.1], color: "#1677ff" },
+    { pos: [-0.45, 1.36, 1.1], color: "#1E81B0" },
+    { pos: [-1.35, 1.36, 1.1], color: "#F9FAFB" },
+    { pos: [-0.9, 2.1, 1.1], color: "#004E89" },
   ];
   return (
     <group position={position}>
@@ -500,7 +499,7 @@ function Containers({ position }: { position: [number, number, number] }) {
       {stack.map((c, i) => (
         <mesh key={`s${i}`} position={[c.pos[0], c.pos[1], c.pos[2] + 0.652]}>
           <planeGeometry args={[0.82, 0.74]} />
-          <meshBasicMaterial color="#0b1f3a" transparent opacity={0.5} />
+          <meshBasicMaterial color="#1B1F2A" transparent opacity={0.5} />
         </mesh>
       ))}
     </group>
@@ -524,7 +523,7 @@ function DataLines() {
         return {
           start: [Math.cos(angle) * r, 0.06, Math.sin(angle) * r],
           end: [Math.cos(angle + 0.35) * (r - 1.4), 0.06, Math.sin(angle + 0.35) * (r - 1.4)],
-          color: i % 3 === 0 ? "#2ed3e6" : "#1677ff",
+          color: i % 3 === 0 ? "#1E81B0" : "#004E89",
         };
       }),
     [],
@@ -562,13 +561,13 @@ function RouteLane() {
       {[-1.28, 1.28].map((x) => (
         <mesh key={x} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.012, x * 5.5 + 0.4]}>
           <planeGeometry args={[17, 0.03]} />
-          <meshBasicMaterial color="#1e4578" transparent opacity={0.5} />
+          <meshBasicMaterial color="#004E89" transparent opacity={0.5} />
         </mesh>
       ))}
       {/* center line */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0.4]}>
         <planeGeometry args={[17, 0.02]} />
-        <meshBasicMaterial color="#1e4578" transparent opacity={0.55} />
+        <meshBasicMaterial color="#004E89" transparent opacity={0.55} />
       </mesh>
     </group>
   );
@@ -600,20 +599,20 @@ export default function LogisticsScene() {
       style={{ background: "transparent" }}
       aria-hidden="true"
     >
-      <fog attach="fog" args={["#08111f", 14, 30]} />
+      <fog attach="fog" args={["#1B1F2A", 14, 30]} />
       <ambientLight intensity={0.45} />
       <directionalLight position={[6, 10, 6]} intensity={1.1} color="#ffffff" />
-      <pointLight position={[-5, 4, -4]} intensity={22} color="#1677ff" />
-      <pointLight position={[5, 3, 4]} intensity={16} color="#2ed3e6" />
+      <pointLight position={[-5, 4, -4]} intensity={22} color="#1E81B0" />
+      <pointLight position={[5, 3, 4]} intensity={16} color="#1E81B0" />
 
       <group position={[0, 0, -0.6]}>
         <RouteLane />
         <CitySkyline />
         <AnimatedRoute curve={curve} />
         <Truck curve={curve} />
-        <HubPin position={[-6.2, 0, 3.4]} color="#2ed3e6" />
+        <HubPin position={[-6.2, 0, 3.4]} color="#1E81B0" />
         <HubPin position={[6.4, 0, -2.6]} color="#1E81B0" />
-        <HubPin position={[1.6, 0, -0.9]} color="#1677ff" />
+        <HubPin position={[1.6, 0, -0.9]} color="#1E81B0" />
         <Warehouse position={[-4.6, 0, -1.6]} />
         <Containers position={[4.1, 0, 1.7]} />
         <DataLines />

@@ -380,7 +380,7 @@ class FleetCanvasLayer extends L.Layer {
         ctx.fillRect(-s, -s * 0.42, s * 1.35, s * 0.84);
         ctx.fillRect(s * 0.35, -s * 0.42, s * 0.6, s * 0.6);
         ctx.shadowBlur = 0;
-        ctx.fillStyle = dark ? "#0b1325" : "#ffffff";
+        ctx.fillStyle = dark ? "#1B1F2A" : "#F9FAFB";
         ctx.beginPath();
         ctx.arc(-s * 0.45, s * 0.48, s * 0.3, 0, Math.PI * 2);
         ctx.arc(s * 0.75, s * 0.48, s * 0.3, 0, Math.PI * 2);
@@ -391,14 +391,14 @@ class FleetCanvasLayer extends L.Layer {
       // Labels
       if (isSel) {
         ctx.font = "700 12px Inter, system-ui, sans-serif";
-        ctx.fillStyle = dark ? "#ffffff" : "#0b1f3a";
+        ctx.fillStyle = dark ? "#F9FAFB" : "#1B1F2A";
         ctx.fillText(u.name, x + 11, y - 9);
         ctx.font = "600 10px ui-monospace, monospace";
         ctx.fillStyle = color;
         ctx.fillText(u.shipment.id, x + 11, y + 4);
       } else if (isHover && zoom >= 2.6) {
         ctx.font = "600 11px Inter, system-ui, sans-serif";
-        ctx.fillStyle = dark ? "#e6f3ff" : "#0b1f3a";
+        ctx.fillStyle = dark ? "#F9FAFB" : "#1B1F2A";
         ctx.fillText(u.name, x + 9, y - 6);
       }
     }
@@ -432,7 +432,7 @@ class FleetCanvasLayer extends L.Layer {
         ctx.restore();
         if (isSelA) {
           ctx.font = "700 12px Inter, system-ui, sans-serif";
-          ctx.fillStyle = dark ? "#ffffff" : "#0b1f3a";
+          ctx.fillStyle = dark ? "#F9FAFB" : "#1B1F2A";
           ctx.fillText(a.callsign, x + 10, y - 8);
           ctx.font = "600 10px ui-monospace, monospace";
           ctx.fillStyle = AIR_COLOR;
@@ -891,7 +891,7 @@ export function LiveWorldMap() {
         <div className="absolute inset-x-3 bottom-3 top-40 z-[600] mx-auto flex max-w-md flex-col overflow-hidden rounded-2xl border border-soft bg-surface shadow-lift sm:inset-x-auto sm:bottom-3 sm:left-auto sm:right-3 sm:top-16 sm:max-w-sm">
           <div
             className="flex items-start justify-between gap-3 px-5 py-4 text-white"
-            style={{ background: selected.kind === "ship" ? "linear-gradient(135deg,#083344,#0b1f3a)" : "linear-gradient(135deg,#431407,#1c1917)" }}
+            style={{ background: selected.kind === "ship" ? "linear-gradient(135deg,#004E89,#1B1F2A)" : "linear-gradient(135deg,#F5A623,#1B1F2A)" }}
           >
             <div className="min-w-0">
               <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-400">

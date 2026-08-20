@@ -29,7 +29,7 @@
   /* BRB primary accent — Deep Blue */
   --color-tech-600: #004E89;
   --color-tech-500: #1E81B0;
-  --color-tech-400: #3A9FD4;
+  --color-tech-400: #3A9FD4; /* light tint of #1E81B0, used for hover/focus states */
   --color-tech-100: #E0F0FA;
 
   /* BRB secondary accent — Indigo */

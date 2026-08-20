@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 const TIER_COLOR: Record<Hub["tier"], string> = {
   major: "#f4f5f5",
   regional: "#1E81B0",
-  gateway: "#3A9FD4",
+  gateway: "#004E89",
 };
 
 const TIER_KEY: Record<Hub["tier"], string> = {
@@ -152,13 +152,13 @@ export function NetworkMap({
       >
         <defs>
           <linearGradient id="nm-land" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#22272b" />
-            <stop offset="100%" stopColor="#14171a" />
+            <stop offset="0%" stopColor="#2A3042" />
+            <stop offset="100%" stopColor="#1B1F2A" />
           </linearGradient>
           <linearGradient id="nm-corridor" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%" stopColor="#1E81B0" />
-            <stop offset="55%" stopColor="#3A9FD4" />
-            <stop offset="100%" stopColor="#6BB8E0" />
+            <stop offset="55%" stopColor="#004E89" />
+            <stop offset="100%" stopColor="#1E81B0" />
           </linearGradient>
         </defs>
 
@@ -166,7 +166,7 @@ export function NetworkMap({
         <path
           d={LANDMASS_D}
           fill="url(#nm-land)"
-          stroke="#989da2"
+          stroke="#C0C5CE"
           strokeOpacity={0.35}
           strokeWidth={0.6}
           strokeLinejoin="round"
@@ -178,7 +178,7 @@ export function NetworkMap({
           const isActive = activeCorridorId === c.id;
           const highlighted = isHover || isActive;
           const dim = dimmed && !isActive && !isHover;
-          const mainColor = isActive ? "#1E81B0" : isHover ? "#6BB8E0" : "#3A9FD4";
+          const mainColor = isActive ? "#1E81B0" : isHover ? "#004E89" : "#1E81B0";
 
           return (
             <g
@@ -224,7 +224,7 @@ export function NetworkMap({
               <path
                 d={d}
                 fill="none"
-                stroke="#ffe9d9"
+                stroke="#F9FAFB"
                 strokeWidth={highlighted ? 2 : 1.2}
                 strokeOpacity={dim ? 0.05 : highlighted ? 0.95 : 0.5}
                 className="netmap-dash"
@@ -235,7 +235,7 @@ export function NetworkMap({
                 <circle
                   key={off}
                   r={2.6}
-                  fill={isActive ? "#ffd2b8" : "#ffc8a8"}
+                  fill={isActive ? "#F5A623" : "#F7B84D"}
                   className="netmap-travel"
                   style={{
                     offsetPath: `path('${d}')`,
@@ -283,7 +283,7 @@ export function NetworkMap({
                 opacity={0.5}
               />
               <circle cx={x} cy={y} r={3.4} fill="none" stroke={color} strokeOpacity={0.45} strokeWidth={1.2} />
-              <circle cx={x} cy={y} r={1.9} fill="#eaf4ff" />
+              <circle cx={x} cy={y} r={1.9} fill="#F9FAFB" />
               {/* Only label hub cities that sit on a corridor (keeps the canvas clean) */}
               {isEndpoint ? (
                 <text
@@ -291,9 +291,9 @@ export function NetworkMap({
                   y={y + off.dy}
                   textAnchor={off.anchor}
                   className="select-none font-semibold"
-                  fill="#d0d3d5"
+                  fill="#C0C5CE"
                   fontSize={11}
-                  style={{ paintOrder: "stroke", stroke: "#0b0b0b", strokeWidth: 3, letterSpacing: "0.02em" }}
+                  style={{ paintOrder: "stroke", stroke: "#1B1F2A", strokeWidth: 3, letterSpacing: "0.02em" }}
                 >
                   {h.city}
                 </text>
