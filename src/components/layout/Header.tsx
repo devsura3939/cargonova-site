@@ -229,15 +229,15 @@ export function Header() {
                 solid ? "border-soft dark:border-white/10" : "border-white/15",
               )}
             >
-              {(["en", "ka"] as Lang[]).map((l) => (
+              {(["en", "ka", "ru"] as Lang[]).map((l) => (
                 <button
                   key={l}
                   type="button"
                   onClick={() => setLang(l)}
                   aria-pressed={lang === l}
                   className={cn(
-                    "flex w-12 items-center justify-center font-mono text-[10.5px] uppercase tracking-[0.1em] transition-colors duration-150",
-                    l === "ka" && "border-l border-soft dark:border-white/10",
+                    "flex w-11 items-center justify-center font-mono text-[10.5px] uppercase tracking-[0.1em] transition-colors duration-150",
+                    l !== "en" && "border-l border-soft dark:border-white/10",
                     lang === l
                       ? "bg-ink-950 text-fog-50 dark:bg-white/10"
                       : cn(
@@ -246,7 +246,7 @@ export function Header() {
                         ),
                   )}
                 >
-                  {l === "en" ? "EN" : "ქარ"}
+                  {l === "en" ? "EN" : l === "ka" ? "ქარ" : "РУС"}
                 </button>
               ))}
             </div>
@@ -285,15 +285,15 @@ export function Header() {
                 solid ? "border-soft dark:border-white/10" : "border-white/15",
               )}
             >
-              {(["en", "ka"] as Lang[]).map((l) => (
+              {(["en", "ka", "ru"] as Lang[]).map((l) => (
                 <button
                   key={l}
                   type="button"
                   onClick={() => setLang(l)}
                   aria-pressed={lang === l}
                   className={cn(
-                    "flex w-11 items-center justify-center font-mono text-[10.5px] uppercase tracking-[0.1em] transition-colors duration-150",
-                    l === "ka" && "border-l border-soft dark:border-white/10",
+                    "flex w-10 items-center justify-center font-mono text-[10.5px] uppercase tracking-[0.1em] transition-colors duration-150",
+                    l !== "en" && "border-l border-soft dark:border-white/10",
                     lang === l
                       ? "bg-ink-950 text-fog-50 dark:bg-white/10"
                       : cn(
@@ -302,7 +302,7 @@ export function Header() {
                         ),
                   )}
                 >
-                  {l === "en" ? "EN" : "ქარ"}
+                  {l === "en" ? "EN" : l === "ka" ? "ქარ" : "РУС"}
                 </button>
               ))}
             </div>

@@ -163,7 +163,7 @@ const KA_MONTHS_LONG = [
   "ივლისი", "აგვისტო", "სექტემბერი", "ოქტომბერი", "ნოემბერი", "დეკემბერი",
 ];
 
-type Lang = "en" | "ka";
+type Lang = "en" | "ka" | "ru";
 
 function at(daysFromToday: number, hour: number, minute = 0): Date {
   const d = new Date();

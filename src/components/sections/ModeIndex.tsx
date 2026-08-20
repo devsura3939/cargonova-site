@@ -22,10 +22,10 @@ type Mode = {
   image: string;
 };
 
-type Bi = { en: string; ka: string };
-const L = (lang: Lang) => (b: Bi) => (lang === "ka" ? b.ka : b.en);
+type Bi = { en: string; ka: string; ru?: string };
+const L = (lang: Lang) => (b: Bi) => lang === "ka" ? b.ka : lang === "ru" ? (b.ru ?? b.en) : b.en;
 
-const MODE_DEFS: Record<"en" | "ka", { label: Bi; headline: Bi; description: Bi; transit: Bi; capacity: Bi; coverage: Bi; specs: { label: Bi; value: Bi }[] }[]> = {
+const MODE_DEFS: Partial<Record<Lang, { label: Bi; headline: Bi; description: Bi; transit: Bi; capacity: Bi; coverage: Bi; specs: { label: Bi; value: Bi }[] }[]>> = {
   en: [
     {
       label: { en: "Road freight", ka: "საგზაო გადაზიდვა" },
@@ -176,7 +176,7 @@ export function ModeIndex() {
   const [activeId, setActiveId] = useState(0);
 
   const pick = L(lang);
-  const modes: Mode[] = MODE_DEFS[lang].map((m, i) => ({
+  const modes: Mode[] = (MODE_DEFS[lang] ?? MODE_DEFS.en!).map((m, i) => ({
     id: String(i),
     label: pick(m.label),
     headline: pick(m.headline),
