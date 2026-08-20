@@ -142,7 +142,7 @@ class FleetCanvasLayer extends L.Layer {
   hitTest(x: number, y: number): { kind: "unit"; unit: LiveUnit } | { kind: "air"; craft: Aircraft } | null {
     let best: { kind: "unit"; unit: LiveUnit } | { kind: "air"; craft: Aircraft } | null = null;
     let bestD = Infinity;
-    const limit = 20;
+    const limit = 24;
     for (const u of this.state.units) {
       if (this.state.filter === "ship" && u.kind !== "ship") continue;
       if (this.state.filter === "truck" && u.kind !== "truck") continue;
@@ -161,7 +161,7 @@ class FleetCanvasLayer extends L.Layer {
     for (const a of this.state.aircraft) {
       const [px, py] = this.project(a.lat, a.lon);
       const d = Math.hypot(px - x, py - y);
-      if (d < 12 && d < bestD) {
+      if (d < 18 && d < bestD) {
         bestD = d;
         best = { kind: "air", craft: a };
       }
@@ -417,15 +417,34 @@ class FleetCanvasLayer extends L.Layer {
         ctx.shadowColor = AIR_COLOR;
         ctx.shadowBlur = isSelA ? 14 : 6;
         ctx.fillStyle = isCargoAirline(a.callsign.replace(/\d+$/, "")) ? "#F0ABFC" : AIR_COLOR;
-        // Paper-plane glyph: fuselage + swept wings
+        // Aircraft glyph: realistic airplane silhouette with swept wings & tail
+        const sc = isSelA ? 1.4 : isHoverA ? 1.2 : 1;
         ctx.beginPath();
-        ctx.moveTo(5.2, 0);
-        ctx.lineTo(1.4, -2.1);
-        ctx.lineTo(-2.6, -1.2);
-        ctx.lineTo(-1, 0);
-        ctx.lineTo(-2.6, 1.2);
-        ctx.lineTo(1.4, 2.1);
+        // Fuselage
+        ctx.moveTo(8 * sc, 0);
+        ctx.quadraticCurveTo(5 * sc, -1.2 * sc, 2 * sc, -1 * sc);
+        ctx.lineTo(-5 * sc, -0.8 * sc);
+        // Tail fin
+        ctx.lineTo(-7 * sc, -2.8 * sc);
+        ctx.lineTo(-6 * sc, -0.5 * sc);
+        // Left wing
+        ctx.lineTo(-2 * sc, -3.2 * sc);
+        ctx.lineTo(-0.5 * sc, -0.6 * sc);
+        // Right side (mirror)
+        ctx.lineTo(-0.5 * sc, 0.6 * sc);
+        ctx.lineTo(-2 * sc, 3.2 * sc);
+        ctx.lineTo(-6 * sc, 0.5 * sc);
+        // Right tail fin
+        ctx.lineTo(-7 * sc, 2.8 * sc);
+        ctx.lineTo(-5 * sc, 0.8 * sc);
+        ctx.lineTo(2 * sc, 1 * sc);
+        ctx.quadraticCurveTo(5 * sc, 1.2 * sc, 8 * sc, 0);
         ctx.closePath();
+        ctx.fill();
+        // Direction arrow at nose
+        ctx.beginPath();
+        ctx.arc(7.5 * sc, 0, 1.2 * sc, 0, Math.PI * 2);
+        ctx.fillStyle = dark ? "rgba(255,255,255,0.9)" : "rgba(27,31,42,0.85)";
         ctx.fill();
         ctx.shadowBlur = 0;
         ctx.globalAlpha = 1;
@@ -1067,15 +1086,24 @@ export function LiveWorldMap() {
                 </div>
               </div>
 
-              <a
-                href={flightRadarUrl(craft.callsign)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-purple-500 px-3 py-2 text-xs font-bold text-white transition-colors hover:bg-purple-400"
-              >
-                <ExternalLink className="h-3.5 w-3.5" />
-                {t("map.trackFlight")}
-              </a>
+              <div className="mt-3 flex gap-2">
+                <Link
+                  href={`/tracking?code=${craft.callsign}`}
+                  className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-electric-500 px-3 py-2 text-xs font-bold text-white transition-colors hover:bg-electric-400"
+                >
+                  <PackageSearch className="h-3.5 w-3.5" />
+                  {t("map.trackShipment")}
+                </Link>
+                <a
+                  href={flightRadarUrl(craft.callsign)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 rounded-xl border border-purple-300 bg-purple-50 px-3 py-2 text-xs font-bold text-purple-700 transition-colors hover:bg-purple-100 dark:border-purple-500/40 dark:bg-purple-500/10 dark:text-purple-300"
+                >
+                  <ExternalLink className="h-3.5 w-3.5" />
+                  {t("map.trackFlight")}
+                </a>
+              </div>
 
               <p className="mt-3 flex items-start gap-1.5 rounded-xl bg-surface-muted px-3 py-2.5 text-[10px] leading-relaxed text-muted">
                 <Satellite className="h-3.5 w-3.5 shrink-0 text-purple-400" />
